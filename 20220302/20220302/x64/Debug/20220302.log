@@ -1,0 +1,56 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(x64\Debug\)에 다른 프로젝트(20220302.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+cl : 명령줄 warning D9030: '/Yc'이(가) 다중 처리와 호환되지 않습니다. /MP 스위치를 무시합니다.
+  20220302.cpp
+  Core.cpp
+e:\isaacproject\20220302\20220302\core.cpp(48): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+e:\isaacproject\20220302\20220302\core.cpp(48): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  KeyMgr.cpp
+  Animation.cpp
+  Animator.cpp
+  Body.cpp
+  Camera.cpp
+  Door.cpp
+  Head.cpp
+  note.cpp
+  Collider.cpp
+  CollisionMgr.cpp
+  EventMgr.cpp
+  func.cpp
+  Missile.cpp
+e:\isaacproject\20220302\20220302\collider.cpp(64): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\collider.cpp(63): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\collider.cpp(62): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\collider.cpp(61): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\missile.cpp(31): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+e:\isaacproject\20220302\20220302\door.cpp(51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\animation.cpp(69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\animation.cpp(68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Monster.cpp
+  Object.cpp
+  PathMgr.cpp
+  Player.cpp
+  Res.cpp
+  ResMgr.cpp
+  Scene.cpp
+  SceneMgr.cpp
+  Scene_Start.cpp
+  Scene_Tool.cpp
+  SelectGDI.cpp
+  Sound.cpp
+e:\isaacproject\20220302\20220302\pathmgr.cpp(32): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\object.cpp(84): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\object.cpp(83): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\object.cpp(82): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\object.cpp(81): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\player.cpp(56): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+e:\isaacproject\20220302\20220302\scene_tool.cpp(44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\scene_tool.cpp(94): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+e:\isaacproject\20220302\20220302\scene_tool.cpp(95): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+e:\isaacproject\20220302\20220302\scene_start.cpp(129): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Texture.cpp
+  Tile.cpp
+  TimeMgr.cpp
+  UI.cpp
+e:\isaacproject\20220302\20220302\texture.cpp(78): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\isaacproject\20220302\20220302\texture.cpp(79): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  20220302.vcxproj -> E:\IsaacProject\20220302\Output\bin_debug\MyGame.exe
