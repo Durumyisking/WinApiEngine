@@ -29,7 +29,7 @@ CMissile::CMissile()
 	, m_bCase(false)
 	, m_pTex(nullptr)
 {
-	m_vDir.Nomalize();
+	m_vDir.Normalize();
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
@@ -118,8 +118,8 @@ void CMissile::update()
 void CMissile::render(HDC _dc)
 {
 
-	int iWidth = (int)m_pTex->Width();
-	int iHeight = (int)m_pTex->Height(); 
+	int iWidth = (int)m_pTex->GetWidth();
+	int iHeight = (int)m_pTex->GetHeight(); 
 
 
 	Vec2 vPos = GetPos();

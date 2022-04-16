@@ -41,7 +41,7 @@ void CScene_Tool::render(HDC _dc)
 	CSelectGDI pen(_dc, PEN_TYPE::GREEN);
 	CSelectGDI brush(_dc, BRUSH_TYPE::WHITE);
 
-	Rectangle(_dc, 0, 0, m_vResolution.x, m_vResolution.y);
+	Rectangle(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y));
 
 	CScene::render(_dc);
 }

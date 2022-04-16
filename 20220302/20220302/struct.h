@@ -6,9 +6,9 @@ struct Vec2
 	float y;
 
 public:
-	float Length() { return sqrt(x * x + y * y); } // ºøº¯
+	float Length() const { return static_cast<float>(sqrt(static_cast<double>(x) * static_cast<double>(x) + static_cast<double>(y) * static_cast<double>(y))); } // ºøº¯
 
-	Vec2& Nomalize()
+	Vec2& Normalize()
 	{
 		float fLen = Length();
 

@@ -68,7 +68,7 @@ void CCamera::CalDiff()
 	else
 	{
 		Vec2 vLookDir = m_vLookAt - m_vPrevLookAt;
-		m_vCurLookAt = m_vPrevLookAt + vLookDir.Nomalize()*m_fSpeed * fDT;
+		m_vCurLookAt = m_vPrevLookAt + vLookDir.Normalize()*m_fSpeed * fDT;
 	}
 
 	Vec2 vResolution = CCore::GetInst()->GetResolution();

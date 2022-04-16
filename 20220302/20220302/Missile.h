@@ -32,7 +32,7 @@ public:
 	void SetDir(Vec2 _vDir)
 	{
 		m_vDir = _vDir;
-		m_vDir.Nomalize();
+		m_vDir.Normalize();
 	}
 	
 	void SetType(MISSILE_TYPE _eType) { m_eType = _eType; }

@@ -38,8 +38,8 @@ void CDoor::update()
 
 void CDoor::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->Width() / 2;
-	int iHeight = (int)m_pTex->Height() / 5;
+	int iWidth = (int)m_pTex->GetWidth() / 2;
+	int iHeight = (int)m_pTex->GetHeight() / 5;
 
 
 	Vec2 vScale = GetScale();	

@@ -4,12 +4,11 @@
 #include "Core.h"
 
 CTexture::CTexture()
-	: m_dc(0)
-	, m_hBit(0)
+	: m_dc(nullptr)
+	, m_hBit(nullptr)
 	, m_bitInfo{}
 {
 }
-
 
 CTexture::~CTexture()
 {
@@ -17,136 +16,73 @@ CTexture::~CTexture()
 	DeleteObject(m_hBit);
 }
 
-
 void CTexture::Load(const wstring & _strFilePath) // 인자의 경로에는 최종적인 경로값이 들어감
 {
-	/*
-		LoadImage(Hinstance, 이미지 경로, 이미지 타입
-			, 가로길이, 세로길이, 이미지 로딩 옵션
-	*/
-
-	// 마지막 두 인자 에 이미지의 가로 세로를 넣어야 하는데 
-	// 이미지는 이미지마다 다 다른 크기를 가지기 때문에 여기서 지정안함
-	// 따라서 default인 0을 넣는다
-
-	m_hBit = (HBITMAP)LoadImage(nullptr, _strFilePath.c_str(), IMAGE_BITMAP ,0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
-
-	assert(m_hBit); // 이미지 로딩 실패시
-
-	// 비트맵을 띄워줄 작은 DC 생성
-	m_dc = CreateCompatibleDC(CCore::GetInst()->GetMainDC());
-
-	// 비트맵과 DC 연결
-	HBITMAP hPrevBit = (HBITMAP)SelectObject(m_dc, m_hBit);
-	DeleteObject(hPrevBit); // 남아있던 이전의 bitmap 제거
-
-	//GetRotatedBitmap(0.f);
-
-	// w 468 h 312
-	// 가로 세로 길이
-	// BITMAP : 비트맵의 각종 정보드를 저장하는 구조체
-	// GetObject() : 특정 OBJ들의 정보를 알려주는 함수, 이때 핸들로 넣어주는게 우리의 비트맵
+	// 가능하면 C 스타일 캐스트가 아닌 형변환 연산자를 사용하는 것을 추천함
+	m_hBit = static_cast<HBITMAP>(LoadImage(nullptr, _strFilePath.c_str(), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE));
 	GetObject(m_hBit, sizeof(BITMAP), &m_bitInfo);
 
+	if (nullptr == m_hBit)
+	{
+		// 이미지 로딩 실패 시
+		assert(false);
+	}
+
+	m_dc = CreateCompatibleDC(CCore::GetInst()->GetMainDC());
+	HBITMAP hPrevBit = static_cast<HBITMAP>(SelectObject(m_dc, m_hBit));
+	DeleteObject(hPrevBit); // 남아있던 이전의 bitmap 제거
+
+	GetRotatedBitmap(0, 0, static_cast<int>(m_bitInfo.bmWidth), static_cast<int>(m_bitInfo.bmHeight), 180.);
 }
-void CTexture::GetRotatedBitmap(float radians)
+void CTexture::GetRotatedBitmap(int source_x, int source_y, int dest_width, int dest_height, double degree)
 {
-	HDC sourceDC, destDC;
-	BITMAP bm;
+	// 지역 변수들은 선언과 동시에 초기화 해주는 걸 추천함
+	// 가끔씩 초기화되지 않은 쓰레기 값이 들어있는 변수가 결과값에 영향을 미치는 경우가 있음
 
-	HBITMAP hbmResult;
-	HBITMAP hbmOldSource;
-	HBITMAP hbmOldDest;
-	HBRUSH hbrBack;
-	HBRUSH hbrOld;
+	HDC source_dc = CreateCompatibleDC(m_dc);
+	HDC dest_dc = CreateCompatibleDC(m_dc);
+	HBITMAP bm_result = CreateCompatibleBitmap(m_dc, dest_width, dest_height);
 
-	XFORM xform;
+	HBITMAP hbm_old_source = static_cast<HBITMAP>(SelectObject(source_dc, m_hBit));
+	HBITMAP hbm_old_dest = static_cast<HBITMAP>(SelectObject(dest_dc, bm_result));
 
-	float cosine, sine;
-	int x1, y1, x2, y2, x3, y3, minx, miny, maxx, maxy, w, h;
+	HBRUSH brush_back = CreateSolidBrush(RGB(255, 0, 255));
+	HBRUSH brush_old = static_cast<HBRUSH>(SelectObject(dest_dc, brush_back));
 
-	// 
-	sourceDC = CreateCompatibleDC(CCore::GetInst()->GetMainDC());
+	PatBlt(dest_dc, 0, 0, dest_width, dest_height, PATCOPY);
+	DeleteObject(SelectObject(dest_dc, brush_old));
 
+	// degree 값 radian으로 변경
+	float cos_theta = static_cast<float>(cos(DegreeToRadian(degree)));
+	float sin_theta = static_cast<float>(sin(DegreeToRadian(degree)));
 
-	destDC = CreateCompatibleDC(CCore::GetInst()->GetMainDC());
+	// 윈도우 좌표계 회전을 위해 그래픽 확장모드 전환
+	SetGraphicsMode(dest_dc, GM_ADVANCED);
 
+	XFORM xform = {};
+	xform.eM11 = cos_theta;
+	xform.eM12 = sin_theta;
+	xform.eM21 = -sin_theta;
+	xform.eM22 = cos_theta;
+	xform.eDx = static_cast<float>(dest_width) / 2.f;
+	xform.eDy = static_cast<float>(dest_height) / 2.f;
 
+	SetWorldTransform(dest_dc, &xform);
 
-	GetObject(m_hBit, sizeof(bm), &bm);
+	// 회전 이미지 출력
+	BitBlt(dest_dc, -(dest_width / 2), -(dest_height / 2), dest_width, dest_height, source_dc, source_x, source_y, SRCCOPY);
 
-	cosine = cos(radians * 3.14 / 180.f);
-	sine = sin(radians * 3.14 / 180.f);
+	// 자원 해제
+	SelectObject(source_dc, hbm_old_source);
+	SelectObject(dest_dc, hbm_old_dest);
+	DeleteObject(source_dc);
+	DeleteObject(dest_dc);
 
+	m_hBit = bm_result;
+	GetObject(m_hBit, sizeof(BITMAP), &m_bitInfo);
 
-	// 회전된 이미지의 영역을 구한다.
-	// 점 3개잡고 설정해준 각도로 돌림
-	x1 = (int)(bm.bmHeight * sine);
-	y1 = (int)(bm.bmHeight * cosine);
-
-	x2 = (int)(bm.bmWidth * cosine + bm.bmHeight * sine);
-	y2 = (int)(bm.bmHeight * cosine - bm.bmWidth * sine);
-
-	x3 = (int)(bm.bmWidth * cosine);
-	y3 = (int)(-bm.bmWidth * sine);
-
-	minx = min(0, min(x1, min(x2, x3)));
-	miny = min(0, min(y1, min(y2, y3)));
-	maxx = max(0, max(x1, max(x2, x3)));
-	maxy = max(0, max(y1, max(y2, y3)));
-
-
-	// 회전된 이미지의 영역
-	w = maxx - minx;
-	h = maxy - miny;
-
-
-
-	// 회전된 이미지 영역 크기의 btimap 생성
-	hbmResult = CreateCompatibleBitmap(m_dc, w, h);
-
-	
-	hbmOldSource = (HBITMAP)SelectObject(sourceDC, m_hBit);
-	hbmOldDest = (HBITMAP)SelectObject(destDC, hbmResult);
-
-
-	// dc 바꾸기전에 배경그림 이미지 회전시키면 빈공간 생기니까
-	hbrBack = CreateSolidBrush(RGB(255,0,255));
-	hbrOld = (HBRUSH)SelectObject(destDC, hbrBack);
-
-	// 우리 bitmap 만큼만 다시 그려줌
-	PatBlt(destDC, 0, 0, w, h, PATCOPY);
-
-	// 늙은이 지움
-	DeleteObject(SelectObject(destDC, hbrOld));
-
-	SetGraphicsMode(destDC, GM_ADVANCED);
-	xform.eM11 = cosine;
-	xform.eM12 = -sine;
-
-	xform.eM21 = sine;
-	xform.eM22 = cosine;
-
-	xform.eDx = (float)-minx;
-	xform.eDy = (float)-miny;
-
-	SetWorldTransform(destDC, &xform);
-
-
-	// 좌표계 바꾼 dc에 비트맵 넣음
-	BitBlt(destDC, 0, 0, bm.bmWidth, bm.bmHeight, sourceDC, 0, 0, SRCCOPY);
-
-
-	// dc 가져옴
-	SelectObject(sourceDC, hbmOldSource);
-	SelectObject(destDC, hbmOldDest);
-
-	DeleteDC(sourceDC);
-	DeleteDC(destDC);
-
-
-
-	m_hBit =  hbmResult;
+	HBITMAP hPrevBit = static_cast<HBITMAP>(SelectObject(m_dc, m_hBit));
+	DeleteObject(hPrevBit); // 남아있던 이전의 bitmap 제거
 }
 
 

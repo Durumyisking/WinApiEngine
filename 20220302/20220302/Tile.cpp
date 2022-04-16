@@ -26,8 +26,8 @@ void CTile::render(HDC _dc)
 	if (nullptr == m_pTileTex || -1 == m_iImgIdx)
 		return;
 
-	UINT iWidth = m_pTileTex->Width();
-	UINT iHeight = m_pTileTex->Height();
+	UINT iWidth = m_pTileTex->GetWidth();
+	UINT iHeight = m_pTileTex->GetHeight();
 
 	UINT iMaxCol = iWidth / ROCK_SIZE;
 	UINT iMaxRow = iHeight / ROCK_SIZE;

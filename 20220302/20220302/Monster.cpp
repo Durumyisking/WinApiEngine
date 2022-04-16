@@ -89,8 +89,8 @@ void CMonster::update()
 
 void CMonster::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->Width();
-	int iHeight = (int)m_pTex->Height(); 
+	int iWidth = (int)m_pTex->GetWidth();
+	int iHeight = (int)m_pTex->GetHeight(); 
 
 	Vec2 vPos = GetPos();
 

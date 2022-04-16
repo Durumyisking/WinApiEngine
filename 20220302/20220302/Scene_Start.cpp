@@ -119,14 +119,15 @@ void CScene_Start::update()
 void CScene_Start::render(HDC _dc)
 {
 	
-	int iWidth = (int)m_pTex->Width();
-	int iHeight = (int)m_pTex->Height();
+	int iWidth = (int)m_pTex->GetWidth();
+	int iHeight = (int)m_pTex->GetHeight();
 
 
 	TransparentBlt(_dc
-		, (int)(0.f)
-		, (int)(0.f)
-		, m_vResolution.x , m_vResolution.y
+		, static_cast<int>(0.f)
+		, static_cast<int>(0.f)
+		, static_cast<int>(m_vResolution.x)
+		, static_cast<int>(m_vResolution.y)
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
