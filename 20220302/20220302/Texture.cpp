@@ -32,7 +32,7 @@ void CTexture::Load(const wstring & _strFilePath) // 인자의 경로에는 최종적인 경
 	HBITMAP hPrevBit = static_cast<HBITMAP>(SelectObject(m_dc, m_hBit));
 	DeleteObject(hPrevBit); // 남아있던 이전의 bitmap 제거
 
-	GetRotatedBitmap(0, 0, static_cast<int>(m_bitInfo.bmWidth), static_cast<int>(m_bitInfo.bmHeight), 180.);
+	//GetRotatedBitmap(0, 0, static_cast<int>(m_bitInfo.bmWidth), static_cast<int>(m_bitInfo.bmHeight), 0.);
 }
 void CTexture::GetRotatedBitmap(int source_x, int source_y, int dest_width, int dest_height, double degree)
 {
@@ -80,9 +80,9 @@ void CTexture::GetRotatedBitmap(int source_x, int source_y, int dest_width, int 
 
 	m_hBit = bm_result;
 	GetObject(m_hBit, sizeof(BITMAP), &m_bitInfo);
-
-	HBITMAP hPrevBit = static_cast<HBITMAP>(SelectObject(m_dc, m_hBit));
-	DeleteObject(hPrevBit); // 남아있던 이전의 bitmap 제거
+	
+	//HBITMAP hPrevBit = static_cast<HBITMAP>(SelectObject(m_dc, m_hBit));
+	//DeleteObject(hPrevBit); // 남아있던 이전의 bitmap 제거
 }
 
 

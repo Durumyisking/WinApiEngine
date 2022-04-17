@@ -2,7 +2,6 @@
 #include "TimeMgr.h"
 #include "Core.h"
 
-
 CTimeMgr::CTimeMgr()
 	: m_llCurCount{} 
 	, m_llPrevCount{}
@@ -11,45 +10,37 @@ CTimeMgr::CTimeMgr()
 	, m_dAcc(0.)
 	, m_iCallCount(0)
 {
-
 }
-
 
 CTimeMgr::~CTimeMgr()
 {
-
 }
 
 void CTimeMgr::init()
 {
-	
-	QueryPerformanceCounter(&m_llPrevCount);
-
-	
-
-	
-	QueryPerformanceFrequency(&m_llFrequency);
+	//QueryPerformanceCounter(&m_llPrevCount);
+	//QueryPerformanceFrequency(&m_llFrequency);
 
 
-
+	m_Current = std::chrono::high_resolution_clock::now();
+	m_Prev = m_Current;
 }
 
 void CTimeMgr::update()
 {
-	QueryPerformanceCounter(&m_llCurCount);
+	m_Current = std::chrono::high_resolution_clock::now();
+
+	const double delta_time_double = std::chrono::duration<double>(m_Current - m_Prev).count();
+	m_Prev = m_Current;
+
+	m_dDeltaTime = delta_time_double;
 
 
-	m_dDeltaTime = (double)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (double)m_llFrequency.QuadPart;
-	
-
+	//QueryPerformanceCounter(&m_llCurCount);
+	//m_dDeltaTime = (double)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (double)m_llFrequency.QuadPart;
 
 	++m_iCallCount; 
-
 	m_dAcc += m_dDeltaTime;
-
-	
-	
-	
 	if (m_dAcc >= 1.) 
 	{
 		m_iFPS = m_iCallCount;
@@ -61,9 +52,7 @@ void CTimeMgr::update()
 		SetWindowText(CCore::GetInst()->GetMainHwnd(), szBuffer);
 	}
 
-
-
-	m_llPrevCount = m_llCurCount; 
+	// m_llPrevCount = m_llCurCount; 
 
 // 디버깅 모드일때만 실행 시키게 함 우리가 release로 하면 전처리기 자차에서 코드 사라짐
 
