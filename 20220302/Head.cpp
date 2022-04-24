@@ -85,7 +85,7 @@ void CHead::update()
 
 	if (KEY_HOLD(KEY::UP))
 	{
-		GetAnimator()->Play(m_strAnimName, false); 
+		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_UP";
 		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 

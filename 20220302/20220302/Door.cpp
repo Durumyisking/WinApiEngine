@@ -17,14 +17,17 @@ CDoor::CDoor()
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"DoorTex", L"texture\\BackGround\\door_01_normaldoor.bmp");
 
 
-	
+
 	SetScale(Vec2(128.f, 116.f));
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(128.f, 116.f));
+	GetCollider()->SetScale(Vec2(102.4f, 92.8f));
+
+	//m_pTex->GetRotatedBitmap(0, 0, GetScale().x, GetScale().y, 180.);
+
 }
-	
+
 
 CDoor::~CDoor()
 {
@@ -33,18 +36,18 @@ CDoor::~CDoor()
 void CDoor::update()
 {
 
-	
+
 }
 
 void CDoor::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->Width() / 2;
-	int iHeight = (int)m_pTex->Height() / 5;
+	int iWidth = (int)m_pTex->GetWidth() / 2;
+	int iHeight = (int)m_pTex->GetHeight() / 5;
 
 
-	Vec2 vScale = GetScale();	
+	Vec2 vScale = GetScale();
 	Vec2 vPos = GetPos();
-	
+
 	TransparentBlt(_dc
 		, (int)(vPos.x - (float)(vScale.x / 2))
 		, (int)(vPos.y - (float)(vScale.y / 2))
@@ -52,6 +55,6 @@ void CDoor::render(HDC _dc)
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
-	
+
 	component_render(_dc);
 }

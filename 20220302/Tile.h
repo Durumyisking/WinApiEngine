@@ -19,6 +19,11 @@ private:
 	virtual void update();
 	virtual void render(HDC _dc);
 
+public:
+	virtual void Save(FILE* _pFile);
+	virtual void Load(FILE* _pFile);
+
+
 	CLONE(CTile);
 
 public:
@@ -31,6 +36,7 @@ public:
 	{
 		++m_iImgIdx;
 	}
+
 
 };
 

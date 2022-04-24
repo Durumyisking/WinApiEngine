@@ -8,6 +8,7 @@
 
 #include "ResMgr.h"
 #include "TimeMgr.h"
+#include "PathMgr.h"
 
 
 CScene::CScene()
@@ -105,6 +106,7 @@ void CScene::render(HDC _dc)
 
 void CScene::CreateTile(UINT _iXCount, UINT _iYCount)
 {
+	DeleteGroup(GROUP_TYPE::TILE);
 
 	m_iTileX = _iXCount;
 	m_iTileY = _iYCount;
@@ -122,6 +124,38 @@ void CScene::CreateTile(UINT _iXCount, UINT _iYCount)
 			AddObject(pTile, GROUP_TYPE::TILE);
 		}
 	}
+}
+
+void CScene::LoadTile(const wstring & _strRelativePath)
+{
+
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	FILE* pFile = nullptr;
+
+	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
+
+	assert(pFile);
+
+	// 타일 개수 불러오기
+	UINT xCount = 0;
+	UINT yCount = 0;
+
+	fread(&xCount, sizeof(UINT), 1, pFile);
+	fread(&yCount, sizeof(UINT), 1, pFile);
+
+	CreateTile(xCount, yCount);
+
+	// 개별타일 데이터 불러오기 
+	const vector<CObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
+	for (size_t i = 0; i < vecTile.size(); ++i)
+	{
+		((CTile*)vecTile[i])->Load(pFile);
+	}
+
+
+	fclose(pFile);
 }
 
 
