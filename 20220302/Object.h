@@ -63,6 +63,7 @@ public:
 	virtual CObject* Clone() = 0;
 
 
+
 private:
 	// 자식 obj 조차도 이 함수를 사용 불가능하다
 	// 오로지 eventmgr에서만 사용하게 할 것

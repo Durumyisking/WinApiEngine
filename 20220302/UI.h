@@ -19,6 +19,7 @@ private:
 
 public:
 	CUI(bool _bCameAff);
+	CUI(const CUI& _origin);
 	~CUI();
 
 	friend class CUIMgr;
@@ -53,7 +54,7 @@ public:
 
 	bool IsMouseOn() { return m_bMouseOn; }
 
-
+	bool IsLbtnDown() { return m_bLbtnDown; }
 
 };
 

@@ -2,12 +2,14 @@
 #include "Scene.h"
 
 class CTexture;
+class CUI;
 
 class CScene_Tool :
 	public CScene
 {
 private:
-	CTexture* m_pTileTex;
+	CTexture*	m_pTileTex;
+	CUI*		m_pUI;
 
 	
 
@@ -25,7 +27,7 @@ public:
 	virtual void Exit();
 public:
 	void SetTileIdx();
-
+	void SaveTile(const wstring & _strRelativePath);
 };
 
 

@@ -10,6 +10,9 @@
 #include "SceneMgr.h"
 #include "ResMgr.h"
 
+#include "Item.h"
+#include "SadOnion.h"
+
 CScene_Item::CScene_Item()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");
@@ -31,42 +34,45 @@ void CScene_Item::Enter()
 	CObject* pHead = new CHead;
 	pHead->SetName(L"PlayerHead");
 
-
-	switch (CSceneMgr::GetInst()->GetPrevScene()->GetRoomType())
-	{
-	case ROOM_TYPE::UP:
-		pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
-		pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
-		break;
-	case ROOM_TYPE::DOWN:
-		pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
-		pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
-		break;
-	case ROOM_TYPE::LEFT:
-		pBody->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-		pHead->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-		break;
-	case ROOM_TYPE::RIGHT:
-		pBody->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-		pHead->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-		break;
-	}
+	SetBodyPos(pBody, pHead);
+	
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
 
 
+
 	// Door
+	CObject* pDoorN = new CDoor;
+	pDoorN->SetPos(Vec2(m_vResolution.x / 2, (pDoorN->GetScale().y / 2) + 25.f));
+	pDoorN->SetName(L"DoorN");
 
 	CObject* pDoorS = new CDoor;
 	pDoorS->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y - (pDoorS->GetScale().y / 2) - 25.f));
 	pDoorS->SetName(L"DoorS");
 
+	CObject* pDoorE = new CDoor;
+	pDoorE->SetPos(Vec2(m_vResolution.x - (pDoorE->GetScale().x / 2) - 25.f, m_vResolution.y / 2));
+	pDoorE->SetName(L"DoorE");
+
+	/*CObject* pDoorW = new CDoor;
+	pDoorW->SetPos(Vec2((pDoorS->GetScale().x / 2) + 25.f, m_vResolution.y / 2));
+	pDoorW->SetName(L"DoorW");*/
+
+	CreateObject(pDoorN, GROUP_TYPE::DOOR);
 	CreateObject(pDoorS, GROUP_TYPE::DOOR);
+	CreateObject(pDoorE, GROUP_TYPE::DOOR);
+	//CreateObject(pDoorW, GROUP_TYPE::DOOR);
+
+	CObject* pItem = new CSadOnion;
+	pItem->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
+	pDoorN->SetName(L"Item");
+	CreateObject(pItem, GROUP_TYPE::ITEM);
+
 
 
 	// 충돌 지정
-	//CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
 
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 }

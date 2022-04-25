@@ -15,7 +15,7 @@
 
 CPlayer::CPlayer()
 	: m_dPrevTime(fDT)
-	, m_fAttackDelay(0.38f)
+	, m_fRate(0.38f)
 {
 	SetScale(HEAD_DEFAULT + BODY_DEFAULT - HEAD_BODY_GAP); 
 }

@@ -7,6 +7,12 @@ struct Vec2
 
 public:
 	float Length() const { return static_cast<float>(sqrt(static_cast<double>(x) * static_cast<double>(x) + static_cast<double>(y) * static_cast<double>(y))); } // ºøº¯
+	bool IsZero()
+	{
+		if (0.f == x && 0.f == y)
+			return true;
+		return false;
+	}
 
 	Vec2& Normalize()
 	{

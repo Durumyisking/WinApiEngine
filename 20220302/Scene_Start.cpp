@@ -57,7 +57,7 @@ void CScene_Start::Enter()
 
 	CObject* pDoorS = new CDoor;
 	pDoorS->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y - (pDoorS->GetScale().y / 2) - 25.f));
-	pDoorS->SetName(L"DoorS");
+		pDoorS->SetName(L"DoorS");
 	
 	CObject* pDoorE = new CDoor;
 	pDoorE->SetPos(Vec2(m_vResolution.x - (pDoorE->GetScale().x / 2) - 25.f, m_vResolution.y / 2));
@@ -71,6 +71,9 @@ void CScene_Start::Enter()
 	CreateObject(pDoorS, GROUP_TYPE::DOOR);
 	CreateObject(pDoorE, GROUP_TYPE::DOOR);
 	CreateObject(pDoorW, GROUP_TYPE::DOOR);
+
+	// 타일 로딩
+	// LoadTile(L"Tile\\start.tile");
 
 
 	// 충돌 지정
@@ -118,21 +121,11 @@ void CScene_Start::update()
 
 void CScene_Start::render(HDC _dc)
 {
-	
 	int iWidth = (int)m_pTex->GetWidth();
 	int iHeight = (int)m_pTex->GetHeight();
 
 
 	StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
-
-	/*TransparentBlt(_dc
-		, static_cast<int>(0.f)
-		, static_cast<int>(0.f)
-		, static_cast<int>(m_vResolution.x)
-		, static_cast<int>(m_vResolution.y)
-		, m_pTex->GetDC()
-		, 0, 0, iWidth, iHeight
-		, RGB(255, 0, 255));*/
 		
 	CScene::render(_dc);
 	
@@ -145,6 +138,6 @@ void CScene_Start::CreateMonster(CMonster* _pMonster, Vec2 _vPos, Vec2 _vScale, 
 	_pMonster->SetCenterPos(_pMonster->GetPos());
 	_pMonster->SetMoveDistance(_fMoveDist);
 	_pMonster->SetSpeed(_fSpeed);
-	_pMonster->SetAcc(_fAcc);	
+	_pMonster->SetAcc(_fAcc);
 	CreateObject(_pMonster, GROUP_TYPE::MONSTER);
 }

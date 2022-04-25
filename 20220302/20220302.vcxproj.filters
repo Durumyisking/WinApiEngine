@@ -107,6 +107,18 @@
     <Filter Include="Engine\05. Scene\Scene_Item">
       <UniqueIdentifier>{f543cd0e-aff4-4a19-b527-f1fd39079006}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Item">
+      <UniqueIdentifier>{25d22daf-186b-4c95-8c1c-23418b5cfde2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Item\C1. SadOnion">
+      <UniqueIdentifier>{05ec2db6-66d4-4b4b-9058-53449b5c5841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\UI\BtnUI">
+      <UniqueIdentifier>{d3c4a910-f1ba-47bc-8387-1a4f165cc977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\UI\PanelUI">
+      <UniqueIdentifier>{d6bf6595-d433-4df2-9cca-53fb2d440a41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -197,7 +209,6 @@
     <ClInclude Include="Animation.h">
       <Filter>Engine\07. Component\Animator\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Head.h">
       <Filter>Engine\04. Object\Player\Isaac</Filter>
     </ClInclude>
@@ -215,6 +226,21 @@
     </ClInclude>
     <ClInclude Include="Scene_Item.h">
       <Filter>Engine\05. Scene\Scene_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\03. Manager\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SadOnion.h">
+      <Filter>Engine\04. Object\Item\C1. SadOnion</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelUI.h">
+      <Filter>Engine\04. Object\UI\PanelUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BtnUI.h">
+      <Filter>Engine\04. Object\UI\BtnUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +322,6 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Engine\07. Component\Animator\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Body.cpp">
       <Filter>Engine\04. Object\Player\Isaac</Filter>
     </ClCompile>
@@ -314,6 +339,21 @@
     </ClCompile>
     <ClCompile Include="Scene_Item.cpp">
       <Filter>Engine\05. Scene\Scene_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\03. Manager\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SadOnion.cpp">
+      <Filter>Engine\04. Object\Item\C1. SadOnion</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelUI.cpp">
+      <Filter>Engine\04. Object\UI\PanelUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BtnUI.cpp">
+      <Filter>Engine\04. Object\UI\BtnUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
