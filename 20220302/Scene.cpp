@@ -6,9 +6,13 @@
 #include "Texture.h"
 #include "Tile.h"
 
+#include "SceneMgr.h"
 #include "ResMgr.h"
 #include "TimeMgr.h"
 #include "PathMgr.h"
+
+#include "Body.h"
+#include "Head.h"
 
 
 CScene::CScene()
@@ -156,6 +160,29 @@ void CScene::LoadTile(const wstring & _strRelativePath)
 
 
 	fclose(pFile);
+}
+
+void CScene::SetBodyPos(CObject * _pBody, CObject * _pHead)
+{
+	switch (CSceneMgr::GetInst()->GetPrevScene()->GetRoomType())
+	{
+	case ROOM_TYPE::UP:
+		_pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
+		_pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
+		break;
+	case ROOM_TYPE::DOWN:
+		_pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
+		_pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
+		break;
+	case ROOM_TYPE::LEFT:
+		_pBody->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
+		_pHead->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
+		break;
+	case ROOM_TYPE::RIGHT:
+		_pBody->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
+		_pHead->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
+		break;
+	}
 }
 
 

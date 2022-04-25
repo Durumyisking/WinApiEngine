@@ -25,8 +25,9 @@ CMissile::CMissile()
 	m_vDir.Normalize();
 
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(10.f, 10.f));
+	GetCollider()->SetOffsetPos(TEAR_DEFAULT);
+	GetCollider()->SetScale(TEAR_DEFAULT);
+	SetScale(TEAR_DEFAULT);
 }
 CMissile::~CMissile()
 {
@@ -34,18 +35,11 @@ CMissile::~CMissile()
 void CMissile::update()
 {
 	Vec2 vPos = GetPos();
-	/*
-	if (vPos.y < 0 || vPos.y > CCore::GetInst()->GetResolution().y)
-	{
-		DeleteObject(this);
-		return;
-	}
-	*/
+
 	switch (m_eType)
 	{
 	case MISSILE_TYPE::DEFAULT:
 	{
-
 		m_fSpeedx = 300.f;
 		m_fSpeedy = 300.f;
 		vPos.x += m_fSpeedx * m_vDir.x * fDT;
@@ -53,37 +47,15 @@ void CMissile::update()
 		SetPos(vPos);
 	}
 	break;
-	case MISSILE_TYPE::ZIGJAG:
-	{
 
-		m_fSpeedx = 500.f;
-		m_fSpeedy = 300.f;
-		vPos.x += m_fSpeedx * m_vDir.x * fDT;
-		vPos.y += m_fSpeedy * m_vDir.y * fDT;
-		float fMaxdistance = 50.f;
-		float fMaxRight = m_vStartvec.x + fMaxdistance;
-		float fMaxLeft = m_vStartvec.x - fMaxdistance;
-		if (GetPos().x > fMaxRight)
-		{
-			SetPos(Vec2(fMaxRight, vPos.y));
-			m_vDir.x *= -1;
-		}
-		else if (GetPos().x < fMaxLeft)
-		{
-			SetPos(Vec2(fMaxLeft, vPos.y));
-			m_vDir.x *= -1;
-		}
-		else
-			SetPos(vPos);
-		return;
-	}
-	break;
 	default:
 		break;
 	}
 	if (0 > GetPos().y)
 	{
 		// scene의 obj벡터의 여기 인덱스를 erase 해주는 함수
+		
+
 		// delete this;
 	}
 }
@@ -96,13 +68,14 @@ void CMissile::render(HDC _dc)
 
 	Vec2 vPos = GetPos();
 
+
 	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
 	TransparentBlt(_dc
-		, (int)(vRenderPos.x - (float)(iWidth / 2))
-		, (int)(vRenderPos.y - (float)(iHeight / 2))
-		, iWidth, iHeight
+		, (int)(vRenderPos.x)
+		, (int)(vRenderPos.y)
+		, GetScale().x * 2, GetScale().y * 2
 		, m_pTex->GetDC()
-		, 0, 0, iWidth, iHeight
+		, 0, iHeight/4, iWidth/8, iHeight/4
 		, RGB(255, 0, 255));
 	component_render(_dc);
 }
@@ -113,15 +86,16 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 
 	SetPos(vMissilePos);
 	SetStartVec(Vec2(vMissilePos));
-	SetScale(Vec2(10.f, 10.f));
+	SetScale(TEAR_DEFAULT);
 
 	switch (_eType)
 	{
 	case MISSILE_TYPE::DEFAULT:
 		SetType(MISSILE_TYPE::DEFAULT);
-		m_pTex = CResMgr::GetInst()->LoadTexture(L"Missile_1Tex", L"texture\\Missile\\Missile_1.bmp");
+		m_pTex = CResMgr::GetInst()->LoadTexture(L"Tear_Tex", L"texture\\Tear\\tears.bmp");
 		if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
 		{
+
 			SetName(L"Missile_Player");
 		}
 
@@ -130,20 +104,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 			SetName(L"Missile_Monster");
 		}
 		break;
-	case MISSILE_TYPE::ZIGJAG:
-		m_pTex = CResMgr::GetInst()->LoadTexture(L"Missile_2Tex", L"texture\\Missile\\Missile_2.bmp");
-		SetType(MISSILE_TYPE::ZIGJAG);
-		if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
-		{
-			SetName(L"Missile_Player");
-			SetDir(Vec2(1.f, -1.f));
-		}
-		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
-		{
-			SetName(L"Missile_Monster");
-			SetDir(Vec2(-1.f, 1.f));
-		}
-		break;
+
 	default:
 		break;
 	}

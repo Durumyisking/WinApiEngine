@@ -10,6 +10,9 @@
 #include "SceneMgr.h"
 #include "ResMgr.h"
 
+#include "Item.h"
+#include "SadOnion.h"
+
 CScene_Item::CScene_Item()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");
@@ -31,26 +34,8 @@ void CScene_Item::Enter()
 	CObject* pHead = new CHead;
 	pHead->SetName(L"PlayerHead");
 
-
-	switch (CSceneMgr::GetInst()->GetPrevScene()->GetRoomType())
-	{
-	case ROOM_TYPE::UP:
-		pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
-		pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
-		break;
-	case ROOM_TYPE::DOWN:
-		pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
-		pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
-		break;
-	case ROOM_TYPE::LEFT:
-		pBody->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-		pHead->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-		break;
-	case ROOM_TYPE::RIGHT:
-		pBody->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-		pHead->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-		break;
-	}
+	SetBodyPos(pBody, pHead);
+	
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
@@ -78,6 +63,12 @@ void CScene_Item::Enter()
 	CreateObject(pDoorS, GROUP_TYPE::DOOR);
 	CreateObject(pDoorE, GROUP_TYPE::DOOR);
 	//CreateObject(pDoorW, GROUP_TYPE::DOOR);
+
+	CObject* pItem = new CSadOnion;
+	pItem->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
+	pDoorN->SetName(L"Item");
+	CreateObject(pItem, GROUP_TYPE::ITEM);
+
 
 
 	// 충돌 지정

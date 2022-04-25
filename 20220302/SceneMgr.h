@@ -14,7 +14,7 @@ private:
 
 public:
 	CScene* GetCurScene() { return m_pCurScene; }
-	CScene* GetPrevScene() { return m_pPrevScene; }
+	CScene* GetPrevScene() { return m_pPrevScene; }	
 
 private:
 	void ChangeScene(SCENE_TYPE _eNext);

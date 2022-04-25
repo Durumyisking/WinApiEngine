@@ -8,7 +8,8 @@ class CObject;	// 전방선언이라 아직 이게 우리의 CObject인지 모름
 				// 이 타입에 대한 정보를 받아오려면 포인터로만 가능
 class CMonster;
 class CTexture;
-
+class CBody;
+class CHead;
 			
 class CScene
 {
@@ -91,5 +92,7 @@ public:
 	vector<CObject*>& GetUIGroup() { return m_arrObj[(UINT)GROUP_TYPE::UI]; }
 
 
+public:
+	void SetBodyPos(CObject* _pBody, CObject* _pHead);
 
 };

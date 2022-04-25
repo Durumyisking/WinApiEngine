@@ -121,7 +121,6 @@ void CScene_Start::update()
 
 void CScene_Start::render(HDC _dc)
 {
-	
 	int iWidth = (int)m_pTex->GetWidth();
 	int iHeight = (int)m_pTex->GetHeight();
 

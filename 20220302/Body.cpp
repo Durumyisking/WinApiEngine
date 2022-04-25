@@ -22,7 +22,7 @@ CBody::CBody()
 	SetScale(BODY_DEFAULT);
 
 	// isaac body
-	CTexture* m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaaac.bmp");
+	CTexture* m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"BODY_IDLE", m_pTex, Vec2(15.f, 80.f), Vec2(18.f, 15.f), Vec2(32.f, 0.f), 0.5f, 1, false);
