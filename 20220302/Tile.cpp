@@ -42,15 +42,28 @@ void CTile::render(HDC _dc)
 	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(GetPos());
 	Vec2 vScale = GetScale(); 
 
+	// 142, 128, 1138, 640
+
 	BitBlt(_dc
-		, int(vRenderPos.x)
-		, int(vRenderPos.y)
+		, 142
+		, 128
 		, int(vScale.x)
 		, int(vScale.y)
 		, m_pTileTex->GetDC()
 		, iCurCol * ROCK_SIZE
 		, iCurRow * ROCK_SIZE
 		, SRCCOPY);
+
+
+	//BitBlt(_dc
+	//	, int(vRenderPos.x)
+	//	, int(vRenderPos.y)
+	//	, int(vScale.x)
+	//	, int(vScale.y)
+	//	, m_pTileTex->GetDC()
+	//	, iCurCol * ROCK_SIZE
+	//	, iCurRow * ROCK_SIZE
+	//	, SRCCOPY);
 }
 
 void CTile::Save(FILE * _pFile)

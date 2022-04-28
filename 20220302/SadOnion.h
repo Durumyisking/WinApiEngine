@@ -3,6 +3,8 @@
 class CSadOnion :
 	public CItem
 {
+
+
 public:
 	CSadOnion();
 	~CSadOnion();

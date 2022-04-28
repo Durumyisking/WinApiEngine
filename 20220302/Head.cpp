@@ -131,7 +131,7 @@ void CHead::update()
 
 void CHead::CreateMissile(Vec2 _vDir)
 {
-	if (m_dPrevTime > m_fRate)
+	if (m_dPrevTime > stat.m_fRate)
 	{
 		CMissile* pMissile = new CMissile;
 		pMissile->SetDir(_vDir);

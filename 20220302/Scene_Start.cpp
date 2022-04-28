@@ -17,13 +17,16 @@
 #include"EventMgr.h"
 #include"SceneMgr.h"
 #include "KeyMgr.h"
-#include "Camera.h"
+
+#include "SceneMgr.h"
 
 
 CScene_Start::CScene_Start()
 	:m_iWave(1)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");	
+	m_eAdjacencyRoom[(UINT)DIR::N] = SCENE_TYPE::ITEM;
+	m_eAdjacencyRoom[(UINT)DIR::S] = SCENE_TYPE::TOOL;
 }
 
 
@@ -49,28 +52,9 @@ void CScene_Start::Enter()
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
 
+	AddDoor(DIR::N);
+	AddDoor(DIR::S);
 
-	// Door
-	CObject* pDoorN = new CDoor;
-	pDoorN->SetPos(Vec2(m_vResolution.x / 2, (pDoorN->GetScale().y / 2) + 25.f));
-	pDoorN->SetName(L"DoorN");
-
-	CObject* pDoorS = new CDoor;
-	pDoorS->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y - (pDoorS->GetScale().y / 2) - 25.f));
-		pDoorS->SetName(L"DoorS");
-	
-	CObject* pDoorE = new CDoor;
-	pDoorE->SetPos(Vec2(m_vResolution.x - (pDoorE->GetScale().x / 2) - 25.f, m_vResolution.y / 2));
-	pDoorE->SetName(L"DoorE");
-	
-	CObject* pDoorW = new CDoor;
-	pDoorW->SetPos(Vec2((pDoorS->GetScale().x / 2)+25.f, m_vResolution.y / 2));
-	pDoorW->SetName(L"DoorW");
-
-	CreateObject(pDoorN, GROUP_TYPE::DOOR);
-	CreateObject(pDoorS, GROUP_TYPE::DOOR);
-	CreateObject(pDoorE, GROUP_TYPE::DOOR);
-	CreateObject(pDoorW, GROUP_TYPE::DOOR);
 
 	// 타일 로딩
 	// LoadTile(L"Tile\\start.tile");

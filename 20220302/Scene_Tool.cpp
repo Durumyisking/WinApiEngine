@@ -9,6 +9,8 @@
 #include "UIMgr.h"
 #include "PathMgr.h"
 
+#include "Core.h"
+
 #include "UI.h"
 #include "BtnUI.h"
 #include "PanelUI.h"
@@ -39,30 +41,25 @@ void CScene_Tool::update()
 
 	if (KEY_TAP(KEY::LSHIFT))
 	{
-		SaveTile(L"tile\\Test.tile");
+		SaveTileData();
 	}
 	if (KEY_TAP(KEY::O))
 	{
-		LoadTile(L"tile\\Test.tile");
+		LoadTileData();
 	}
 
 }
 
 void CScene_Tool::render(HDC _dc)
 {
-	CSelectGDI pen(_dc, PEN_TYPE::GREEN);
-	CSelectGDI brush(_dc, BRUSH_TYPE::WHITE);
-
-	Rectangle(_dc, 0, 0, m_vResolution.x, m_vResolution.y);
-	Rectangle(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y));
-
+	
 	CScene::render(_dc);
 }
 void CScene_Tool::Enter()
 {
 	// 타일 생성
-	CreateTile(4, 8);
-
+	CreateTile(TILE_WIDTH, TILE_HEIGHT);
+	/*
 	CUI* pPanelUI = new CPanelUI;
 	pPanelUI->SetName(L"PanelUI");
 	pPanelUI->SetScale(Vec2(500.f, 300.f));
@@ -83,7 +80,7 @@ void CScene_Tool::Enter()
 	AddObject(pClonePanel, GROUP_TYPE::UI);
 
 	m_pUI = pClonePanel;
-
+	*/
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 
 }
@@ -118,24 +115,18 @@ void CScene_Tool::SetTileIdx()
 		const vector <CObject*>& vecTile = GetGroupObject(GROUP_TYPE::TILE);
 		((CTile*)vecTile[iIdx])->AddImgIdx();
 
-
-
 	}
 }
 
-void CScene_Tool::SaveTile(const wstring & _strRelativePath)
+void CScene_Tool::SaveTile(const wstring & _strFilePath)
 {
-	// 윈도우 함수에서 필요로 하는 절대 경로를 생성 해줘야 함
-	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
-	strFilePath += _strRelativePath;
-
 	FILE* pFile = nullptr;
 
 	// 우린 2바이트 문자열을 쓰니까  wopen 사용
 	// 쓰기모드 "w"로 파일을 열면 저장을 한다는 의미라 파일이 없으면 새로 만들어줌
 	// "b" 우리가 사용하는 비트(binary) 데이터 형태로 간주하겠다.
 	// 안붙히면 우리가 저장이나 불러오는 비트 데이터를 char 단위로 간주함
-	_wfopen_s(&pFile, strFilePath.c_str(), L"wb");
+	_wfopen_s(&pFile, _strFilePath.c_str(), L"wb");
 
 	assert(pFile);
 
@@ -158,6 +149,74 @@ void CScene_Tool::SaveTile(const wstring & _strRelativePath)
 
 
 	fclose(pFile);
+}
+
+void CScene_Tool::SaveTileData()
+{
+	wchar_t szName[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	// 구조체 사이즈 지정
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	// 열려질 창의 부모를 지정
+	ofn.hwndOwner = CCore::GetInst()->GetMainHwnd();
+	// 완성된 경로가 채워질 멤버 포인터
+	ofn.lpstrFile = szName;
+	// 버퍼 크기 (문자열 메모리 사이즈) 여기선 256*2(wchar_t)가 들어감
+	ofn.nMaxFile = sizeof(szName);
+	// 확장자 필터 설정 (항목명 \0 이름.확장자명
+	ofn.lpstrFilter = L"All\0*.*\0Tile\0*.tile\0";
+	// 세팅해놓은 필더중에 처음 표시되는 필터 인덱스
+	ofn.nFilterIndex = 0;
+	// 저장하는 파일 타이틀 초기값
+	ofn.lpstrFileTitle = nullptr;
+	// 저장하는 파일 이름 길이 제한
+	ofn.nMaxFileTitle = 0;
+
+	wstring strTileFolder = CPathMgr::GetInst()->GetContentPath();
+	strTileFolder += L"tile";
+	// 창 처음 나왔을때 보여줄 경로
+	ofn.lpstrInitialDir = strTileFolder.c_str();
+	// 파일 플래그
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	// 창 띄워주는 함수 (Modal 방식 포커싱 가져가서 끄기 전까지 포커싱 고정시킴)
+	// GetSaveFileName 저장버튼 누르면 true 아니면 false 반환
+	if (GetSaveFileName(&ofn))
+	{
+		SaveTile(szName);
+	}
+}
+
+void CScene_Tool::LoadTileData()
+{
+	wchar_t szName[256] = {};
+
+	OPENFILENAME ofn = {};
+
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = CCore::GetInst()->GetMainHwnd();
+	ofn.lpstrFile = szName;
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = L"All\0*.*\0Tile\0*.tile\0";
+	ofn.nFilterIndex = 0;
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+
+	wstring strTileFolder = CPathMgr::GetInst()->GetContentPath();
+	strTileFolder += L"tile";
+	ofn.lpstrInitialDir = strTileFolder.c_str();
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetSaveFileName(&ofn))
+	{
+		// LoadTile에서는 경로를 받으면 앞에 절대경로를 붙이니까 앞에서 잘라야댐
+		wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
+
+		LoadTile(strRelativePath);
+	}
 }
 
 

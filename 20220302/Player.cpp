@@ -6,6 +6,7 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "Item.h"
 
 #include "TimeMgr.h"
 #include "KeyMgr.h"
@@ -15,7 +16,8 @@
 
 CPlayer::CPlayer()
 	: m_dPrevTime(fDT)
-	, m_fRate(0.38f)
+	, m_ePrevDoorDir(DIR::END)
+	, stat{ 6, 6, 3.5, 400.f, 0.38f }
 {
 	SetScale(HEAD_DEFAULT + BODY_DEFAULT - HEAD_BODY_GAP); 
 }
@@ -33,14 +35,23 @@ void CPlayer::update()
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
 
-	if (KEY_HOLD(KEY::W) && vPos.y > LIMITN) vPos.y -= 400.f * fDT;
-	if (KEY_HOLD(KEY::S) && vPos.y < LIMITS+500.f) vPos.y += 400.f * fDT;
-	if (KEY_HOLD(KEY::A) && vPos.x > LIMITW) vPos.x -= 400.f * fDT;
-	if (KEY_HOLD(KEY::D) && vPos.x < LIMITE) vPos.x += 400.f * fDT;
+	if (KEY_HOLD(KEY::W) && vPos.y > LIMITN) vPos.y -= stat.m_fSpeed * fDT;
+	if (KEY_HOLD(KEY::S) && vPos.y < LIMITS+500.f) vPos.y += stat.m_fSpeed * fDT;
+	if (KEY_HOLD(KEY::A) && vPos.x > LIMITW) vPos.x -= stat.m_fSpeed * fDT;
+	if (KEY_HOLD(KEY::D) && vPos.x < LIMITE) vPos.x += stat.m_fSpeed * fDT;
 
 	SetPos(vPos);
 		
 	GetAnimator()->update();
+
+
+	if (nullptr != m_GetItemCheck)
+	{
+		ItemCheck();
+
+		m_GetItemCheck = nullptr;
+	}
+
 }
 
 void CPlayer::render(HDC _dc)
@@ -68,30 +79,44 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 
 
-	if (L"DoorN" == pOtherObj->GetName())
+	// door
+	if (L"Door" == pOtherObj->GetName())
 	{
-		CSceneMgr::GetInst()->GetCurScene()->SetRoomType(ROOM_TYPE::DOWN);
-		ChangeScene(SCENE_TYPE::ITEM);
+		CDoor* pdoor = (CDoor*)pOtherObj;
+
+		switch (pdoor->GetDir())
+		{
+		case DIR::N:
+			m_ePrevDoorDir = DIR::N;
+			ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::N));
+			break;
+		case DIR::S:
+			m_ePrevDoorDir = DIR::S;
+			ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::S));
+			break;
+		case DIR::E:
+			m_ePrevDoorDir = DIR::E;
+			ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::E));
+			break;
+		case DIR::W:
+			m_ePrevDoorDir = DIR::W;
+			ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::W));
+			break;
+
+		default:
+			break;
+		}
+
+
 	}
-	else if (L"DoorS" == pOtherObj->GetName())
+	
+	// item
+	else if (L"Item" == pOtherObj->GetName())
 	{
-		CSceneMgr::GetInst()->GetCurScene()->SetRoomType(ROOM_TYPE::UP);
-		ChangeScene(SCENE_TYPE::TOOL);
+		m_vInventory.push_back((CItem*)pOtherObj);
+		m_GetItemCheck = (CItem*)pOtherObj;
 	}
-
-	else if (L"DoorE" == pOtherObj->GetName())
-	{
-		CSceneMgr::GetInst()->GetCurScene()->SetRoomType(ROOM_TYPE::LEFT);
-	//	ChangeScene(SCENE_TYPE::ITEM);
-	}
-
-	else if (L"DoorW" == pOtherObj->GetName())
-	{
-		CSceneMgr::GetInst()->GetCurScene()->SetRoomType(ROOM_TYPE::RIGHT);
-	//	ChangeScene(SCENE_TYPE::ITEM);
-	}
-
-
+	
 }
 
 void CPlayer::OnCollisionExit(CCollider * _pOther)
@@ -102,5 +127,12 @@ void CPlayer::CreateMissile(Vec2 _vDir)
 {
 
 
+}
+
+void CPlayer::ItemCheck()
+{
+	stat += m_GetItemCheck->GetStat();
+
+	stat.m_fSpeed = 600.f;
 }
 

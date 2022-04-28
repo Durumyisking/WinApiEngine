@@ -44,6 +44,9 @@
 #define TILE_SIZE 64
 #define ROCK_SIZE 32
 
+#define TILE_WIDTH 13
+#define TILE_HEIGHT 7
+
 #define HEAD_DEFAULT Vec2(84.f, 75.f)
 #define BODY_DEFAULT Vec2(54.f, 30.f)
 #define HEAD_BODY_GAP Vec2(0.f, 40.f)
@@ -95,6 +98,8 @@ enum class GROUP_TYPE
 
 enum class SCENE_TYPE
 {
+	NONE,
+
 	TOOL, // 게임 만드는 씬
 	START,
 	STAGE_01,
@@ -153,15 +158,7 @@ enum class EVENT_TYPE
 	END,
 };
 
-enum class ROOM_TYPE
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
 
-	END,
-};
 
 
 enum class DIR

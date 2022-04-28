@@ -86,6 +86,26 @@ public:
 		, y((float)_vec.y)
 	{}
 
+};
 
+struct Stat
+{
+	UINT		m_iMaxHP;
+	UINT		m_iHP;
+	float		m_fDmg;
+	float		m_fSpeed;
+	float		m_fRate;
+
+public:
+	Stat operator += (Stat _vOther)
+	{
+		(*this).m_iMaxHP += _vOther.m_iMaxHP;
+		(*this).m_iHP += _vOther.m_iHP;
+		(*this).m_fDmg += _vOther.m_fDmg;
+		(*this).m_fSpeed += _vOther.m_fSpeed;
+		(*this).m_fRate += _vOther.m_fRate;
+
+		return *this;
+	}
 
 };

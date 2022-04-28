@@ -8,14 +8,15 @@ class CObject;	// 전방선언이라 아직 이게 우리의 CObject인지 모름
 				// 이 타입에 대한 정보를 받아오려면 포인터로만 가능
 class CMonster;
 class CTexture;
-class CBody;
-class CHead;
+//class CBody;
+//class CHead;
 			
 class CScene
 {
 
 
 private:
+
 	// 모든 OBject 클래스의 부모 클래스로써 모든 자식 클래스의 포인터를 받을 수 있음
 	vector<CObject*>	m_arrObj[(UINT)GROUP_TYPE::END]; // Obj 그룹을 담은 벡터를 배열로 선언
 	wstring				m_strName; // Scene이름
@@ -23,7 +24,7 @@ private:
 	UINT				m_iTileX;
 	UINT				m_iTileY;
 
-	ROOM_TYPE			m_eRoomType;
+//	ROOM_TYPE			m_eRoomType;
 
 protected:
 	float				m_fTimeCount;
@@ -31,6 +32,12 @@ protected:
 
 	// 이전 방 기준 방의 위치
 	Vec2				m_vResolution;
+
+	// 몬스터 수
+	UINT				m_iMonsterCount;
+
+	// 인접한 방
+	SCENE_TYPE			m_eAdjacencyRoom[(UINT)DIR::END];
 
 
 public:
@@ -43,11 +50,18 @@ public:
 	const wstring& GetName() { return m_strName; }
 
 	 
-	void SetRoomType(ROOM_TYPE _eRoomType) { m_eRoomType = _eRoomType; }
-	ROOM_TYPE& GetRoomType() { return m_eRoomType; }
+	//void SetRoomType(ROOM_TYPE _eRoomType) { m_eRoomType = _eRoomType; }
+	//ROOM_TYPE& GetRoomType() { return m_eRoomType; }
+	SCENE_TYPE& GetAdjacenyRoom(DIR _eDir) { return m_eAdjacencyRoom[(UINT)_eDir]; }
+
 
 	UINT GetTileX() { return m_iTileX; }
 	UINT GetTileY() { return m_iTileY; }
+
+	UINT GetMonsterCount() { return m_iMonsterCount;}
+	UINT SetMonsterCount(UINT _iMonsterCount) { m_iMonsterCount = _iMonsterCount; }
+
+
 
 	// 원본을 참조후 원본에 손상이 안가게 const 붙임
 	const vector <CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; }
@@ -91,8 +105,11 @@ public:
 
 	vector<CObject*>& GetUIGroup() { return m_arrObj[(UINT)GROUP_TYPE::UI]; }
 
+	void AddDoor(DIR _eDir);
+
 
 public:
 	void SetBodyPos(CObject* _pBody, CObject* _pHead);
+
 
 };

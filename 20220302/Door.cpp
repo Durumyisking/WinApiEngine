@@ -11,14 +11,16 @@
 
 
 
-CDoor::CDoor()
+CDoor::CDoor(DIR _eDir)
 	:m_pTex(nullptr)
 {
+	
+	this->m_eDir = _eDir;
+	m_bOpen = true;
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"DoorTex", L"texture\\BackGround\\door_01_normaldoor.bmp");
 
-
-
 	SetScale(Vec2(128.f, 116.f));
+	SetName(L"Door");
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
@@ -58,3 +60,4 @@ void CDoor::render(HDC _dc)
 
 	component_render(_dc);
 }
+

@@ -20,14 +20,15 @@ public:
 public:
 	virtual void update();
 	virtual void render(HDC _dc);
-
-
-public:
 	virtual void Enter();
 	virtual void Exit();
 public:
 	void SetTileIdx();
-	void SaveTile(const wstring & _strRelativePath);
+	void SaveTile(const wstring & _strFilePath);
+	void SaveTileData();
+	void LoadTileData();
+
+
 };
 
 

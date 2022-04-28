@@ -9,6 +9,7 @@ class CItem :
 
 protected:
 	CTexture*		m_pTex;
+	Stat m_stat;
 
 public:
 	CItem();
@@ -18,5 +19,16 @@ public:
 public:
 	virtual void update();
 	virtual void render(HDC _dc);
+
+
+public:
+	virtual void OnCollision(CCollider* _pOther);
+	virtual void OnCollisionEnter(CCollider* _pOther);
+	virtual void OnCollisionExit(CCollider* _pOther);
+
+
+public:
+	Stat GetStat() { return m_stat; }
+
 };
 

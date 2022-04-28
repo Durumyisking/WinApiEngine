@@ -36,6 +36,8 @@ using std::wstring;
 
 #include <math.h>
 
+#include <Commdlg.h>
+
 // custom header
 #include "define.h"
 #include "struct.h"

@@ -5,20 +5,25 @@
 #include "Object.h"
 #include "Texture.h"
 #include "Tile.h"
+#include "Body.h"
+#include "Head.h"
+#include "Door.h"
 
 #include "SceneMgr.h"
 #include "ResMgr.h"
 #include "TimeMgr.h"
 #include "PathMgr.h"
 
-#include "Body.h"
-#include "Head.h"
+#include "SelectGDI.h"
+
+
 
 
 CScene::CScene()
 	:m_fTimeCount(0)
 	,m_pTex(nullptr)
 	,m_vResolution (CCore::GetInst()->GetResolution())
+	, m_eAdjacencyRoom{}
 
 	, m_iTileX(0)
 	, m_iTileY(0)
@@ -83,6 +88,13 @@ void CScene::finalupdate()
 
 void CScene::render(HDC _dc)
 {
+	CSelectGDI pen(_dc, PEN_TYPE::GREEN);
+	CSelectGDI brush(_dc, BRUSH_TYPE::HOLLOW);
+
+	Rectangle(_dc, 142, 128, 1138, 640);
+//	Rectangle(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y));
+
+
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
 		// 우리가 Obj를 삭제하기 위해서는
@@ -162,27 +174,56 @@ void CScene::LoadTile(const wstring & _strRelativePath)
 	fclose(pFile);
 }
 
+void CScene::AddDoor(DIR _eDir)
+{
+		if (SCENE_TYPE::END != m_eAdjacencyRoom[(UINT)_eDir]);
+		{
+			CObject* pDoor = new CDoor(_eDir);
+
+			switch (_eDir)
+			{
+			case DIR::E:
+				pDoor->SetPos(Vec2(m_vResolution.x - (pDoor->GetScale().x / 2) - 25.f, m_vResolution.y / 2));
+				break;
+			case DIR::W:
+				pDoor->SetPos(Vec2((pDoor->GetScale().x / 2) + 25.f, m_vResolution.y / 2));
+				break;
+			case DIR::S:
+				pDoor->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y - (pDoor->GetScale().y / 2) - 25.f));
+				break;
+			case DIR::N:
+				pDoor->SetPos(Vec2(m_vResolution.x / 2, (pDoor->GetScale().y / 2) + 25.f));
+				break;
+			default:
+				break;
+			}
+			pDoor->SetName(L"Door");
+			CreateObject(pDoor, GROUP_TYPE::DOOR);
+		
+		}
+}
+
 void CScene::SetBodyPos(CObject * _pBody, CObject * _pHead)
 {
-	switch (CSceneMgr::GetInst()->GetPrevScene()->GetRoomType())
-	{
-	case ROOM_TYPE::UP:
-		_pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
-		_pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
-		break;
-	case ROOM_TYPE::DOWN:
-		_pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
-		_pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
-		break;
-	case ROOM_TYPE::LEFT:
-		_pBody->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-		_pHead->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-		break;
-	case ROOM_TYPE::RIGHT:
-		_pBody->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-		_pHead->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-		break;
-	}
+	//switch (CSceneMgr::GetInst()->GetPrevScene()->GetRoomType ())
+	//{
+	//case ROOM_TYPE::UP:
+	//	_pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
+	//	_pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITN));
+	//	break;
+	//case ROOM_TYPE::DOWN:
+	//	_pBody->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
+	//	_pHead->SetPos(Vec2(m_vResolution.x / 2, LIMITS));
+	//	break;
+	//case ROOM_TYPE::LEFT:
+	//	_pBody->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
+	//	_pHead->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
+	//	break;
+	//case ROOM_TYPE::RIGHT:
+	//	_pBody->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
+	//	_pHead->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
+	//	break;
+	//}
 }
 
 

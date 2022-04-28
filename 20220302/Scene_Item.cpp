@@ -16,6 +16,7 @@
 CScene_Item::CScene_Item()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");
+	m_eAdjacencyRoom[(UINT)DIR::S] = SCENE_TYPE::START;
 }
 
 CScene_Item::~CScene_Item()
@@ -29,9 +30,11 @@ void CScene_Item::Enter()
 	// ISAAC
 
 	CObject* pBody = new CBody;
+	//pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pBody->SetName(L"PlayerBody");
 
 	CObject* pHead = new CHead;
+	//pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pHead->SetName(L"PlayerHead");
 
 	SetBodyPos(pBody, pHead);
@@ -41,38 +44,22 @@ void CScene_Item::Enter()
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
 
 
+	AddDoor(DIR::S);
 
-	// Door
-	CObject* pDoorN = new CDoor;
-	pDoorN->SetPos(Vec2(m_vResolution.x / 2, (pDoorN->GetScale().y / 2) + 25.f));
-	pDoorN->SetName(L"DoorN");
 
-	CObject* pDoorS = new CDoor;
-	pDoorS->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y - (pDoorS->GetScale().y / 2) - 25.f));
-	pDoorS->SetName(L"DoorS");
-
-	CObject* pDoorE = new CDoor;
-	pDoorE->SetPos(Vec2(m_vResolution.x - (pDoorE->GetScale().x / 2) - 25.f, m_vResolution.y / 2));
-	pDoorE->SetName(L"DoorE");
-
-	/*CObject* pDoorW = new CDoor;
-	pDoorW->SetPos(Vec2((pDoorS->GetScale().x / 2) + 25.f, m_vResolution.y / 2));
-	pDoorW->SetName(L"DoorW");*/
-
-	CreateObject(pDoorN, GROUP_TYPE::DOOR);
-	CreateObject(pDoorS, GROUP_TYPE::DOOR);
-	CreateObject(pDoorE, GROUP_TYPE::DOOR);
 	//CreateObject(pDoorW, GROUP_TYPE::DOOR);
 
 	CObject* pItem = new CSadOnion;
 	pItem->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
-	pDoorN->SetName(L"Item");
+	pItem->SetName(L"Item");
 	CreateObject(pItem, GROUP_TYPE::ITEM);
 
 
 
 	// 충돌 지정
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::ITEM);
+	//CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::ITEM, GROUP_TYPE::PLAYER);
 
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 }
