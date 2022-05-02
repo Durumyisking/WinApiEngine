@@ -6,7 +6,7 @@
 
 CItem::CItem()
 	:m_pTex(nullptr)
-	, m_stat{ 0, 0, 0.f, 0.f, 0.f }
+	, m_stat{ 0, 0, 0, 0.f, 0.f }
 {
 	SetScale(Vec2(64.f, 64.f));
 
@@ -50,7 +50,7 @@ void CItem::OnCollision(CCollider * _pOther)
 void CItem::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	if (L"PlayerBody" == pOtherObj->GetName() || L"PlayerHead" == pOtherObj->GetName())
+	if (L"Player" == pOtherObj->GetName())
 	{
 		DeleteObject(this);
 	}

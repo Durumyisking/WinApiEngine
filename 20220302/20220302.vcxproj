@@ -175,6 +175,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="EventMgr.h" />
     <ClInclude Include="func.h" />
+    <ClInclude Include="Gaper.h" />
     <ClInclude Include="Head.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIMgr.h" />
+    <ClInclude Include="WallCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="20220302.cpp">
@@ -215,6 +217,7 @@
     <ClCompile Include="BtnUI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Gaper.cpp" />
     <ClCompile Include="Head.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="note.cpp" />
@@ -249,6 +252,7 @@
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIMgr.cpp" />
+    <ClCompile Include="WallCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="20220302.rc" />

@@ -11,15 +11,11 @@
 #include "TimeMgr.h"
 
 CBody::CBody()
-	: m_pAnim(nullptr)
-	, m_strAnimName(L"BODY_IDLE")
+	:  m_strAnimName(L"BODY_IDLE")
 
 {
 
-	CreateCollider();
-	GetCollider()->SetOffsetPos(HEAD_BODY_GAP);
-	GetCollider()->SetScale(BODY_DEFAULT);
-	SetScale(BODY_DEFAULT);
+	SetScale(Vec2(54.f, 39.f));
 
 	// isaac body
 	CTexture* m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");

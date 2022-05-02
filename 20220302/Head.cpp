@@ -13,16 +13,9 @@
 
 
 CHead::CHead()
-	: m_pAnim(nullptr)
-	, m_strAnimName(L"HEAD_DOWN")
+	: m_strAnimName(L"HEAD_IDLE")
 {
-
-
-	// 콜라이더 생성
-	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(HEAD_DEFAULT);
-	SetScale(HEAD_DEFAULT);
+	SetScale(Vec2(84.f, 75.f));
 
 	// 애니메이션 생성
 
@@ -30,6 +23,8 @@ CHead::CHead()
 	CTexture* m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 
 	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"HEAD_IDLE", m_pTex, Vec2(10.f, 25.f), Vec2(28.f, 26.f), Vec2(40.f, 0.f), 0.5f, 1, false);
+
 
 	GetAnimator()->CreateAnimation(L"HEAD_UP", m_pTex, Vec2(170.f, 25.f), Vec2(28.f, 26.f), Vec2(40.f, 0.f), 0.5f, 2, false);
 	GetAnimator()->CreateAnimation(L"HEAD_DOWN", m_pTex, Vec2(10.f, 25.f), Vec2(28.f, 26.f), Vec2(40.f, 0.f), 0.5f, 2, false);
@@ -124,7 +119,7 @@ void CHead::update()
 		KEY_AWAY(KEY::A) || KEY_AWAY(KEY::D))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
-		m_strAnimName = L"HEAD_DOWN";
+		m_strAnimName = L"HEAD_IDLE";
 		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 	}
 }

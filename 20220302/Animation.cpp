@@ -74,38 +74,29 @@ void CAnimation::render(HDC _dc)
 	// 렌더링 위치
 //	vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
-	/*if (m_bReverse)
-	{
-		StretchBlt(_dc
-			, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f) - vScale.x / 3.f
-			, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f) - vScale.y / 3.f
-			, (int)(m_vecFrm[m_iCurFrm].vSlice.x) * 3
-			, (int)(m_vecFrm[m_iCurFrm].vSlice.y) * 3
-			, Outputdc
-			, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f) - vScale.x / 3.f
-			, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f) - vScale.y / 3.f
-			, iWidth
-			, iHeight
-			, SRCCOPY);
-
-		Outputdc = Reversdc;
-	}
-*/
 
 
-	//StretchBlt(Reversdc
-	//	, 0
-	//	, 0
-	//	, iWidth
-	//	, iHeight
-	//	, m_pTex->GetDC()
+	//BLENDFUNCTION bf = {};
+
+	//bf.BlendOp = AC_SRC_OVER;
+	//bf.BlendFlags = 0;
+	//bf.AlphaFormat = AC_SRC_ALPHA;
+	//// 고정 알파값 ( 이걸 바꿔서 투명도 조절 )
+	//bf.SourceConstantAlpha = 255;
+
+	//AlphaBlend(_dc
 	//	, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f) - vScale.x / 3.f
 	//	, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f) - vScale.y / 3.f
-	//	, iWidth
-	//	, iHeight
-	//	, SRCCOPY);
-	
-	
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.x) * 3
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.y) * 3
+	//	, Outputdc
+	//	, (int)(m_vecFrm[m_iCurFrm].vLT.x)
+	//	, (int)(m_vecFrm[m_iCurFrm].vLT.y)
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.x)
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.y)
+	//	, bf
+	//);
+
 
 	TransparentBlt(_dc
 		, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f) - vScale.x / 3.f

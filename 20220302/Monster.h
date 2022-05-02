@@ -2,29 +2,25 @@
 #include "Object.h"
 #include "Texture.h"
 
+class CAnimation;
+
 class CMonster :
 	public CObject
 {
 
 private:
-	Vec2		m_vCenterPos;	// 와리가리 기준점
-	float		m_fSpeed;
-	float		m_fMaxDistance; // 최대 이동거리
+	Stat stat;
+
 	int			m_iDir;			// 이동 방향
 	float		m_fAcc;
 
-	int			m_iHP;
-
-	double		m_dPrevTime;
-
-	CTexture*	m_pTex;
+	CAnimation* m_pAnim;
 
 
 public:
-	float GetSpeed() { return m_fSpeed; }
-	void SetSpeed(float _fSpeed) { m_fSpeed = _fSpeed; }
-	void SetMoveDistance(float _f) { m_fMaxDistance = _f; }
-	void SetCenterPos(Vec2 _vPos) { m_vCenterPos = _vPos; }
+	Stat GetStat() { return stat; }
+	void SetStat(Stat _playerstat) { stat = _playerstat; }
+
 	void SetAcc(float _fAcc) { m_fAcc = _fAcc; }
 
 

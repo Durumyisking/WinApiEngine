@@ -20,9 +20,6 @@ public:
 public:
 	virtual void render(HDC _dc);
 
-	virtual void CreateMonster(CMonster* _pMonster, Vec2 _vPos, Vec2 _vScale
-		, float _fMoveDist, float _fSpeed, float _fAcc);
-
 };
 
 	

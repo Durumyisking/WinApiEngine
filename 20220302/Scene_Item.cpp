@@ -26,28 +26,20 @@ CScene_Item::~CScene_Item()
 void CScene_Item::Enter()
 {
 	// Object Ãß°¡
+	CObject* pPlayer = new CPlayer;
+	CPlayer* objPlayer = (CPlayer*)pPlayer;
 
-	// ISAAC
+	objPlayer->init();
 
-	CObject* pBody = new CBody;
-	//pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
-	pBody->SetName(L"PlayerBody");
+	SetPlayerPos(pPlayer);
+	//pPlayer->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
+	pPlayer->SetName(L"Player");
 
-	CObject* pHead = new CHead;
-	//pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
-	pHead->SetName(L"PlayerHead");
-
-	SetBodyPos(pBody, pHead);
-	
-
-	CreateObject(pBody, GROUP_TYPE::PLAYER);
-	CreateObject(pHead, GROUP_TYPE::PLAYER);
+	CreateObject(pPlayer, GROUP_TYPE::PLAYER);
 
 
 	AddDoor(DIR::S);
 
-
-	//CreateObject(pDoorW, GROUP_TYPE::DOOR);
 
 	CObject* pItem = new CSadOnion;
 	pItem->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));

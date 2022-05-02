@@ -119,6 +119,12 @@
     <Filter Include="Engine\04. Object\UI\PanelUI">
       <UniqueIdentifier>{d6bf6595-d433-4df2-9cca-53fb2d440a41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\gaper">
+      <UniqueIdentifier>{e45ef53b-0a9a-4555-8fd8-04248f7834ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\WallCollider">
+      <UniqueIdentifier>{7c388e62-622d-44c6-bb98-c4d90ccefc4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -242,6 +248,12 @@
     <ClInclude Include="BtnUI.h">
       <Filter>Engine\04. Object\UI\BtnUI</Filter>
     </ClInclude>
+    <ClInclude Include="Gaper.h">
+      <Filter>Engine\04. Object\Monster\gaper</Filter>
+    </ClInclude>
+    <ClInclude Include="WallCollider.h">
+      <Filter>Engine\04. Object\WallCollider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -354,6 +366,12 @@
     </ClCompile>
     <ClCompile Include="BtnUI.cpp">
       <Filter>Engine\04. Object\UI\BtnUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gaper.cpp">
+      <Filter>Engine\04. Object\Monster\gaper</Filter>
+    </ClCompile>
+    <ClCompile Include="WallCollider.cpp">
+      <Filter>Engine\04. Object\WallCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

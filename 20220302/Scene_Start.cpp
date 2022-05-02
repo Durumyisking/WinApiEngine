@@ -6,7 +6,7 @@
 #include "Monster.h"
 #include "Head.h"
 #include "Body.h"
-#include "Door.h"
+
 
 #include "Core.h"
 
@@ -18,6 +18,7 @@
 #include"SceneMgr.h"
 #include "KeyMgr.h"
 
+#include "WallCollider.h"
 #include "SceneMgr.h"
 
 
@@ -39,21 +40,24 @@ CScene_Start::~CScene_Start()
 void CScene_Start::Enter()
 {
 	// Object 추가
+	CObject* pPlayer = new CPlayer;
+	CPlayer* objPlayer = (CPlayer*)pPlayer;
 
-	// ISAAC
-	CObject* pBody = new CBody;
-	pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
-	pBody->SetName(L"PlayerBody");
+	objPlayer->init();
 
-	CObject* pHead = new CHead;
-	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2 ));
-	pHead->SetName(L"PlayerHead");
+	SetPlayerPos(objPlayer);
+	//pPlayer->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
+	pPlayer->SetName(L"Player");
 
-	CreateObject(pBody, GROUP_TYPE::PLAYER);
-	CreateObject(pHead, GROUP_TYPE::PLAYER);
+	CreateObject(pPlayer, GROUP_TYPE::PLAYER);
 
 	AddDoor(DIR::N);
 	AddDoor(DIR::S);
+
+
+	//CObject* pWallCollider = new CWallCollider(Vec2(142.f, 128.f), Vec2(1138.f, 1.f));
+	//pWallCollider->SetName(L"Wall");
+	//CreateObject(pWallCollider, GROUP_TYPE::WALL);
 
 
 	// 타일 로딩
@@ -67,6 +71,8 @@ void CScene_Start::Enter()
 	//CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PROJ_MONSTER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::WALL);
+
 
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 }
@@ -113,15 +119,4 @@ void CScene_Start::render(HDC _dc)
 		
 	CScene::render(_dc);
 	
-}
-
-void CScene_Start::CreateMonster(CMonster* _pMonster, Vec2 _vPos, Vec2 _vScale, float _fMoveDist, float _fSpeed, float _fAcc)
-{
-	_pMonster->SetPos(_vPos);
-	_pMonster->SetScale(_vScale);
-	_pMonster->SetCenterPos(_pMonster->GetPos());
-	_pMonster->SetMoveDistance(_fMoveDist);
-	_pMonster->SetSpeed(_fSpeed);
-	_pMonster->SetAcc(_fAcc);
-	CreateObject(_pMonster, GROUP_TYPE::MONSTER);
 }

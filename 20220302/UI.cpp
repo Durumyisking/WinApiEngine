@@ -5,6 +5,7 @@
 
 #include "Camera.h"
 #include "KeyMgr.h"
+#include "Texture.h"
 
 #include "SelectGDI.h"
 
@@ -18,15 +19,16 @@ CUI::CUI(bool _bCamAff)
 	: m_pParentUI(nullptr)
 	, m_bCameAffected(_bCamAff)
 	, m_bMouseOn(false)
+	, m_pTex(nullptr)
 {
 }
-
 CUI::CUI(const CUI& _origin)
 	: CObject(_origin)
 	, m_pParentUI(nullptr)
 	, m_bCameAffected(false)
 	, m_bMouseOn(false)
 	, m_bLbtnDown(false)
+	, m_pTex(nullptr)
 {
 	for (size_t i = 0; i < _origin.m_vecChildUI.size(); ++i)
 		AddChild(_origin.m_vecChildUI[i]->Clone());
@@ -76,7 +78,18 @@ void CUI::render(HDC _dc)
 		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 	}
 
-	if (m_bLbtnDown)
+
+	if (nullptr != m_pTex)
+	{
+
+		int iWidth = (int)m_pTex->GetWidth();
+		int iHeight = (int)m_pTex->GetHeight();
+
+		StretchBlt(_dc, vPos.x, vPos.y, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+			, m_pTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+
+	}
+	else if (m_bLbtnDown)
 	{
 		CSelectGDI select(_dc, PEN_TYPE::RED);
 

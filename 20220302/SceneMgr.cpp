@@ -30,6 +30,8 @@ void CSceneMgr::ChangeScene(SCENE_TYPE _eNext)
 
 	// 여기서 Scene을 바로 바꾸면 문제가 이전 호출스택에서 가리키는scene이 달라 문제
 	// 그래서 이벤트 처리처럼 모아서 다음 프레임에 바꿔버림	
+	m_pPrevScene = m_pCurScene;	
+
 	m_pCurScene->Exit();
 	m_pCurScene = m_arrScene[(UINT)_eNext];
 	m_pCurScene->Enter();
@@ -49,6 +51,8 @@ void CSceneMgr::init()
 
 	// 현재 씬 설정
 	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::START];
+	m_pPrevScene = m_pCurScene;
+
 	m_pCurScene->Enter();
 
 }

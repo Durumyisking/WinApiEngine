@@ -4,7 +4,6 @@ class CHead :
 	public CPlayer
 {
 private:
-	CAnimation* m_pAnim;
 	wstring		m_strAnimName;
 
 public:

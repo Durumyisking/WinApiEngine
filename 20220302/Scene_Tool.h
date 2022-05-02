@@ -11,6 +11,8 @@ private:
 	CTexture*	m_pTileTex;
 	CUI*		m_pUI;
 
+
+
 	
 
 public:

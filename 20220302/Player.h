@@ -4,23 +4,32 @@
 
 class CAnimation;
 class CItem;
+class CBody;
+class CHead;
 
 class CPlayer :
 	public CObject
 {
 private:
 	DIR m_ePrevDoorDir;
+	CBody* pBody;
+	CHead* pHead;
 
 
 protected:
-
 	Stat stat;
 
+	CAnimation*		m_pAnim;
 
-	double		m_dPrevTime; // 평타 쿨타임
+	double			m_dPrevTime; // 평타 쿨타임
 
 	vector<CItem*>	m_vInventory;
 	CItem*			m_GetItemCheck;
+
+	CPlayer*		m_pOwner;
+
+	float			m_fAcc;
+	float			m_fMaxAcc;
 
 public:
 	CPlayer();
@@ -31,13 +40,13 @@ public:
 	virtual void render(HDC _dc);
 	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName,  Vec2 _vOffset);
 
-	// 획득 아이템 체크 -
-	// 이번 프레임에 획득한 아이템이 있으면 -
-	// 콜리전 이벤트에서 인벤토리 및 획득 아이템에 추가-
-	// update때 획득 아이템 체크후 -
-	// 획득 효과 처리
-	// 획득 아이템 삭제
+	Stat GetStat() { return stat; }
+	void SetStat(Stat _playerstat) { stat = _playerstat; }
 
+	void SetOwner(CPlayer* _pPlayer) { m_pOwner = _pPlayer; }
+
+public:
+	void init();
 
 	CLONE(CPlayer);
 
@@ -48,8 +57,12 @@ public:
 
 	virtual void CreateMissile(Vec2 _vDir);
 
-public:
+private:
 	// 이번프레임에 획득 아이템이 있었을때 아이템 효과를 부여
 	void ItemCheck();
+
+
+	friend class CBody;
+	friend class CHead;
 };
 

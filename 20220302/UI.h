@@ -1,7 +1,7 @@
 #pragma once
 #include "Object.h"
 
-
+class CTexture;
 
 class CUI :
 	public CObject
@@ -14,6 +14,9 @@ private:
 	bool				m_bCameAffected; // UI가 카메라 영향을 받는지
 	bool				m_bMouseOn;
 	bool				m_bLbtnDown;
+
+protected:
+	CTexture*			m_pTex;
 
 
 
@@ -55,6 +58,11 @@ public:
 	bool IsMouseOn() { return m_bMouseOn; }
 
 	bool IsLbtnDown() { return m_bLbtnDown; }
+
+	void SetTexture(CTexture* _pTex)
+	{
+		m_pTex = _pTex;
+	}
 
 };
 

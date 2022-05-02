@@ -47,14 +47,13 @@
 #define TILE_WIDTH 13
 #define TILE_HEIGHT 7
 
-#define HEAD_DEFAULT Vec2(84.f, 75.f)
-#define BODY_DEFAULT Vec2(54.f, 30.f)
-#define HEAD_BODY_GAP Vec2(0.f, 40.f)
+
+#define HEAD_BODY_GAP Vec2(0.f, 43.f)
 
 #define TEAR_DEFAULT Vec2(17.f, 17.f)
 
 #define LIMITN 116.f
-#define LIMITS 500.f
+#define LIMITS 600.f
 #define LIMITE 1152.f
 #define LIMITW 128.f
 
@@ -76,7 +75,7 @@ enum class GROUP_TYPE
 
 	TILE, 
 
-	PLAYER,
+	WALL,
 
 	MISSILE,
 
@@ -89,6 +88,9 @@ enum class GROUP_TYPE
 	DOOR,
 
 	ITEM,
+
+	PLAYER,
+
 
 	UI = 31,
 
@@ -157,8 +159,6 @@ enum class EVENT_TYPE
 
 	END,
 };
-
-
 
 
 enum class DIR

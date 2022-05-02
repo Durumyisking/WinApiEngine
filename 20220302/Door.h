@@ -11,6 +11,10 @@ private:
 	CTexture*		m_pTex;
 	DIR				m_eDir;
 	bool			m_bOpen;
+
+	// 텍스처 자를 위치
+	int				m_iSliceX;
+	int				m_iSliceY;
 public:
 	CDoor(DIR _Dir);
 	~CDoor();
@@ -37,6 +41,21 @@ public:
 		m_bOpen = true;
 	}
 
+	bool IsOpen()
+	{
+		return m_bOpen;
+	}
+
+	void SetTexture(CTexture* _pTex)
+	{
+		m_pTex = _pTex;
+	}
+
+	void SetSlice(int _x, int _y)
+	{
+		m_iSliceX = _x;
+		m_iSliceY = _y;
+	}
 
 
 

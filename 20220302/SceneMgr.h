@@ -9,11 +9,13 @@ class CSceneMgr
 private:
 	CScene*		m_arrScene[(UINT)SCENE_TYPE::END];	// ¸ðµç ¾À ¸ñ·Ï
 	CScene*		m_pCurScene;						// ÇöÀç ¾À
+	CScene*		m_pPrevScene;
 
 
 public:
 	CScene* GetCurScene() { return m_pCurScene; }
-	CScene* GetSceneArr(SCENE_TYPE _eType) { return m_arrScene[(UINT)_eType]; }
+	CScene* GetPrevScene() { return m_pPrevScene; }
+//	CScene* GetSceneArr(SCENE_TYPE _eType) { return m_arrScene[(UINT)_eType]; }
 
 private:
 	void ChangeScene(SCENE_TYPE _eNext);

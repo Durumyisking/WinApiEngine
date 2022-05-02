@@ -8,8 +8,8 @@ class CObject;	// 전방선언이라 아직 이게 우리의 CObject인지 모름
 				// 이 타입에 대한 정보를 받아오려면 포인터로만 가능
 class CMonster;
 class CTexture;
-//class CBody;
-//class CHead;
+class Collider;
+
 			
 class CScene
 {
@@ -24,7 +24,7 @@ private:
 	UINT				m_iTileX;
 	UINT				m_iTileY;
 
-//	ROOM_TYPE			m_eRoomType;
+	
 
 protected:
 	float				m_fTimeCount;
@@ -39,6 +39,9 @@ protected:
 	// 인접한 방
 	SCENE_TYPE			m_eAdjacencyRoom[(UINT)DIR::END];
 
+	// 이동 된 방 기준 이전 방의 타입
+	DIR					m_roomDir;
+
 
 public:
 	CScene();
@@ -48,6 +51,9 @@ public:
 public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
+
+	void SetRoomDir(DIR _eDir) { m_roomDir = _eDir; }
+	DIR GetRoomDir() { return m_roomDir; }
 
 	 
 	//void SetRoomType(ROOM_TYPE _eRoomType) { m_eRoomType = _eRoomType; }
@@ -109,7 +115,7 @@ public:
 
 
 public:
-	void SetBodyPos(CObject* _pBody, CObject* _pHead);
+	void SetPlayerPos(CObject* _pPlayer);
 
 
 };

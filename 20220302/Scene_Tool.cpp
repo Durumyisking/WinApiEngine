@@ -19,7 +19,11 @@
 
 #include "resource.h"
 
+// btnfunc type
+// 반환타입이 void고 dword_pt 인자를 2개 받는함수
 void ChangeScene(DWORD_PTR, DWORD_PTR);
+
+
 CScene_Tool::CScene_Tool()
 	: m_pTileTex(nullptr)
 	, m_pUI(nullptr)
@@ -39,10 +43,6 @@ void CScene_Tool::update()
 	if (KEY_TAP(KEY::P))
 		CUIMgr::GetInst()->SetFocusedUI(m_pUI);
 
-	if (KEY_TAP(KEY::LSHIFT))
-	{
-		SaveTileData();
-	}
 	if (KEY_TAP(KEY::O))
 	{
 		LoadTileData();
@@ -59,30 +59,42 @@ void CScene_Tool::Enter()
 {
 	// 타일 생성
 	CreateTile(TILE_WIDTH, TILE_HEIGHT);
-	/*
+	
 	CUI* pPanelUI = new CPanelUI;
 	pPanelUI->SetName(L"PanelUI");
 	pPanelUI->SetScale(Vec2(500.f, 300.f));
 	pPanelUI->SetPos(Vec2(m_vResolution.x - pPanelUI->GetScale().x, 0.f));
 
-	CBtnUI* pBtnUI = new CBtnUI;
-	pBtnUI->SetName(L"BtnUI");
-	pBtnUI->SetScale(Vec2(100.f, 50.f));
-	pBtnUI->SetPos(Vec2(0.f, 0.f));
-	// pBtnUI->SetClickedCallBack(ChangeScene, 0, 0);
-	pPanelUI->AddChild(pBtnUI);
+	CBtnUI* pBtnSaveUI = new CBtnUI;
+	CTexture* pSaveTex = CResMgr::GetInst()->LoadTexture(L"BtnSave", L"texture\\UI\\Save.bmp");
+	pBtnSaveUI->SetTexture(pSaveTex);
+	pBtnSaveUI->SetName(L"BtnSaveUI");
+	pBtnSaveUI->SetScale(Vec2(110.f, 30.f));
+	pBtnSaveUI->SetPos(Vec2(0.f, 0.f));
+	pBtnSaveUI->SetClickedCallBack((SCENE_MEMFUNC)&CScene_Tool::SaveTileData, this);
+
+	CBtnUI* pBtnLoadUI = new CBtnUI;
+	CTexture* pLoadTex = CResMgr::GetInst()->LoadTexture(L"BtnLoad", L"texture\\UI\\Load.bmp");
+	pBtnLoadUI->SetTexture(pLoadTex);
+	pBtnLoadUI->SetName(L"BtnLoadUI");
+	pBtnLoadUI->SetScale(Vec2(110.f, 30.f));
+	pBtnLoadUI->SetPos(Vec2(0.f, 30.f));
+	pBtnLoadUI->SetClickedCallBack((SCENE_MEMFUNC)&CScene_Tool::LoadTileData, this);
+
+
+	pPanelUI->AddChild(pBtnSaveUI);
+	pPanelUI->AddChild(pBtnLoadUI);
+
 	AddObject(pPanelUI, GROUP_TYPE::UI);
 
+	m_pUI = pPanelUI;
 
-	CUI* pClonePanel = pPanelUI->Clone();
-	pClonePanel->SetPos(pClonePanel->GetPos() + Vec2(-300.f, 0.f));
-	((CBtnUI*)pClonePanel->GetChildUI()[0])->SetClickedCallBack(ChangeScene, 0, 0);
-	AddObject(pClonePanel, GROUP_TYPE::UI);
-
-	m_pUI = pClonePanel;
-	*/
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 
+	//CUI* pClonePanel = pPanelUI->Clone();
+	//pClonePanel->SetPos(pClonePanel->GetPos() + Vec2(-300.f, 0.f));
+	//((CBtnUI*)pClonePanel->GetChildUI()[0])->SetClickedCallBack((SCENE_MEMFUNC)&CScene_Tool::SaveTileData, this);
+	//AddObject(pClonePanel, GROUP_TYPE::UI);
 }
 
 void CScene_Tool::Exit()
@@ -219,7 +231,7 @@ void CScene_Tool::LoadTileData()
 	}
 }
 
-
+// 전역함수
 void ChangeScene(DWORD_PTR, DWORD_PTR)
 {
 	ChangeScene(SCENE_TYPE::START);
