@@ -12,6 +12,7 @@
 
 CBody::CBody()
 	:  m_strAnimName(L"BODY_IDLE")
+	, m_fAnimFrame(0.05f)
 
 {
 

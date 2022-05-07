@@ -6,6 +6,8 @@
 
 #include "TimeMgr.h"
 #include "KeyMgr.h"
+#include "ResMgr.h"
+#include "Texture.h"	
 
 
 CCamera::CCamera()
@@ -13,6 +15,7 @@ CCamera::CCamera()
 	, m_fTime(0.5f)
 	, m_fSpeed(0.f)
 	, m_fAccTime(0.5f)
+	, m_pVeilTex(nullptr)
 {
 }
 
@@ -23,8 +26,18 @@ CCamera::~CCamera()
 
 
 
+void CCamera::init()
+{
+	Vec2 vResolution = CCore::GetInst()->GetResolution();
+
+	m_pVeilTex = CResMgr::GetInst()->CreateTexture(L"CameraVeil", (UINT)vResolution.x, (UINT)vResolution.y);
+
+}
+
 void CCamera::update()
 {
+	
+
 	if (m_pTargetObj)
 	{
 		if (m_pTargetObj->IsDead())
@@ -49,6 +62,65 @@ void CCamera::update()
 	// 화면 중앙좌표와 카메라 LookAt 좌표값과의 차이
 	// 그 차이만큼 다른 OBj들을 반대로 이동시켜줄것
 	CalDiff();
+
+}
+
+void CCamera::render(HDC _dc)
+{
+	// 카메라 이펙트가 있는지 확인
+	if(m_listCamEffect.empty())
+		return;
+
+	// 시간 누적값 체크
+	tCamEffect& effect =  m_listCamEffect.front();
+	effect.m_fCurTime += fDT;
+
+	float fRatio = 0.f; // 이팩트 진행 비율
+	fRatio = effect.m_fCurTime / effect.m_fDuration;
+
+	if (fRatio < 0.f)
+		fRatio = 0.f;
+	if (fRatio > 1.f)
+		fRatio = 1.f;
+
+	int iAlpha = 0;
+
+	if (CAM_EFFECT::FADE_OUT == effect.eEffect)
+	{
+		iAlpha = static_cast<int>(255.f* fRatio);
+	}
+
+	else if (CAM_EFFECT::FADE_IN == effect.eEffect)
+	{
+		iAlpha = static_cast<int>(255.f* (1.f - fRatio));
+	}
+
+	
+
+	BLENDFUNCTION bf = {};
+
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.AlphaFormat = 0;
+	bf.SourceConstantAlpha = iAlpha;
+
+	AlphaBlend(_dc
+		, 0	, 0
+		, static_cast<int>(m_pVeilTex->GetWidth())
+		, static_cast<int>(m_pVeilTex->GetHeight())
+		, m_pVeilTex->GetDC()
+		, 0	, 0
+		, static_cast<int>(m_pVeilTex->GetWidth())
+		, static_cast<int>(m_pVeilTex->GetHeight())
+		, bf
+	);
+
+	// 진행시간이 이펙트 최대 지정 넘어가면
+	if (effect.m_fDuration < effect.m_fCurTime)
+	{
+		m_listCamEffect.pop_front();
+		return;
+	}
 
 }
 

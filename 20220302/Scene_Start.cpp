@@ -46,18 +46,13 @@ void CScene_Start::Enter()
 	objPlayer->init();
 
 	SetPlayerPos(objPlayer);
-	//pPlayer->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pPlayer->SetName(L"Player");
 
 	CreateObject(pPlayer, GROUP_TYPE::PLAYER);
 
 	AddDoor(DIR::N);
 	AddDoor(DIR::S);
-
-
-	//CObject* pWallCollider = new CWallCollider(Vec2(142.f, 128.f), Vec2(1138.f, 1.f));
-	//pWallCollider->SetName(L"Wall");
-	//CreateObject(pWallCollider, GROUP_TYPE::WALL);
+	AddWall();
 
 
 	// 타일 로딩
@@ -66,15 +61,19 @@ void CScene_Start::Enter()
 
 	// 충돌 지정
 
-	// Player - Monster
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 	//CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PROJ_MONSTER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::WALL);
-
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::WALL, GROUP_TYPE::PROJ_PLAYER);
 
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
+	
+	// 카메라 효과 지정
+	CCamera::GetInst()->FadeOut(2.f);
+	CCamera::GetInst()->FadeIn(2.f);
+
 }
 
 void CScene_Start::Exit()

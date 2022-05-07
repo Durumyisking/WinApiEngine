@@ -48,12 +48,12 @@ public:
 	void MouseOnCheck();
 
 public:
-	CUI* GetParent() { return m_pParentUI; }
+	CUI* GetParent() const { return m_pParentUI; }
 	void AddChild(CUI* _pUI) { m_vecChildUI.push_back(_pUI); _pUI->m_pParentUI = this; }
 
-	const vector<CUI*>& GetChildUI() { return m_vecChildUI; }
+	const vector<CUI*>& GetChildUI() const { return m_vecChildUI; }
 
-	Vec2 GetFinalPos() { return m_vFinalPos; }
+	Vec2 GetFinalPos() const { return m_vFinalPos; }
 
 	bool IsMouseOn() { return m_bMouseOn; }
 

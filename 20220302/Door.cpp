@@ -27,7 +27,7 @@ CDoor::CDoor(DIR _eDir)
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(iWidth/2, iHeight/2));
+	GetCollider()->SetScale(Vec2(90.f, 90.f));
 
 	//m_pTex->GetRotatedBitmap(0, 0, GetScale().x, GetScale().y, 180.);
 
@@ -54,9 +54,9 @@ void CDoor::render(HDC _dc)
 	Vec2 vPos = GetPos();
 
 	TransparentBlt(_dc
-		, (int)(vPos.x - (float)(vScale.x / 2))
-		, (int)(vPos.y - (float)(vScale.y / 2))
-		, vScale.x, vScale.y
+		, static_cast<int>(vPos.x - (float)(vScale.x / 2))
+		, static_cast<int>(vPos.y - (float)(vScale.y / 2))
+		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
 		, m_pTex->GetDC()
 		, m_iSliceX, m_iSliceY, iWidth, iHeight
 		, RGB(255, 0, 255));

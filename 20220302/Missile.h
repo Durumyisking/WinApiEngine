@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include "Object.h"
 #include "Texture.h"
+
+class CAnimation;
+
 class CMissile :
 	public CObject
 {
@@ -12,10 +15,15 @@ private:
 	float		m_fModifyXDir;
 	float		m_fModifyYDir;
 
-	float		m_fSpeedx;
-	float		m_fSpeedy;
+	float		m_fSpeed;
+	//float		m_fSpeedy;
 	bool		m_bCase;
 	CTexture*	m_pTex;
+
+	CAnimation*		m_pAnim;
+	wstring		m_strAnimName;
+
+
 public:
 	CMissile();
 	~CMissile();
@@ -29,6 +37,9 @@ public:
 
 	void SetType(MISSILE_TYPE _eType) { m_eType = _eType; }
 	void SetStartVec(Vec2 _vec) { m_vStartvec = _vec; }
+
+	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset);
+
 public:
 	virtual void update();
 	virtual void render(HDC _dc);

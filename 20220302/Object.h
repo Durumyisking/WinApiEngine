@@ -33,11 +33,11 @@ public:
 	CCollider* GetCollider() { return m_pCollider; }
 	CAnimator* GetAnimator() { return m_pAnimator; }
 
-	Vec2 GetPos() { return m_vPos; }
-	Vec2 GetScale() { return m_vScale; }
+	Vec2 GetPos() const { return m_vPos; }
+	Vec2 GetScale() const { return m_vScale; }
 
 	void SetName(const wstring& _strName) { m_strName = _strName; }
-	const wstring& GetName() { return m_strName; }
+	const wstring& GetName() const { return m_strName; }
 
 	bool IsDead() { return !m_bAlive; }
 

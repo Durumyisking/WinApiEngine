@@ -99,15 +99,15 @@ void CAnimation::render(HDC _dc)
 
 
 	TransparentBlt(_dc
-		, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f) - vScale.x / 3.f
-		, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f) - vScale.y / 3.f
-		, (int)(m_vecFrm[m_iCurFrm].vSlice.x) * 3
-		, (int)(m_vecFrm[m_iCurFrm].vSlice.y) * 3
+		, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - vScale.x / 3.f)
+		, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - vScale.y / 3.f)
+		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x) * 3
+		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y) * 3
 		, Outputdc
-		, (int)(m_vecFrm[m_iCurFrm].vLT.x)
-		, (int)(m_vecFrm[m_iCurFrm].vLT.y)
-		, (int)(m_vecFrm[m_iCurFrm].vSlice.x)
-		, (int)(m_vecFrm[m_iCurFrm].vSlice.y)
+		, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.x)
+		, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.y)
+		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x)
+		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y)
 		, RGB(255, 0, 255)
 	);
 

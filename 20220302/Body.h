@@ -5,6 +5,7 @@ class CBody :
 {
 private:
 	wstring		m_strAnimName;
+	float		m_fAnimFrame;
 
 
 public:
@@ -15,5 +16,10 @@ public:
 
 public:
 	virtual void update();
+
+
+public:
+	float GetAnimFrame() const { return m_fAnimFrame; }
+	void SetAnimFrame(float _value) { m_fAnimFrame = _value; }
 };
 

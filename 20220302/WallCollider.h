@@ -23,7 +23,7 @@ public:
 	virtual void OnCollisionEnter(CCollider* _pOther);
 
 
-	DIR	GetDir() { return m_eDir; }
+	DIR	GetDir() const { return m_eDir; }
 
 };
 

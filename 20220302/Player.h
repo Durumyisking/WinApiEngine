@@ -30,6 +30,9 @@ protected:
 
 	float			m_fAcc;
 	float			m_fMaxAcc;
+	float			m_fPrevSpeed;
+
+	float			m_arrMoveDir[(UINT)DIR::END];
 
 public:
 	CPlayer();
@@ -40,7 +43,7 @@ public:
 	virtual void render(HDC _dc);
 	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName,  Vec2 _vOffset);
 
-	Stat GetStat() { return stat; }
+	Stat GetStat() const { return stat; }
 	void SetStat(Stat _playerstat) { stat = _playerstat; }
 
 	void SetOwner(CPlayer* _pPlayer) { m_pOwner = _pPlayer; }

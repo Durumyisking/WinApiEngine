@@ -33,9 +33,9 @@ void CItem::render(HDC _dc)
 	Vec2 vPos = GetPos();
 
 	TransparentBlt(_dc
-		, (int)(vPos.x - (float)(vScale.x / 2))
-		, (int)(vPos.y - (float)(vScale.y / 2))
-		, vScale.x, vScale.y
+		, static_cast<int>(vPos.x - (float)(vScale.x / 2))
+		, static_cast<int>(vPos.y - (float)(vScale.y / 2))
+		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));

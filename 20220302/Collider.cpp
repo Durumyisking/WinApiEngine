@@ -58,10 +58,10 @@ void CCollider::render(HDC _dc)
 	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
 
 	Rectangle(_dc,
-		vRenderPos.x - m_vScale.x / 2.f,
-		vRenderPos.y - m_vScale.y / 2.f,
-		vRenderPos.x + m_vScale.x / 2.f,
-		vRenderPos.y + m_vScale.y / 2.f);
+		static_cast<int>(vRenderPos.x - m_vScale.x / 2.f),
+		static_cast<int>(vRenderPos.y - m_vScale.y / 2.f),
+		static_cast<int>(vRenderPos.x + m_vScale.x / 2.f),
+		static_cast<int>(vRenderPos.y + m_vScale.y / 2.f));
 
 
 	// 함수 종료시 CSelectGDI의 소멸자 호출

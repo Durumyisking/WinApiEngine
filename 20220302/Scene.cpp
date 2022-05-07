@@ -31,21 +31,7 @@ CScene::CScene()
 	, m_iTileY(0)
 {
 
-	CObject* pWallColliderN = new CWallCollider(Vec2(640.f, 128.f), Vec2(300.f, 1.f), DIR::N);
-	pWallColliderN->SetName(L"Wall");
-	CreateObject(pWallColliderN, GROUP_TYPE::WALL);
 
-	CObject* pWallColliderS = new CWallCollider(Vec2(640.f, 640.f), Vec2(300.f, 1.f),DIR::S);
-	pWallColliderS->SetName(L"Wall");
-	CreateObject(pWallColliderS, GROUP_TYPE::WALL);
-
-	CObject* pWallColliderE = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 400.f), DIR::E);
-	pWallColliderE->SetName(L"Wall");
-	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
-
-	CObject* pWallColliderW = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 400.f), DIR::W);
-	pWallColliderW->SetName(L"Wall");
-	CreateObject(pWallColliderW, GROUP_TYPE::WALL);
 }
 
 
@@ -109,20 +95,11 @@ void CScene::render(HDC _dc)
 	CSelectGDI pen(_dc, PEN_TYPE::GREEN);
 	CSelectGDI brush(_dc, BRUSH_TYPE::HOLLOW);
 
-	//Rectangle(_dc, 142, 128, 1138, 640);
-//	Rectangle(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y));
-
-
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
-		// 우리가 Obj를 삭제하기 위해서는
-		// delete obj 전 마지막 단계인 (update - *render* - event(여기서 delete))
-		// render단계에서 삭제하여야 한다 (삭제 안하면 삭제한 obj를 보여주려고 하겠쬬?
-		// erase함수 쓰기위해 iterator로 선언
+	
 		vector<CObject*>::iterator iter = m_arrObj[i].begin();
 
-		// erase로 삭제하면 다음 iter을 반환하기 때문에 ++시 iter가 두 번 상승한다
-		// 따라서 obj가 alive상태일때 ++해주고 아닐땐 erase해줘서 반복한다
 		for (; iter != m_arrObj[i].end();)
 		{
 			if (!(*iter)->IsDead())
@@ -228,6 +205,45 @@ void CScene::AddDoor(DIR _eDir)
 			CreateObject(pDoor, GROUP_TYPE::DOOR);
 		
 		}
+}
+
+void CScene::AddWall()
+{
+	// collider for body
+	CObject* pWallColliderN = new CWallCollider(Vec2(640.f, 128.f), Vec2(1000.f, 1.f), DIR::N);
+	pWallColliderN->SetName(L"Wall");
+	CreateObject(pWallColliderN, GROUP_TYPE::WALL);
+
+	CObject* pWallColliderS = new CWallCollider(Vec2(640.f, 640.f), Vec2(1000.f, 1.f), DIR::S);
+	pWallColliderS->SetName(L"Wall");
+	CreateObject(pWallColliderS, GROUP_TYPE::WALL);
+
+	CObject* pWallColliderE = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 550.f), DIR::E);
+	pWallColliderE->SetName(L"Wall");
+	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
+
+	CObject* pWallColliderW = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 550.f), DIR::W);
+	pWallColliderW->SetName(L"Wall");
+	CreateObject(pWallColliderW, GROUP_TYPE::WALL);
+
+
+	// collider for tear
+	CObject* pWallTearColliderN = new CWallCollider(Vec2(640.f, 100.f), Vec2(1050.f, 1.f), DIR::N);
+	pWallTearColliderN->SetName(L"Wall_Tear");
+	CreateObject(pWallTearColliderN, GROUP_TYPE::WALL);
+
+	CObject* pWallTearColliderS = new CWallCollider(Vec2(640.f, 670.f), Vec2(1050.f, 1.f), DIR::S);
+	pWallTearColliderS->SetName(L"Wall_Tear");
+	CreateObject(pWallTearColliderS, GROUP_TYPE::WALL);
+
+	CObject* pWallTearColliderE = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::E);
+	pWallTearColliderE->SetName(L"Wall_Tear");
+	CreateObject(pWallTearColliderE, GROUP_TYPE::WALL);
+
+	CObject* pWallTearColliderW = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::W);
+	pWallTearColliderW->SetName(L"Wall_Tear");
+	CreateObject(pWallTearColliderW, GROUP_TYPE::WALL);
+
 }
 
 void CScene::SetPlayerPos(CObject * _pPlayer)

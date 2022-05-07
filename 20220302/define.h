@@ -77,7 +77,7 @@ enum class GROUP_TYPE
 
 	WALL,
 
-	MISSILE,
+	TEAR,
 
 	MONSTER,
 

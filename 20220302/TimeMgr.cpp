@@ -67,7 +67,7 @@ void CTimeMgr::update()
 
 // 디버깅 모드일때만 실행 시키게 함 우리가 release로 하면 전처리기 자차에서 코드 사라짐
 
-// 디버깅 모드에서 중단이 걸려서 Deltatimedl 무한정 늘어난다
+// 디버깅 모드에서 중단이 걸려서 Deltatime이 무한정 늘어난다
 // 우리는 60프레임 기준 1프레임이 지났을때 1프레임만 지나게 할 것이다.
 #ifdef _DEBUG
 	if (m_dDeltaTime > (1. / 60.))

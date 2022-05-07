@@ -48,3 +48,19 @@ CTexture * CResMgr::FindTexture(const wstring & _strKey)
 	// 포인터는 res지만 우린 텍스쳐 줄꺼기 때문에 다운캐스팅
 	return (CTexture*)iter->second;
 }
+
+CTexture * CResMgr::CreateTexture(const wstring & _strKey, UINT _iWidth, UINT _iHeight)
+{
+	CTexture* pTex = FindTexture(_strKey);
+	if (nullptr != pTex)
+		return pTex;	
+
+
+	pTex = new CTexture;
+	pTex->Create(_iWidth, _iHeight);
+	pTex->SetKey(_strKey);
+
+	m_mapTex.insert(make_pair(_strKey, pTex));
+
+	return pTex;
+}

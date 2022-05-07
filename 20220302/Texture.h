@@ -42,17 +42,21 @@ public:	// Member Function
 	// getter와 setter를 습관화 하는게 좋음
 	// 또한 getter 함수를 사용할 때는 const를 붙여서
 	// 혹시나 사용자의 실수로 메모리 변조가 일어나는 걸 막는다
-	// 멤버함수 뒤에 붙는 const는 '모든 멤버 변수들을 상수화' 함
 	// 멤버함수 뒤에 붙는 const는 해당 함수내의 '멤버 변수들을 상수화' 함
 
 	HDC GetDC() const { return m_dc; }
 	HBITMAP GetHBIT() const { return m_hBit; }
 	UINT GetWidth() const { return m_bitInfo.bmWidth; }
 	UINT GetHeight() const { return m_bitInfo.bmHeight; }
+	void Create(UINT _iWidth, UINT _iHeight);
 	void Load(const wstring& _strFilePath);
 	void GetRotatedBitmap(int source_x, int source_y, int dest_width, int dest_height, double degree);
 	// 자주 사용될 수 있는 수학 함수의 경우 글로벌 헤더에 추가하여
 	// 사용하기 쉽게 설정해두는 것이 좋음
+
+
+
+
 	static double RadianToDegree(const double radian) { return radian * 180 / PI; }
 	static double DegreeToRadian(const double degree) { return degree * PI / 180; }
 };

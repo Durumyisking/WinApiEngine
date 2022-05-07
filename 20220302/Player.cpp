@@ -27,6 +27,7 @@ CPlayer::CPlayer()
 	, stat{ 6, 6, 5, 400.f, 0.38f }
 	, m_fAcc(0.1f)
 	, m_fMaxAcc(1.f)
+	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
 {
 
 }
@@ -48,13 +49,40 @@ void CPlayer::update()
 	{
 		if (m_fAcc < m_fMaxAcc)
 		{
-			m_fAcc += 0.05;
+			m_fAcc += 0.05f;
 		}
-		vPos.y -= stat.m_fSpeed * m_fAcc * fDT;
+		vPos.y -= stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::N] * fDT;
 	}
-	if (KEY_HOLD(KEY::S)) vPos.y += stat.m_fSpeed * fDT;
-	if (KEY_HOLD(KEY::A)) vPos.x -= stat.m_fSpeed * fDT;
-	if (KEY_HOLD(KEY::D)) vPos.x += stat.m_fSpeed * fDT;
+	if (KEY_HOLD(KEY::S))
+	{
+		if (m_fAcc < m_fMaxAcc)
+		{
+			m_fAcc += 0.05f;
+		}
+		vPos.y += stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::S] * fDT;
+	}
+	if (KEY_HOLD(KEY::A)) {
+		if (m_fAcc < m_fMaxAcc)
+		{
+			m_fAcc += 0.05f;
+		}
+		vPos.x -= stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::E] * fDT;
+	}
+	if (KEY_HOLD(KEY::D)) {
+		if (m_fAcc < m_fMaxAcc)
+		{
+			m_fAcc += 0.05f;
+		}
+		vPos.x += stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::W] * fDT;
+	}
+
+	if (KEY_AWAY(KEY::W) || KEY_AWAY(KEY::S) ||
+		KEY_AWAY(KEY::A) || KEY_AWAY(KEY::D))
+	{
+		if(m_fAcc > 0.f)
+			m_fAcc -= 0.05f;
+	}
+
 
 	SetPos(vPos);
 
@@ -108,6 +136,7 @@ void CPlayer::init()
 	pHead->SetOwner(this);
 
 	pBody->SetStat(stat);
+	pHead->SetStat(stat);
 
 	pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
@@ -119,37 +148,8 @@ void CPlayer::init()
 
 void CPlayer::OnCollision(CCollider * _pOther)
 {
-	CObject* pOtherObj = _pOther->GetObj();
-
-	Vec2 vPos = GetPos();
 
 
-	if (L"Wall" == pOtherObj->GetName())
-	{
-		CWallCollider* pWall = (CWallCollider*)pOtherObj;
-		Vec2 vWallPos = pWall->GetPos();
-
-
-		switch (pWall->GetDir())
-		{
-		case DIR::N:
-			SetPos(Vec2(vPos.x, vWallPos.y));
-			break;
-		case DIR::S:
-			SetPos(Vec2(vPos.x, vWallPos.y));
-			break;
-		case DIR::E:
-			SetPos(Vec2(vWallPos.x, vPos.y));
-			break;
-		case DIR::W:
-			SetPos(Vec2(vWallPos.x, vPos.y));
-			break;
-
-		default:
-			break;
-		}
-
-	}
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
@@ -191,8 +191,31 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				break;
 			}
 		}
+	}
 
 
+	if (L"Wall" == pOtherObj->GetName())
+	{
+		CWallCollider* pWall = (CWallCollider*)pOtherObj;
+		
+		switch (pWall->GetDir())
+		{
+		case DIR::N:
+			this->m_arrMoveDir[(UINT)DIR::N] = 0.f;
+			break;
+		case DIR::S:
+			this->m_arrMoveDir[(UINT)DIR::S] = 0.f;
+			break;
+		case DIR::E:
+			this->m_arrMoveDir[(UINT)DIR::E] = 0.f;
+			break;
+		case DIR::W:
+			this->m_arrMoveDir[(UINT)DIR::W] = 0.f;
+			break;
+
+		default:
+			break;
+		}
 	}
 	
 	// item
@@ -207,6 +230,33 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 void CPlayer::OnCollisionExit(CCollider * _pOther)
 {
+	CObject* pOtherObj = _pOther->GetObj();
+	if (L"Wall" == pOtherObj->GetName())
+	{
+		CWallCollider* pWall = (CWallCollider*)pOtherObj;
+
+		switch (pWall->GetDir())
+		{
+		case DIR::N:
+			m_ePrevDoorDir = DIR::N;
+			this->m_arrMoveDir[(UINT)DIR::N] = 1.f;
+			break;
+		case DIR::S:
+			this->m_arrMoveDir[(UINT)DIR::S] = 1.f;
+			break;
+		case DIR::E:
+			this->m_arrMoveDir[(UINT)DIR::E] = 1.f;
+			break;
+		case DIR::W:
+			this->m_arrMoveDir[(UINT)DIR::W] = 1.f;
+			break;
+
+		default:
+			break;
+		}
+
+
+	}
 }
 
 void CPlayer::CreateMissile(Vec2 _vDir)
@@ -219,7 +269,6 @@ void CPlayer::ItemCheck()
 {
 	stat += m_GetItemCheck->GetStat();
 
-	stat.m_fSpeed = 600.f;
 
 	pBody->SetStat(this->stat);
 	pHead->SetStat(this->stat);

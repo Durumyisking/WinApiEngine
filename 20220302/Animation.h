@@ -57,6 +57,8 @@ public:
 	tAnimFrm& GetFrame(int _iIdx) { return m_vecFrm[_iIdx]; }
 	int GetMaxFrame() { return (UINT)m_vecFrm.size(); }
 
+
+
 	void SetReverse(bool _bReverse) { m_bReverse = _bReverse; }
 
 	friend class CAnimator;

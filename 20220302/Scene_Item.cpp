@@ -39,6 +39,7 @@ void CScene_Item::Enter()
 
 
 	AddDoor(DIR::S);
+	AddWall();
 
 
 	CObject* pItem = new CSadOnion;
