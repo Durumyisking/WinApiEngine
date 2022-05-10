@@ -85,7 +85,7 @@ void CUI::render(HDC _dc)
 		int iWidth = (int)m_pTex->GetWidth();
 		int iHeight = (int)m_pTex->GetHeight();
 
-		StretchBlt(_dc, vPos.x, vPos.y, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+		StretchBlt(_dc, static_cast<int>(vPos.x), static_cast<int>(vPos.y), static_cast<int>(vScale.x), static_cast<int>(vScale.y)
 			, m_pTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
 
 	}

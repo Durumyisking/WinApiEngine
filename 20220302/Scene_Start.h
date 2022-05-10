@@ -7,7 +7,7 @@ class CScene_Start :
 private:
 	int m_iWave;
 	
-
+	
 public:
 	CScene_Start();
 	~CScene_Start();

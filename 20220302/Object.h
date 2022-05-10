@@ -3,6 +3,7 @@
 
 class CCollider;
 class CAnimator;
+class CAnimation;
 
 class CObject
 {
@@ -52,6 +53,8 @@ public:
 
 	void CreateCollider();
 	void CreateAnimator();
+
+	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset);
 
 	virtual void OnCollision(CCollider* _pOther) {};
 	virtual void OnCollisionEnter(CCollider* _pOther) {};

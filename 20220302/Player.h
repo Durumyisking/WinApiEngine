@@ -41,7 +41,6 @@ public:
 public:
 	virtual void update();
 	virtual void render(HDC _dc);
-	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName,  Vec2 _vOffset);
 
 	Stat GetStat() const { return stat; }
 	void SetStat(Stat _playerstat) { stat = _playerstat; }

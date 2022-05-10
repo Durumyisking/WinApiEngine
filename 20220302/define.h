@@ -50,7 +50,6 @@
 
 #define HEAD_BODY_GAP Vec2(0.f, 43.f)
 
-#define TEAR_DEFAULT Vec2(17.f, 17.f)
 
 #define LIMITN 116.f
 #define LIMITS 600.f
@@ -76,6 +75,8 @@ enum class GROUP_TYPE
 	TILE, 
 
 	WALL,
+
+	TEARWALL,
 
 	TEAR,
 
@@ -103,6 +104,7 @@ enum class SCENE_TYPE
 	NONE,
 
 	TOOL, // 게임 만드는 씬
+	MENU,
 	START,
 	STAGE_01,
 	STAGE_02,

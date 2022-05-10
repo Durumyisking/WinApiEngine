@@ -125,6 +125,12 @@
     <Filter Include="Engine\04. Object\WallCollider">
       <UniqueIdentifier>{7c388e62-622d-44c6-bb98-c4d90ccefc4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Menu">
+      <UniqueIdentifier>{da9d1387-a0ff-4a39-a64c-7d8d31ff7313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Menu">
+      <UniqueIdentifier>{8fe55a03-1275-4fb7-a9ff-be725c1ccbb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -254,6 +260,12 @@
     <ClInclude Include="WallCollider.h">
       <Filter>Engine\04. Object\WallCollider</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Menu.h">
+      <Filter>Engine\05. Scene\Scene_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuObj.h">
+      <Filter>Engine\04. Object\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -372,6 +384,12 @@
     </ClCompile>
     <ClCompile Include="WallCollider.cpp">
       <Filter>Engine\04. Object\WallCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Menu.cpp">
+      <Filter>Engine\05. Scene\Scene_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuObj.cpp">
+      <Filter>Engine\04. Object\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

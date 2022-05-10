@@ -72,7 +72,7 @@ void CAnimation::render(HDC _dc)
 	vPos = vPos + m_vecFrm[m_iCurFrm].vOffset;
 
 	// ·»´õ¸µ À§Ä¡
-//	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 
 

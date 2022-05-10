@@ -105,7 +105,7 @@ void CHead::update()
 	if (KEY_HOLD(KEY::RIGHT))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
-		m_strAnimName = L"HEAD_RIGHT";
+		m_strAnimName = L"HEAD_RIGHT";	
 		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
 		CreateMissile(Vec2(1.f, 0.f));

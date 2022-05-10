@@ -28,7 +28,7 @@ private:
 
 protected:
 	float				m_fTimeCount;
-	CTexture*			m_pTex;
+	CTexture*			m_pBgTex;
 
 	// 이전 방 기준 방의 위치
 	Vec2				m_vResolution;

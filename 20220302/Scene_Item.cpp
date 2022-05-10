@@ -15,7 +15,7 @@
 
 CScene_Item::CScene_Item()
 {
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");
+	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");
 	m_eAdjacencyRoom[(UINT)DIR::S] = SCENE_TYPE::START;
 }
 
@@ -73,11 +73,11 @@ void CScene_Item::update()
 
 void CScene_Item::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->GetWidth();
-	int iHeight = (int)m_pTex->GetHeight();
+	int iWidth = (int)m_pBgTex->GetWidth();
+	int iHeight = (int)m_pBgTex->GetHeight();
 
 
-	StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+	StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
 
 	CScene::render(_dc);
 }

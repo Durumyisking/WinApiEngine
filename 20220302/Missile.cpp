@@ -26,7 +26,6 @@ CMissile::CMissile()
 	, m_fModifyYDir(0.f)
 	, m_fSpeed(300.f)
 	//, m_fSpeedy(300.f)
-	, m_bCase(false)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"TEAR_IDLE")
 {
@@ -40,9 +39,9 @@ CMissile::CMissile()
 	m_vDir.Normalize();
 
 	CreateCollider();
-	GetCollider()->SetOffsetPos(TEAR_DEFAULT);
-	GetCollider()->SetScale(TEAR_DEFAULT);
-	SetScale(TEAR_DEFAULT);
+	GetCollider()->SetOffsetPos(Vec2(32.f, 32.f));
+	GetCollider()->SetScale(Vec2(32.f, 32.f));
+	SetScale(Vec2(32.f, 32.f));
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
@@ -112,7 +111,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 
 	SetPos(vMissilePos);
 	SetStartVec(Vec2(vMissilePos));
-	SetScale(TEAR_DEFAULT);
+	SetScale(Vec2(100.f, 80.f));
 
 	switch (_eType)
 	{
@@ -120,7 +119,6 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 		SetType(MISSILE_TYPE::DEFAULT);
 		if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
 		{
-
 			SetName(L"Missile_Player");
 		}
 

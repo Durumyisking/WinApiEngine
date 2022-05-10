@@ -25,7 +25,7 @@
 CScene_Start::CScene_Start()
 	:m_iWave(1)
 {
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"StartSceneTex", L"texture\\BackGround\\BG_basement.bmp");	
+	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\BG_basement.bmp");
 	m_eAdjacencyRoom[(UINT)DIR::N] = SCENE_TYPE::ITEM;
 	m_eAdjacencyRoom[(UINT)DIR::S] = SCENE_TYPE::TOOL;
 }
@@ -66,12 +66,12 @@ void CScene_Start::Enter()
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::WALL);
-	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::WALL, GROUP_TYPE::PROJ_PLAYER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_PLAYER);
 
-	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 	
+
+
 	// 카메라 효과 지정
-	CCamera::GetInst()->FadeOut(2.f);
 	CCamera::GetInst()->FadeIn(2.f);
 
 }
@@ -110,12 +110,13 @@ void CScene_Start::update()
 
 void CScene_Start::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->GetWidth();
-	int iHeight = (int)m_pTex->GetHeight();
+
+	int iWidth = (int)m_pBgTex->GetWidth();
+	int iHeight = (int)m_pBgTex->GetHeight();
 
 
-	StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
-		
+	StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);	
+
 	CScene::render(_dc);
-	
+
 }

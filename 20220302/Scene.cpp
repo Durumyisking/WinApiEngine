@@ -23,7 +23,7 @@
 
 CScene::CScene()
 	: m_fTimeCount(0)
-	, m_pTex(nullptr)
+	, m_pBgTex(nullptr)
 	, m_vResolution (CCore::GetInst()->GetResolution())
 	, m_eAdjacencyRoom{}
 	, m_roomDir(DIR::END)
@@ -31,7 +31,7 @@ CScene::CScene()
 	, m_iTileY(0)
 {
 
-
+	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 }
 
 
@@ -92,9 +92,6 @@ void CScene::finalupdate()
 
 void CScene::render(HDC _dc)
 {
-	CSelectGDI pen(_dc, PEN_TYPE::GREEN);
-	CSelectGDI brush(_dc, BRUSH_TYPE::HOLLOW);
-
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
 	
@@ -230,19 +227,19 @@ void CScene::AddWall()
 	// collider for tear
 	CObject* pWallTearColliderN = new CWallCollider(Vec2(640.f, 100.f), Vec2(1050.f, 1.f), DIR::N);
 	pWallTearColliderN->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderN, GROUP_TYPE::WALL);
+	CreateObject(pWallTearColliderN, GROUP_TYPE::TEARWALL);
 
 	CObject* pWallTearColliderS = new CWallCollider(Vec2(640.f, 670.f), Vec2(1050.f, 1.f), DIR::S);
 	pWallTearColliderS->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderS, GROUP_TYPE::WALL);
+	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
 
 	CObject* pWallTearColliderE = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::E);
 	pWallTearColliderE->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderE, GROUP_TYPE::WALL);
+	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
 
 	CObject* pWallTearColliderW = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::W);
 	pWallTearColliderW->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderW, GROUP_TYPE::WALL);
+	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
 
 }
 

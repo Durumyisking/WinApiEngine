@@ -16,8 +16,9 @@ private:
 	float		m_fModifyYDir;
 
 	float		m_fSpeed;
-	//float		m_fSpeedy;
-	bool		m_bCase;
+
+	float		m_fAccFall;
+
 	CTexture*	m_pTex;
 
 	CAnimation*		m_pAnim;

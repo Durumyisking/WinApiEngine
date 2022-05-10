@@ -82,7 +82,7 @@ void CCore::progress()
 	// Mgr update (1 frame cycle)
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
-	// CCamera::GetInst()->update();
+	CCamera::GetInst()->update();
 
 	// Scene update
 	CSceneMgr::GetInst()->update();

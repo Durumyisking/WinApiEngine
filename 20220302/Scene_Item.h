@@ -3,6 +3,8 @@
 class CScene_Item :
 	public CScene
 {
+private:
+
 
 public:
 	CScene_Item();

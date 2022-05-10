@@ -50,13 +50,13 @@ void CCamera::update()
 		}
 	}
 
-	if (KEY_HOLD(KEY::UP))
+	if (KEY_HOLD(KEY::I))
 		m_vLookAt.y -= 300.f * fDT;
-	if (KEY_HOLD(KEY::DOWN))
+	if (KEY_HOLD(KEY::K))
 		m_vLookAt.y += 300.f * fDT;
-	if (KEY_HOLD(KEY::LEFT))
+	if (KEY_HOLD(KEY::J))
 		m_vLookAt.x -= 300.f * fDT;
-	if (KEY_HOLD(KEY::RIGHT))
+	if (KEY_HOLD(KEY::L))
 		m_vLookAt.x += 300.f * fDT;
 
 	// 화면 중앙좌표와 카메라 LookAt 좌표값과의 차이
@@ -139,12 +139,9 @@ void CCamera::CalDiff()
 	}
 	else
 	{
-		Vec2 vLookDir = m_vLookAt - m_vPrevLookAt;
-
-		if (vLookDir.IsZero())
-		{
-			m_vCurLookAt = m_vPrevLookAt + vLookDir.Normalize()*m_fSpeed * fDT;
-		}
+		Vec2 vLookDir = m_vLookAt - m_vPrevLookAt;		
+		m_vCurLookAt = m_vPrevLookAt + vLookDir.Normalize()*m_fSpeed * fDT;
+		
 	}
 
 	Vec2 vResolution = CCore::GetInst()->GetResolution();

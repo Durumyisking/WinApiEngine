@@ -7,6 +7,7 @@
 
 #include "Collider.h"
 #include "Animator.h"
+#include "Animation.h"
 
 #include "Core.h"
 
@@ -63,6 +64,16 @@ void CObject::CreateAnimator()
 	m_pAnimator->m_pOwner = this;
 }
 
+void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset)
+{
+	GetAnimator()->Play(_AnimName, true);
+
+	_pAnim = GetAnimator()->FindAnimation(_AnimName);
+
+	for (UINT i = 0; i < _pAnim->GetMaxFrame(); ++i)
+		_pAnim->GetFrame(i).vOffset = Vec2(_vOffset);
+}
+
 void CObject::finalupdate()
 {
 	if (m_pCollider)
@@ -77,19 +88,13 @@ void CObject::render(HDC _dc)
 	// ÁøÂ¥ ÁÂÇ¥°¡ ¾Æ´Ñ ·»´õ¸µ µÇ´Â ÁÂÇ¥ (ÁøÂ¥ ÁÂÇ¥´Â m_vPos)
 	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vPos);
 
-	Rectangle(_dc,
-		(int)vRenderPos.x - m_vScale.x / 2.f,
-		(int)vRenderPos.y - m_vScale.y / 2.f,
-		(int)vRenderPos.x + m_vScale.x / 2.f,
-		(int)vRenderPos.y + m_vScale.y / 2.f);
+
 
 	component_render(_dc);
 }
 
 void CObject::component_render(HDC _dc)
 {
-
-
 	if (nullptr != m_pCollider)
 	{
 		m_pCollider->render(_dc);
@@ -103,3 +108,5 @@ void CObject::component_render(HDC _dc)
 
 	}
 }
+
+
