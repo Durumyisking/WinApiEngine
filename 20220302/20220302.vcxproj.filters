@@ -131,6 +131,15 @@
     <Filter Include="Engine\04. Object\Menu">
       <UniqueIdentifier>{8fe55a03-1275-4fb7-a9ff-be725c1ccbb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\UI\Status">
+      <UniqueIdentifier>{935d1b76-63ae-4d9e-bca6-bec27cb66a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\UI\Status\Heart">
+      <UniqueIdentifier>{4ef3668a-3ac0-4fcb-a657-fcd80fe5d5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\UI\Status\Pickup">
+      <UniqueIdentifier>{6eca4863-faeb-4fb9-8e17-53288d16beb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -266,6 +275,12 @@
     <ClInclude Include="MenuObj.h">
       <Filter>Engine\04. Object\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="Heart.h">
+      <Filter>Engine\04. Object\UI\Status\Heart</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupUI.h">
+      <Filter>Engine\04. Object\UI\Status\Pickup</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -390,6 +405,12 @@
     </ClCompile>
     <ClCompile Include="MenuObj.cpp">
       <Filter>Engine\04. Object\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Heart.cpp">
+      <Filter>Engine\04. Object\UI\Status\Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupUI.cpp">
+      <Filter>Engine\04. Object\UI\Status\Pickup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

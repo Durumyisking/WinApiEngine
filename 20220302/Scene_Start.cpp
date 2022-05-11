@@ -21,9 +21,15 @@
 #include "WallCollider.h"
 #include "SceneMgr.h"
 
+#include "UI.h"
+#include "Heart.h"
+#include"PanelUI.h"
+#include"BtnUI.h"
+
 
 CScene_Start::CScene_Start()
-	:m_iWave(1)
+	: vecHeartUI{}
+
 {
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\BG_basement.bmp");
 	m_eAdjacencyRoom[(UINT)DIR::N] = SCENE_TYPE::ITEM;
@@ -43,6 +49,8 @@ void CScene_Start::Enter()
 	CObject* pPlayer = new CPlayer;
 	CPlayer* objPlayer = (CPlayer*)pPlayer;
 
+	m_pPlayer = objPlayer;
+
 	objPlayer->init();
 
 	SetPlayerPos(objPlayer);
@@ -54,6 +62,16 @@ void CScene_Start::Enter()
 	AddDoor(DIR::S);
 	AddWall();
 
+
+	round(213);
+
+	int iHeartSize = objPlayer->GetStat().m_iMaxHP / 2;
+	for (int i = 0; i < iHeartSize; ++i)
+	{
+		CUI* pHeartUI = new CHeart(i + 1);
+		vecHeartUI.push_back(pHeartUI);
+		AddObject(pHeartUI, GROUP_TYPE::UI);
+	}
 
 	// 타일 로딩
 	// LoadTile(L"Tile\\start.tile");
@@ -104,6 +122,11 @@ void CScene_Start::update()
 		CCamera::GetInst()->SetLookAt(vLookAt);
 	}
 
+	int iIdx = m_pPlayer->GetStat().m_iHP / 2;
+	if (1 == m_pPlayer->GetStat().m_iHP % 2)
+	{
+		vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
+	}
 }
 
 

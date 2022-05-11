@@ -180,6 +180,7 @@
     <ClInclude Include="func.h" />
     <ClInclude Include="Gaper.h" />
     <ClInclude Include="Head.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MenuObj.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="PanelUI.h" />
     <ClInclude Include="PathMgr.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PickupUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="ResMgr.h" />
@@ -224,6 +226,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Gaper.cpp" />
     <ClCompile Include="Head.cpp" />
+    <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MenuObj.cpp" />
     <ClCompile Include="note.cpp" />
@@ -242,6 +245,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PanelUI.cpp" />
     <ClCompile Include="PathMgr.cpp" />
+    <ClCompile Include="PickupUI.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Res.cpp" />
     <ClCompile Include="ResMgr.cpp" />

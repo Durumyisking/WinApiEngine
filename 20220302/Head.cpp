@@ -126,13 +126,13 @@ void CHead::update()
 
 void CHead::CreateMissile(Vec2 _vDir)
 {
-	if (m_dPrevTime > stat.m_fRate)
+	if (m_dAttackDealy > stat.m_fRate)
 	{
 		CMissile* pMissile = new CMissile;
 		pMissile->SetDir(_vDir);
 		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GetPos(), GROUP_TYPE::PROJ_PLAYER);
 
-		m_dPrevTime = 0.f;
+		m_dAttackDealy = 0.f;
 	}
 
 }

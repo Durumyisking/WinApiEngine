@@ -59,6 +59,17 @@ void CScene_Menu::update()
 			m_bOnNewGame = true;
 		}
 	}
+	else if (KEY_TAP(KEY::ESC))
+	{
+		if (!m_bOnNewGame)
+			ChangeScene(SCENE_TYPE::TOOL);
+		else
+		{
+			CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
+			m_bOnNewGame = false;
+		}
+	}
+
 }
 
 void CScene_Menu::render(HDC _dc)

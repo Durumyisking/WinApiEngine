@@ -78,7 +78,7 @@ void CScene_Tool::Enter()
 	pBtnLoadUI->SetTexture(pLoadTex);
 	pBtnLoadUI->SetName(L"BtnLoadUI");
 	pBtnLoadUI->SetScale(Vec2(110.f, 30.f));
-	pBtnLoadUI->SetPos(Vec2(0.f, 30.f));
+	pBtnLoadUI->SetPos(Vec2(0.f, 60.f));
 	pBtnLoadUI->SetClickedCallBack((SCENE_MEMFUNC)&CScene_Tool::LoadTileData, this);
 
 
@@ -89,7 +89,6 @@ void CScene_Tool::Enter()
 
 	m_pUI = pPanelUI;
 
-	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 
 	//CUI* pClonePanel = pPanelUI->Clone();
 	//pClonePanel->SetPos(pClonePanel->GetPos() + Vec2(-300.f, 0.f));

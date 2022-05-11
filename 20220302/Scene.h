@@ -21,6 +21,8 @@ private:
 	vector<CObject*>	m_arrObj[(UINT)GROUP_TYPE::END]; // Obj 그룹을 담은 벡터를 배열로 선언
 	wstring				m_strName; // Scene이름
 
+
+	// 타일 개수
 	UINT				m_iTileX;
 	UINT				m_iTileY;
 
@@ -81,6 +83,7 @@ public:
 
 	virtual void render(HDC _dc);
 
+	void renderTile(HDC _dc);
 
 
 public:

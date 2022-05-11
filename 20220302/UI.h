@@ -17,6 +17,7 @@ private:
 
 protected:
 	CTexture*			m_pTex;
+	Vec2				m_vSlice;
 
 
 
@@ -54,6 +55,9 @@ public:
 	const vector<CUI*>& GetChildUI() const { return m_vecChildUI; }
 
 	Vec2 GetFinalPos() const { return m_vFinalPos; }
+
+	Vec2 GetSlice() { return m_vSlice; }
+	void SetSlice(Vec2 _vSlice) { m_vSlice = _vSlice; }
 
 	bool IsMouseOn() { return m_bMouseOn; }
 

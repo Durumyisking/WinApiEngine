@@ -44,15 +44,15 @@ void CTile::render(HDC _dc)
 
 	// 142, 128, 1138, 640
 
-	BitBlt(_dc
-		, 142
-		, 128
-		, int(vScale.x)
-		, int(vScale.y)
-		, m_pTileTex->GetDC()
-		, iCurCol * ROCK_SIZE
-		, iCurRow * ROCK_SIZE
-		, SRCCOPY);
+	//BitBlt(_dc
+	//	, 142
+	//	, 128
+	//	, int(vScale.x)
+	//	, int(vScale.y)
+	//	, m_pTileTex->GetDC()
+	//	, iCurCol * ROCK_SIZE
+	//	, iCurRow * ROCK_SIZE
+	//	, SRCCOPY);
 
 
 	//BitBlt(_dc
@@ -64,6 +64,18 @@ void CTile::render(HDC _dc)
 	//	, iCurCol * ROCK_SIZE
 	//	, iCurRow * ROCK_SIZE
 	//	, SRCCOPY);
+
+	StretchBlt(_dc
+		, int(vRenderPos.x) * 2
+		, int(vRenderPos.y) * 2
+		, int(vScale.x) * 2
+		, int(vScale.y) * 2
+		, m_pTileTex->GetDC()
+		, iCurCol * ROCK_SIZE
+		, iCurRow * ROCK_SIZE
+		, int(vScale.x)
+		, int(vScale.y)
+		, SRCCOPY);
 }
 
 void CTile::Save(FILE * _pFile)

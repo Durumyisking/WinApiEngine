@@ -32,7 +32,7 @@ void CScene_Item::Enter()
 	objPlayer->init();
 
 	SetPlayerPos(pPlayer);
-	//pPlayer->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
+
 	pPlayer->SetName(L"Player");
 
 	CreateObject(pPlayer, GROUP_TYPE::PLAYER);
@@ -54,7 +54,6 @@ void CScene_Item::Enter()
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::ITEM);
 	//CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::ITEM, GROUP_TYPE::PLAYER);
 
-	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 }
 
 void CScene_Item::Exit()

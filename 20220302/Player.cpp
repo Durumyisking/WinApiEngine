@@ -17,17 +17,18 @@
 #include "Head.h"
 
 #include "WallCollider.h"
-
+#include "Heart.h"
 
 CPlayer::CPlayer()
-	: m_dPrevTime(fDT)
+	: m_dAttackDealy(fDT)
 	, m_ePrevDoorDir(DIR::END)
 	, m_pAnim(nullptr)
 	, m_pOwner(nullptr)
 	, stat{ 6, 6, 5, 400.f, 0.38f }
-	, m_fAcc(0.1f)
+	, m_fAcc(0.f)
 	, m_fMaxAcc(1.f)
 	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
+	, m_finvincibilityTime(1.f)
 {
 
 }
@@ -40,7 +41,8 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-	m_dPrevTime += fDT;
+	m_dAttackDealy += fDT;
+
 
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
@@ -49,39 +51,41 @@ void CPlayer::update()
 	{
 		if (m_fAcc < m_fMaxAcc)
 		{
-			m_fAcc += 0.05f;
+			m_fAcc += 0.02f;
 		}
-		vPos.y -= stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::N] * fDT;
+		vPos.y -= stat.m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::S))
 	{
 		if (m_fAcc < m_fMaxAcc)
 		{
-			m_fAcc += 0.05f;
+			m_fAcc += 0.02f;
 		}
-		vPos.y += stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::S] * fDT;
+		vPos.y += stat.m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::A)) {
 		if (m_fAcc < m_fMaxAcc)
 		{
-			m_fAcc += 0.05f;
+			m_fAcc += 0.02f;
 		}
-		vPos.x -= stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::E] * fDT;
+		vPos.x -= stat.m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::D)) {
 		if (m_fAcc < m_fMaxAcc)
 		{
-			m_fAcc += 0.05f;
+			m_fAcc += 0.02f;
 		}
-		vPos.x += stat.m_fSpeed * m_fAcc * m_arrMoveDir[(UINT)DIR::W] * fDT;
+		vPos.x += stat.m_fSpeed * m_fAcc * fDT;
 	}
 
-	if (KEY_AWAY(KEY::W) || KEY_AWAY(KEY::S) ||
-		KEY_AWAY(KEY::A) || KEY_AWAY(KEY::D))
+	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
+		!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
 	{
-		if(m_fAcc > 0.f)
+		if (m_fAcc > 0.f)
 			m_fAcc -= 0.05f;
 	}
+
+
 
 
 	SetPos(vPos);

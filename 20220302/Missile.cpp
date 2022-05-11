@@ -18,14 +18,13 @@
 #include "Animator.h"
 
 CMissile::CMissile()
-	: m_fTheta(PI / 2.f)
+	: m_fTheta(static_cast<float>(PI / 2.f))
 	, m_vDir(Vec2(0.f, -1.f))
 	, m_vStartvec(Vec2(0.f, 0.f))
 	, m_eType(MISSILE_TYPE::DEFAULT)
 	, m_fModifyXDir(0.1f)
 	, m_fModifyYDir(0.f)
 	, m_fSpeed(300.f)
-	//, m_fSpeedy(300.f)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"TEAR_IDLE")
 {
@@ -57,7 +56,7 @@ void CMissile::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vO
 
 	_pAnim = GetAnimator()->FindAnimation(_AnimName);
 
-	for (UINT i = 0; i < _pAnim->GetMaxFrame(); ++i)
+	for (UINT i = 0; i < (UINT)_pAnim->GetMaxFrame(); ++i)
 		_pAnim->GetFrame(i).vOffset = Vec2(_vOffset);
 }
 

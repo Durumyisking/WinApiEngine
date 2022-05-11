@@ -1,13 +1,17 @@
 #pragma once
 #include "Scene.h"
+
+class CUI;
+class CPlayer;
+
 class CScene_Start :
 	public CScene
 {
 
 private:
-	int m_iWave;
-	
-	
+	vector<CUI*> vecHeartUI;
+	CPlayer* m_pPlayer;
+
 public:
 	CScene_Start();
 	~CScene_Start();

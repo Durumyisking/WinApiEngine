@@ -5,8 +5,6 @@
 #include "Object.h"
 #include "Texture.h"
 #include "Tile.h"
-#include "Body.h"
-#include "Head.h"
 #include "Door.h"
 
 #include "SceneMgr.h"
@@ -18,6 +16,8 @@
 #include "SelectGDI.h"
 
 #include "WallCollider.h"
+
+#include "Camera.h"
 
 
 
@@ -94,6 +94,11 @@ void CScene::render(HDC _dc)
 {
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
+		if ((UINT)GROUP_TYPE::TILE == i)
+		{
+			renderTile(_dc);
+			continue;
+		}
 	
 		vector<CObject*>::iterator iter = m_arrObj[i].begin();
 
@@ -110,6 +115,49 @@ void CScene::render(HDC _dc)
 			}
 		}
 	}
+}
+
+void CScene::renderTile(HDC _dc)
+{
+	vector<CObject*> vecTile = GetGroupObject(GROUP_TYPE::TILE);
+
+	Vec2 vCamLook = CCamera::GetInst()->GetLookAt();
+	Vec2 vLeftTop = vCamLook - m_vResolution / 2.f;
+
+	UINT iTileSize = TILE_SIZE;
+
+	// 행렬을 아나 실제로는 타일 idx로 접근해야함
+	// 왜냐하면 우리가 2차원으로 선언 안해놨자나
+	// idx = (타일 개수 * row) + col
+	int iLTCol = static_cast<int>(vLeftTop.x) / iTileSize;
+	int iLTRow = static_cast<int>(vLeftTop.y) / iTileSize;
+	//int iLTIdx = m_iTileX * iLTRow + iLTCol;
+
+	// 가로 세로에 들어갈 수 있는 최대 타일 개수
+	// 끝에 짤리면 +1
+	int iClientWidth = (static_cast<int>(m_vResolution.x) / iTileSize);
+	int iClientHeight = (static_cast<int>(m_vResolution.y) / iTileSize);
+
+	for (int iCurRow = iLTRow; iCurRow < (iLTRow + iClientHeight); ++iCurRow)
+	{
+		for (int iCurCol = iLTCol; iCurCol < (iLTCol + iClientWidth); ++iCurCol)
+		{
+			// 찍으려는 영역엥서 삐져나가면 인덱스 계산 및 렌더를 안함
+			if (iCurCol < 0 || iCurCol >= m_iTileX ||
+				iCurRow < 0 || iCurRow >= m_iTileY)
+			{
+				continue;
+			}
+
+
+			// for문 내 타일의 idx 구한것 
+			int iIdx = (m_iTileX * iCurRow) + iCurCol;
+
+			vecTile[iIdx]->render(_dc);
+			
+		}
+	}
+
 }
 
 void CScene::CreateTile(UINT _iXCount, UINT _iYCount)

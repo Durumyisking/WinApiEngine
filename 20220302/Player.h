@@ -21,7 +21,7 @@ protected:
 
 	CAnimation*		m_pAnim;
 
-	double			m_dPrevTime; // 평타 쿨타임
+	double			m_dAttackDealy; // 평타 쿨타임
 
 	vector<CItem*>	m_vInventory;
 	CItem*			m_GetItemCheck;
@@ -31,6 +31,8 @@ protected:
 	float			m_fAcc;
 	float			m_fMaxAcc;
 	float			m_fPrevSpeed;
+
+	float			m_finvincibilityTime;
 
 	float			m_arrMoveDir[(UINT)DIR::END];
 
@@ -66,5 +68,6 @@ private:
 
 	friend class CBody;
 	friend class CHead;
+	friend class CHeart;
 };
 

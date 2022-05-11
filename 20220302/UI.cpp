@@ -20,6 +20,7 @@ CUI::CUI(bool _bCamAff)
 	, m_bCameAffected(_bCamAff)
 	, m_bMouseOn(false)
 	, m_pTex(nullptr)
+	, m_vSlice(Vec2(0, 0))
 {
 }
 CUI::CUI(const CUI& _origin)
@@ -29,6 +30,7 @@ CUI::CUI(const CUI& _origin)
 	, m_bMouseOn(false)
 	, m_bLbtnDown(false)
 	, m_pTex(nullptr)
+	, m_vSlice(Vec2(0, 0))
 {
 	for (size_t i = 0; i < _origin.m_vecChildUI.size(); ++i)
 		AddChild(_origin.m_vecChildUI[i]->Clone());
@@ -85,8 +87,14 @@ void CUI::render(HDC _dc)
 		int iWidth = (int)m_pTex->GetWidth();
 		int iHeight = (int)m_pTex->GetHeight();
 
-		StretchBlt(_dc, static_cast<int>(vPos.x), static_cast<int>(vPos.y), static_cast<int>(vScale.x), static_cast<int>(vScale.y)
-			, m_pTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x), static_cast<int>(vPos.y)
+			, static_cast<int>(vScale.x) * 2, static_cast<int>(vScale.y) * 2
+			, m_pTex->GetDC(), GetScale().x * m_vSlice.x, GetScale().y * m_vSlice.y
+			, static_cast<int>(vScale.x) , static_cast<int>(vScale.y)
+			, RGB(255, 0, 255));
+
+
 
 	}
 	else if (m_bLbtnDown)

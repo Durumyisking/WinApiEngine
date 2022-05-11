@@ -6,6 +6,9 @@ class CHead :
 private:
 	wstring		m_strAnimName;
 
+
+
+
 public:
 	CHead();
 	~CHead();
