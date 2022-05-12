@@ -26,6 +26,9 @@
 #include"PanelUI.h"
 #include"BtnUI.h"
 
+#include "AI.h"
+#include "IdleState.h"
+#include "TraceState.h"
 
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
@@ -62,9 +65,28 @@ void CScene_Start::Enter()
 	AddDoor(DIR::S);
 	AddWall();
 
+	// 몬스터 생성
+	int m_iMonsterCount = 1;
+	float fMonScale = 30.f;
 
-	round(213);
+	CMonster* pMonsterObj = nullptr;
 
+	pMonsterObj = new CMonster;
+	pMonsterObj->SetName(L"Monster");
+	pMonsterObj->SetScale(Vec2(fMonScale, fMonScale));
+	pMonsterObj->SetPos(m_vResolution / 4.f);
+
+	// 몬스터 ai 세팅
+	CAI* pAI = new CAI;
+	pAI->AddState(new CIdleState);
+	pAI->AddState(new CTraceState);
+
+	pAI->SetCurState(MON_STATE::IDLE);
+	pMonsterObj->SetAI(pAI);
+
+	AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
+
+	// ui 세팅
 	int iHeartSize = objPlayer->GetStat().m_iMaxHP / 2;
 	for (int i = 0; i < iHeartSize; ++i)
 	{
@@ -80,7 +102,7 @@ void CScene_Start::Enter()
 	// 충돌 지정
 
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
-	//CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PROJ_MONSTER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PROJ_MONSTER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::WALL);
@@ -90,7 +112,7 @@ void CScene_Start::Enter()
 
 
 	// 카메라 효과 지정
-	CCamera::GetInst()->FadeIn(2.f);
+	CCamera::GetInst()->FadeIn(1.f);
 
 }
 

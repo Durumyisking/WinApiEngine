@@ -3,11 +3,6 @@
 class CHead :
 	public CPlayer
 {
-private:
-	wstring		m_strAnimName;
-
-
-
 
 public:
 	CHead();
@@ -17,5 +12,10 @@ public:
 public:
 	virtual void update();
 	virtual void CreateMissile(Vec2 _vDir);
+
+public:
+	virtual void OnCollision(CCollider* _pOther);
+	virtual void OnCollisionEnter(CCollider* _pOther);
+	virtual void OnCollisionExit(CCollider* _pOther);
 };
 

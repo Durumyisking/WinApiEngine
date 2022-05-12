@@ -70,9 +70,10 @@ void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOf
 
 	_pAnim = GetAnimator()->FindAnimation(_AnimName);
 
-	for (UINT i = 0; i < _pAnim->GetMaxFrame(); ++i)
+	for (UINT i = 0; i < (UINT)_pAnim->GetMaxFrame(); ++i)
 		_pAnim->GetFrame(i).vOffset = Vec2(_vOffset);
 }
+
 
 void CObject::finalupdate()
 {

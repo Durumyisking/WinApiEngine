@@ -3,6 +3,7 @@
 #include"Texture.h"
 
 class CAnimation;
+class CTexture;
 class CItem;
 class CBody;
 class CHead;
@@ -19,8 +20,6 @@ private:
 protected:
 	Stat stat;
 
-	CAnimation*		m_pAnim;
-
 	double			m_dAttackDealy; // 평타 쿨타임
 
 	vector<CItem*>	m_vInventory;
@@ -35,6 +34,13 @@ protected:
 	float			m_finvincibilityTime;
 
 	float			m_arrMoveDir[(UINT)DIR::END];
+
+
+
+	CTexture*		m_pTex;
+	CAnimation*		m_pAnim;
+	wstring			m_strAnimName;
+
 
 public:
 	CPlayer();

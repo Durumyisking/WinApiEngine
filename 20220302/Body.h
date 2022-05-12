@@ -4,7 +4,6 @@ class CBody :
 	public CPlayer
 {
 private:
-	wstring		m_strAnimName;
 	float		m_fAnimFrame;
 
 
@@ -17,6 +16,12 @@ public:
 public:
 	virtual void update();
 
+
+
+public:
+	virtual void OnCollision(CCollider* _pOther);
+	virtual void OnCollisionEnter(CCollider* _pOther);
+	virtual void OnCollisionExit(CCollider* _pOther);
 
 public:
 	float GetAnimFrame() const { return m_fAnimFrame; }

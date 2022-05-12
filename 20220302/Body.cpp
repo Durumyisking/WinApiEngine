@@ -11,16 +11,15 @@
 #include "TimeMgr.h"
 
 CBody::CBody()
-	:  m_strAnimName(L"BODY_IDLE")
-	, m_fAnimFrame(0.05f)
+	: m_fAnimFrame(0.05f)
 
 {
 
 	SetScale(Vec2(54.f, 39.f));
 
 	// isaac body
-	CTexture* m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 
+	m_strAnimName = L"BODY_IDLE";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"BODY_IDLE", m_pTex, Vec2(15.f, 80.f), Vec2(18.f, 15.f), Vec2(32.f, 0.f), 0.5f, 1, false);
 
@@ -42,6 +41,12 @@ CBody::~CBody()
 void CBody::update()
 {
 	CPlayer::update();
+
+	if (m_finvincibilityTime > 0.5f)
+	{
+		m_strAnimName = L"BODY_IDLE";
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+	}
 
 	if (KEY_HOLD(KEY::W))
 	{
@@ -78,6 +83,27 @@ void CBody::update()
 		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
 	}
 
+}
+
+void CBody::OnCollision(CCollider * _pOther)
+{
+
+	CObject* pOtherObj = _pOther->GetObj();
+
+	// monster
+	if (L"Monster" == pOtherObj->GetName())
+	{
+		GetAnimator()->Play(m_strAnimName, false);
+	}
+
+}
+
+void CBody::OnCollisionEnter(CCollider * _pOther)
+{
+}
+
+void CBody::OnCollisionExit(CCollider * _pOther)
+{
 }
 
 

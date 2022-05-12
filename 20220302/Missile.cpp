@@ -17,14 +17,12 @@
 #include "Animation.h"
 #include "Animator.h"
 
-CMissile::CMissile()
+CMissile::CMissile(float _fSpeed, int _iDmg)
 	: m_fTheta(static_cast<float>(PI / 2.f))
 	, m_vDir(Vec2(0.f, -1.f))
-	, m_vStartvec(Vec2(0.f, 0.f))
 	, m_eType(MISSILE_TYPE::DEFAULT)
-	, m_fModifyXDir(0.1f)
-	, m_fModifyYDir(0.f)
-	, m_fSpeed(300.f)
+	, m_fSpeed(_fSpeed)
+	, m_iDmg(_iDmg)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"TEAR_IDLE")
 {
@@ -50,15 +48,6 @@ CMissile::~CMissile()
 }
 
 
-void CMissile::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset)
-{
-	GetAnimator()->Play(_AnimName	, true);
-
-	_pAnim = GetAnimator()->FindAnimation(_AnimName);
-
-	for (UINT i = 0; i < (UINT)_pAnim->GetMaxFrame(); ++i)
-		_pAnim->GetFrame(i).vOffset = Vec2(_vOffset);
-}
 
 
 void CMissile::update()
@@ -109,7 +98,6 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 	vMissilePos.y -= GetScale().y / 2.f;
 
 	SetPos(vMissilePos);
-	SetStartVec(Vec2(vMissilePos));
 	SetScale(Vec2(100.f, 80.f));
 
 	switch (_eType)
@@ -118,7 +106,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 		SetType(MISSILE_TYPE::DEFAULT);
 		if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
 		{
-			SetName(L"Missile_Player");
+			SetName(L"Tear_Player");
 		}
 
 		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)

@@ -5,6 +5,10 @@
 #include "TimeMgr.h"
 #include "ResMgr.h"
 #include "Camera.h"
+#include "AI.h"
+
+
+
 CMonster::CMonster()
 	: stat{ 30, 30, 1, 400.f, 0.38f }
 	, m_pAnim(nullptr)
@@ -12,20 +16,30 @@ CMonster::CMonster()
 	, m_fAcc(0.f)
 
 {
+	SetName(L"Monster");
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 	GetCollider()->SetScale(Vec2(30.f, 30.f));
 }
 CMonster::~CMonster()
 {
+	if (nullptr != m_pAI)
+	{
+		delete m_pAI;
+	}
 }
+
+
 void CMonster::Attack(MISSILE_TYPE _eType)
 {
-	CMissile* pMissile = new CMissile;
-	pMissile->CreateMissile(_eType, GetPos(), GROUP_TYPE::PROJ_MONSTER);
+
+
 }
+
+
 void CMonster::update()
 {
+	m_pAI->update();
 	
 	Vec2 vCurPos = GetPos();
 
@@ -58,12 +72,23 @@ void CMonster::OnCollision(CCollider * _pOther)
 void CMonster::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	if (L"Missile_Player" == pOtherObj->GetName())
+
+	if (L"Tear_Player" == pOtherObj->GetName())
 	{
+		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
+
+		stat.m_iHP -= pMissileObj->GetDmg();
+
 		if (0 >= stat.m_iHP)
 			DeleteObject(this);
 	}
 }
 void CMonster::OnCollisionExit(CCollider * _pOther)
 {
+}
+
+void CMonster::SetAI(CAI * _pAI)
+{
+	m_pAI = _pAI;
+	m_pAI->m_pOwner = this;
 }

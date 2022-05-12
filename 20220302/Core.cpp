@@ -45,7 +45,8 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 
 
 	
-	RECT rt = { 0.f, 0.f, m_vResolution.x, m_vResolution.y };
+	RECT rt = { static_cast<long>(0.f), static_cast<long>(0.f)
+		, static_cast<long>(m_vResolution.x), static_cast<long>(m_vResolution.y) };
 	
 	
 	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, true); 

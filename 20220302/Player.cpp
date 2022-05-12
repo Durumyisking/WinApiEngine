@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.h"
+#include "Monster.h"
 #include"Missile.h"
 #include "Door.h"
 #include "Scene.h"
@@ -24,12 +25,22 @@ CPlayer::CPlayer()
 	, m_ePrevDoorDir(DIR::END)
 	, m_pAnim(nullptr)
 	, m_pOwner(nullptr)
-	, stat{ 6, 6, 5, 400.f, 0.38f }
+	, m_pTex(nullptr)
+	, stat{ 6, 6, 5, 400.f, 0.38f}
 	, m_fAcc(0.f)
 	, m_fMaxAcc(1.f)
 	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
 	, m_finvincibilityTime(1.f)
 {
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
+
+
+	// 0 325   48 37
+	m_strAnimName = L"Hurt";
+
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
+
 
 }
 
@@ -42,6 +53,14 @@ CPlayer::~CPlayer()
 void CPlayer::update()
 {
 	m_dAttackDealy += fDT;
+
+	if(m_finvincibilityTime <= 0.f || m_finvincibilityTime > 1.f)
+		m_finvincibilityTime += fDT;
+
+	if (m_finvincibilityTime > 0.5f)
+	{
+		GetAnimator()->Play(m_strAnimName, false);
+	}
 
 
 	Vec2 vPos = GetPos();
@@ -144,7 +163,22 @@ void CPlayer::init()
 
 void CPlayer::OnCollision(CCollider * _pOther)
 {
+	CObject* pOtherObj = _pOther->GetObj();
 
+	// monster
+	if (L"Monster" == pOtherObj->GetName())
+	{
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+
+		CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
+
+		if (m_finvincibilityTime >= 1.f)
+		{
+			stat.m_iHP -= pMonster->GetStat().m_iDmg;
+			m_finvincibilityTime = 0.f;
+		}
+
+	}
 
 }
 
@@ -189,10 +223,10 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 	}
 
-
+	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		CWallCollider* pWall = (CWallCollider*)pOtherObj;
+		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 		
 		switch (pWall->GetDir())
 		{
@@ -215,12 +249,14 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	}
 	
 	// item
-	else if (L"Item" == pOtherObj->GetName())
+	if (L"Item" == pOtherObj->GetName())
 	{
-		m_vInventory.push_back((CItem*)pOtherObj);
-		m_GetItemCheck = (CItem*)pOtherObj;
-
+		CItem* pItem = dynamic_cast<CItem*>(pOtherObj);
+		m_vInventory.push_back(pItem);
+		m_GetItemCheck = pItem;
 	}
+	
+	
 	
 }
 

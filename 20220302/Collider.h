@@ -50,10 +50,10 @@ public:
 	Vec2 GetFinalPos() { return m_vFinalPos; }
 
 
-	CObject* GetObj() { return m_pOwner; }
-	Vec2 GetOffsetPos() { return m_vOffsetPos; }
-	Vec2 GetScale() { return m_vScale; }
-	UINT GetID() { return m_iID; }
+	CObject* GetObj() const { return m_pOwner; }
+	Vec2 GetOffsetPos() const { return m_vOffsetPos; }
+	Vec2 GetScale() const { return m_vScale; }
+	UINT GetID() const { return m_iID; }
 
 
 

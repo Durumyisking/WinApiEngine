@@ -143,8 +143,8 @@ void CScene::renderTile(HDC _dc)
 		for (int iCurCol = iLTCol; iCurCol < (iLTCol + iClientWidth); ++iCurCol)
 		{
 			// ÂïÀ¸·Á´Â ¿µ¿ª¿¨¼­ »ßÁ®³ª°¡¸é ÀÎµ¦½º °è»ê ¹× ·»´õ¸¦ ¾ÈÇÔ
-			if (iCurCol < 0 || iCurCol >= m_iTileX ||
-				iCurRow < 0 || iCurRow >= m_iTileY)
+			if (iCurCol < 0 || iCurCol >= static_cast<int>(m_iTileX) ||
+				iCurRow < 0 || iCurRow >= static_cast<int>(m_iTileY))
 			{
 				continue;
 			}

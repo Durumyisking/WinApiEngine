@@ -23,7 +23,6 @@ private: // 우리가 자체적으로 동적할당 불가능하게 private으로 함
 								// 자식 클래스에서 실수로 void Test(float value) override; 라 선언했을 때 오류를 발생시킴
 
 public:
-	// modern C++에서 복사 이동의 생성자와 연산자를 명시적으로 선언해주라고 추천함
 	// modern C++에서 복사 / 이동의 생성자와 대입 연산자를 명시적으로 선언해주라고 추천함
 	// 'constructors of the rule of 5' 라고 함
 	// 당장 필요치 않을 때는 delete 키워드를 사용해서 명시적으로 삭제한 뒤

@@ -167,3 +167,13 @@ enum class DIR
 {
 	E,W,S,N, END
 };
+
+enum class MON_STATE
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATTACK,
+	AWAY,
+	DEAD,
+};

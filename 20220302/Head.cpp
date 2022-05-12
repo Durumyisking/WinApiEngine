@@ -13,15 +13,14 @@
 
 
 CHead::CHead()
-	: m_strAnimName(L"HEAD_IDLE")
 {
 	SetScale(Vec2(84.f, 75.f));
+
 
 	// 애니메이션 생성
 
 	// isaac head
-	CTexture* m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
-
+	m_strAnimName = L"HEAD_IDLE";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"HEAD_IDLE", m_pTex, Vec2(10.f, 25.f), Vec2(28.f, 26.f), Vec2(40.f, 0.f), 0.5f, 1, false);
 
@@ -43,10 +42,17 @@ CHead::~CHead()
 }
 
 
+
 void CHead::update()
 {
 
 	CPlayer::update();
+
+	if (m_finvincibilityTime > 0.5f)
+	{
+		m_strAnimName = L"HEAD_IDLE";
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+	}
 
 	// 문제점
 	// 이동하면서 눈물쏠때 조건식 순서대로 우선순위가 작용함
@@ -124,11 +130,34 @@ void CHead::update()
 	}
 }
 
+
+
+void CHead::OnCollision(CCollider * _pOther)
+{
+
+	CObject* pOtherObj = _pOther->GetObj();
+
+	// monster
+	if (L"Monster" == pOtherObj->GetName())
+	{
+		GetAnimator()->Play(m_strAnimName, false);
+	}
+
+}
+
+void CHead::OnCollisionEnter(CCollider * _pOther)
+{
+}
+
+void CHead::OnCollisionExit(CCollider * _pOther)
+{
+}
+
 void CHead::CreateMissile(Vec2 _vDir)
 {
 	if (m_dAttackDealy > stat.m_fRate)
 	{
-		CMissile* pMissile = new CMissile;
+		CMissile* pMissile = new CMissile(stat.m_fSpeed, stat.m_iDmg);
 		pMissile->SetDir(_vDir);
 		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GetPos(), GROUP_TYPE::PROJ_PLAYER);
 

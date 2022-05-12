@@ -35,9 +35,6 @@ protected:
 	// 이전 방 기준 방의 위치
 	Vec2				m_vResolution;
 
-	// 몬스터 수
-	UINT				m_iMonsterCount;
-
 	// 인접한 방
 	SCENE_TYPE			m_eAdjacencyRoom[(UINT)DIR::END];
 
@@ -65,10 +62,6 @@ public:
 
 	UINT GetTileX() { return m_iTileX; }
 	UINT GetTileY() { return m_iTileY; }
-
-	UINT GetMonsterCount() { return m_iMonsterCount;}
-	UINT SetMonsterCount(UINT _iMonsterCount) { m_iMonsterCount = _iMonsterCount; }
-
 
 
 	// 원본을 참조후 원본에 손상이 안가게 const 붙임
