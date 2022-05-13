@@ -90,11 +90,11 @@ void CBody::OnCollision(CCollider * _pOther)
 
 	CObject* pOtherObj = _pOther->GetObj();
 
-	// monster
-	if (L"Monster" == pOtherObj->GetName())
-	{
-		GetAnimator()->Play(m_strAnimName, false);
-	}
+	//// monster
+	//if (L"Monster" == pOtherObj->GetName())
+	//{
+	//	GetAnimator()->Play(m_strAnimName, false);
+	//}
 
 }
 

@@ -24,6 +24,7 @@ private:
 								// 그래서 복사 생성자를 직접 만들어주어 복사할때도 nextid를 가지게한다
 	int		m_iCol;				// 충돌 갯수
 
+	bool	m_bOnCollider;
 
 public:
 	CCollider();
@@ -55,6 +56,8 @@ public:
 	Vec2 GetScale() const { return m_vScale; }
 	UINT GetID() const { return m_iID; }
 
+	bool isColliderOn() const { return m_bOnCollider; }
+	void SetColliderOn (bool _bOnCollider) { m_bOnCollider = _bOnCollider; }
 
 
 	

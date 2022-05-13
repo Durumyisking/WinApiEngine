@@ -22,6 +22,7 @@ CCollider::CCollider(const CCollider & _origin)
 	,m_vOffsetPos(_origin.m_vOffsetPos)
 	,m_vScale(_origin.m_vScale)
 	,m_iID(g_iNextID)
+	,m_bOnCollider(true)
 {
 	// 디폴트 대입연산자가 발생했을때 id가 복사되는 오류가 생김
 	// 그런데 어차피 collider끼리 대입연산이 발생할 이유가 없음
@@ -69,19 +70,26 @@ void CCollider::render(HDC _dc)
 
 void CCollider::OnCollision(CCollider * _pOther)
 {
-	m_pOwner->OnCollision(_pOther);
+	if(m_bOnCollider)
+		m_pOwner->OnCollision(_pOther);
 }
 
 void CCollider::OnCollisionEnter(CCollider * _pOther)
 {
-	++m_iCol;
-	m_pOwner->OnCollisionEnter(_pOther);
+	if (m_bOnCollider)
+	{
+		++m_iCol;
+		m_pOwner->OnCollisionEnter(_pOther);
+	}
 }
 
 void CCollider::OnCollisionExit(CCollider * _pOther)
 {
-	--m_iCol;
-	m_pOwner->OnCollisionExit(_pOther);
+	if (m_bOnCollider)
+	{
+		--m_iCol;
+		m_pOwner->OnCollisionExit(_pOther);
+	}
 }
 
 
