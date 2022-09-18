@@ -87,7 +87,7 @@ void CScene_Start::Enter()
 	AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
 
 	// ui 세팅
-	int iHeartSize = objPlayer->GetStat()->m_iMaxHP / 2;
+	int iHeartSize = objPlayer->GetStat().m_iMaxHP / 2;
 	for (int i = 0; i < iHeartSize; ++i)
 	{
 		CUI* pHeartUI = new CHeart(i + 1);
@@ -144,19 +144,10 @@ void CScene_Start::update()
 		CCamera::GetInst()->SetLookAt(vLookAt);
 	}
 
-	// 풀피일때 else if문 실행하면 idx 초과하니까 풀피일때 제외함
-	if (!(m_pPlayer->GetStat()->m_iHP == m_pPlayer->GetStat()->m_iMaxHP))
+	int iIdx = m_pPlayer->GetStat().m_iHP / 2;
+	if (1 == m_pPlayer->GetStat().m_iHP % 2)
 	{
-		int iIdx = m_pPlayer->GetStat()->m_iHP / 2;
-		if (1 == m_pPlayer->GetStat()->m_iHP % 2)
-		{
-			vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
-		}
-		else if (0 == m_pPlayer->GetStat()->m_iHP % 2)
-		{
-			// 2로 나눴을때 0이됐을때의 몫은 빈 하트가 되야하는 idx 
-			vecHeartUI[iIdx]->SetSlice(Vec2(2, 0));
-		}
+		vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
 	}
 }
 

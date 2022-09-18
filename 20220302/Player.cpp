@@ -26,12 +26,11 @@ CPlayer::CPlayer()
 	, m_pAnim(nullptr)
 	, m_pOwner(nullptr)
 	, m_pTex(nullptr)
-	, stat(nullptr)
+	, stat{ 6, 6, 5, 400.f, 0.38f}
 	, m_fAcc(0.f)
 	, m_fMaxAcc(1.f)
-	, m_arrMoveDir{ 1.f, 1.f , 1.f , 1.f }
+	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
 	, m_finvincibilityTime(1.f)
-	, m_bHit(false)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 
@@ -41,6 +40,7 @@ CPlayer::CPlayer()
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
+
 
 }
 
@@ -54,23 +54,14 @@ void CPlayer::update()
 {
 	m_dAttackDealy += fDT;
 
-
-	// 무적 애니메이션은 0.5초후 취소
-	// 무적 시간은 1초
-	if (m_finvincibilityTime < 1.f)
+	if(m_finvincibilityTime <= 0.f || m_finvincibilityTime > 1.f)
 		m_finvincibilityTime += fDT;
+
 	if (m_finvincibilityTime > 0.5f)
 	{
-		SetHit(false);
+		GetAnimator()->Play(m_strAnimName, false);
 	}
-	// 바디랑 헤드는 콜라이더 없으니까 예외처리
-	if (nullptr == m_pOwner)
-	{
-		if (m_finvincibilityTime >= 1.0f)
-			GetCollider()->SetColliderOn(true);
-		if (m_finvincibilityTime > 0.5f)
-			GetAnimator()->Play(m_strAnimName, false);
-	}
+
 
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
@@ -81,7 +72,7 @@ void CPlayer::update()
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.y -= stat->m_fSpeed * m_fAcc * fDT;
+		vPos.y -= stat.m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::S))
 	{
@@ -89,21 +80,21 @@ void CPlayer::update()
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.y += stat->m_fSpeed * m_fAcc * fDT;
+		vPos.y += stat.m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::A)) {
 		if (m_fAcc < m_fMaxAcc)
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.x -= stat->m_fSpeed * m_fAcc * fDT;
+		vPos.x -= stat.m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::D)) {
 		if (m_fAcc < m_fMaxAcc)
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.x += stat->m_fSpeed * m_fAcc * fDT;
+		vPos.x += stat.m_fSpeed * m_fAcc * fDT;
 	}
 
 	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
@@ -112,10 +103,6 @@ void CPlayer::update()
 		if (m_fAcc > 0.f)
 			m_fAcc -= 0.05f;
 	}
-
-	// dead
-	if(0 == stat->m_iHP)
-		DeleteObject(this);
 
 
 
@@ -143,10 +130,7 @@ void CPlayer::update()
 
 void CPlayer::render(HDC _dc)
 {
-	if (!IsHit())
-	{
-		component_render(_dc);
-	}
+	component_render(_dc);
 }
 
 
@@ -159,16 +143,13 @@ void CPlayer::init()
 	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
 	GetCollider()->SetScale(Vec2(40.f, 30.f));
 
+
 	pBody = new CBody;
 	pHead = new CHead;
 	
 	pBody->SetOwner(this);
 	pHead->SetOwner(this);
 
-	newstat = { 6, 6, 5, 400.f, 0.38f };
-
-	stat = &newstat;
-	
 	pBody->SetStat(stat);
 	pHead->SetStat(stat);
 
@@ -191,14 +172,11 @@ void CPlayer::OnCollision(CCollider * _pOther)
 
 		CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
 
-		DeadCheck();
-
-		SetHit(true);
-		stat->m_iHP -= pMonster->GetStat().m_iDmg;
-		m_finvincibilityTime = 0.f;
-		GetCollider()->SetColliderOn(false);
-
-		
+		if (m_finvincibilityTime >= 1.f)
+		{
+			stat.m_iHP -= pMonster->GetStat().m_iDmg;
+			m_finvincibilityTime = 0.f;
+		}
 
 	}
 
@@ -321,7 +299,7 @@ void CPlayer::CreateMissile(Vec2 _vDir)
 
 void CPlayer::ItemCheck()
 {
-	*stat += m_GetItemCheck->GetStat();
+	stat += m_GetItemCheck->GetStat();
 
 
 	pBody->SetStat(this->stat);

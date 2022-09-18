@@ -18,9 +18,7 @@ private:
 
 
 protected:
-	Stat* stat;
-	Stat newstat;
-
+	Stat stat;
 
 	double			m_dAttackDealy; // ÆòÅ¸ ÄðÅ¸ÀÓ
 
@@ -37,7 +35,7 @@ protected:
 
 	float			m_arrMoveDir[(UINT)DIR::END];
 
-	bool			m_bHit;
+
 
 	CTexture*		m_pTex;
 	CAnimation*		m_pAnim;
@@ -52,19 +50,10 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 
-	Stat* GetStat() const { return stat; }
-	void SetStat(Stat* _playerstat) { stat = _playerstat; }
+	Stat GetStat() const { return stat; }
+	void SetStat(Stat _playerstat) { stat = _playerstat; }
 
 	void SetOwner(CPlayer* _pPlayer) { m_pOwner = _pPlayer; }
-
-	bool IsHit() { return m_bHit; }
-	void SetHit(bool _bHit) { m_bHit = _bHit; }
-
-	void DeadCheck() 
-	{ 	
-		if (0 == stat->m_iHP)
-			DeleteObject(this);
-	}
 
 public:
 	void init();
