@@ -8,6 +8,8 @@ CPickupKey::CPickupKey()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PickupKeyTex", L"texture\\Pickup\\pickup_003_key.bmp");
 
+	m_eType = PICKUP_TYPE::KEY;
+
 	SetName(L"PickupKey");
 	m_strAnimName = L"PickupKey";
 	SetScale(Vec2(32.f, 64.f));
@@ -30,13 +32,7 @@ void CPickupKey::OnCollision(CCollider * _pOther)
 {
 }
 
-void CPickupKey::OnCollisionEnter(CCollider * _pOther)
-{
-	CObject* pOtherObj = _pOther->GetObj();
-	if (L"Player" == pOtherObj->GetName())
-		DeleteObject(this);
 
-}
 
 void CPickupKey::OnCollisionExit(CCollider * _pOther)
 {

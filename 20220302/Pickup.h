@@ -13,6 +13,8 @@ protected:
 	CAnimation*		m_pAnim;
 	wstring			m_strAnimName;
 
+	PICKUP_TYPE		m_eType;
+
 public:
 	CPickup();
 	~CPickup();

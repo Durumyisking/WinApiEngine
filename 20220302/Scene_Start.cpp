@@ -30,6 +30,7 @@
 #include "IdleState.h"
 #include "TraceState.h"
 
+#include "PickupUI.h"
 #include "PickupCount.h"
 #include "PickupHeart.h"
 #include "PickupKey.h"
@@ -82,13 +83,27 @@ void CScene_Start::Enter()
 
 	// 픽업 생성
 	CObject* pHeart = new CPickupHeart;
-	pHeart->SetName(L"PickupHeart");
-	pHeart->SetScale(pHeart->GetScale());
-	pHeart->SetPos(Vec2(400.f, 400.f));
+	pHeart->SetPos(Vec2(300.f, 400.f));
+
+	CObject* pCoin = new CPickupCoin;
+	pCoin->SetPos(Vec2(300.f, 500.f));
+
+	CObject* pBomb = new CPickupBomb;
+	pBomb->SetPos(Vec2(500.f, 400.f));
+
+	CObject* pKey = new CPickupKey;
+	pKey->SetPos(Vec2(500.f, 500.f));
 	
 	AddObject(pHeart, GROUP_TYPE::PICKUP);
+	AddObject(pCoin, GROUP_TYPE::PICKUP);
+	AddObject(pBomb, GROUP_TYPE::PICKUP);
+	AddObject(pKey, GROUP_TYPE::PICKUP);
+
+	
 
 	// ui 세팅
+	
+	// 체력 ui
 	int iHeartSize = objPlayer->GetStat()->m_iMaxHP / 2;
 	for (int i = 0; i < iHeartSize; ++i)
 	{
@@ -97,13 +112,24 @@ void CScene_Start::Enter()
 		AddObject(pHeartUI, GROUP_TYPE::UI);
 	}
 
-	CUI* pPickupCount[3];
 	// 픽업 카운트
 	// 1 = 코인 2 = 폭탄 3 = 열쇠
+
+	// 픽업 타입
+	CUI* pPickupType[3];
 	for (size_t i = 1; i < 4; i++)
 	{
-		pPickupCount[i-1] = new CPickupCount(static_cast<PICKUP_TYPE>(i));
-		AddObject(pPickupCount[i-1], GROUP_TYPE::UI);
+		pPickupType[i - 1] = new CPickupUI(static_cast<PICKUP_TYPE>(i));
+		AddObject(pPickupType[i - 1], GROUP_TYPE::UI);
+		pPickupType[i - 1]->SetSlice(Vec2(static_cast<int>((i-1) / 2), (i-1) % 2));
+	}
+	// 픽업 개수
+	CUI* pPickupCount[3];
+	for (size_t i = 1; i < 4; i++)
+	{
+		pPickupCount[i-1] = new CPickupCount(static_cast<PICKUP_TYPE>(i), m_pPlayer->GetPickup());
+		AddObject(pPickupCount[i - 1], GROUP_TYPE::UI);
+
 	}
 
 
@@ -158,6 +184,26 @@ void CScene_Start::update()
 	}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// UI처리
+	////////////////////////////////////////////////////////////////////
+
+
 	// 플레이어 HP처리
 	int iIdx = m_pPlayer->GetStat()->m_iHP / 2;
 
@@ -201,16 +247,6 @@ void CScene_Start::update()
 	}
 	
 
-
-	//if (1 == m_pPlayer->GetStat()->m_iHP % 2)
-	//{
-	//	vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
-	//}
-	//else if ((0 == m_pPlayer->GetStat()->m_iHP % 2))
-	//{
-	//	vecHeartUI[iIdx]->SetSlice(Vec2(2, 0));
-	//}
-	
 }
 
 

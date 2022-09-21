@@ -3,10 +3,8 @@
 class CPickupCount :
 	public CUI
 {
-private:
-	PICKUP_TYPE	m_eType;
 public:
-	CPickupCount(PICKUP_TYPE _eType);
+	CPickupCount(PICKUP_TYPE _eType, Pickup& _Pickup);
 	~CPickupCount();
 
 public:
@@ -14,5 +12,10 @@ public:
 	virtual void render(HDC _dc);
 
 	CLONE(CPickupCount);
+
+private:
+	PICKUP_TYPE	m_eType;
+	Pickup*		m_pPickup;
+
 };
 

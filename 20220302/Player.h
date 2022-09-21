@@ -58,6 +58,8 @@ public:
 	Stat* GetStat() const { return m_pStat; }
 	void SetStat(Stat* _playerstat) { m_pStat = _playerstat; }
 
+	Pickup& GetPickup()  { return m_Pickup; }
+
 	void SetOwner(CPlayer* _pPlayer) { m_pOwner = _pPlayer; }
 
 	UINT GetPrevHp() { return m_iPrevHp;}

@@ -8,6 +8,7 @@
 CPickupCoin::CPickupCoin()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PickupCoinTex", L"texture\\Pickup\\pickup_002_coin.bmp");
+	m_eType = PICKUP_TYPE::COIN;
 
 	SetName(L"PickupCoin");
 	m_strAnimName = L"PickupCoin";
@@ -33,13 +34,6 @@ void CPickupCoin::OnCollision(CCollider * _pOther)
 {
 }
 
-void CPickupCoin::OnCollisionEnter(CCollider * _pOther)
-{
-	CObject* pOtherObj = _pOther->GetObj();
-	if (L"Player" == pOtherObj->GetName())
-		DeleteObject(this);
-		
-}
 
 void CPickupCoin::OnCollisionExit(CCollider * _pOther)
 {

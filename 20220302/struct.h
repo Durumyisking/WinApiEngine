@@ -100,6 +100,7 @@ public:
 
 };
 
+/** 게임 캐릭터와 아이템들의 스펙 */
 struct Stat
 {
 	UINT		m_iMaxHP;
@@ -121,6 +122,7 @@ public:
 	}
 
 public:
+
 	void Heal(UINT _iValue)
 	{
 		if (m_iHP == m_iMaxHP - 1)
@@ -130,9 +132,10 @@ public:
 		else 
 			(*this).m_iHP += _iValue;
 	}
-	void InflictDamage(Stat* _pDetStat)
+	/** DestStat에 캐릭터 데미지만큼 피해를 입힙니다. */
+	void InflictDamage(Stat* _pDestStat)
 	{
-		_pDetStat->m_iHP -= (*this).m_iDmg;
+		_pDestStat->m_iHP -= (*this).m_iDmg;
 	}
 };
 
@@ -144,6 +147,18 @@ struct Pickup
 	UINT		m_iKey;
 
 public:
+	void SetCoin(int _iValue)
+	{
+		m_iCoin += _iValue;
+	}
+	void SetBomb(int _iValue)
+	{
+		m_iBomb += _iValue;
+	}
+	void SetKey(int _iValue)
+	{
+		m_iKey += _iValue;
+	}
 	Pickup operator += (Pickup _vOther)
 	{
 		(*this).m_iCoin += _vOther.m_iCoin;

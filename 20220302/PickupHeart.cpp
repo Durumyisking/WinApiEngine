@@ -10,6 +10,7 @@
 CPickupHeart::CPickupHeart()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PickupHeartTex", L"texture\\Pickup\\pickup_001_heart.bmp");
+	m_eType = PICKUP_TYPE::HEART;
 
 	SetName(L"PickupHeart");
 	m_strAnimName = L"PickupHeart";

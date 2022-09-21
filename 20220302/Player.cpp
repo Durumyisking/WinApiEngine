@@ -28,6 +28,7 @@ CPlayer::CPlayer()
 	, m_pOwner(nullptr)
 	, m_pTex(nullptr)
 	, m_pStat(nullptr)
+	, m_Pickup{}
 	, m_fAcc(0.f)
 	, m_fMaxAcc(1.f)
 	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
@@ -230,11 +231,6 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	}
 	
 
-	if (L"PickupHeart" == pOtherObj->GetName())
-	{
-		CPickup* pItem = dynamic_cast<CPickup*>(pOtherObj);
-
-	}
 	
 }
 
