@@ -116,8 +116,8 @@ void CScene_Tool::SetTileIdx()
 
 
 		// bmp에서 넘어갔을때 동작 안되게 처리
-		if (vMousePos.x < 0.f || iTileX <= iCol
-			|| vMousePos.y < 0.f || iTileY <= iRow)
+		if (vMousePos.x < 0.f || iTileX <= static_cast<UINT>(iCol)
+			|| vMousePos.y < 0.f || iTileY <= static_cast<UINT>(iRow))
 		{
 			return;
 		}

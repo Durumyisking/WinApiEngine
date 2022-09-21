@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Monster.h"
 #include "Missile.h"
-#include"Collider.h"
 #include "TimeMgr.h"
 #include "ResMgr.h"
 #include "Camera.h"
@@ -10,10 +9,11 @@
 
 
 CMonster::CMonster()
-	: stat{ 30, 30, 1, 400.f, 0.38f }
+	: m_Stat{}
 	, m_pAnim(nullptr)
 	, m_iDir(1)
 	, m_fAcc(0.f)
+	, m_pTex(nullptr)
 
 {
 	SetName(L"Monster");
@@ -49,20 +49,7 @@ void CMonster::update()
 
 void CMonster::render(HDC _dc)
 {
-	/*int iWidth = (int)m_pTex->GetWidth();
-	int iHeight = (int)m_pTex->GetHeight();
 
-	Vec2 vPos = GetPos();
-		
-	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
-
-	TransparentBlt(_dc
-		, (int)(vRenderPos.x - (float)(iWidth / 2))
-		, (int)(vRenderPos.y - (float)(iHeight / 2))
-		, iWidth, iHeight
-		, m_pTex->GetDC()
-		, 0, 0, iWidth, iHeight
-		, RGB(255, 0, 255));*/
 	component_render(_dc);
 }
 void CMonster::OnCollision(CCollider * _pOther)
@@ -77,9 +64,9 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 	{
 		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
 
-		stat.m_iHP -= pMissileObj->GetDmg();
+		m_Stat.m_iHP -= pMissileObj->GetDmg();
 
-		if (0 >= stat.m_iHP)
+		if (0 >= m_Stat.m_iHP)
 			DeleteObject(this);
 	}
 }

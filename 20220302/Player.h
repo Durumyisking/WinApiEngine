@@ -12,13 +12,14 @@ class CPlayer :
 	public CObject
 {
 private:
-	DIR m_ePrevDoorDir;
 	CBody* pBody;
 	CHead* pHead;
+	Pickup m_Pickup;
 
 
 protected:
-	Stat stat;
+	Stat*	m_pStat;
+	Stat	m_Stat;
 
 	double			m_dAttackDealy; // 평타 쿨타임
 
@@ -41,6 +42,10 @@ protected:
 	CAnimation*		m_pAnim;
 	wstring			m_strAnimName;
 
+	// 회복 계산을 위한 임시 hp
+	UINT			m_iPrevHp;
+
+
 
 public:
 	CPlayer();
@@ -50,10 +55,13 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 
-	Stat GetStat() const { return stat; }
-	void SetStat(Stat _playerstat) { stat = _playerstat; }
+	Stat* GetStat() const { return m_pStat; }
+	void SetStat(Stat* _playerstat) { m_pStat = _playerstat; }
 
 	void SetOwner(CPlayer* _pPlayer) { m_pOwner = _pPlayer; }
+
+	UINT GetPrevHp() { return m_iPrevHp;}
+	void SetPrevHp(UINT _Prevhp) { m_iPrevHp = _Prevhp; }
 
 public:
 	void init();

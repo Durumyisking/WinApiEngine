@@ -6,6 +6,7 @@
 #include "RigidBody.h"
 
 
+
 CPickupHeart::CPickupHeart()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PickupHeartTex", L"texture\\Pickup\\pickup_001_heart.bmp");
@@ -44,12 +45,21 @@ void CPickupHeart::OnCollisionEnter(CCollider * _pOther)
 		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
 
 		if (pPlayer->GetStat()->m_iHP != pPlayer->GetStat()->m_iMaxHP)
+		{
+			pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
+			pPlayer->GetStat()->Heal(2);
 			DeleteObject(this);
+		}
 	}
 }
 
 void CPickupHeart::OnCollisionExit(CCollider * _pOther)
 {
+}
+
+void CPickupHeart::GiveHpToPlayer(CPlayer* _pPlayer)
+{
+//	_pPlayer.
 }
 
 

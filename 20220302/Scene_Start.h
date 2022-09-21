@@ -12,6 +12,7 @@ private:
 	vector<CUI*> vecHeartUI;
 	CPlayer* m_pPlayer;
 
+
 public:
 	CScene_Start();
 	~CScene_Start();

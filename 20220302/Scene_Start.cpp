@@ -30,6 +30,14 @@
 #include "IdleState.h"
 #include "TraceState.h"
 
+#include "PickupCount.h"
+#include "PickupHeart.h"
+#include "PickupKey.h"
+#include "PickupCoin.h"
+#include "PickupBomb.h"
+
+
+
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
 
@@ -65,35 +73,41 @@ void CScene_Start::Enter()
 	AddDoor(DIR::S);
 	AddWall();
 
+
+
 	// 몬스터 생성
-	int m_iMonsterCount = 1;
-	float fMonScale = 30.f;
+	CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, m_vResolution / 4);
+	AddObject(pGaper, GROUP_TYPE::MONSTER);
 
-	CMonster* pMonsterObj = nullptr;
 
-	pMonsterObj = new CMonster;
-	pMonsterObj->SetName(L"Monster");
-	pMonsterObj->SetScale(Vec2(fMonScale, fMonScale));
-	pMonsterObj->SetPos(m_vResolution / 4.f);
-
-	// 몬스터 ai 세팅
-	CAI* pAI = new CAI;
-	pAI->AddState(new CIdleState);
-	pAI->AddState(new CTraceState);
-
-	pAI->SetCurState(MON_STATE::IDLE);
-	pMonsterObj->SetAI(pAI);
-
-	AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
+	// 픽업 생성
+	CObject* pHeart = new CPickupHeart;
+	pHeart->SetName(L"PickupHeart");
+	pHeart->SetScale(pHeart->GetScale());
+	pHeart->SetPos(Vec2(400.f, 400.f));
+	
+	AddObject(pHeart, GROUP_TYPE::PICKUP);
 
 	// ui 세팅
-	int iHeartSize = objPlayer->GetStat().m_iMaxHP / 2;
+	int iHeartSize = objPlayer->GetStat()->m_iMaxHP / 2;
 	for (int i = 0; i < iHeartSize; ++i)
 	{
 		CUI* pHeartUI = new CHeart(i + 1);
 		vecHeartUI.push_back(pHeartUI);
 		AddObject(pHeartUI, GROUP_TYPE::UI);
 	}
+
+	CUI* pPickupCount[3];
+	// 픽업 카운트
+	// 1 = 코인 2 = 폭탄 3 = 열쇠
+	for (size_t i = 1; i < 4; i++)
+	{
+		pPickupCount[i-1] = new CPickupCount(static_cast<PICKUP_TYPE>(i));
+		AddObject(pPickupCount[i-1], GROUP_TYPE::UI);
+	}
+
+
+
 
 	// 타일 로딩
 	// LoadTile(L"Tile\\start.tile");
@@ -103,9 +117,10 @@ void CScene_Start::Enter()
 
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PROJ_MONSTER);
-	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::WALL);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PICKUP);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_PLAYER);
 
 	
@@ -135,8 +150,6 @@ void CScene_Start::update()
 		ChangeScene(SCENE_TYPE::TOOL);
 	}
 
-
-
 	// 카메라 전환
 	if (KEY_TAP(KEY::LBTN))
 	{
@@ -144,11 +157,60 @@ void CScene_Start::update()
 		CCamera::GetInst()->SetLookAt(vLookAt);
 	}
 
-	int iIdx = m_pPlayer->GetStat().m_iHP / 2;
-	if (1 == m_pPlayer->GetStat().m_iHP % 2)
+
+	// 플레이어 HP처리
+	int iIdx = m_pPlayer->GetStat()->m_iHP / 2;
+
+	// 풀피일때는 idx 초과 오류가 발생할수 있음
+	if (m_pPlayer->GetStat()->m_iHP == m_pPlayer->GetStat()->m_iMaxHP)
+		--iIdx;
+	
+	// 체력 홀수일때 반칸 hp
+	if (1 == m_pPlayer->GetStat()->m_iHP % 2)
 	{
-		vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
+		// 체력을 회복했을때
+		if (m_pPlayer->GetStat()->m_iHP >= m_pPlayer->GetPrevHp())
+		{
+			// 이전칸 꽉찬하트 현재칸 반칸하트
+			vecHeartUI[iIdx - 1]->SetSlice(Vec2(0, 0));
+			vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
+
+		}
+		else
+			vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
 	}
+
+	// 짝수일때
+	if (0 == m_pPlayer->GetStat()->m_iHP % 2)
+	{
+		// 체력을 회복했을때
+		if (m_pPlayer->GetStat()->m_iHP >= m_pPlayer->GetPrevHp())
+		{
+			// 풀피면 최상위 인덱스에 접근
+			if (m_pPlayer->GetStat()->m_iHP == m_pPlayer->GetStat()->m_iMaxHP)
+			{
+				vecHeartUI[iIdx]->SetSlice(Vec2(0, 0));
+			}
+			// 풀피 아니면 이전 하트칸 꽉찬하트로 변경
+			else
+				vecHeartUI[iIdx - 1]->SetSlice(Vec2(0, 0));
+		}
+		// 체력을 빈칸으로
+		else
+			vecHeartUI[iIdx]->SetSlice(Vec2(2, 0));
+	}
+	
+
+
+	//if (1 == m_pPlayer->GetStat()->m_iHP % 2)
+	//{
+	//	vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
+	//}
+	//else if ((0 == m_pPlayer->GetStat()->m_iHP % 2))
+	//{
+	//	vecHeartUI[iIdx]->SetSlice(Vec2(2, 0));
+	//}
+	
 }
 
 

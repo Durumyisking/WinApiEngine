@@ -27,7 +27,7 @@ public:
 
 	Vec2 operator +(Vec2 _vOther)
 	{
-		return(Vec2(x + _vOther.x, y + _vOther.y));
+		return(Vec2(x + _vOther.x , y + _vOther.y));
 	}
 	Vec2 operator += (Vec2 _vOther)
 	{
@@ -52,7 +52,12 @@ public:
 	{
 		return(Vec2(x * _f, y * _f));
 	}
-
+	Vec2 operator -()
+	{
+		(*this).x = -x;
+		(*this).y = -y;
+		return *this;
+	}
 
 	Vec2 operator /(Vec2 _vOther)
 	{
@@ -64,6 +69,13 @@ public:
 	{
 		assert(!(0.f == _f));
 		return(Vec2(x / _f, y / _f));
+	}	
+	Vec2 operator *= (float _f)
+	{
+		(*this).x *= _f;
+		(*this).y *= _f;
+
+		return *this;
 	}
 
 public:
@@ -104,6 +116,39 @@ public:
 		(*this).m_iDmg += _vOther.m_iDmg;
 		(*this).m_fSpeed += _vOther.m_fSpeed;
 		(*this).m_fRate += _vOther.m_fRate;
+
+		return *this;
+	}
+
+public:
+	void Heal(UINT _iValue)
+	{
+		if (m_iHP == m_iMaxHP - 1)
+		{
+			(*this).m_iHP += 1;
+		}
+		else 
+			(*this).m_iHP += _iValue;
+	}
+	void InflictDamage(Stat* _pDetStat)
+	{
+		_pDetStat->m_iHP -= (*this).m_iDmg;
+	}
+};
+
+/** 플레이어의 Pickup 개수를 담는 구조체*/
+struct Pickup
+{
+	UINT		m_iCoin;
+	UINT		m_iBomb;
+	UINT		m_iKey;
+
+public:
+	Pickup operator += (Pickup _vOther)
+	{
+		(*this).m_iCoin += _vOther.m_iCoin;
+		(*this).m_iKey += _vOther.m_iKey;
+		(*this).m_iBomb += _vOther.m_iBomb;
 
 		return *this;
 	}

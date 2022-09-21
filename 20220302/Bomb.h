@@ -2,6 +2,7 @@
 #include "Object.h"
 
 class CAnimation;
+class CRigidBody;
 
 class CBomb :
 	public CObject

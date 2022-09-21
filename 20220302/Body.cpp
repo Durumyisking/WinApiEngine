@@ -2,6 +2,8 @@
 #include "Body.h"
 #include "Head.h"
 
+
+
 #include "Collider.h"
 #include "Animation.h"
 #include "Animator.h"
@@ -27,8 +29,6 @@ CBody::CBody()
 	GetAnimator()->CreateAnimation(L"BODY_DOWN", m_pTex, Vec2(175.f, 80.f), Vec2(18.f, 15.f), Vec2(32.f, 0.f), 0.05f, 5, false);
 	GetAnimator()->CreateAnimation(L"BODY_LEFT", m_pTex, Vec2(15.f, 154.f), Vec2(19.f, 14.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 	GetAnimator()->CreateAnimation(L"BODY_RIGHT", m_pTex, Vec2(15.f, 123.f), Vec2(18.f, 14.f), Vec2(32.f, 0.f), 0.05f, 10, false);
-	
-
 
 	PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
 }

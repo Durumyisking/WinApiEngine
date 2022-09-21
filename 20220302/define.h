@@ -80,6 +80,8 @@ enum class GROUP_TYPE
 
 	TEAR,
 
+	BOMB,
+
 	MONSTER,
 
 	PROJ_PLAYER,
@@ -89,6 +91,8 @@ enum class GROUP_TYPE
 	DOOR,
 
 	ITEM,
+
+	PICKUP,
 
 	PLAYER,
 
@@ -176,4 +180,12 @@ enum class MON_STATE
 	ATTACK,
 	AWAY,
 	DEAD,
+};
+
+enum class PICKUP_TYPE
+{
+	HEART,
+	COIN,
+	BOMB,
+	KEY
 };

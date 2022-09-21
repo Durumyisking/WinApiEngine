@@ -1,20 +1,28 @@
 #pragma once
 #include "Object.h"
+#include "Collider.h"
+#include "Player.h"
 
 class CAnimation;
 class CAI;
+class CTexture;
 
 class CMonster :
 	public CObject
 {
 
-private:
-	Stat stat;
+protected:
+	Stat	m_Stat;
+
 
 	int			m_iDir;			// 이동 방향
 	float		m_fAcc;
+	float		m_fRecogRange;
 
-	CAnimation* m_pAnim;
+
+	CTexture*		m_pTex;
+	CAnimation*		m_pAnim;
+	wstring			m_strAnimName;
 
 	CAI*			m_pAI;
 
@@ -32,12 +40,14 @@ public:
 	virtual void render(HDC _dc);
 
 public:
-	Stat GetStat() { return stat; }
-	void SetStat(Stat _playerstat) { stat = _playerstat; }
+	Stat GetStat() { return m_Stat;  }
+	void SetStat(Stat _playerstat) { m_Stat = _playerstat; }
 
 	void SetAcc(float _fAcc) { m_fAcc = _fAcc; }
 
 	void SetAI(CAI* _pAI);
+
+	void SetRecogRange(float _fRecogRange) { m_fRecogRange = _fRecogRange; }
 
 
 	CLONE(CMonster);

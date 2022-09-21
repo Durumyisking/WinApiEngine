@@ -21,14 +21,6 @@ CHeart::~CHeart()
 
 void CHeart::update()
 {
-	// 하트를 배열로 선언한다
-// 크기는 player max hp/2
-
-	
-
-	
-
-
 
 }
 

@@ -158,6 +158,30 @@
     <Filter Include="Engine\08. Module\AI\State\Dead">
       <UniqueIdentifier>{66f5f5a4-780c-424e-bb0a-6065d116aed1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\Fly">
+      <UniqueIdentifier>{83408e72-1bb4-42ca-99d7-32fa0fe3f43f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07. Component\RigidBody">
+      <UniqueIdentifier>{93104f58-02c7-4c66-982c-013a89de0b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Pickup">
+      <UniqueIdentifier>{d1a7ebca-d7ae-4b57-9319-665909fe8e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Pickup\Bomb">
+      <UniqueIdentifier>{81256ea3-46d1-434f-83ae-73aab5fe9627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Pickup\Coin">
+      <UniqueIdentifier>{fb92734d-2f77-4815-a735-bcbb921fe03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Pickup\Heart">
+      <UniqueIdentifier>{ad7704d4-6c86-485a-b5c2-be9a01a85d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Pickup\Key">
+      <UniqueIdentifier>{195566c6-ff8e-4376-af10-8c56486e7e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Bomb">
+      <UniqueIdentifier>{fd0a0339-c36d-4280-a760-35c757293a83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -311,6 +335,36 @@
     <ClInclude Include="TraceState.h">
       <Filter>Engine\08. Module\AI\State\Trace</Filter>
     </ClInclude>
+    <ClInclude Include="Fly.h">
+      <Filter>Engine\04. Object\Monster\Fly</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFactory.h">
+      <Filter>Engine\04. Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Engine\07. Component\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickup.h">
+      <Filter>Engine\04. Object\Pickup</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupHeart.h">
+      <Filter>Engine\04. Object\Pickup\Heart</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupCoin.h">
+      <Filter>Engine\04. Object\Pickup\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupBomb.h">
+      <Filter>Engine\04. Object\Pickup\Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupKey.h">
+      <Filter>Engine\04. Object\Pickup\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Engine\04. Object\Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupCount.h">
+      <Filter>Engine\04. Object\UI\Status\Pickup</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -453,6 +507,36 @@
     </ClCompile>
     <ClCompile Include="TraceState.cpp">
       <Filter>Engine\08. Module\AI\State\Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="Fly.cpp">
+      <Filter>Engine\04. Object\Monster\Fly</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFactory.cpp">
+      <Filter>Engine\04. Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Engine\07. Component\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickup.cpp">
+      <Filter>Engine\04. Object\Pickup</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupHeart.cpp">
+      <Filter>Engine\04. Object\Pickup\Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupCoin.cpp">
+      <Filter>Engine\04. Object\Pickup\Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupBomb.cpp">
+      <Filter>Engine\04. Object\Pickup\Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupKey.cpp">
+      <Filter>Engine\04. Object\Pickup\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Engine\04. Object\Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupCount.cpp">
+      <Filter>Engine\04. Object\UI\Status\Pickup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,5 +5,10 @@ class CPickupUI :
 {
 
 
+public:
+	virtual void update();
+	virtual void render(HDC _dc);
+
 };
 
+	

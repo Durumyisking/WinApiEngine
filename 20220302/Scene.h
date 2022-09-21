@@ -1,5 +1,5 @@
 #pragma once
-
+#include "MonsterFactory.h"
 
 class CObject;	// 전방선언이라 아직 이게 우리의 CObject인지 모름
 				// 직접 헤더를 참조하면 CObject쪽의 코드가 변경되면

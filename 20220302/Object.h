@@ -4,6 +4,7 @@
 class CCollider;
 class CAnimator;
 class CAnimation;
+class CRigidBody;
 
 class CObject
 {
@@ -16,6 +17,7 @@ private:
 
 	CCollider*	m_pCollider; // 충돌체 필요하면 얘 가지고 없으면 안가지면 되는 것
 	CAnimator*	m_pAnimator;
+	CRigidBody* m_pRigidBody;
 
 	bool		m_bAlive;	// 살았니 죽었니
 
@@ -33,6 +35,7 @@ public:
 
 	CCollider* GetCollider() { return m_pCollider; }
 	CAnimator* GetAnimator() { return m_pAnimator; }
+	CRigidBody* GetRigidBody() { return m_pRigidBody; }
 
 	Vec2 GetPos() const { return m_vPos; }
 	Vec2 GetScale() const { return m_vScale; }
@@ -53,8 +56,11 @@ public:
 
 	void CreateCollider();
 	void CreateAnimator();
+	void CreateRigidBody();
 
+	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset, float _fRepeat);
 	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset);
+
 
 	virtual void OnCollision(CCollider* _pOther) {};
 	virtual void OnCollisionEnter(CCollider* _pOther) {};

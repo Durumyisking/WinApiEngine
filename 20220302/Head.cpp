@@ -155,9 +155,9 @@ void CHead::OnCollisionExit(CCollider * _pOther)
 
 void CHead::CreateMissile(Vec2 _vDir)
 {
-	if (m_dAttackDealy > stat.m_fRate)
+	if (m_dAttackDealy > m_pStat->m_fRate)
 	{
-		CMissile* pMissile = new CMissile(stat.m_fSpeed, stat.m_iDmg);
+		CMissile* pMissile = new CMissile(m_pStat->m_fSpeed, m_pStat->m_iDmg);
 		pMissile->SetDir(_vDir);
 		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GetPos(), GROUP_TYPE::PROJ_PLAYER);
 

@@ -20,13 +20,14 @@
 #include "WallCollider.h"
 #include "Heart.h"
 
+#include "Pickup.h"	
+
 CPlayer::CPlayer()
 	: m_dAttackDealy(fDT)
-	, m_ePrevDoorDir(DIR::END)
 	, m_pAnim(nullptr)
 	, m_pOwner(nullptr)
 	, m_pTex(nullptr)
-	, stat{ 6, 6, 5, 400.f, 0.38f}
+	, m_pStat(nullptr)
 	, m_fAcc(0.f)
 	, m_fMaxAcc(1.f)
 	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
@@ -34,6 +35,8 @@ CPlayer::CPlayer()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 
+	m_Stat = { 6, 6, 5, 400.f, 0.38f };
+	m_pStat = &m_Stat;
 
 	// 0 325   48 37
 	m_strAnimName = L"Hurt";
@@ -59,7 +62,7 @@ void CPlayer::update()
 
 	if (m_finvincibilityTime > 0.5f)
 	{
-		GetAnimator()->Play(m_strAnimName, false);
+		// GetAnimator()->Play(m_strAnimName, false);
 	}
 
 
@@ -72,7 +75,7 @@ void CPlayer::update()
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.y -= stat.m_fSpeed * m_fAcc * fDT;
+		vPos.y -= m_pStat->m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::S))
 	{
@@ -80,21 +83,21 @@ void CPlayer::update()
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.y += stat.m_fSpeed * m_fAcc * fDT;
+		vPos.y += m_pStat->m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::A)) {
 		if (m_fAcc < m_fMaxAcc)
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.x -= stat.m_fSpeed * m_fAcc * fDT;
+		vPos.x -= m_pStat->m_fSpeed * m_fAcc * fDT;
 	}
 	if (KEY_HOLD(KEY::D)) {
 		if (m_fAcc < m_fMaxAcc)
 		{
 			m_fAcc += 0.02f;
 		}
-		vPos.x += stat.m_fSpeed * m_fAcc * fDT;
+		vPos.x += m_pStat->m_fSpeed * m_fAcc * fDT;
 	}
 
 	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
@@ -150,8 +153,8 @@ void CPlayer::init()
 	pBody->SetOwner(this);
 	pHead->SetOwner(this);
 
-	pBody->SetStat(stat);
-	pHead->SetStat(stat);
+	pBody->SetStat(m_pStat);
+	pHead->SetStat(m_pStat);
 
 	pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
@@ -168,14 +171,12 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	// monster
 	if (L"Monster" == pOtherObj->GetName())
 	{
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+//		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
 		CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
 
 		if (m_finvincibilityTime >= 1.f)
 		{
-			stat.m_iHP -= pMonster->GetStat().m_iDmg;
-			m_finvincibilityTime = 0.f;
 		}
 
 	}
@@ -192,35 +193,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	{
 		CDoor* pdoor = (CDoor*)pOtherObj;
 
-		if (pdoor->IsOpen()) 
-		{
-			switch (pdoor->GetDir())
-			{
-			case DIR::N:
-				m_ePrevDoorDir = DIR::N;
-				CSceneMgr::GetInst()->GetCurScene()->SetRoomDir(DIR::N);
-				ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::N));
-				break;
-			case DIR::S:
-				m_ePrevDoorDir = DIR::S;
-				CSceneMgr::GetInst()->GetCurScene()->SetRoomDir(DIR::S);
-				ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::S));
-				break;
-			case DIR::E:
-				m_ePrevDoorDir = DIR::E;
-				CSceneMgr::GetInst()->GetCurScene()->SetRoomDir(DIR::E);
-				ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::E));
-				break;
-			case DIR::W:
-				m_ePrevDoorDir = DIR::W;
-				CSceneMgr::GetInst()->GetCurScene()->SetRoomDir(DIR::W);
-				ChangeScene(CSceneMgr::GetInst()->GetCurScene()->GetAdjacenyRoom(DIR::W));
-				break;
-
-			default:
-				break;
-			}
-		}
+	
 	}
 
 	// wall
@@ -256,7 +229,12 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		m_GetItemCheck = pItem;
 	}
 	
-	
+
+	if (L"PickupHeart" == pOtherObj->GetName())
+	{
+		CPickup* pItem = dynamic_cast<CPickup*>(pOtherObj);
+
+	}
 	
 }
 
@@ -267,25 +245,6 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 	{
 		CWallCollider* pWall = (CWallCollider*)pOtherObj;
 
-		switch (pWall->GetDir())
-		{
-		case DIR::N:
-			m_ePrevDoorDir = DIR::N;
-			this->m_arrMoveDir[(UINT)DIR::N] = 1.f;
-			break;
-		case DIR::S:
-			this->m_arrMoveDir[(UINT)DIR::S] = 1.f;
-			break;
-		case DIR::E:
-			this->m_arrMoveDir[(UINT)DIR::E] = 1.f;
-			break;
-		case DIR::W:
-			this->m_arrMoveDir[(UINT)DIR::W] = 1.f;
-			break;
-
-		default:
-			break;
-		}
 
 
 	}
@@ -299,10 +258,10 @@ void CPlayer::CreateMissile(Vec2 _vDir)
 
 void CPlayer::ItemCheck()
 {
-	stat += m_GetItemCheck->GetStat();
+	*m_pStat += m_GetItemCheck->GetStat();
 
 
-	pBody->SetStat(this->stat);
-	pHead->SetStat(this->stat);
+	pBody->SetStat(this->m_pStat);
+	pHead->SetStat(this->m_pStat);
 }
 

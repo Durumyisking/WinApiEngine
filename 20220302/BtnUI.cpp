@@ -40,7 +40,7 @@ void CBtnUI::MouseLbtnClicked()
 	if (m_pSceneInst && m_pSceneFunc)
 	{
 		// 객체로 멤버함수 포인터 호출할때
-
+				
 		// * 기호로 원본으로 접근후   함수도 포인터로 받아왔으니까*로 접근
 		((*m_pSceneInst).*m_pSceneFunc)();
 	}

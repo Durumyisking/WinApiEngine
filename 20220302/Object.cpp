@@ -9,6 +9,8 @@
 #include "Animator.h"
 #include "Animation.h"
 
+#include "RigidBody.h"
+
 #include "Core.h"
 
 CObject::CObject()
@@ -62,6 +64,23 @@ void CObject::CreateAnimator()
 {
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+void CObject::CreateRigidBody()
+{
+	m_pRigidBody = new CRigidBody;
+	m_pRigidBody->m_pOwner = this;
+}
+
+void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset, float _fRepeat)
+{
+	GetAnimator()->Play(_AnimName, true);
+
+	_pAnim = GetAnimator()->FindAnimation(_AnimName);
+
+	for (UINT i = 0; i < (UINT)_pAnim->GetMaxFrame(); ++i)
+		_pAnim->GetFrame(i).vOffset = Vec2(_vOffset);
+
 }
 
 void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset)

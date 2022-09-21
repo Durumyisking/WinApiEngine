@@ -29,8 +29,6 @@ public:
 	virtual void OnCollisionExit(CCollider* _pOther);
 
 
-public:
-	void iloveyou();
 
 
 	CLONE(CPickup);

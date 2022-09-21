@@ -216,7 +216,7 @@ void CScene::LoadTile(const wstring & _strRelativePath)
 
 void CScene::AddDoor(DIR _eDir)
 {
-		if (SCENE_TYPE::END != m_eAdjacencyRoom[(UINT)_eDir]);
+		if (SCENE_TYPE::END != m_eAdjacencyRoom[(UINT)_eDir])
 		{
 			CObject* pDoor = new CDoor(_eDir);
 			CDoor* pDoorObj = (CDoor*)pDoor;
