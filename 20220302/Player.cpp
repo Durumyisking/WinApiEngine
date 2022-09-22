@@ -51,6 +51,7 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+
 }
 
 
@@ -162,6 +163,8 @@ void CPlayer::init()
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
+
+	
 
 }
 

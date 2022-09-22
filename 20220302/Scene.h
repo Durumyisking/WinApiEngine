@@ -26,20 +26,13 @@ private:
 	UINT				m_iTileX;
 	UINT				m_iTileY;
 
-	
+
 
 protected:
 	float				m_fTimeCount;
 	CTexture*			m_pBgTex;
-
-	// 이전 방 기준 방의 위치
 	Vec2				m_vResolution;
 
-	// 인접한 방
-	SCENE_TYPE			m_eAdjacencyRoom[(UINT)DIR::END];
-
-	// 이동 된 방 기준 이전 방의 타입
-	DIR					m_roomDir;
 
 
 public:
@@ -51,13 +44,10 @@ public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
 
-	void SetRoomDir(DIR _eDir) { m_roomDir = _eDir; }
-	DIR GetRoomDir() { return m_roomDir; }
 
 	 
 	//void SetRoomType(ROOM_TYPE _eRoomType) { m_eRoomType = _eRoomType; }
 	//ROOM_TYPE& GetRoomType() { return m_eRoomType; }
-	SCENE_TYPE& GetAdjacenyRoom(DIR _eDir) { return m_eAdjacencyRoom[(UINT)_eDir]; }
 
 
 	UINT GetTileX() { return m_iTileX; }
@@ -107,11 +97,10 @@ public:
 
 	vector<CObject*>& GetUIGroup()  { return m_arrObj[(UINT)GROUP_TYPE::UI]; }
 
-	void AddDoor(DIR _eDir);
-	void AddWall();
+
 
 public:
-	void SetPlayerPos(CObject* _pPlayer);
+
 
 
 };

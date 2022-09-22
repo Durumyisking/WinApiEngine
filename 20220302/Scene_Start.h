@@ -7,12 +7,6 @@ class CPlayer;
 class CScene_Start :
 	public CScene
 {
-
-private:
-	vector<CUI*> vecHeartUI;
-	CPlayer* m_pPlayer;
-
-
 public:
 	CScene_Start();
 	~CScene_Start();
@@ -24,6 +18,27 @@ public:
 
 public:
 	virtual void render(HDC _dc);
+
+
+	void SetRoomDir(DIR _eDir) { m_roomDir = _eDir; }
+	DIR GetRoomDir() { return m_roomDir; }
+
+	SCENE_TYPE& GetAdjacenyRoom(DIR _eDir) { return m_eAdjacencyRoom[(UINT)_eDir]; }
+
+	void AddDoor(DIR _eDir);
+	void AddWall();
+	void SetPlayerPos(CObject* _pPlayer);
+
+private:
+	vector<CUI*> vecHeartUI;
+	CPlayer* m_pPlayer;
+	
+	// 인접한 방
+	SCENE_TYPE			m_eAdjacencyRoom[(UINT)DIR::END];
+
+	// 이동 된 방 기준 이전 방의 타입
+	DIR					m_roomDir;
+
 
 };
 
