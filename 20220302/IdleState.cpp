@@ -1,6 +1,14 @@
 #include "pch.h"
 #include "IdleState.h"
 
+#include "Scene.h"
+#include "SceneMgr.h"
+
+#include "Player.h"
+#include "Monster.h"
+
+#include "Core.h"
+
 CIdleState::CIdleState()
 	: CState(MON_STATE::IDLE)
 {
@@ -21,9 +29,22 @@ void CIdleState::Exit()
 void CIdleState::update()
 {
 	// player의 위치 체크
+	CPlayer* pPlayer = (CPlayer*)CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
+	Vec2 vPlayerPos = pPlayer->GetPos();
+
+
 
 	// 몬스터 범위 안에 들어오면 추적상태로 전환
+	CMonster* pMonster = GetMonster();
+	float fRecogrange =  pMonster->GetRecogRange();
+	Vec2 vMonPos = pMonster->GetPos();
 
-	// 
+	Vec2 fDiff = vPlayerPos - vMonPos;
+	float fLen = fDiff.Length();
+
+	if (fLen < fRecogrange)
+	{
+		ChangeAIState(GetAI(), MON_STATE::TRACE);
+	}
 
 }

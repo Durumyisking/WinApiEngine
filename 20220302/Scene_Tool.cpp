@@ -48,6 +48,12 @@ void CScene_Tool::update()
 		LoadTileData();
 	}
 
+
+	if (KEY_TAP(KEY::ENTER))
+	{
+		ChangeScene(SCENE_TYPE::START);
+	}
+
 }
 
 void CScene_Tool::render(HDC _dc)
@@ -57,6 +63,8 @@ void CScene_Tool::render(HDC _dc)
 }
 void CScene_Tool::Enter()
 {
+	CCore::GetInst()->DockingMenu();
+
 	// 타일 생성
 	CreateTile(TILE_WIDTH, TILE_HEIGHT);
 	
@@ -98,6 +106,9 @@ void CScene_Tool::Enter()
 
 void CScene_Tool::Exit()
 {
+	// 메뉴바 해제하겠다.
+	CCore::GetInst()->DivideMenu();
+
 	DeleteAll();
 }
 

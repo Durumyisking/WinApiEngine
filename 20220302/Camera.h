@@ -26,7 +26,7 @@ private:
 	Vec2				m_vLookAt;		// 카메라가 보고 있는곳 (화면의 중심)
 	Vec2				m_vPrevLookAt;	// 카메라가 보는 이전프레임 위치
 										// 이 두 위치의 차이가 급격하게 벌어지면 스무스하게 이동하는게 보기 좋음!
-	Vec2				m_vCurLookAt;	// 이전 위치와 현재 위치 보정위치 (찐 Lookat)
+	Vec2				m_vCurLookAt;	// 이전 위치와 현재 위치 보정위치 (찐 Lookat) // 현재 화면의 중앙
 
 	CObject*			m_pTargetObj;	// 카메라 타겟 오브젝트
 

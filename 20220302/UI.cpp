@@ -90,7 +90,9 @@ void CUI::render(HDC _dc)
 		TransparentBlt(_dc
 			, static_cast<int>(vPos.x), static_cast<int>(vPos.y)
 			, static_cast<int>(vScale.x) * 2, static_cast<int>(vScale.y) * 2
-			, m_pTex->GetDC(), GetScale().x * m_vSlice.x, GetScale().y * m_vSlice.y
+			, m_pTex->GetDC()
+			, static_cast<int>(GetScale().x * m_vSlice.x)
+			, static_cast<int>(GetScale().y * m_vSlice.y)
 			, static_cast<int>(vScale.x) , static_cast<int>(vScale.y)
 			, RGB(255, 0, 255));
 

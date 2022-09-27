@@ -1,6 +1,7 @@
 #pragma once
 
 class CAI;
+class CMonster;
 
 class CState
 {
@@ -9,6 +10,7 @@ private:
 	CAI*		m_pAI;
 	// ป๓ลย
 	MON_STATE	m_eState;
+
 
 
 public:
@@ -28,6 +30,8 @@ public:
 
 	void SetState(MON_STATE& _strKey) { m_eState = _strKey; }
 	MON_STATE GetType() const { return m_eState; }
+	CMonster* GetMonster();
+
 
 
 	friend class CAI;

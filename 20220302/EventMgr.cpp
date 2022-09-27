@@ -6,6 +6,8 @@
 #include "Scene.h"
 
 #include "UIMgr.h"
+#include "AI.h"
+#include "State.h"
 
 CEventMgr::CEventMgr()
 {
@@ -67,8 +69,6 @@ void CEventMgr::Execute(const tEvent & _eve)
 		CObject* pDeadObj = (CObject*)_eve.lParam;
 		pDeadObj->SetDead();
 		m_vecDead.push_back(pDeadObj);
-
-
 	}
 		break;
 	case EVENT_TYPE::SCENE_CHANGE:
@@ -77,9 +77,15 @@ void CEventMgr::Execute(const tEvent & _eve)
 
 		// focus ui ÇØÁ¦
 		CUIMgr::GetInst()->SetFocusedUI(nullptr);
-
 		break;
 
+	case EVENT_TYPE::CHANGE_AI:
+		// wParam : AI
+		// lParam : ¹Ù²Ü ai state type
+	{
+		CAI* pAI = (CAI*)_eve.lParam;
+		pAI->SetCurState(static_cast<MON_STATE>(_eve.wParam));
+	}
 	default:
 		break;
 	}

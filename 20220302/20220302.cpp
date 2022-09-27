@@ -5,7 +5,14 @@
 
 
 #define MAX_LOADSTRING 100
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
 
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#else
+#define DBG_NEW new
+#endif
 
 HINSTANCE hInst;                                
 WCHAR szTitle[MAX_LOADSTRING];                  
@@ -26,7 +33,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
 	// Memory Leak check
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	// _crtBreakAlloc(); // 메모리 누수 문제가 생겼을때 문제의 해당 지점에 중단점 걸어줌
+	const char* str = DBG_NEW char[20];
+	/*
+	_CrtSetBreakAlloc(827);
+	_CrtSetBreakAlloc(786);
+	_CrtSetBreakAlloc(560);
+	_CrtSetBreakAlloc(559);
+	_CrtSetBreakAlloc(557);
+	_CrtSetBreakAlloc(555);
+	_CrtSetBreakAlloc(554);
+	_CrtSetBreakAlloc(553);
+	_CrtSetBreakAlloc(551);
+	_CrtSetBreakAlloc(550);
+	_CrtSetBreakAlloc(549);
+	_CrtSetBreakAlloc(464);
+	_CrtSetBreakAlloc(461);
+	_CrtSetBreakAlloc(459);
+	_CrtSetBreakAlloc(458);
+	_CrtSetBreakAlloc(457);
+	_CrtSetBreakAlloc(455);
+	_CrtSetBreakAlloc(454);
+	_CrtSetBreakAlloc(453);
+	*/
+//	_crtBreakAlloc; // 메모리 누수 문제가 생겼을때 문제의 해당 지점에 중단점 걸어줌
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
@@ -67,10 +96,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				break;
 
 			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-				
-
-			{
-				
+			{				
 				TranslateMessage(&msg); 
 				DispatchMessage(&msg); 
 			}
@@ -105,7 +131,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MY20220302));
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_MY20220302);
+	wcex.lpszMenuName = nullptr;//MAKEINTRESOURCEW(IDC_MY20220302);
 	wcex.lpszClassName = szWindowClass;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 

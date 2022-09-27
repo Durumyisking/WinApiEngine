@@ -9,6 +9,7 @@ class CObject;	// 전방선언이라 아직 이게 우리의 CObject인지 모름
 class CMonster;
 class CTexture;
 class Collider;
+class CPlayer;
 
 			
 class CScene
@@ -25,6 +26,7 @@ private:
 	// 타일 개수
 	UINT				m_iTileX;
 	UINT				m_iTileY;
+	CPlayer*			m_pPlayer;
 
 
 
@@ -50,8 +52,8 @@ public:
 	//ROOM_TYPE& GetRoomType() { return m_eRoomType; }
 
 
-	UINT GetTileX() { return m_iTileX; }
-	UINT GetTileY() { return m_iTileY; }
+	UINT GetTileX() const { return m_iTileX; }
+	UINT GetTileY() const { return m_iTileY; }
 
 
 	// 원본을 참조후 원본에 손상이 안가게 const 붙임
@@ -67,6 +69,9 @@ public:
 	virtual void render(HDC _dc);
 
 	void renderTile(HDC _dc);
+
+	CPlayer* GetPlayer() const { return m_pPlayer; }
+	void AddPlayer(CPlayer* _pPlayer) { m_pPlayer = _pPlayer; };
 
 
 public:

@@ -60,17 +60,19 @@ CScene_Start::~CScene_Start()
 void CScene_Start::Enter()
 {
 	// Object 추가
-	CObject* pPlayer = new CPlayer;
-	CPlayer* objPlayer = (CPlayer*)pPlayer;
+	m_pPlayer = new CPlayer;
+//	CPlayer* objPlayer = (CPlayer*)pPlayer;
+	//m_pPlayerinst = (CPlayer*)pPlayer;
 
-	m_pPlayer = objPlayer;
+	m_pPlayer->init();
 
-	objPlayer->init();
+	SetPlayerPos(m_pPlayer);
+	m_pPlayer->SetName(L"Player");
 
-	SetPlayerPos(objPlayer);
-	pPlayer->SetName(L"Player");
+	AddPlayer(m_pPlayer);
 
-	CreateObject(pPlayer, GROUP_TYPE::PLAYER);
+
+	CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
 
 	AddDoor(DIR::N);
 	AddDoor(DIR::S);
@@ -106,7 +108,7 @@ void CScene_Start::Enter()
 	// ui 세팅
 	
 	// 체력 ui
-	int iHeartSize = objPlayer->GetStat()->m_iMaxHP / 2;
+	int iHeartSize = m_pPlayer->GetStat()->m_iMaxHP / 2;
 	for (int i = 0; i < iHeartSize; ++i)
 	{
 		CUI* pHeartUI = new CHeart(i + 1);

@@ -25,8 +25,10 @@ public:
 public:
 	void AddState(CState* _pState);
 	CState* GetState(MON_STATE _eState);
+	CMonster* GetOwner() const { return m_pOwner; }
 
 	void SetCurState(MON_STATE _eState) { m_pCurState = m_pmapState.find(_eState)->second; }
+	void ChangeState(MON_STATE _eNextState);
 
 
 	friend class CMonster;

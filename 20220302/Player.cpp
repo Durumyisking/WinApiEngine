@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Collider.h"
 #include "Animator.h"
+#include "RigidBody.h"
 #include "Animation.h"
 #include "Item.h"
 
@@ -19,8 +20,9 @@
 
 #include "WallCollider.h"
 #include "Heart.h"
-
 #include "Pickup.h"	
+
+
 
 CPlayer::CPlayer()
 	: m_dAttackDealy(fDT)
@@ -51,7 +53,10 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
-
+	//if (nullptr == pBody && nullptr == pHead)
+	//{
+	//	delete this;
+	//}
 }
 
 
@@ -148,6 +153,8 @@ void CPlayer::init()
 	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
 	GetCollider()->SetScale(Vec2(40.f, 30.f));
 
+	CreateRigidBody();
+//	GetRigidBody().
 
 	pBody = new CBody;
 	pHead = new CHead;
@@ -231,10 +238,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CItem* pItem = dynamic_cast<CItem*>(pOtherObj);
 		m_vInventory.push_back(pItem);
 		m_GetItemCheck = pItem;
-	}
-	
-
-	
+	}	
 }
 
 void CPlayer::OnCollisionExit(CCollider * _pOther)

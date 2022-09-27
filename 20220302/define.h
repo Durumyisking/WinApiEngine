@@ -143,6 +143,7 @@ enum class BRUSH_TYPE
 {
 	HOLLOW,
 	WHITE,
+	BLACK,
 	END,
 
 };
@@ -162,6 +163,7 @@ enum class EVENT_TYPE
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	SCENE_CHANGE,
+	CHANGE_AI,
 
 	END,
 };

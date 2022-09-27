@@ -31,14 +31,13 @@ public:
 
 private:
 	vector<CUI*> vecHeartUI;
-	CPlayer* m_pPlayer;
 	
 	// 인접한 방
 	SCENE_TYPE			m_eAdjacencyRoom[(UINT)DIR::END];
 
 	// 이동 된 방 기준 이전 방의 타입
 	DIR					m_roomDir;
-
+	CPlayer*			m_pPlayer;
 
 };
 

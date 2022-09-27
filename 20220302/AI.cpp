@@ -43,3 +43,15 @@ CState * CAI::GetState(MON_STATE _eState)
 
 	return iter->second;
 }
+
+void CAI::ChangeState(MON_STATE _eNextState)
+{
+	CState* pNextState = GetState(_eNextState);
+	
+	assert(m_pCurState != pNextState);
+
+	m_pCurState->Exit();
+	m_pCurState = pNextState;
+	m_pCurState->Enter();
+
+}

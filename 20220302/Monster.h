@@ -48,7 +48,7 @@ public:
 	void SetAI(CAI* _pAI);
 
 	void SetRecogRange(float _fRecogRange) { m_fRecogRange = _fRecogRange; }
-
+	float GetRecogRange() const { return m_fRecogRange; }
 
 	CLONE(CMonster);
 public:

@@ -15,6 +15,10 @@
 
 #include "Object.h"
 
+#include "SelectGDI.h"
+
+#include "resource.h"
+
 
 CCore::CCore()
 	: m_hWnd(0)
@@ -30,10 +34,10 @@ CCore::~CCore()
 {	
 	ReleaseDC(m_hWnd, m_hDC);
 	
-
-
 	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
 		DeleteObject(m_arrPen[i]);
+
+	DestroyMenu(m_hMenu);
 }
 
 // CObject g_obj;
@@ -44,14 +48,16 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 	m_vResolution = _vResolution;
 
 
-	
+	// 해상도에 맞게 윈도우 크기 조정
 	RECT rt = { static_cast<long>(0.f), static_cast<long>(0.f)
-		, static_cast<long>(m_vResolution.x), static_cast<long>(m_vResolution.y) };
-	
-	
+		, static_cast<long>(m_vResolution.x), static_cast<long>(m_vResolution.y) };	
 	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, true); 
 	SetWindowPos(_hWnd, nullptr, 0, 0,
 		rt.right - rt.left, rt.bottom - rt.top, 0);
+
+	// 메뉴바 생성
+	m_hMenu = LoadMenu(nullptr, MAKEINTRESOURCEW(IDC_MY20220302));
+
 
 	m_hDC = GetDC(m_hWnd); 
 
@@ -98,7 +104,8 @@ void CCore::progress()
 	// =========
 
 	// 화면 클리어
-	Rectangle(m_pMemTex->GetDC(), -1, -1, (int)m_vResolution.x + 1, (int)m_vResolution.y + 1);
+	Clear();
+//	Rectangle(m_pMemTex->GetDC(), -1, -1, (int)m_vResolution.x + 1, (int)m_vResolution.y + 1);
 
 	CSceneMgr::GetInst()->render(m_pMemTex->GetDC());
 	CCamera::GetInst()->render(m_pMemTex->GetDC());
@@ -109,9 +116,13 @@ void CCore::progress()
 
 	// 이벤트 지연 처리
 	CEventMgr::GetInst()->update();
+	
+}
 
-	
-	
+void CCore::Clear()
+{
+	CSelectGDI gdi(m_pMemTex->GetDC(), BRUSH_TYPE::BLACK);
+	Rectangle(m_pMemTex->GetDC(), -1, -1, m_vResolution.x + 1, m_vResolution.y + 1);
 }
 
 void CCore::CreateBrushPen()
@@ -119,9 +130,30 @@ void CCore::CreateBrushPen()
 	// hollow brush
 	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH); 
 	m_arrBrush[(UINT)BRUSH_TYPE::WHITE] = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	m_arrBrush[(UINT)BRUSH_TYPE::BLACK] = (HBRUSH)GetStockObject(BLACK_BRUSH);
 
 	// red green blue pen
 	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+}
+
+void CCore::DockingMenu()
+{
+	SetMenu(m_hWnd, m_hMenu);
+	// 메뉴가 있으니까 true
+	ChangeWindowSize(true);
+}
+
+void CCore::DivideMenu()
+{
+	SetMenu(m_hWnd, nullptr);
+	ChangeWindowSize(false);
+}
+
+void CCore::ChangeWindowSize(bool _bMenu)
+{
+	RECT rt = { 0,0,m_vResolution.x, m_vResolution.y };
+	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, _bMenu);
+	SetWindowPos(m_hWnd, nullptr, 100, 100, rt.right - rt.left, rt.bottom - rt.top, 0);
 }
