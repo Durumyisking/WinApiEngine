@@ -46,8 +46,9 @@ void CBomb::update()
 			m_strAnimName = L"Explode";
 			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), 1.f);
 			m_bExplosion = true;
+			GetCollider()->SetScale(Vec2(192.f, 192.f));
+
 		}
-		GetCollider()->SetScale(Vec2(192.f, 192.f));
 	}
 
 }
@@ -63,6 +64,7 @@ void CBomb::OnCollision(CCollider * _pOther)
 
 void CBomb::OnCollisionEnter(CCollider * _pOther)
 {
+
 }
 
 void CBomb::OnCollisionExit(CCollider * _pOther)

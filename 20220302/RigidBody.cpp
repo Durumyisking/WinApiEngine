@@ -7,7 +7,7 @@
 CRigidBody::CRigidBody()
 	: m_pOwner(nullptr)
 	, m_fMass(1.f)
-	, m_fFricCoeff(1000.f)
+	, m_fFricCoeff(100.f)
 	, m_fMaxSpeed(300.f)
 {
 }
@@ -71,10 +71,8 @@ void CRigidBody::finalupdate()
 		m_vVelocity *= m_fMaxSpeed;
 	}
 
-
 	// 속도에 따른 물체이동
 	Move();
-
 
 	// 매 순간순간 힘을 초기화시켜준 후
 	// 다음 프레임때 물체에 들어간 힘을 전부 계산하여 처리
@@ -90,12 +88,13 @@ void CRigidBody::Move()
 	{	
 		// 이동방향
 		Vec2 vDir = m_vVelocity;
+
 		vDir.Normalize();
 
 		Vec2 vPos = m_pOwner->GetPos();
-		vPos += vDir * fSpeed * fDT;
-		// vPos += m_vVelocity * fDT; 위 코드와 같으나 속력과 방향을 분해해서 사용 가능 하다~
 
+		//vPos += vDir * fSpeed * fDT;
+		vPos += m_vVelocity * fDT; //위 코드와 같으나 속력과 방향을 분해해서 사용 가능 하다~
 
 		m_pOwner->SetPos(vPos);
 	}

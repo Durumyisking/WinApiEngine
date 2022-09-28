@@ -65,16 +65,18 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
+	// 공격 쿨타임
 	m_dAttackDealy += fDT;
 
+	// 무적시간
 	if (m_finvincibilityTime < 1.f)
 		m_finvincibilityTime += fDT;
-
 	if (m_finvincibilityTime > 0.5f)
 	{
 		// GetAnimator()->Play(m_strAnimName, false);
 	}
 
+	// 이동
 	CRigidBody* pRigid = GetRigidBody();
 
 	Vec2 vPos = GetPos();
@@ -103,6 +105,7 @@ void CPlayer::update()
 
 	SetPos(vPos);
 
+	// 부모객체만 자식들 setpos
 	if (nullptr != pBody && nullptr != pHead)
 	{	
 		pBody->SetPos(vPos);
@@ -111,6 +114,7 @@ void CPlayer::update()
 	GetAnimator()->update();
 
 
+	// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
 	if (nullptr != m_GetItemCheck)
 	{
 		ItemCheck();

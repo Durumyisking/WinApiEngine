@@ -51,6 +51,9 @@ CObject::~CObject()
 
 	if (nullptr != m_pAnimator)
 		delete m_pAnimator;
+
+	if (nullptr != m_pRigidBody)
+		delete m_pRigidBody;
 }
 
 
@@ -129,9 +132,6 @@ void CObject::component_render(HDC _dc)
 		m_pCollider->render(_dc);
 		// 내부를 공백으로 채우는 hollow brush 사용
 	}
-
-
-
 }
 
 

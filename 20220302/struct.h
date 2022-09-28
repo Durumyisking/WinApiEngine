@@ -53,10 +53,8 @@ public:
 		return(Vec2(x * _f, y * _f));
 	}
 	Vec2 operator -()
-	{
-		(*this).x = -x;
-		(*this).y = -y;
-		return *this;
+	{;
+		return Vec2(-(*this).x, -(*this).y);
 	}
 
 	Vec2 operator /(Vec2 _vOther)
