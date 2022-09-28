@@ -4,7 +4,6 @@
 #include "TimeMgr.h"
 #include "ResMgr.h"
 #include "Camera.h"
-#include "AI.h"
 
 
 
@@ -18,8 +17,6 @@ CMonster::CMonster()
 {
 	SetName(L"Monster");
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(30.f, 30.f));
 }
 CMonster::~CMonster()
 {
@@ -40,12 +37,8 @@ void CMonster::Attack(MISSILE_TYPE _eType)
 void CMonster::update()
 {
 	m_pAI->update();
-	
-	Vec2 vCurPos = GetPos();
-
-
-	SetPos(vCurPos);
 }
+
 
 void CMonster::render(HDC _dc)
 {
@@ -54,7 +47,16 @@ void CMonster::render(HDC _dc)
 }
 void CMonster::OnCollision(CCollider * _pOther)
 {
+	//CObject* pOtherObj = _pOther->GetObj();
 
+//// player 
+//if (L"Player" == pOtherObj->GetName())
+//{
+//	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+//	
+//	pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
+//	GetStat().InflictDamage(pPlayer->GetStat());
+//}
 }
 void CMonster::OnCollisionEnter(CCollider * _pOther)
 {

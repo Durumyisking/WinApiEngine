@@ -3,10 +3,6 @@
 class CBody :
 	public CPlayer
 {
-private:
-	float		m_fAnimFrame;
-
-
 public:
 	CBody();
 	~CBody();
@@ -26,5 +22,10 @@ public:
 public:
 	float GetAnimFrame() const { return m_fAnimFrame; }
 	void SetAnimFrame(float _value) { m_fAnimFrame = _value; }
+
+private:
+	float		m_fAnimFrame;
+	float		m_fBombCooldown;
+
 };
 

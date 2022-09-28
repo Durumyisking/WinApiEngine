@@ -82,6 +82,8 @@ enum class GROUP_TYPE
 
 	BOMB,
 
+	PLAYER,
+
 	MONSTER,
 
 	PROJ_PLAYER,
@@ -94,7 +96,6 @@ enum class GROUP_TYPE
 
 	PICKUP,
 
-	PLAYER,
 
 
 	UI = 31,

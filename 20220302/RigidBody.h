@@ -40,9 +40,10 @@ public:
 	Vec2 GetForce() { return m_vForce; }
 
 	void SetVelocity(Vec2 _v) { m_vVelocity = _v; }
-	Vec2  GetVelocity() const { return m_vVelocity; }
+	Vec2 GetVelocity() const { return m_vVelocity; }
 	void AddVelocity(Vec2 _v) { m_vVelocity += _v; }
 	void SetMaxVelocity(float _f) { m_fMaxSpeed = _f; }
+	void SetFricCoeff(float _f) { m_fFricCoeff = _f; }
 
 private:
 	void Move();

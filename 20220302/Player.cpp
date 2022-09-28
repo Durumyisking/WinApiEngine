@@ -47,6 +47,9 @@ CPlayer::CPlayer()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
 
+	CreateRigidBody();
+	GetRigidBody()->SetMaxVelocity(m_pStat->m_fSpeed);
+	GetRigidBody()->SetFricCoeff(0.f);
 
 }
 
@@ -64,7 +67,7 @@ void CPlayer::update()
 {
 	m_dAttackDealy += fDT;
 
-	if(m_finvincibilityTime <= 0.f || m_finvincibilityTime > 1.f)
+	if (m_finvincibilityTime < 1.f)
 		m_finvincibilityTime += fDT;
 
 	if (m_finvincibilityTime > 0.5f)
@@ -72,46 +75,27 @@ void CPlayer::update()
 		// GetAnimator()->Play(m_strAnimName, false);
 	}
 
+	CRigidBody* pRigid = GetRigidBody();
 
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
 
-	if (KEY_HOLD(KEY::W)) 
-	{
-		if (m_fAcc < m_fMaxAcc)
-		{
-			m_fAcc += 0.02f;
-		}
-		vPos.y -= m_pStat->m_fSpeed * m_fAcc * fDT;
+	if (KEY_HOLD(KEY::W)) {
+		pRigid->AddForce(Vec2(0.f, -200.f));
 	}
-	if (KEY_HOLD(KEY::S))
-	{
-		if (m_fAcc < m_fMaxAcc)
-		{
-			m_fAcc += 0.02f;
-		}
-		vPos.y += m_pStat->m_fSpeed * m_fAcc * fDT;
+	if (KEY_HOLD(KEY::S)) {
+		pRigid->AddForce(Vec2(0.f, 200.f));
 	}
 	if (KEY_HOLD(KEY::A)) {
-		if (m_fAcc < m_fMaxAcc)
-		{
-			m_fAcc += 0.02f;
-		}
-		vPos.x -= m_pStat->m_fSpeed * m_fAcc * fDT;
+		pRigid->AddForce(Vec2(-200.f, 0.f));
 	}
 	if (KEY_HOLD(KEY::D)) {
-		if (m_fAcc < m_fMaxAcc)
-		{
-			m_fAcc += 0.02f;
-		}
-		vPos.x += m_pStat->m_fSpeed * m_fAcc * fDT;
+		pRigid->AddForce(Vec2(200.f, 0.f));
 	}
 
 	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
 		!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
 	{
-		if (m_fAcc > 0.f)
-			m_fAcc -= 0.05f;
 	}
 
 
@@ -152,10 +136,7 @@ void CPlayer::init()
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
 	GetCollider()->SetScale(Vec2(40.f, 30.f));
-
-	CreateRigidBody();
-//	GetRigidBody().
-
+	
 	pBody = new CBody;
 	pHead = new CHead;
 	
@@ -170,8 +151,6 @@ void CPlayer::init()
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
-
-	
 
 }
 
@@ -188,6 +167,15 @@ void CPlayer::OnCollision(CCollider * _pOther)
 
 		if (m_finvincibilityTime >= 1.f)
 		{
+			m_finvincibilityTime = 0;
+			// hurt 애니메이션 재생
+			m_iPrevHp = m_pStat->m_iHP;
+			--m_pStat->m_iHP;
+
+		}
+		else if (m_finvincibilityTime < 1.f)
+		{
+			// 
 		}
 
 	}

@@ -28,6 +28,7 @@ public:
 	CMonster* GetOwner() const { return m_pOwner; }
 
 	void SetCurState(MON_STATE _eState) { m_pCurState = m_pmapState.find(_eState)->second; }
+	CState* GetCurState() const { return m_pCurState; }
 	void ChangeState(MON_STATE _eNextState);
 
 

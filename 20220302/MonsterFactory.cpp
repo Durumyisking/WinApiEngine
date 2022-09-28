@@ -35,6 +35,10 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
+
+		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+		pMon->GetCollider()->SetScale(Vec2(80.f, 100.f));
+
 	}
 		break;
 

@@ -12,8 +12,11 @@
 #include "KeyMgr.h"
 #include "TimeMgr.h"
 
+#include "Bomb.h"
+
 CBody::CBody()
 	: m_fAnimFrame(0.05f)
+	, m_fBombCooldown(1.f)
 
 {
 
@@ -41,6 +44,11 @@ CBody::~CBody()
 void CBody::update()
 {
 	CPlayer::update();
+
+	if (1.f > m_fBombCooldown)
+	{
+		m_fBombCooldown += fDT;
+	}
 
 	if (m_finvincibilityTime > 0.5f)
 	{
@@ -83,6 +91,15 @@ void CBody::update()
 		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
 	}
 
+	if (KEY_HOLD(KEY::E))
+	{
+		if (1.f <= m_fBombCooldown)
+		{
+			CBomb* pnewBomb = new CBomb();
+			pnewBomb->CreateBomb(GetPos(), GetScale());
+			m_fBombCooldown = 0;
+		}
+	}
 }
 
 void CBody::OnCollision(CCollider * _pOther)

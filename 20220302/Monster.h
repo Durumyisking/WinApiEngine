@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "Collider.h"
 #include "Player.h"
+#include "AI.h"
 
 class CAnimation;
 class CAI;
@@ -46,6 +47,7 @@ public:
 	void SetAcc(float _fAcc) { m_fAcc = _fAcc; }
 
 	void SetAI(CAI* _pAI);
+	CAI* GetAI() const { return m_pAI; }
 
 	void SetRecogRange(float _fRecogRange) { m_fRecogRange = _fRecogRange; }
 	float GetRecogRange() const { return m_fRecogRange; }

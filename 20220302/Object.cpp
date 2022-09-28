@@ -101,6 +101,9 @@ void CObject::finalupdate()
 
 	if (m_pAnimator)
 		m_pAnimator->finalupdate();
+
+	if (m_pRigidBody)
+		m_pRigidBody->finalupdate();
 }
 
 void CObject::render(HDC _dc)
@@ -108,25 +111,27 @@ void CObject::render(HDC _dc)
 	// 진짜 좌표가 아닌 렌더링 되는 좌표 (진짜 좌표는 m_vPos)
 	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vPos);
 
-
-
 	component_render(_dc);
 }
 
 void CObject::component_render(HDC _dc)
 {
-	if (nullptr != m_pCollider)
-	{
-		m_pCollider->render(_dc);
-		// 내부를 공백으로 채우는 hollow brush 사용
-
-	}
 
 	if (nullptr != m_pAnimator)
 	{
 		m_pAnimator->render(_dc);
-
 	}
+
+
+	// Collider가 나중에 rendering되게
+	if (nullptr != m_pCollider)
+	{
+		m_pCollider->render(_dc);
+		// 내부를 공백으로 채우는 hollow brush 사용
+	}
+
+
+
 }
 
 

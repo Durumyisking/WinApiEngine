@@ -23,6 +23,8 @@
 // 반환타입이 void고 dword_pt 인자를 2개 받는함수
 void ChangeScene(DWORD_PTR, DWORD_PTR);
 
+// 타일 X = 15칸 Y는 9칸
+
 
 CScene_Tool::CScene_Tool()
 	: m_pTileTex(nullptr)

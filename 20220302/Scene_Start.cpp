@@ -59,6 +59,8 @@ CScene_Start::~CScene_Start()
 
 void CScene_Start::Enter()
 {
+	CCore::GetInst()->DivideMenu();
+
 	// Object Ãß°¡
 	m_pPlayer = new CPlayer;
 //	CPlayer* objPlayer = (CPlayer*)pPlayer;

@@ -18,6 +18,7 @@ private:
 	CRigidBody *	m_pRigid;
 	
 	float			m_fBombTime;
+	bool			m_bExplosion;
 
 
 public:
@@ -39,7 +40,7 @@ public:
 	virtual void OnCollisionExit(CCollider* _pOther);
 
 public:
-	void CreateBomb(Vec2 _vStartPos);
+	void CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale);
 
 
 
