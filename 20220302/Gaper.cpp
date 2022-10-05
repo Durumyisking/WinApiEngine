@@ -40,7 +40,7 @@ void CGaper::update()
 
 void CGaper::OnCollision(CCollider* _pOther)
 {
-
+	CMonster::OnCollision(_pOther);
 }
 
 void CGaper::OnCollisionEnter(CCollider* _pOther)

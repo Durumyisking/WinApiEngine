@@ -198,51 +198,51 @@ void CScene_Start::update()
 
 	// UI처리
 	////////////////////////////////////////////////////////////////////
-
-
 	// 플레이어 HP처리
-	int iIdx = m_pPlayer->GetStat()->m_iHP / 2;
-
-	// 풀피일때는 idx 초과 오류가 발생할수 있음
-	if (m_pPlayer->GetStat()->m_iHP == m_pPlayer->GetStat()->m_iMaxHP)
-		--iIdx;
-	
-	// 체력 홀수일때 반칸 hp
-	if (1 == m_pPlayer->GetStat()->m_iHP % 2)
+	if (m_pPlayer->GetStat()->m_iMaxHP == m_pPlayer->GetStat()->m_iHP)
 	{
-		// 체력을 회복했을때
-		if (m_pPlayer->GetStat()->m_iHP >= m_pPlayer->GetPrevHp())
+		for (size_t i = 0; i < vecHeartUI.size(); i++)
 		{
-			// 이전칸 꽉찬하트 현재칸 반칸하트
-			vecHeartUI[iIdx - 1]->SetSlice(Vec2(0, 0));
-			vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
-
+			vecHeartUI[i]->SetSlice(Vec2(0, 0));
 		}
-		else
-			vecHeartUI[iIdx]->SetSlice(Vec2(1, 0));
 	}
-
-	// 짝수일때
-	if (0 == m_pPlayer->GetStat()->m_iHP % 2)
+	else if (0 == m_pPlayer->GetStat()->m_iHP)
 	{
-		// 체력을 회복했을때
-		if (m_pPlayer->GetStat()->m_iHP >= m_pPlayer->GetPrevHp())
+		for (size_t i = 0; i < vecHeartUI.size(); i++)
 		{
-			// 풀피면 최상위 인덱스에 접근
-			if (m_pPlayer->GetStat()->m_iHP == m_pPlayer->GetStat()->m_iMaxHP)
+			vecHeartUI[i]->SetSlice(Vec2(2, 0));
+		}
+	}
+	else
+	{
+		int iIdx = (m_pPlayer->GetStat()->m_iHP / 2) - 1;
+		if ((1 == m_pPlayer->GetStat()->m_iHP % 2))
+			++iIdx;
+
+		for (size_t i = 0; i < vecHeartUI.size(); i++)
+		{
+			if (i < iIdx)
 			{
-				vecHeartUI[iIdx]->SetSlice(Vec2(0, 0));
+				vecHeartUI[i]->SetSlice(Vec2(0, 0));
 			}
-			// 풀피 아니면 이전 하트칸 꽉찬하트로 변경
+			else if (i > iIdx)
+			{
+				vecHeartUI[i]->SetSlice(Vec2(2, 0));
+			}
+			// 현재 hp에 대한 idx를 바꾸고 더 낮은 idx는 풀피 더 높은놈은 빈칸
 			else
-				vecHeartUI[iIdx - 1]->SetSlice(Vec2(0, 0));
+			{
+				if ((1 == m_pPlayer->GetStat()->m_iHP % 2))
+				{
+					vecHeartUI[i]->SetSlice(Vec2(1, 0));
+				}
+				else
+				{
+					vecHeartUI[i]->SetSlice(Vec2(0, 0));
+				}
+			}
 		}
-		// 체력을 빈칸으로
-		else
-			vecHeartUI[iIdx]->SetSlice(Vec2(2, 0));
 	}
-	
-
 }
 
 

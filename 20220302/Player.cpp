@@ -60,6 +60,9 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
+	if (0 >= m_pStat->m_iHP)
+		m_pStat->m_iHP = 0;
+
 	// 공격 쿨타임
 	m_dAttackDealy += fDT;
 

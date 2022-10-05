@@ -18,8 +18,8 @@ private:
 	CRigidBody *	m_pRigid;
 	
 	float			m_fBombTime;
-	bool			m_bExplosion;
-
+	bool			m_bExplosionAnim;
+	bool			m_bPassFrame;
 
 public:
 	CBomb();

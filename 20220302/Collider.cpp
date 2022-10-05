@@ -14,6 +14,7 @@ CCollider::CCollider()
 	: m_pOwner(nullptr)
 	, m_iID(g_iNextID++) // static 변수가 증가하면서 새로운 collider에 새로운 id부여
 	, m_iCol(0)
+	, m_bSwitch(true)
 {
 }
 
@@ -22,6 +23,7 @@ CCollider::CCollider(const CCollider & _origin)
 	,m_vOffsetPos(_origin.m_vOffsetPos)
 	,m_vScale(_origin.m_vScale)
 	,m_iID(g_iNextID)
+	, m_bSwitch(true)
 {
 	// 디폴트 대입연산자가 발생했을때 id가 복사되는 오류가 생김
 	// 그런데 어차피 collider끼리 대입연산이 발생할 이유가 없음
@@ -31,60 +33,70 @@ CCollider::CCollider(const CCollider & _origin)
 
 }
 
-
 CCollider::~CCollider()
 {
 }
 
 void CCollider::finalupdate()
 {
-	Vec2 vObjectPos = m_pOwner->GetPos();
-	m_vFinalPos = vObjectPos + m_vOffsetPos;
+	if (m_bSwitch)
+	{
+		Vec2 vObjectPos = m_pOwner->GetPos();
+		m_vFinalPos = vObjectPos + m_vOffsetPos;
 
-	assert(0 <= m_iCol);
+		assert(0 <= m_iCol);
+	}
 }
 
 void CCollider::render(HDC _dc)
 {
-	PEN_TYPE epen(PEN_TYPE::GREEN);
+	if (m_bSwitch)
+	{
+		PEN_TYPE epen(PEN_TYPE::GREEN);
 
-	// 임시객체(지역변수)로 펜과 브러시 생성
-	if(m_iCol)
-		epen = PEN_TYPE::RED;
+		// 임시객체(지역변수)로 펜과 브러시 생성
+		if (m_iCol)
+			epen = PEN_TYPE::RED;
 
-	CSelectGDI pen(_dc, epen);
-	CSelectGDI brush (_dc, BRUSH_TYPE::HOLLOW);
+		CSelectGDI pen(_dc, epen);
+		CSelectGDI brush(_dc, BRUSH_TYPE::HOLLOW);
 
-	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
+		Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
 
-	Rectangle(_dc,
-		static_cast<int>(vRenderPos.x - m_vScale.x / 2.f),
-		static_cast<int>(vRenderPos.y - m_vScale.y / 2.f),
-		static_cast<int>(vRenderPos.x + m_vScale.x / 2.f),
-		static_cast<int>(vRenderPos.y + m_vScale.y / 2.f));
-
+		Rectangle(_dc,
+			static_cast<int>(vRenderPos.x - m_vScale.x / 2.f),
+			static_cast<int>(vRenderPos.y - m_vScale.y / 2.f),
+			static_cast<int>(vRenderPos.x + m_vScale.x / 2.f),
+			static_cast<int>(vRenderPos.y + m_vScale.y / 2.f));
+	}
 
 	// 함수 종료시 CSelectGDI의 소멸자 호출
 }
 
 void CCollider::OnCollision(CCollider * _pOther)
 {
-	m_pOwner->OnCollision(_pOther);
+	if (m_bSwitch)
+		m_pOwner->OnCollision(_pOther);
 }
 
 void CCollider::OnCollisionEnter(CCollider * _pOther)
 {
-	++m_iCol;
-	m_pOwner->OnCollisionEnter(_pOther);
+	if (m_bSwitch)
+	{
+		++m_iCol;
+		m_pOwner->OnCollisionEnter(_pOther);
+
+	}
 }
 
-void CCollider::OnCollisionExit(CCollider * _pOther)
+void CCollider::OnCollisionExit(CCollider* _pOther)
 {
-	--m_iCol;
-	m_pOwner->OnCollisionExit(_pOther);
+	if (m_bSwitch)
+	{
+		--m_iCol;
+		m_pOwner->OnCollisionExit(_pOther);
+	}
 }
-
-
 
 // 충돌할때 오브젝트끼리 충돌하면 오브젝트들을 일일히 연산시켜야댐 (너무 비효율적)
 // 그래서 우리 enum에 있는 group type별로 충돌하는지 판별할 것

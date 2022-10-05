@@ -14,7 +14,9 @@ CBomb::CBomb()
 	: m_pTex(nullptr)
 	, m_strAnimName(L"Bomb")
 	, m_fBombTime(3.5f)
-	, m_bExplosion(false)
+	, m_bExplosionAnim(false)
+	, m_bPassFrame(false)
+		
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Bomb	", L"texture\\Pickup\\pickup_016_bomb.bmp");
 	m_pEffectTex = CResMgr::GetInst()->LoadTexture(L"Explode", L"texture\\Effect\\effect_029_explosion.bmp");
@@ -40,20 +42,27 @@ void CBomb::update()
 	if (m_fBombTime < 0)
 		DeleteObject(this);
 
-
-
-	if (m_fBombTime < 1.4f)
+	if (m_bPassFrame)
 	{
-		if (!m_bExplosion)
-		{
-			m_strAnimName = L"Explode";
-			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), 1.f);
-			m_bExplosion = true;
-			GetCollider()->SetScale(Vec2(192.f, 192.f));
-
-		}
+		GetCollider()->SwitchOff(); // 3
+		m_bPassFrame = false;
 	}
 
+
+
+	if (!m_bExplosionAnim) // 1
+	{
+		if (m_fBombTime < 1.4f)
+		{
+
+			m_strAnimName = L"Explode";
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), 1.f);
+			m_bExplosionAnim = true;
+			m_bPassFrame = true;
+			GetCollider()->SetScale(Vec2(500.f, 500.f));
+			
+		}
+	}	
 }
 
 void CBomb::render(HDC _dc)
@@ -61,19 +70,13 @@ void CBomb::render(HDC _dc)
 	component_render(_dc);
 }
 
-void CBomb::OnCollision(CCollider * _pOther)
-{
-
-
-}
-
-void CBomb::OnCollisionEnter(CCollider * _pOther)
+void CBomb::OnCollision(CCollider * _pOther) // 2
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (m_bExplosion)
+
+	if (m_bPassFrame)
 	{
-		// Player | Monster 
 		if (L"Player" == pOtherObj->GetName())
 		{
 			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
@@ -84,7 +87,31 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 		if (L"Monster" == pOtherObj->GetName())
 		{
 			CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
+			pMonster->GetStat().InflictDamage(100);
+		}
+	}
 
+}
+
+void CBomb::OnCollisionEnter(CCollider * _pOther)
+{
+
+	CObject* pOtherObj = _pOther->GetObj();
+
+
+	// Player | Monster 
+	if (m_bPassFrame)
+	{
+		if (L"Player" == pOtherObj->GetName())
+		{
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+
+			pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
+			pPlayer->GetStat()->InflictDamage(2);
+		}
+		if (L"Monster" == pOtherObj->GetName())
+		{
+			CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
 			pMonster->GetStat().InflictDamage(100);
 		}
 	}
@@ -99,14 +126,11 @@ void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale)
 	// Ä³¸¯ÅÍÀÇ xÁÂÇ¥ÀÇ Áß¾Ó, Ä³¸¯ÅÍyÃÖÇÏ´Ü + ÆøÅºÀÇ scale.y / 2
 	Vec2 vBombPos = _vOwnerPos + Vec2(0.f, _vOwnerScale.y - 10.f);
 
-//	vBombPos += GetScale() / 4.f;
 
 	SetPos(vBombPos);
-//	SetScale(Vec2(128.f, 128.f));
 
 	CreateCollider();
 	GetCollider()->SetScale(GetScale());
-//	GetCollider()->SetOffsetPos(Vec2())
 
 	CreateObject(this, GROUP_TYPE::BOMB);
 }

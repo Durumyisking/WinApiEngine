@@ -82,6 +82,8 @@ enum class GROUP_TYPE
 
 	BOMB,
 
+	PICKUP,
+
 	PLAYER,
 
 	MONSTER,
@@ -94,7 +96,6 @@ enum class GROUP_TYPE
 
 	ITEM,
 
-	PICKUP,
 
 
 

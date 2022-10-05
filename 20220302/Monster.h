@@ -41,7 +41,7 @@ public:
 	virtual void render(HDC _dc);
 
 public:
-	Stat GetStat() { return m_Stat;  }
+	Stat& GetStat() { return m_Stat;  }
 	void SetStat(Stat _playerstat) { m_Stat = _playerstat; }
 
 	void SetAcc(float _fAcc) { m_fAcc = _fAcc; }

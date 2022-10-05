@@ -101,8 +101,8 @@ public:
 /** 게임 캐릭터와 아이템들의 스펙 */
 struct Stat
 {
-	UINT		m_iMaxHP;
-	UINT		m_iHP;
+	int		m_iMaxHP;
+	int		m_iHP;
 	int			m_iDmg;
 	float		m_fSpeed;
 	float		m_fRate;

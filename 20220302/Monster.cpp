@@ -36,6 +36,9 @@ void CMonster::Attack(MISSILE_TYPE _eType)
 
 void CMonster::update()
 {
+	if (0 >= m_Stat.m_iHP)
+		DeleteObject(this);
+
 	m_pAI->update();
 }
 
@@ -58,9 +61,6 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
 
 		m_Stat.m_iHP -= pMissileObj->GetDmg();
-
-		if (0 >= m_Stat.m_iHP)
-			DeleteObject(this);
 	}
 }
 void CMonster::OnCollisionExit(CCollider * _pOther)
