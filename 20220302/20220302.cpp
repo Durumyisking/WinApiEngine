@@ -34,27 +34,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// Memory Leak check
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	const char* str = DBG_NEW char[20];
-	/*
-	_CrtSetBreakAlloc(827);
-	_CrtSetBreakAlloc(786);
-	_CrtSetBreakAlloc(560);
-	_CrtSetBreakAlloc(559);
-	_CrtSetBreakAlloc(557);
-	_CrtSetBreakAlloc(555);
-	_CrtSetBreakAlloc(554);
-	_CrtSetBreakAlloc(553);
-	_CrtSetBreakAlloc(551);
-	_CrtSetBreakAlloc(550);
-	_CrtSetBreakAlloc(549);
-	_CrtSetBreakAlloc(464);
-	_CrtSetBreakAlloc(461);
-	_CrtSetBreakAlloc(459);
-	_CrtSetBreakAlloc(458);
-	_CrtSetBreakAlloc(457);
-	_CrtSetBreakAlloc(455);
-	_CrtSetBreakAlloc(454);
-	_CrtSetBreakAlloc(453);
-	*/
+	//_CrtSetBreakAlloc(555);
+	delete[] str;
+
 //	_crtBreakAlloc; // 메모리 누수 문제가 생겼을때 문제의 해당 지점에 중단점 걸어줌
 
 	UNREFERENCED_PARAMETER(hPrevInstance);

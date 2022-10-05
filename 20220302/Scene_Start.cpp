@@ -152,8 +152,14 @@ void CScene_Start::Enter()
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DOOR);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::WALL);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::PICKUP);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::BOMB);
+
+	
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::BOMB);
+
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_PLAYER);
+	
 
 	
 
@@ -307,13 +313,13 @@ void CScene_Start::AddWall()
 	pWallColliderS->SetName(L"Wall");
 	CreateObject(pWallColliderS, GROUP_TYPE::WALL);
 
-	CObject* pWallColliderE = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 550.f), DIR::E);
-	pWallColliderE->SetName(L"Wall");
-	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
-
-	CObject* pWallColliderW = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 550.f), DIR::W);
+	CObject* pWallColliderW = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 550.f), DIR::W);
 	pWallColliderW->SetName(L"Wall");
 	CreateObject(pWallColliderW, GROUP_TYPE::WALL);
+
+	CObject* pWallColliderE = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 550.f), DIR::E);
+	pWallColliderE->SetName(L"Wall");
+	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
 
 
 	// collider for tear
@@ -325,13 +331,13 @@ void CScene_Start::AddWall()
 	pWallTearColliderS->SetName(L"Wall_Tear");
 	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
 
-	CObject* pWallTearColliderE = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::E);
-	pWallTearColliderE->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
-
-	CObject* pWallTearColliderW = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::W);
+	CObject* pWallTearColliderW = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::W);
 	pWallTearColliderW->SetName(L"Wall_Tear");
 	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
+
+	CObject* pWallTearColliderE = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::E);
+	pWallTearColliderE->SetName(L"Wall_Tear");
+	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
 
 }
 

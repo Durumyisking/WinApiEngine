@@ -131,9 +131,9 @@ public:
 			(*this).m_iHP += _iValue;
 	}
 	/** DestStat에 캐릭터 데미지만큼 피해를 입힙니다. */
-	void InflictDamage(Stat* _pDestStat)
+	void InflictDamage(int _iDmg)
 	{
-		_pDestStat->m_iHP -= (*this).m_iDmg;
+		m_iHP -= _iDmg;
 	}
 };
 

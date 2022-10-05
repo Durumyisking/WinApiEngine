@@ -45,6 +45,7 @@ void CGaper::OnCollision(CCollider* _pOther)
 
 void CGaper::OnCollisionEnter(CCollider* _pOther)
 {
+	CMonster::OnCollisionEnter(_pOther);
 
 }
 

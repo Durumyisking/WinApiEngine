@@ -13,6 +13,9 @@ CPickupKey::CPickupKey()
 	SetName(L"PickupKey");
 	m_strAnimName = L"PickupKey";
 	SetScale(Vec2(32.f, 64.f));
+	GetCollider()->SetScale(Vec2(44.f, 64.f));
+	GetCollider()->SetOffsetPos(Vec2(4.f, 8.f));
+
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PickupKey", m_pTex, Vec2(0.f, 0.f), Vec2(16.f, 32.f), Vec2(64.f, 0.f), 0.1f, 1, false);
 

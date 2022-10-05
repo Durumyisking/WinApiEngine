@@ -34,7 +34,7 @@ protected:
 
 	float			m_finvincibilityTime;
 
-	float			m_arrMoveDir[(UINT)DIR::END];
+	bool			m_arrWallDirCheck[(UINT)DIR::END];
 
 
 

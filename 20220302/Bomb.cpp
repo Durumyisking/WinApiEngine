@@ -7,6 +7,9 @@
 
 #include "TimeMgr.h"
 
+#include "Player.h"
+#include "Monster.h"
+
 CBomb::CBomb()
 	: m_pTex(nullptr)
 	, m_strAnimName(L"Bomb")
@@ -60,11 +63,31 @@ void CBomb::render(HDC _dc)
 
 void CBomb::OnCollision(CCollider * _pOther)
 {
+
+
 }
 
 void CBomb::OnCollisionEnter(CCollider * _pOther)
 {
+	CObject* pOtherObj = _pOther->GetObj();
 
+	if (m_bExplosion)
+	{
+		// Player | Monster 
+		if (L"Player" == pOtherObj->GetName())
+		{
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+
+			pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
+			pPlayer->GetStat()->InflictDamage(2);
+		}
+		if (L"Monster" == pOtherObj->GetName())
+		{
+			CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
+
+			pMonster->GetStat().InflictDamage(100);
+		}
+	}
 }
 
 void CBomb::OnCollisionExit(CCollider * _pOther)

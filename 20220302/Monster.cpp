@@ -29,7 +29,7 @@ CMonster::~CMonster()
 
 void CMonster::Attack(MISSILE_TYPE _eType)
 {
-
+	
 
 }
 
@@ -47,16 +47,7 @@ void CMonster::render(HDC _dc)
 }
 void CMonster::OnCollision(CCollider * _pOther)
 {
-	//CObject* pOtherObj = _pOther->GetObj();
 
-//// player 
-//if (L"Player" == pOtherObj->GetName())
-//{
-//	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
-//	
-//	pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
-//	GetStat().InflictDamage(pPlayer->GetStat());
-//}
 }
 void CMonster::OnCollisionEnter(CCollider * _pOther)
 {

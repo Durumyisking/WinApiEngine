@@ -10,8 +10,6 @@ CPickup::CPickup()
 	: m_pTex(nullptr)
 {
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(16.f, 16.f));
 }
 
 CPickup::~CPickup()

@@ -33,23 +33,18 @@ CPlayer::CPlayer()
 	, m_Pickup{}
 	, m_fAcc(0.f)
 	, m_fMaxAcc(1.f)
-	, m_arrMoveDir{1.f, 1.f , 1.f , 1.f }
+	, m_arrWallDirCheck{}
 	, m_finvincibilityTime(1.f)
 {
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
-
 	m_Stat = { 6, 6, 5, 400.f, 0.38f };
 	m_pStat = &m_Stat;
 
-	// 0 325   48 37
 	m_strAnimName = L"Hurt";
-
-	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 
 	CreateRigidBody();
 	GetRigidBody()->SetMaxVelocity(m_pStat->m_fSpeed);
-	GetRigidBody()->SetFricCoeff(0.f);
+	//GetRigidBody()->SetFricCoeff(0.f);
 
 }
 
@@ -81,18 +76,35 @@ void CPlayer::update()
 
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-
+	
+	
 	if (KEY_HOLD(KEY::W)) {
-		pRigid->AddForce(Vec2(0.f, -200.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+		{
+			pRigid->AddVelocity(Vec2(0.f, -50.f));
+			pRigid->AddForce(Vec2(0.f, -200.f));
+		}
 	}
 	if (KEY_HOLD(KEY::S)) {
-		pRigid->AddForce(Vec2(0.f, 200.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
+		{
+			pRigid->AddVelocity(Vec2(0.f, 50.f));
+			pRigid->AddForce(Vec2(0.f, 200.f));
+		}
 	}
 	if (KEY_HOLD(KEY::A)) {
-		pRigid->AddForce(Vec2(-200.f, 0.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
+		{
+			pRigid->AddVelocity(Vec2(-50.f, 0.f));
+			pRigid->AddForce(Vec2(-200.f, 0.f));
+		}
 	}
 	if (KEY_HOLD(KEY::D)) {
-		pRigid->AddForce(Vec2(200.f, 0.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
+		{
+			pRigid->AddVelocity(Vec2(50.f, 0.f));
+			pRigid->AddForce(Vec2(200.f, 0.f));
+		}
 	}
 
 	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
@@ -137,9 +149,14 @@ void CPlayer::init()
 {
 	SetScale(Vec2(138.f, 91.f));
 
+
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
 	GetCollider()->SetScale(Vec2(40.f, 30.f));
+
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
+
 	
 	pBody = new CBody;
 	pHead = new CHead;
@@ -152,6 +169,8 @@ void CPlayer::init()
 
 	pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
+
+
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
@@ -181,9 +200,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		{
 			// 
 		}
-
 	}
-
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
@@ -207,21 +224,23 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		switch (pWall->GetDir())
 		{
 		case DIR::N:
-			this->m_arrMoveDir[(UINT)DIR::N] = 0.f;
+			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
 			break;
 		case DIR::S:
-			this->m_arrMoveDir[(UINT)DIR::S] = 0.f;
+			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
 			break;
 		case DIR::E:
-			this->m_arrMoveDir[(UINT)DIR::E] = 0.f;
+			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
 			break;
 		case DIR::W:
-			this->m_arrMoveDir[(UINT)DIR::W] = 0.f;
+			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
 			break;
 
 		default:
 			break;
 		}
+
+		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
 	// item
@@ -236,12 +255,30 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 void CPlayer::OnCollisionExit(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
+	
+	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		CWallCollider* pWall = (CWallCollider*)pOtherObj;
+		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 
+		switch (pWall->GetDir())
+		{
+		case DIR::N:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
+			break;
+		case DIR::S:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
+			break;
+		case DIR::E:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
+			break;
+		case DIR::W:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
+			break;
 
-
+		default:
+			break;
+		}
 	}
 }
 
