@@ -20,7 +20,8 @@
 
 #include "WallCollider.h"
 #include "Heart.h"
-#include "Pickup.h"	
+#include "Pickup.h"
+#include "PickupHeart.h"
 
 
 
@@ -44,6 +45,7 @@ CPlayer::CPlayer()
 
 	CreateRigidBody();
 	GetRigidBody()->SetMaxVelocity(m_pStat->m_fSpeed);
+	
 	//GetRigidBody()->SetFricCoeff(0.f);
 
 }
@@ -84,28 +86,28 @@ void CPlayer::update()
 	if (KEY_HOLD(KEY::W)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
 		{
-			pRigid->AddVelocity(Vec2(0.f, -50.f));
-			pRigid->AddForce(Vec2(0.f, -200.f));
+			pRigid->AddVelocity(Vec2(0.f, -30.f));
+				pRigid->AddForce(Vec2(0.f, -200.f));
 		}
 	}
 	if (KEY_HOLD(KEY::S)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
 		{
-			pRigid->AddVelocity(Vec2(0.f, 50.f));
+			pRigid->AddVelocity(Vec2(0.f, 30.f));
 			pRigid->AddForce(Vec2(0.f, 200.f));
 		}
 	}
 	if (KEY_HOLD(KEY::A)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
 		{
-			pRigid->AddVelocity(Vec2(-50.f, 0.f));
+			pRigid->AddVelocity(Vec2(-30.f, 0.f));
 			pRigid->AddForce(Vec2(-200.f, 0.f));
 		}
 	}
 	if (KEY_HOLD(KEY::D)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
 		{
-			pRigid->AddVelocity(Vec2(50.f, 0.f));
+			pRigid->AddVelocity(Vec2(30.f, 0.f));
 			pRigid->AddForce(Vec2(200.f, 0.f));
 		}
 	}
@@ -147,6 +149,22 @@ void CPlayer::render(HDC _dc)
 }
 
 
+
+CBody* CPlayer::Body()
+{
+	if (nullptr == m_pOwner)
+		return pBody;
+
+	return nullptr;
+}
+
+CHead* CPlayer::Head()
+{
+	if (nullptr == m_pOwner)
+		return pHead;
+
+	return nullptr;
+}
 
 void CPlayer::init()
 {
@@ -204,6 +222,17 @@ void CPlayer::OnCollision(CCollider * _pOther)
 			// 
 		}
 	}
+
+	if (L"PickupHeart" == pOtherObj->GetName())
+	{
+		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
+
+		Vec2 vec = this->GetPos() - pHeart->GetPos();
+		vec.Normalize();
+		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
+		vec = vec * 50.f;
+		this->GetRigidBody()->AddForce(vec);
+	}
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
@@ -242,7 +271,6 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		default:
 			break;
 		}
-
 		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
@@ -253,6 +281,17 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		m_vInventory.push_back(pItem);
 		m_GetItemCheck = pItem;
 	}	
+
+	if (L"PickupHeart" == pOtherObj->GetName())
+	{
+		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
+
+		Vec2 vec = this->GetPos() - pHeart->GetPos();
+		vec.Normalize();
+		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
+		vec = vec  * 50.f;
+		this->GetRigidBody()->AddForce(vec);
+	}
 }
 
 void CPlayer::OnCollisionExit(CCollider * _pOther)

@@ -182,6 +182,12 @@
     <Filter Include="Engine\04. Object\Bomb">
       <UniqueIdentifier>{fd0a0339-c36d-4280-a760-35c757293a83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Start\Room">
+      <UniqueIdentifier>{584a09ca-90a1-486a-b2a6-2f3693b14aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Start\Map">
+      <UniqueIdentifier>{7f5c9146-f08a-4220-b611-146d37f7c58e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -365,6 +371,9 @@
     <ClInclude Include="PickupCount.h">
       <Filter>Engine\04. Object\UI\Status\Pickup</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Engine\05. Scene\Scene_Start\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -537,6 +546,9 @@
     </ClCompile>
     <ClCompile Include="PickupCount.cpp">
       <Filter>Engine\04. Object\UI\Status\Pickup</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Engine\05. Scene\Scene_Start\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -44,7 +44,7 @@ void CIdleState::update()
 
 	if (fLen < fRecogrange)
 	{
-		ChangeAIState(GetAI(), MON_STATE::TRACE);
+//		ChangeAIState(GetAI(), MON_STATE::TRACE);
 	}
 
 }

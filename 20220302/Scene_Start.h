@@ -3,6 +3,7 @@
 
 class CUI;
 class CPlayer;
+class CMap;
 
 class CScene_Start :
 	public CScene
@@ -29,6 +30,7 @@ public:
 	void AddWall();
 	void SetPlayerPos(CObject* _pPlayer);
 
+
 private:
 	vector<CUI*> vecHeartUI;
 	
@@ -38,7 +40,6 @@ private:
 	// 이동 된 방 기준 이전 방의 타입
 	DIR					m_roomDir;
 	CPlayer*			m_pPlayer;
-
 };
 
 	

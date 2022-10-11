@@ -3,6 +3,9 @@
 #include "Texture.h"
 #include "Player.h"
 #include "Collider.h"
+#include "RigidBody.h"
+#include "WallCollider.h"
+
 
 class CPickup :
 	public CObject

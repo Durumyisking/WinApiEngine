@@ -10,7 +10,7 @@ class CMonster;
 class CTexture;
 class Collider;
 class CPlayer;
-
+class CMap;
 			
 class CScene
 {
@@ -34,6 +34,7 @@ protected:
 	float				m_fTimeCount;
 	CTexture*			m_pBgTex;
 	Vec2				m_vResolution;
+	CMap* m_pMap;
 
 
 
@@ -72,6 +73,8 @@ public:
 
 	CPlayer* GetPlayer() const { return m_pPlayer; }
 	void AddPlayer(CPlayer* _pPlayer) { m_pPlayer = _pPlayer; };
+	void SetMap(CMap* _pMap) { m_pMap = _pMap; }
+
 
 
 public:

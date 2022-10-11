@@ -38,6 +38,8 @@
 #include "PickupCoin.h"
 #include "PickupBomb.h"
 
+#include "Map.h"
+
 
 
 CScene_Start::CScene_Start()
@@ -48,6 +50,16 @@ CScene_Start::CScene_Start()
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\BG_basement.bmp");
 	m_eAdjacencyRoom[(UINT)DIR::N] = SCENE_TYPE::ITEM;
 	m_eAdjacencyRoom[(UINT)DIR::S] = SCENE_TYPE::TOOL;
+
+	//wchar_t szName[256] = L"E:\\IsaacProject\\Output\\bin\\content\\map\\Stage1.txt";
+
+	//wstring strStageFolder = CPathMgr::GetInst()->GetContentPath();
+	//strStageFolder += L"map";
+
+	//m_pMap = new CMap();
+
+	//wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
+	//m_pMap->LoadMap(strRelativePath);
 }
 
 
@@ -159,6 +171,8 @@ void CScene_Start::Enter()
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::BOMB);
 
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_PLAYER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::WALL, GROUP_TYPE::PICKUP);
+
 	
 
 	

@@ -2,6 +2,7 @@
 #include "Object.h"
 #include"Texture.h"
 
+
 class CAnimation;
 class CTexture;
 class CItem;
@@ -64,6 +65,9 @@ public:
 
 	UINT GetPrevHp() { return m_iPrevHp;}
 	void SetPrevHp(UINT _Prevhp) { m_iPrevHp = _Prevhp; }
+
+	CBody* Body();
+	CHead* Head();
 
 public:
 	void init();

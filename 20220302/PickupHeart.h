@@ -20,8 +20,6 @@ public:
 	virtual void OnCollisionEnter(CCollider* _pOther);
 	virtual void OnCollisionExit(CCollider* _pOther);
 
-public:
-	void GiveHpToPlayer(CPlayer* _pPlayer);
 };
 
 

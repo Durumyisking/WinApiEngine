@@ -187,6 +187,7 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="MenuObj.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="Heart.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MenuObj.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="note.cpp" />

@@ -47,6 +47,7 @@
 #define TILE_WIDTH 13
 #define TILE_HEIGHT 7
 
+#define MAP_SIZE 7
 
 #define HEAD_BODY_GAP Vec2(0.f, 43.f)
 
