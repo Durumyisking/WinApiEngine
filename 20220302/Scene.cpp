@@ -16,7 +16,7 @@
 #include "SelectGDI.h"
 
 #include "WallCollider.h"
-
+#include "Map.h"
 #include "Camera.h"
 
 
@@ -44,6 +44,8 @@ CScene::~CScene()
 			delete m_arrObj[i][j];
 		}
 	}
+	m_pMap->~CMap();
+	delete m_pMap;
 }
 
 void CScene::DeleteGroup(GROUP_TYPE _eTarget)

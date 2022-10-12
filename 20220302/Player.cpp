@@ -23,6 +23,8 @@
 #include "Pickup.h"
 #include "PickupHeart.h"
 
+#include "Door.h"
+#include "Room.h"
 
 
 CPlayer::CPlayer()
@@ -245,6 +247,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	{
 		CDoor* pdoor = (CDoor*)pOtherObj;
 
+		CCamera::GetInst()->SetLookAt(pdoor->GetOwner()->GetPos());
 	
 	}
 

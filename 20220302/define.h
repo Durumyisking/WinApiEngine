@@ -73,6 +73,8 @@ enum class GROUP_TYPE
 {
 	DEFAULT,
 
+	ROOM,
+
 	TILE, 
 
 	WALL,
@@ -193,4 +195,12 @@ enum class PICKUP_TYPE
 	COIN,
 	BOMB,
 	KEY
+};
+
+enum class ROOM_TYPE
+{
+	START,
+	NORMAL,
+	TRESURE,
+	BOSS,
 };

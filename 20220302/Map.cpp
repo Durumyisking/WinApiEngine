@@ -6,6 +6,9 @@
 
 #include "Scene.h"
 
+#include "Room.h"
+#include "Core.h"
+
 CMap::CMap()
 	: m_MapData{}
 {
@@ -13,6 +16,14 @@ CMap::CMap()
 
 CMap::~CMap()
 {
+
+	//for (int y = 0; y < MAP_SIZE; y++)
+	//{
+	//	for (int x = 0; x < MAP_SIZE; x++)
+	//	{
+	//		delete m_MapData[y][x];
+	//	}
+	//}
 }
 
 void CMap::LoadMap(const wstring& _strRelativePath)
@@ -34,24 +45,54 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 
 		if (0 != pFile)
 		{
+			Vec2 vResolution = CCore::GetInst()->GetResolution();
 			for (int y = 0; y < MAP_SIZE; y++)
 			{
 				fgetws(buff, 63, pFile);
 				for (int x = 0; x < MAP_SIZE; x++)
 				{
-					m_MapData[y][x] = buff[x];
+					switch (buff[x])
+					{
+					case L'0':
+						break;
+					case L'1':
+						m_MapData[y][x] = new CRoom(ROOM_TYPE::START, Vec2(x, y), this);
+						m_vStartPos = Vec2(x * vResolution.x + (vResolution.x / 2), y * vResolution.y + (vResolution.y / 2));
+						SetCurrentRoom(dynamic_cast<CRoom*>(m_MapData[y][x]));
+						break;
+					case L'2':
+						m_MapData[y][x] = new CRoom(ROOM_TYPE::NORMAL, Vec2(x, y), this);
+						break;
+					case L'3':
+						m_MapData[y][x] = new CRoom(ROOM_TYPE::TRESURE, Vec2(x, y), this);
+						break;
+					case L'9':
+						m_MapData[y][x] = new CRoom(ROOM_TYPE::BOSS, Vec2(x, y), this);
+						break;
+					default:
+						break;
+					}
+				}
+			}
+			// ºÒ·¯¿Â map init
+			for (int y = 0; y < MAP_SIZE; y++)
+			{
+				for (int x = 0; x < MAP_SIZE; x++)
+				{
+					if (nullptr != m_MapData[y][x])
+					{
+						m_MapData[y][x]->SetScale(vResolution);
+						m_MapData[y][x]->SetPos(Vec2(x * vResolution.x + (vResolution.x / 2), y * vResolution.y + (vResolution.y / 2)));
+						dynamic_cast<CRoom*>(m_MapData[y][x])->AddWall();
+						dynamic_cast<CRoom*>(m_MapData[y][x])->AddDoor();
+						CSceneMgr::GetInst()->GetCurScene()->AddObject(m_MapData[y][x], GROUP_TYPE::ROOM);
+					}
 				}
 			}
 			fclose(pFile);
 		}
 
-		//for (size_t i = 0; i < 7; ++i)
-		//{
-		//	fread(&m_MapData[i], sizeof(wstring), 1, pFile);
-		//}
 
 		CSceneMgr::GetInst()->GetCurScene()->SetMap(this);
-
-//		fclose(pFile);
 	
 }

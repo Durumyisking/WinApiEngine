@@ -2,21 +2,21 @@
 #include "Object.h"
 
 class CTexture;
-
+class CRoom;
 class CDoor :
 	public CObject
 {
 
 private:
 	CTexture*		m_pTex;
-	DIR				m_eDir;
 	bool			m_bOpen;
+	CRoom*			m_pOwner;
 
 	// 텍스처 자를 위치
 	int				m_iSliceX;
 	int				m_iSliceY;
 public:
-	CDoor(DIR _Dir);
+	CDoor(CRoom* _pOwner);
 	~CDoor();
 
 	CLONE(CDoor);
@@ -24,7 +24,6 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 
-	DIR GetDir () { return m_eDir;}
 
 	void setOpen(bool _bOpen)
 	{
@@ -57,7 +56,7 @@ public:
 		m_iSliceY = _y;
 	}
 
-
+	CRoom* GetOwner() const { return m_pOwner; }
 
 
 };

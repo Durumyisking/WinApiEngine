@@ -374,6 +374,9 @@
     <ClInclude Include="Map.h">
       <Filter>Engine\05. Scene\Scene_Start\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Engine\05. Scene\Scene_Start\Room</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -549,6 +552,9 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Engine\05. Scene\Scene_Start\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Engine\05. Scene\Scene_Start\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

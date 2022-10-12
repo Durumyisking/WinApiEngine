@@ -13,7 +13,10 @@ private:
 
 
 public:
-	CScene* GetCurScene() { return m_pCurScene; }
+	CScene* GetCurScene() 
+	{
+		return m_pCurScene;
+	}
 	CScene* GetPrevScene() { return m_pPrevScene; }
 //	CScene* GetSceneArr(SCENE_TYPE _eType) { return m_arrScene[(UINT)_eType]; }
 

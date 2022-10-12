@@ -39,27 +39,15 @@
 #include "PickupBomb.h"
 
 #include "Map.h"
+#include "Room.h"
 
 
 
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
-	, m_eAdjacencyRoom{}
 	, m_roomDir(DIR::END)
 {
-	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\BG_basement.bmp");
-	m_eAdjacencyRoom[(UINT)DIR::N] = SCENE_TYPE::ITEM;
-	m_eAdjacencyRoom[(UINT)DIR::S] = SCENE_TYPE::TOOL;
-
-	//wchar_t szName[256] = L"E:\\IsaacProject\\Output\\bin\\content\\map\\Stage1.txt";
-
-	//wstring strStageFolder = CPathMgr::GetInst()->GetContentPath();
-	//strStageFolder += L"map";
-
-	//m_pMap = new CMap();
-
-	//wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
-	//m_pMap->LoadMap(strRelativePath);
+	//m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\bg_basement_start.bmp");
 }
 
 
@@ -73,25 +61,52 @@ void CScene_Start::Enter()
 {
 	CCore::GetInst()->DivideMenu();
 
+	// map 추가
+	wchar_t szName[256] = L"E:\\IsaacProject\\Output\\bin\\content\\map\\Stage1.txt";
+
+	wstring strStageFolder = CPathMgr::GetInst()->GetContentPath();
+	strStageFolder += L"map";
+	m_pMap = new CMap();
+	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
+	m_pMap->LoadMap(strRelativePath);
+
+	m_pMap->GetCurrentRoom()->Enter();
+
+	// start room의 위치로 카메라 이동
+	CCamera::GetInst()->SetLookAt(m_pMap->GetStartPos());
+
+
 	// Object 추가
+		
+	// 벽 충돌체 추가
+//	AddWall();
+
+	// 방 세팅
+	for (size_t i = 0; i < 7; i++)
+	{
+		for (size_t j = 0; j < 7; j++)
+		{
+			
+		}
+	}
+	//AddDoor(DIR::N);
+	//AddDoor(DIR::S);
+
+
+	// Player 생성
 	m_pPlayer = new CPlayer;
 //	CPlayer* objPlayer = (CPlayer*)pPlayer;
 	//m_pPlayerinst = (CPlayer*)pPlayer;
 
 	m_pPlayer->init();
 
-	SetPlayerPos(m_pPlayer);
+	m_pPlayer->SetPos(m_pMap->GetStartPos());
 	m_pPlayer->SetName(L"Player");
 
 	AddPlayer(m_pPlayer);
 
 
 	CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
-
-	AddDoor(DIR::N);
-	AddDoor(DIR::S);
-	AddWall();
-
 
 
 	// 몬스터 생성
@@ -264,11 +279,11 @@ void CScene_Start::update()
 void CScene_Start::render(HDC _dc)
 {
 
-	int iWidth = (int)m_pBgTex->GetWidth();
-	int iHeight = (int)m_pBgTex->GetHeight();
+	//int iWidth = (int)m_pBgTex->GetWidth();
+	//int iHeight = (int)m_pBgTex->GetHeight();
 
 
-	StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);	
+	//StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);	
 
 	CScene::render(_dc);
 
@@ -281,7 +296,7 @@ void CScene_Start::render(HDC _dc)
 
 void CScene_Start::AddDoor(DIR _eDir)
 {
-	if (SCENE_TYPE::END != m_eAdjacencyRoom[(UINT)_eDir])
+	/*if (SCENE_TYPE::END != m_eAdjacencyRoom[(UINT)_eDir])
 	{
 		CObject* pDoor = new CDoor(_eDir);
 		CDoor* pDoorObj = (CDoor*)pDoor;
@@ -314,45 +329,44 @@ void CScene_Start::AddDoor(DIR _eDir)
 		pDoor->SetName(L"Door");
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 
-	}
+	}*/
 }
 void CScene_Start::AddWall()
 {
-	// collider for body
-	CObject* pWallColliderN = new CWallCollider(Vec2(640.f, 128.f), Vec2(1000.f, 1.f), DIR::N);
-	pWallColliderN->SetName(L"Wall");
-	CreateObject(pWallColliderN, GROUP_TYPE::WALL);
-
-	CObject* pWallColliderS = new CWallCollider(Vec2(640.f, 640.f), Vec2(1000.f, 1.f), DIR::S);
-	pWallColliderS->SetName(L"Wall");
-	CreateObject(pWallColliderS, GROUP_TYPE::WALL);
-
-	CObject* pWallColliderW = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 550.f), DIR::W);
-	pWallColliderW->SetName(L"Wall");
-	CreateObject(pWallColliderW, GROUP_TYPE::WALL);
-
-	CObject* pWallColliderE = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 550.f), DIR::E);
-	pWallColliderE->SetName(L"Wall");
-	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
-
-
-	// collider for tear
-	CObject* pWallTearColliderN = new CWallCollider(Vec2(640.f, 100.f), Vec2(1050.f, 1.f), DIR::N);
-	pWallTearColliderN->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderN, GROUP_TYPE::TEARWALL);
-
-	CObject* pWallTearColliderS = new CWallCollider(Vec2(640.f, 670.f), Vec2(1050.f, 1.f), DIR::S);
-	pWallTearColliderS->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
-
-	CObject* pWallTearColliderW = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::W);
-	pWallTearColliderW->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
-
-	CObject* pWallTearColliderE = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::E);
-	pWallTearColliderE->SetName(L"Wall_Tear");
-	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
-
+//	// collider for body
+//	CObject* pWallColliderN = new CWallCollider(Vec2(640.f, 128.f), Vec2(1000.f, 1.f), DIR::N);
+//	pWallColliderN->SetName(L"Wall");
+//	CreateObject(pWallColliderN, GROUP_TYPE::WALL);
+//
+//	CObject* pWallColliderS = new CWallCollider(Vec2(640.f, 640.f), Vec2(1000.f, 1.f), DIR::S);
+//	pWallColliderS->SetName(L"Wall");
+//	CreateObject(pWallColliderS, GROUP_TYPE::WALL);
+//
+//	CObject* pWallColliderW = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 550.f), DIR::W);
+//	pWallColliderW->SetName(L"Wall");
+//	CreateObject(pWallColliderW, GROUP_TYPE::WALL);
+//
+//	CObject* pWallColliderE = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 550.f), DIR::E);
+//	pWallColliderE->SetName(L"Wall");
+//	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
+//
+//
+//	// collider for tear
+//	CObject* pWallTearColliderN = new CWallCollider(Vec2(640.f, 100.f), Vec2(1050.f, 1.f), DIR::N);
+//	pWallTearColliderN->SetName(L"Wall_Tear");
+//	CreateObject(pWallTearColliderN, GROUP_TYPE::TEARWALL);
+//
+//	CObject* pWallTearColliderS = new CWallCollider(Vec2(640.f, 670.f), Vec2(1050.f, 1.f), DIR::S);
+//	pWallTearColliderS->SetName(L"Wall_Tear");
+//	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
+//
+//	CObject* pWallTearColliderW = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::W);
+//	pWallTearColliderW->SetName(L"Wall_Tear");
+//	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
+//
+//	CObject* pWallTearColliderE = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::E);
+//	pWallTearColliderE->SetName(L"Wall_Tear");
+//	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
 }
 
 void CScene_Start::SetPlayerPos(CObject* _pPlayer)

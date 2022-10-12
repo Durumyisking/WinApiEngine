@@ -7,15 +7,15 @@
 #include "Core.h"
 
 #include "ResMgr.h"
+#include "Room.h"
 
 
 
-
-CDoor::CDoor(DIR _eDir)
+CDoor::CDoor(CRoom* _pOwner)
 	:m_pTex(nullptr)
+	,m_pOwner(m_pOwner)
 {
 	
-	this->m_eDir = _eDir;
 	m_bOpen = true;
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"DoorTex", L"texture\\BackGround\\DoorNS.bmp");
 	

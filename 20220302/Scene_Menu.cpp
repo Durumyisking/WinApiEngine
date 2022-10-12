@@ -39,7 +39,7 @@ void CScene_Menu::Enter()
 
 void CScene_Menu::Exit()
 {
-	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
+	CCamera::GetInst()->SetLookAtDirect(m_vResolution / 2.f);
 	
 	DeleteAll();
 }
