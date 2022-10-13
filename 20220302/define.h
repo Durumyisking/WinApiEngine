@@ -81,6 +81,8 @@ enum class GROUP_TYPE
 
 	TEARWALL,
 
+	DOOR,
+
 	TEAR,
 
 	BOMB,
@@ -94,8 +96,6 @@ enum class GROUP_TYPE
 	PROJ_PLAYER,
 
 	PROJ_MONSTER,
-
-	DOOR,
 
 	ITEM,
 
@@ -176,7 +176,11 @@ enum class EVENT_TYPE
 
 enum class DIR
 {
-	E,W,S,N, END
+	N,
+	S,
+	E,
+	W,
+	END,
 };
 
 enum class MON_STATE

@@ -192,6 +192,7 @@
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="NormalRoom.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PanelUI.h" />
     <ClInclude Include="PathMgr.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Scene_Item.h" />
+    <ClInclude Include="StartRoom.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
@@ -241,6 +243,7 @@
     <ClCompile Include="BtnUI.cpp" />
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="NormalRoom.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Fly.cpp" />
@@ -288,6 +291,7 @@
     <ClCompile Include="SelectGDI.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Scene_Item.cpp" />
+    <ClCompile Include="StartRoom.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />

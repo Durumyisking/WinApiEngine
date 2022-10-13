@@ -3,6 +3,7 @@
 
 class CTexture;
 class CDoor;
+class CMap;
 
 class CRoom : 
 	public CObject
@@ -24,15 +25,18 @@ public:
 	void AddWall();
 	void AddDoor();
 	void Enter();
-
+	void IsClear();
 private:
 	ROOM_TYPE m_eType;
 
 protected:
 	CTexture*	m_pBgTex;
 	Vec2		m_vPos;
-	CMap*		 m_pOwner;
+	CMap*		m_pOwner;
 
-	vector<CDoor*> m_pDoor;
+	vector<CDoor*> m_Door;
+
+	int			m_iMonsterCount;
+	bool		m_bIsClear;
 
 };

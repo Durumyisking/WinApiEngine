@@ -193,7 +193,15 @@ void CPlayer::init()
 	pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 
+	pBody->CreateCollider();
+	pBody->CreateCollider();
+	pBody->CreateCollider();
+	pBody->CreateCollider();
 
+	pBody;
+
+
+	m_Pickup.SetBomb(5);
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
@@ -245,10 +253,37 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	// door
 	if (L"Door" == pOtherObj->GetName())
 	{
-		CDoor* pdoor = (CDoor*)pOtherObj;
+		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+		Vec2 vPos = {};
 
-		CCamera::GetInst()->SetLookAt(pdoor->GetOwner()->GetPos());
-	
+		if (pdoor->IsOpen())
+		{
+			switch (pdoor->Dir())
+			{
+			case DIR::N:
+				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y - 1);
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, -225.f));
+				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				break;
+			case DIR::S:
+				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y + 1);
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 275.f));
+				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				break;
+			case DIR::E:
+				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x + 1, pdoor->GetOwner()->GetRoomPos().y);
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(500.f, 40.f));
+				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				break;
+			case DIR::W:
+				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x - 1, pdoor->GetOwner()->GetRoomPos().y);
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-500.f, 40.f));
+				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	// wall

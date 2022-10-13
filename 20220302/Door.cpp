@@ -11,19 +11,15 @@
 
 
 
-CDoor::CDoor(CRoom* _pOwner)
+CDoor::CDoor(CRoom* _pOwner, DIR _eDir)
 	:m_pTex(nullptr)
-	,m_pOwner(m_pOwner)
+	,m_pOwner(_pOwner)
+	,m_eDir(_eDir)
 {
 	
-	m_bOpen = true;
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"DoorTex", L"texture\\BackGround\\DoorNS.bmp");
+	m_bOpen = false;
 	
-	int iWidth = (int)m_pTex->GetWidth() / 2;
-	int iHeight = (int)m_pTex->GetHeight() / 2;
-
 	SetScale(Vec2(128.f, 116.f));
-	SetName(L"Door");
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
@@ -40,7 +36,50 @@ CDoor::~CDoor()
 
 void CDoor::update()
 {
-
+	if (!IsOpen())
+	{
+		switch (m_eDir)
+		{
+		case DIR::N:
+			SetSlice(64, 0);
+			break;
+		case DIR::S:
+			SetSlice(64, 48);
+			break;
+		case DIR::E:
+			SetSlice(48, 64);
+			break;
+		case DIR::W:
+			SetSlice(48, 0);
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		switch (m_eDir)
+		{
+		case DIR::N:
+			SetSlice(0, 0);
+			break;
+		case DIR::S:
+			SetSlice(0, 48);
+			break;
+		case DIR::E:
+			SetSlice(0, 64);
+			break;
+		case DIR::W:
+			SetSlice(0, 0);
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+	}
 
 }
 
@@ -52,6 +91,7 @@ void CDoor::render(HDC _dc)
 
 	Vec2 vScale = GetScale();
 	Vec2 vPos = GetPos();
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 	TransparentBlt(_dc
 		, static_cast<int>(vPos.x - (float)(vScale.x / 2))

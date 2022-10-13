@@ -51,13 +51,13 @@ void CCamera::update()
 	}
 
 	if (KEY_HOLD(KEY::I))
-		m_vLookAt.y -= 300.f * fDT;
+		m_vLookAt.y -= 400.f * fDT;
 	if (KEY_HOLD(KEY::K))
-		m_vLookAt.y += 300.f * fDT;
+		m_vLookAt.y += 400.f * fDT;
 	if (KEY_HOLD(KEY::J))
-		m_vLookAt.x -= 300.f * fDT;
+		m_vLookAt.x -= 400.f * fDT;
 	if (KEY_HOLD(KEY::L))
-		m_vLookAt.x += 300.f * fDT;
+		m_vLookAt.x += 400.f * fDT;
 
 	// 화면 중앙좌표와 카메라 LookAt 좌표값과의 차이
 	// 그 차이만큼 다른 OBj들을 반대로 이동시켜줄것

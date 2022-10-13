@@ -25,8 +25,6 @@ public:
 	DIR GetRoomDir() { return m_roomDir; }
 
 
-	void AddDoor(DIR _eDir);
-	void AddWall();
 	void SetPlayerPos(CObject* _pPlayer);
 
 

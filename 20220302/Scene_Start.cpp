@@ -53,7 +53,7 @@ CScene_Start::CScene_Start()
 
 CScene_Start::~CScene_Start()
 {
-	DeleteAll();
+	Exit();
 }
 
 
@@ -100,7 +100,7 @@ void CScene_Start::Enter()
 
 	m_pPlayer->init();
 
-	m_pPlayer->SetPos(m_pMap->GetStartPos());
+	m_pPlayer->SetPos(m_pMap->GetStartPos()+ Vec2(0.f, -40.f));
 	m_pPlayer->SetName(L"Player");
 
 	AddPlayer(m_pPlayer);
@@ -112,6 +112,7 @@ void CScene_Start::Enter()
 	// 몬스터 생성
 	CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, m_vResolution / 4);
 	AddObject(pGaper, GROUP_TYPE::MONSTER);
+
 
 
 	// 픽업 생성
@@ -290,106 +291,9 @@ void CScene_Start::render(HDC _dc)
 }
 
 
-
-
-
-
-void CScene_Start::AddDoor(DIR _eDir)
-{
-	/*if (SCENE_TYPE::END != m_eAdjacencyRoom[(UINT)_eDir])
-	{
-		CObject* pDoor = new CDoor(_eDir);
-		CDoor* pDoorObj = (CDoor*)pDoor;
-
-		switch (_eDir)
-		{
-		case DIR::E:
-			pDoor->SetPos(Vec2(m_vResolution.x - (pDoor->GetScale().x / 2) - 25.f, m_vResolution.y / 2));
-			pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
-			pDoorObj->SetSlice(0, 64);
-			break;
-		case DIR::W:
-			pDoor->SetPos(Vec2((pDoor->GetScale().x / 2) + 25.f, m_vResolution.y / 2));
-			pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
-			pDoorObj->SetSlice(0, 0);
-			break;
-		case DIR::S:
-			pDoor->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y - (pDoor->GetScale().y / 2) - 25.f));
-			pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
-			pDoorObj->SetSlice(0, 48);
-			break;
-		case DIR::N:
-			pDoor->SetPos(Vec2(m_vResolution.x / 2, (pDoor->GetScale().y / 2) + 25.f));
-			pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
-			pDoorObj->SetSlice(0, 0);
-			break;
-		default:
-			break;
-		}
-		pDoor->SetName(L"Door");
-		CreateObject(pDoor, GROUP_TYPE::DOOR);
-
-	}*/
-}
-void CScene_Start::AddWall()
-{
-//	// collider for body
-//	CObject* pWallColliderN = new CWallCollider(Vec2(640.f, 128.f), Vec2(1000.f, 1.f), DIR::N);
-//	pWallColliderN->SetName(L"Wall");
-//	CreateObject(pWallColliderN, GROUP_TYPE::WALL);
-//
-//	CObject* pWallColliderS = new CWallCollider(Vec2(640.f, 640.f), Vec2(1000.f, 1.f), DIR::S);
-//	pWallColliderS->SetName(L"Wall");
-//	CreateObject(pWallColliderS, GROUP_TYPE::WALL);
-//
-//	CObject* pWallColliderW = new CWallCollider(Vec2(142.f, 389.f), Vec2(1.f, 550.f), DIR::W);
-//	pWallColliderW->SetName(L"Wall");
-//	CreateObject(pWallColliderW, GROUP_TYPE::WALL);
-//
-//	CObject* pWallColliderE = new CWallCollider(Vec2(1138.f, 389.f), Vec2(1.f, 550.f), DIR::E);
-//	pWallColliderE->SetName(L"Wall");
-//	CreateObject(pWallColliderE, GROUP_TYPE::WALL);
-//
-//
-//	// collider for tear
-//	CObject* pWallTearColliderN = new CWallCollider(Vec2(640.f, 100.f), Vec2(1050.f, 1.f), DIR::N);
-//	pWallTearColliderN->SetName(L"Wall_Tear");
-//	CreateObject(pWallTearColliderN, GROUP_TYPE::TEARWALL);
-//
-//	CObject* pWallTearColliderS = new CWallCollider(Vec2(640.f, 670.f), Vec2(1050.f, 1.f), DIR::S);
-//	pWallTearColliderS->SetName(L"Wall_Tear");
-//	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
-//
-//	CObject* pWallTearColliderW = new CWallCollider(Vec2(110.f, 389.f), Vec2(1.f, 600.f), DIR::W);
-//	pWallTearColliderW->SetName(L"Wall_Tear");
-//	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
-//
-//	CObject* pWallTearColliderE = new CWallCollider(Vec2(1170.f, 389.f), Vec2(1.f, 600.f), DIR::E);
-//	pWallTearColliderE->SetName(L"Wall_Tear");
-//	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
-}
-
 void CScene_Start::SetPlayerPos(CObject* _pPlayer)
 {
 	_pPlayer->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 
 	
-	//switch (CSceneMgr::GetInst()->GetPrevScene()->GetRoomDir())
-	//{
-	//case DIR::S:
-	//	_pPlayer->SetPos(Vec2(m_vResolution.x / 2, LIMITN + 100.f));
-	//	break;
-	//case DIR::N:
-	//	_pPlayer->SetPos(Vec2(m_vResolution.x / 2, LIMITS - 100.f));
-	//	break;
-	//case DIR::W:
-	//	_pPlayer->SetPos(Vec2(LIMITE, m_vResolution.y / 2));
-	//	break;
-	//case DIR::E:
-	//	_pPlayer->SetPos(Vec2(LIMITW, m_vResolution.y / 2));
-	//	break;
-	//case DIR::END:
-	//	break;
-
-	//}
 }

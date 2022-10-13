@@ -93,12 +93,14 @@ void CBody::update()
 
 	if (KEY_HOLD(KEY::E))
 	{
-		if (1.f <= m_fBombCooldown)
-		{
-			CBomb* pnewBomb = new CBomb();
-			pnewBomb->CreateBomb(GetPos(), GetScale());
-			m_fBombCooldown = 0;
-		}
+		if(0 < m_pOwner->GetPickup().m_iBomb)
+			if (1.f <= m_fBombCooldown)
+			{
+				m_pOwner->GetPickup().SetBomb(-1);
+				CBomb* pnewBomb = new CBomb();
+				pnewBomb->CreateBomb(GetPos(), GetScale());
+				m_fBombCooldown = 0;
+			}
 	}
 }
 

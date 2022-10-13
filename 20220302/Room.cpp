@@ -7,6 +7,7 @@
 
 #include "WallCollider.h"
 #include "Door.h"
+#include "Collider.h"
 
 CRoom::CRoom()
 {
@@ -17,6 +18,7 @@ CRoom::CRoom(ROOM_TYPE _eType, Vec2 _vPos, CMap* _pOwner)
 	, m_vPos(_vPos)
 	, m_pOwner(_pOwner)
 {
+	m_bIsClear = false;
 	switch (_eType)
 	{
 	case ROOM_TYPE::START:
@@ -38,20 +40,36 @@ CRoom::CRoom(ROOM_TYPE _eType, Vec2 _vPos, CMap* _pOwner)
 
 CRoom::~CRoom()
 {
+
 }
 
 void CRoom::update()
 {
+	if (m_iMonsterCount <= 0)
+	{
+		m_bIsClear = true;
+	}
+	if (m_bIsClear)
+	{
+		for (size_t i = 0; i < m_Door.size(); i++)
+		{
+			m_Door[i]->openDoor();
+		}
+	}
 }
 
 void CRoom::render(HDC _dc)
 {
 	int iWidth = m_pBgTex->GetWidth();
 	int iHeight = m_pBgTex->GetHeight();
+
 	float posx = GetPos().x - (GetScale().x / 2);
 	float posy = GetPos().y - (GetScale().y / 2);
 
-	StretchBlt(_dc, posx, posy, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+	Vec2 vPos(posx, posy);
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
+	StretchBlt(_dc, vPos.x, vPos.y, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
 }
 
 
@@ -73,17 +91,17 @@ void CRoom::AddWall()
 	pWallColliderS2->SetName(L"Wall");
 	CreateObject(pWallColliderS2, GROUP_TYPE::WALL);
 
-	CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-480.f, -160.f), Vec2(1.f, 265.f), DIR::W);
+	CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, -160.f), Vec2(1.f, 265.f), DIR::W);
 	pWallColliderW1->SetName(L"Wall");
 	CreateObject(pWallColliderW1, GROUP_TYPE::WALL);
-	CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-480.f, 160.f), Vec2(1.f, 265.f), DIR::W);
+	CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-500.f, 160.f), Vec2(1.f, 265.f), DIR::W);
 	pWallColliderW2->SetName(L"Wall");
 	CreateObject(pWallColliderW2, GROUP_TYPE::WALL);
 
-	CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(480.f, -160.f), Vec2(1.f, 265.f), DIR::E);
+	CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, -160.f), Vec2(1.f, 265.f), DIR::E);
 	pWallColliderE1->SetName(L"Wall");
 	CreateObject(pWallColliderE1, GROUP_TYPE::WALL);
-	CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(480.f, 160.f), Vec2(1.f, 265.f), DIR::E);
+	CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(500.f, 160.f), Vec2(1.f, 265.f), DIR::E);
 	pWallColliderE2->SetName(L"Wall");
 	CreateObject(pWallColliderE2, GROUP_TYPE::WALL);
 
@@ -97,11 +115,11 @@ void CRoom::AddWall()
 	pWallTearColliderS->SetName(L"Wall_Tear");
 	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
 
-	CObject* pWallTearColliderW = new CWallCollider(GetPos() + Vec2(-510.f, 0.f), Vec2(1.f, 600.f), DIR::W);
+	CObject* pWallTearColliderW = new CWallCollider(GetPos() + Vec2(-530.f, 0.f), Vec2(1.f, 600.f), DIR::W);
 	pWallTearColliderW->SetName(L"Wall_Tear");
 	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
 
-	CObject* pWallTearColliderE = new CWallCollider(GetPos() + Vec2(510.f, 0.f), Vec2(1.f, 600.f), DIR::E);
+	CObject* pWallTearColliderE = new CWallCollider(GetPos() + Vec2(530.f, 0.f), Vec2(1.f, 600.f), DIR::E);
 	pWallTearColliderE->SetName(L"Wall_Tear");
 	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
 
@@ -110,65 +128,76 @@ void CRoom::AddWall()
 void CRoom::AddDoor()
 {
 
-	int x = m_vPos.x;
-	int y = m_vPos.y;
+	int x = static_cast<int>(m_vPos.x);
+	int y = static_cast<int>(m_vPos.y);
 
 	if (nullptr != m_pOwner->GetMapData(y - 1, x))
 	{
-		CObject* pDoor = new CDoor(this);
+		CObject* pDoor = new CDoor(this, DIR::N);
 		CDoor* pDoorObj = (CDoor*)pDoor;
 		pDoor->SetPos(GetPos() +
 			Vec2(
 				0.f,
-				(pDoor->GetScale().y / 2) - 370.f
+				(pDoor->GetScale().y / 2) - 359.f
 			));
 		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
 		pDoorObj->SetSlice(0, 0);
 		pDoor->SetName(L"Door");
+		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
+		m_Door.push_back(pDoorObj);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 	}
+
 	if (nullptr != m_pOwner->GetMapData(y + 1, x))
 	{
-		CObject* pDoor = new CDoor(this);
+		CObject* pDoor = new CDoor(this, DIR::S);
 		CDoor* pDoorObj = (CDoor*)pDoor;
 		pDoor->SetPos(GetPos() +
 			Vec2(
 				0.f,
-				(pDoor->GetScale().y / 2 + 250.f)
+				(pDoor->GetScale().y / 2 + 242.f)
 			));
 		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
 		pDoorObj->SetSlice(0, 48);
 		pDoor->SetName(L"Door");
+		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
+		m_Door.push_back(pDoorObj);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 
 	}
+
 	if (nullptr != m_pOwner->GetMapData(y, x - 1))
 	{
-		CObject* pDoor = new CDoor(this);
+		CObject* pDoor = new CDoor(this, DIR::W);
 		CDoor* pDoorObj = (CDoor*)pDoor;
 		pDoor->SetPos(GetPos() + 
 			Vec2(
-				(pDoor->GetScale().x / 2) - 600.f, 
+				(pDoor->GetScale().x / 2) - 610.f, 
+				0.f
+			));
+		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
+		pDoorObj->SetSlice(0, 0);
+		pDoor->SetName(L"Door");
+		pDoor->GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
+		m_Door.push_back(pDoorObj);
+		CreateObject(pDoor, GROUP_TYPE::DOOR);
+
+	}
+
+	if (nullptr != m_pOwner->GetMapData(y, x + 1))
+	{
+		CObject* pDoor = new CDoor(this, DIR::E);
+		CDoor* pDoorObj = (CDoor*)pDoor;
+		pDoor->SetPos(GetPos() +
+			Vec2(
+				(pDoor->GetScale().x / 2) + 480.f,
 				0.f
 			));
 		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
 		pDoorObj->SetSlice(0, 64);
 		pDoor->SetName(L"Door");
-		CreateObject(pDoor, GROUP_TYPE::DOOR);
-
-	}
-	if (nullptr != m_pOwner->GetMapData(y, x + 1))
-	{
-		CObject* pDoor = new CDoor(this);
-		CDoor* pDoorObj = (CDoor*)pDoor;
-		pDoor->SetPos(GetPos() +
-			Vec2(
-				(pDoor->GetScale().x / 2) + 470.f,
-				0.f
-			));
-		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
-		pDoorObj->SetSlice(0, 0);
-		pDoor->SetName(L"Door");
+		pDoor->GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
+		m_Door.push_back(pDoorObj);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 
 	}
@@ -177,5 +206,5 @@ void CRoom::AddDoor()
 void CRoom::Enter()
 {
 	m_pOwner->SetCurrentRoom(this);
-	AddWall();
+//	AddWall();
 }

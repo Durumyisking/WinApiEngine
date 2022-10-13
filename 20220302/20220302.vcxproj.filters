@@ -77,9 +77,6 @@
     <Filter Include="Engine\07. Component\Collider">
       <UniqueIdentifier>{e71ed116-e6a6-41a0-8a3d-53731a51e99b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Door">
-      <UniqueIdentifier>{d1f80a75-684f-4ce3-80cd-049f5d5c9fd2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\07. Component\Animator\Animation">
       <UniqueIdentifier>{d2fe5e7e-2099-479c-86eb-cfe6750d91f1}</UniqueIdentifier>
     </Filter>
@@ -182,11 +179,17 @@
     <Filter Include="Engine\04. Object\Bomb">
       <UniqueIdentifier>{fd0a0339-c36d-4280-a760-35c757293a83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\05. Scene\Scene_Start\Room">
-      <UniqueIdentifier>{584a09ca-90a1-486a-b2a6-2f3693b14aee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\05. Scene\Scene_Start\Map">
       <UniqueIdentifier>{7f5c9146-f08a-4220-b611-146d37f7c58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Room">
+      <UniqueIdentifier>{584a09ca-90a1-486a-b2a6-2f3693b14aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Room\Door">
+      <UniqueIdentifier>{d1f80a75-684f-4ce3-80cd-049f5d5c9fd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Room\RoomSub">
+      <UniqueIdentifier>{f8ecf2fd-ed9e-48e9-82f6-116693bf8abf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -273,7 +276,7 @@
       <Filter>Engine\07. Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>Engine\04. Object\Door</Filter>
+      <Filter>Engine\04. Object\Room\Door</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Engine\07. Component\Animator\Animation</Filter>
@@ -375,7 +378,13 @@
       <Filter>Engine\05. Scene\Scene_Start\Map</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>Engine\05. Scene\Scene_Start\Room</Filter>
+      <Filter>Engine\04. Object\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalRoom.h">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClInclude>
+    <ClInclude Include="StartRoom.h">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,7 +461,7 @@
       <Filter>Engine\07. Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>Engine\04. Object\Door</Filter>
+      <Filter>Engine\04. Object\Room\Door</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Engine\07. Component\Animator\Animation</Filter>
@@ -554,7 +563,13 @@
       <Filter>Engine\05. Scene\Scene_Start\Map</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
-      <Filter>Engine\05. Scene\Scene_Start\Room</Filter>
+      <Filter>Engine\04. Object\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalRoom.cpp">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClCompile>
+    <ClCompile Include="StartRoom.cpp">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

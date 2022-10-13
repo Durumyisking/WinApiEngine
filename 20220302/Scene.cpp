@@ -44,8 +44,6 @@ CScene::~CScene()
 			delete m_arrObj[i][j];
 		}
 	}
-	m_pMap->~CMap();
-	delete m_pMap;
 }
 
 void CScene::DeleteGroup(GROUP_TYPE _eTarget)
@@ -57,9 +55,10 @@ void CScene::DeleteAll()
 {
 	for (size_t i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
-
 		Safe_Delete_Vec<CObject*>(m_arrObj[i]);
 	}
+	m_pMap->~CMap();
+	delete m_pMap;
 }
 
 void CScene::update()
