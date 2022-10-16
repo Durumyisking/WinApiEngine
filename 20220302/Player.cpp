@@ -198,10 +198,9 @@ void CPlayer::init()
 	pBody->CreateCollider();
 	pBody->CreateCollider();
 
-	pBody;
 
 
-	m_Pickup.SetBomb(5);
+	m_Pickup.SetBomb(9);
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
@@ -290,7 +289,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	if (L"Wall" == pOtherObj->GetName())
 	{
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
-		
+		SetPosTemp();
+
 		switch (pWall->GetDir())
 		{
 		case DIR::N:

@@ -1,41 +1,14 @@
 #include "pch.h"
 #include "Room.h"
 
-#include "ResMgr.h"
-#include "Texture.h"
-#include "Map.h"
-
 #include "WallCollider.h"
-#include "Door.h"
-#include "Collider.h"
+
+
 
 CRoom::CRoom()
 {
-}
-
-CRoom::CRoom(ROOM_TYPE _eType, Vec2 _vPos, CMap* _pOwner)
-	: m_eType(_eType)
-	, m_vPos(_vPos)
-	, m_pOwner(_pOwner)
-{
 	m_bIsClear = false;
-	switch (_eType)
-	{
-	case ROOM_TYPE::START:
-		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexStart", L"texture\\BackGround\\bg_basement_start.bmp");
-		break;
-	case ROOM_TYPE::NORMAL:
-		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal", L"texture\\BackGround\\bg_basement_normal.bmp");
-		break;
-	case ROOM_TYPE::TRESURE:
-		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexTreasure", L"texture\\BackGround\\bg_basement_normal.bmp");
-		break;
-	case ROOM_TYPE::BOSS:
-		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexBoss", L"texture\\BackGround\\bg_basement_normal.bmp");
-		break;
-	default:
-		break;
-	}
+
 }
 
 CRoom::~CRoom()
@@ -125,6 +98,7 @@ void CRoom::AddWall()
 
 }
 
+
 void CRoom::AddDoor()
 {
 
@@ -140,7 +114,7 @@ void CRoom::AddDoor()
 				0.f,
 				(pDoor->GetScale().y / 2) - 359.f
 			));
-		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
+		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y - 1, x))->GetType());
 		pDoorObj->SetSlice(0, 0);
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
@@ -157,7 +131,7 @@ void CRoom::AddDoor()
 				0.f,
 				(pDoor->GetScale().y / 2 + 242.f)
 			));
-		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
+		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y + 1, x))->GetType());
 		pDoorObj->SetSlice(0, 48);
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
@@ -175,7 +149,7 @@ void CRoom::AddDoor()
 				(pDoor->GetScale().x / 2) - 610.f, 
 				0.f
 			));
-		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
+		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x - 1))->GetType());
 		pDoorObj->SetSlice(0, 0);
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
@@ -193,7 +167,7 @@ void CRoom::AddDoor()
 				(pDoor->GetScale().x / 2) + 480.f,
 				0.f
 			));
-		pDoorObj->SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
+		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x + 1))->GetType());
 		pDoorObj->SetSlice(0, 64);
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));

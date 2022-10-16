@@ -85,8 +85,8 @@ void CDoor::update()
 
 void CDoor::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->GetWidth() / 2;
-	int iHeight = (int)m_pTex->GetHeight() / 2;
+	int iWidth = (int)m_pTex->GetWidth() / m_iSliceCountX;
+	int iHeight = (int)m_pTex->GetHeight() / m_iSliceCountY;
 
 
 	Vec2 vScale = GetScale();
@@ -102,5 +102,56 @@ void CDoor::render(HDC _dc)
 		, RGB(255, 0, 255));
 
 	component_render(_dc);
+}
+
+void CDoor::SetTextureType(ROOM_TYPE _eType)
+{
+	switch (_eType)
+	{
+	case ROOM_TYPE::START: 	case ROOM_TYPE::NORMAL:
+		switch (m_eDir)
+		{
+		case DIR::N: case DIR::S:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
+			m_iSliceCountX = 2;
+			m_iSliceCountY = 2;
+
+			break;
+		case DIR::E: case DIR::W:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
+			m_iSliceCountX = 2;
+			m_iSliceCountY = 2;
+
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+		break;
+	case ROOM_TYPE::TRESURE:
+		switch (m_eDir)
+		{
+		case DIR::N: case DIR::S:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNStreasure", L"texture\\BackGround\\DoorNStreasure.bmp"));
+			m_iSliceCountX = 3;
+			m_iSliceCountY = 2;
+			break;
+		case DIR::E: case DIR::W:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWtreasure", L"texture\\BackGround\\DoorEWtreasure.bmp"));
+			m_iSliceCountX = 2;
+			m_iSliceCountY = 3;
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+		break;
+	case ROOM_TYPE::BOSS:
+		break;
+	default:
+		break;
+	}
 }
 

@@ -386,6 +386,9 @@
     <ClInclude Include="StartRoom.h">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClInclude>
+    <ClInclude Include="TreasureRoom.h">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -569,6 +572,9 @@
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
     <ClCompile Include="StartRoom.cpp">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClCompile>
+    <ClCompile Include="TreasureRoom.cpp">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
   </ItemGroup>

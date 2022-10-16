@@ -18,8 +18,6 @@
 #include"SceneMgr.h"
 #include "KeyMgr.h"
 
-#include "Door.h"
-#include "WallCollider.h"
 #include "SceneMgr.h"
 
 #include "UI.h"
@@ -78,25 +76,9 @@ void CScene_Start::Enter()
 
 	// Object 추가
 		
-	// 벽 충돌체 추가
-//	AddWall();
-
-	// 방 세팅
-	for (size_t i = 0; i < 7; i++)
-	{
-		for (size_t j = 0; j < 7; j++)
-		{
-			
-		}
-	}
-	//AddDoor(DIR::N);
-	//AddDoor(DIR::S);
-
 
 	// Player 생성
 	m_pPlayer = new CPlayer;
-//	CPlayer* objPlayer = (CPlayer*)pPlayer;
-	//m_pPlayerinst = (CPlayer*)pPlayer;
 
 	m_pPlayer->init();
 
@@ -109,9 +91,7 @@ void CScene_Start::Enter()
 	CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
 
 
-	// 몬스터 생성
-	CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, m_vResolution / 4);
-	AddObject(pGaper, GROUP_TYPE::MONSTER);
+
 
 
 

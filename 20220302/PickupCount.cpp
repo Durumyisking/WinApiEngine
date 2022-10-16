@@ -12,7 +12,7 @@ CPickupCount::CPickupCount(PICKUP_TYPE _eType, Pickup& _Pickup)
 	, m_pPickup(&_Pickup)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"texpickupcount", L"texture\\UI\\numfont.bmp");
-	SetScale(Vec2(16.f, 16.f));
+	SetScale(Vec2(18.f, 16.f));
 	switch (m_eType)
 	{
 	case PICKUP_TYPE::COIN:

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -227,6 +227,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TraceState.h" />
+    <ClInclude Include="TreasureRoom.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIMgr.h" />
     <ClInclude Include="WallCollider.h" />
@@ -297,6 +298,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TraceState.cpp" />
+    <ClCompile Include="TreasureRoom.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIMgr.cpp" />
     <ClCompile Include="WallCollider.cpp" />

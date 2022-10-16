@@ -15,6 +15,7 @@
 
 CObject::CObject()
 	: m_vPos{}
+	, m_vPosTemp{}
 	, m_vScale{}
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
@@ -75,7 +76,7 @@ void CObject::CreateRigidBody()
 	m_pRigidBody->m_pOwner = this;
 }
 
-void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset, float _fRepeat)
+void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset, float	_fMagnify)
 {
 	GetAnimator()->Play(_AnimName, true);
 

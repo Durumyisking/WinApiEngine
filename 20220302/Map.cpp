@@ -9,6 +9,10 @@
 #include "Room.h"
 #include "Core.h"
 
+#include "StartRoom.h"
+#include "NormalRoom.h"
+#include "TreasureRoom.h"
+
 CMap::CMap()
 	: m_MapData{}
 {
@@ -53,24 +57,30 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 				{
 					switch (buff[x])
 					{
-					case L'0':
+					case L'0':	
 						break;
 					case L'1':
-						m_MapData[y][x] = new CRoom(ROOM_TYPE::START, Vec2(x, y), this);
+						m_MapData[y][x] = new CStartRoom();
 						m_vStartPos = Vec2(x * vResolution.x + (vResolution.x / 2), y * vResolution.y + (vResolution.y / 2));
 						SetCurrentRoom(dynamic_cast<CRoom*>(m_MapData[y][x]));
 						break;
 					case L'2':
-						m_MapData[y][x] = new CRoom(ROOM_TYPE::NORMAL, Vec2(x, y), this);
+						m_MapData[y][x] = new CNormalRoom();
 						break;
 					case L'3':
-						m_MapData[y][x] = new CRoom(ROOM_TYPE::TRESURE, Vec2(x, y), this);
+						m_MapData[y][x] = new CTreasureRoom();
 						break;
 					case L'9':
-						m_MapData[y][x] = new CRoom(ROOM_TYPE::BOSS, Vec2(x, y), this);
-						break;
+						//m_MapData[y][x] = new CRoom(ROOM_TYPE::BOSS, Vec2(x, y), this);
+						//break;
 					default:
 						break;
+					}
+					// 방 좌표 주고 map과 연결
+					if (nullptr != m_MapData[y][x])
+					{
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetRoomPos(Vec2(x, y));
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetOwner(this);
 					}
 				}
 			}

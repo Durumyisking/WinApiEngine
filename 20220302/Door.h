@@ -14,6 +14,7 @@ public:
 public:
 	virtual void update();
 	virtual void render(HDC _dc);
+	void SetTextureType(ROOM_TYPE _eType);
 
 
 	void setOpen(bool _bOpen)
@@ -61,5 +62,8 @@ private:
 	// 텍스처 자를 위치
 	int				m_iSliceX;
 	int				m_iSliceY;
+
+	int				m_iSliceCountX;
+	int				m_iSliceCountY;
 };
 
