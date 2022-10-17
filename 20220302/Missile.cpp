@@ -17,6 +17,8 @@
 #include "Animation.h"
 #include "Animator.h"
 
+#include "RigidBody.h"
+
 CMissile::CMissile(float _fSpeed, int _iDmg)
 	: m_fTheta(static_cast<float>(PI / 2.f))
 	, m_vDir(Vec2(0.f, -1.f))
@@ -25,20 +27,29 @@ CMissile::CMissile(float _fSpeed, int _iDmg)
 	, m_iDmg(_iDmg)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"TEAR_IDLE")
+	, m_pOwner(nullptr)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"TEAR_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.5f, 1, false);
 
+	GetAnimator()->CreateAnimation(L"TEAR_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.5f, 1, false);
 	GetAnimator()->CreateAnimation(L"TEAR_POOFA", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 16, false);
 	
+	GetAnimator()->FindAnimation(L"TEAR_IDLE")->SetMagnify(2.f);
+	GetAnimator()->FindAnimation(L"TEAR_POOFA")->SetMagnify(2.f);
 
 	m_vDir.Normalize();
 
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(32.f, 32.f));
+	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 	GetCollider()->SetScale(Vec2(32.f, 32.f));
 	SetScale(Vec2(32.f, 32.f));
+
+	CreateRigidBody();
+	CRigidBody* pRigid = GetRigidBody();
+	pRigid->SetMaxVelocity(100.f);
+	pRigid->SetMass(0.5f);
+	pRigid->SetFricCoeff(100.f);
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
@@ -60,8 +71,17 @@ void CMissile::update()
 	{
 	case MISSILE_TYPE::DEFAULT:
 	{
-		vPos.x += m_fSpeed * m_vDir.x * fDT;
-		vPos.y += m_fSpeed * m_vDir.y * fDT;
+		if (nullptr != m_pOwner)
+		{
+			Vec2 vVel = m_pOwner->GetRigidBody()->GetVelocity();
+			vPos.x += vVel.x + m_fSpeed * m_vDir.x * fDT;
+			vPos.y += vVel.y + m_fSpeed * m_vDir.y * fDT;
+		}
+		else
+		{
+			vPos.x += m_fSpeed * m_vDir.x * fDT;
+			vPos.y += m_fSpeed * m_vDir.y * fDT;
+		}
 	}
 	if(m_fSpeed>0)
 		m_fSpeed -= 0.75f;
@@ -92,7 +112,7 @@ void CMissile::render(HDC _dc)
 {
 	component_render(_dc);
 }
-void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _eShooter)
+void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _eShooter, CObject* _pShooter)
 {
 	Vec2 vMissilePos = _vStartPos; // 현재 플레이어의 위치 가져옴
 	vMissilePos.y -= GetScale().y / 2.f;
@@ -107,6 +127,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 		if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
 		{
 			SetName(L"Tear_Player");
+			m_pOwner = _pShooter;
 		}
 
 		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)

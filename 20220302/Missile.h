@@ -18,10 +18,9 @@ private:
 	float		m_fAccFall;
 
 	CTexture*	m_pTex;
-
 	CAnimation*	m_pAnim;
 	wstring		m_strAnimName;
-
+	CObject*	m_pOwner;
 
 public:
 	CMissile(float _fSpeed, int _iDmg);
@@ -44,7 +43,7 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 public:
-	void CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _eShooter);
+	void CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _eShooter, CObject* _pShooter);
 	CLONE(CMissile);
 
 

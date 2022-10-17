@@ -25,9 +25,11 @@ private:
 	vector<tAnimFrm>	m_vecFrm;  // 프레임 점보 모음
 	int					m_iCurFrm; // 현재 프레임
 	float				m_fAccTime;
+	float				m_fMagnify;
 
 	bool				m_bFinish; // 애니메이션이 끝났는지 체크
 	bool				m_bReverse; // 애니메이션 좌우 반전 여부
+
 
 
 public:
@@ -52,6 +54,8 @@ public:
 		m_iCurFrm = _iFrameIdx;
 		m_fAccTime = 0.f;
 	}
+	void SetMagnify(float _fValue) { m_fMagnify = _fValue; }
+
 
 	// 받아간쪽에서 수정 가능하게 레퍼런스
 	tAnimFrm& GetFrame(int _iIdx) { return m_vecFrm[_iIdx]; }
