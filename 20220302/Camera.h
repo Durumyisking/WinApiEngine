@@ -50,12 +50,6 @@ public:
 		m_fSpeed = fMoveDist / m_fTime;
 		m_fAccTime = 0.f;
 	}
-	void SetLookAtDirect(Vec2 _vLook)
-	{
-		m_vLookAt = _vLook;
-		m_fSpeed = 5000.f;
-		m_fAccTime = 0.f;
-	}
 	Vec2 GetRenderPos(Vec2 _vObjPos){ return _vObjPos - m_vDiff; }
 	Vec2 GetRealPos(Vec2 _vRenderPos) {return  _vRenderPos + m_vDiff; }
 

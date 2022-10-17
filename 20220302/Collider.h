@@ -25,6 +25,7 @@ private:
 	int		m_iCol;				// Ãæµ¹ °¹¼ö
 
 	bool	m_bSwitch;
+	bool	m_bRenderSwitch;
 
 public:
 	CCollider();
@@ -60,6 +61,7 @@ public:
 	void SwitchOn() { m_bSwitch = true; }
 	void SwitchOff() { m_bSwitch = false; }
 
+	void ToggleRenderSwitch	() { m_bRenderSwitch = !m_bRenderSwitch; }
 
 	
 };

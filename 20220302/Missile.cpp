@@ -47,9 +47,9 @@ CMissile::CMissile(float _fSpeed, int _iDmg)
 
 	CreateRigidBody();
 	CRigidBody* pRigid = GetRigidBody();
-	pRigid->SetMaxVelocity(100.f);
+	pRigid->SetMaxVelocity(500.f);
 	pRigid->SetMass(0.5f);
-	pRigid->SetFricCoeff(100.f);
+	pRigid->SetFricCoeff(50.f);
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
@@ -63,42 +63,39 @@ CMissile::~CMissile()
 
 void CMissile::update()
 {
-
-
 	Vec2 vPos = GetPos();
 
 	switch (m_eType)
 	{
 	case MISSILE_TYPE::DEFAULT:
 	{
-		if (nullptr != m_pOwner)
+		CRigidBody* pRigid = GetRigidBody();
+
+		m_fAccFall -= fDT;
+
+		// 중력가속도
+		pRigid->AddForce(Vec2(0.f, +9.8f));
+		if (m_fAccFall <= 0.f)
 		{
-			Vec2 vVel = m_pOwner->GetRigidBody()->GetVelocity();
-			vPos.x += vVel.x + m_fSpeed * m_vDir.x * fDT;
-			vPos.y += vVel.y + m_fSpeed * m_vDir.y * fDT;
+			DeleteObject(this);
 		}
-		else
+
+		if (m_fAccFall <= 0.8f)
 		{
-			vPos.x += m_fSpeed * m_vDir.x * fDT;
-			vPos.y += m_fSpeed * m_vDir.y * fDT;
+			pRigid->AddForce(Vec2(0.f, 300.f));
 		}
+
+
+		if (m_fAccFall <= 0.5f)
+		{
+			pRigid->SetVelocity(Vec2(0.f, 0.f));
+			GetAnimator()->Play(m_strAnimName, false);
+			m_strAnimName = L"TEAR_POOFA";
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		}
+
+		break;
 	}
-	if(m_fSpeed>0)
-		m_fSpeed -= 0.75f;
-
-	if (m_fSpeed < 60.f)
-	{
-		GetAnimator()->Play(m_strAnimName, false);
-		m_strAnimName = L"TEAR_POOFA";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
-		vPos.y += 0.163f;
-	}
-
-	if (m_fSpeed <= 0.f)
-		DeleteObject(this);
-
-	break;
-
 	default:
 		break;
 	}
@@ -128,6 +125,24 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 		{
 			SetName(L"Tear_Player");
 			m_pOwner = _pShooter;
+
+			// 플레이어의 스텟에서 눈물 최대속도 받음
+			GetRigidBody()->SetMaxVelocity(dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fShotSpeed);
+
+			// 플레이어의 힘/3 받은 후 더함
+			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 3.f;
+			vForce = vForce + m_vDir * m_fSpeed;
+			GetRigidBody()->AddVelocity(vForce);
+
+			if (L"Head" == m_pOwner->GetName())
+			{
+				m_fAccFall = dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fRange;
+			}
+			else
+			{
+				m_fAccFall = dynamic_cast<CMonster*>(m_pOwner)->GetStat().m_fRange;
+			}
+
 		}
 
 		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
@@ -156,7 +171,7 @@ void CMissile::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"Wall_Tear" == pOtherObj->GetName())
 	{
-		m_fSpeed = 60.f;
+		m_fAccFall = 0.5f;
 	}
 }
 void CMissile::OnCollisionExit(CCollider * _pOther)

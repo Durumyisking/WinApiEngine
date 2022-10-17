@@ -43,7 +43,6 @@
 
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
-	, m_roomDir(DIR::END)
 {
 	//m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\bg_basement_start.bmp");
 }
@@ -197,6 +196,10 @@ void CScene_Start::update()
 	{
 		ChangeScene(SCENE_TYPE::TOOL);
 	}
+	if (KEY_TAP(KEY::ESC))
+	{
+		ChangeScene(SCENE_TYPE::MENU);
+	}
 
 	// 카메라 전환
 	if (KEY_TAP(KEY::LBTN))
@@ -204,6 +207,12 @@ void CScene_Start::update()
 		Vec2 vLookAt = CCamera::GetInst()->GetRealPos(MOUSE_POS);
 		CCamera::GetInst()->SetLookAt(vLookAt);
 	}
+	// 카메라 초기화
+	if (KEY_TAP(KEY::C))
+	{
+		CCamera::GetInst()->SetLookAt(m_pMap->GetCurrentRoom()->GetPos());
+	}
+
 
 
 	// UI처리
@@ -260,11 +269,6 @@ void CScene_Start::update()
 void CScene_Start::render(HDC _dc)
 {
 
-	//int iWidth = (int)m_pBgTex->GetWidth();
-	//int iHeight = (int)m_pBgTex->GetHeight();
-
-
-	//StretchBlt(_dc, 0, 0, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);	
 
 	CScene::render(_dc);
 

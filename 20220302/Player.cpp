@@ -25,6 +25,7 @@
 
 #include "Door.h"
 #include "Room.h"
+#include "Map.h"
 
 
 CPlayer::CPlayer()
@@ -39,7 +40,7 @@ CPlayer::CPlayer()
 	, m_arrWallDirCheck{}
 	, m_finvincibilityTime(1.f)
 {
-	m_Stat = { 6, 6, 5, 400.f, 0.38f };
+	m_Stat = { 6, 6, 5, 400.f, 1000.f, 2.f ,0.38f };
 	m_pStat = &m_Stat;
 
 	m_strAnimName = L"Hurt";
@@ -88,28 +89,28 @@ void CPlayer::update()
 	if (KEY_HOLD(KEY::W)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
 		{
-			pRigid->AddVelocity(Vec2(0.f, -30.f));
+			pRigid->AddVelocity(Vec2(0.f, -50.f));
 				pRigid->AddForce(Vec2(0.f, -200.f));
 		}
 	}
 	if (KEY_HOLD(KEY::S)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
 		{
-			pRigid->AddVelocity(Vec2(0.f, 30.f));
+			pRigid->AddVelocity(Vec2(0.f, 50.f));
 			pRigid->AddForce(Vec2(0.f, 200.f));
 		}
 	}
 	if (KEY_HOLD(KEY::A)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
 		{
-			pRigid->AddVelocity(Vec2(-30.f, 0.f));
+			pRigid->AddVelocity(Vec2(-50.f, 0.f));
 			pRigid->AddForce(Vec2(-200.f, 0.f));
 		}
 	}
 	if (KEY_HOLD(KEY::D)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
 		{
-			pRigid->AddVelocity(Vec2(30.f, 0.f));
+			pRigid->AddVelocity(Vec2(50.f, 0.f));
 			pRigid->AddForce(Vec2(200.f, 0.f));
 		}
 	}
@@ -187,6 +188,9 @@ void CPlayer::init()
 	pBody->SetOwner(this);
 	pHead->SetOwner(this);
 
+	pBody->SetName(L"Body");
+	pHead->SetName(L"Head");
+
 	pBody->SetStat(m_pStat);
 	pHead->SetStat(m_pStat);
 
@@ -260,24 +264,30 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			switch (pdoor->Dir())
 			{
 			case DIR::N:
+				// 문 뒤에있는 방의 위치를 얻어 그 방으로 이동합니다.
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y - 1);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, -225.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				// 들어간 방을 현재 방으로 설정합니다.
+				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y - 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
 			case DIR::S:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y + 1);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 275.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y + 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
 			case DIR::E:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x + 1, pdoor->GetOwner()->GetRoomPos().y);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(500.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x + 1)))->Enter();
 				break;
 			case DIR::W:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x - 1, pdoor->GetOwner()->GetRoomPos().y);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-500.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x - 1)))->Enter();
 				break;
 			default:
 				break;

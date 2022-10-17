@@ -48,6 +48,7 @@ public:
 	ROOM_TYPE GetType() const { return m_eType; }
 	void SetRoomPos(Vec2 _v) { m_vPos = _v; }
 	void SetOwner(CMap* _pMap) { m_pOwner = _pMap; }
+	CMap* GetOwner() const { return m_pOwner; }
 	void AddWall();
 	void AddDoor();
 	virtual void Enter();

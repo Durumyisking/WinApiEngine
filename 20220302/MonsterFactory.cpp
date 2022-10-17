@@ -19,7 +19,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 	case MON_TYPE::Gaper:
 	{
 		pMon = new CGaper;
-		Stat GaperStat = { 30, 30, 1, 100.f, 0.38f };
+		Stat GaperStat = { 30, 30, 1, 100.f, 650.f, 0.38f };
 		pMon->SetScale(Vec2(90.f, 114.f));
 		pMon->SetStat(GaperStat);
 		pMon->SetRecogRange(250.f);

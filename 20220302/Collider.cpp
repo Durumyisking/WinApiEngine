@@ -15,6 +15,7 @@ CCollider::CCollider()
 	, m_iID(g_iNextID++) // static 변수가 증가하면서 새로운 collider에 새로운 id부여
 	, m_iCol(0)
 	, m_bSwitch(true)
+	, m_bRenderSwitch(true)
 {
 }
 
@@ -52,22 +53,25 @@ void CCollider::render(HDC _dc)
 {
 	if (m_bSwitch)
 	{
-		PEN_TYPE epen(PEN_TYPE::GREEN);
+		if (m_bRenderSwitch)
+		{
+			PEN_TYPE epen(PEN_TYPE::GREEN);
 
-		// 임시객체(지역변수)로 펜과 브러시 생성
-		if (m_iCol)
-			epen = PEN_TYPE::RED;
+			// 임시객체(지역변수)로 펜과 브러시 생성
+			if (m_iCol)
+				epen = PEN_TYPE::RED;
 
-		CSelectGDI pen(_dc, epen);
-		CSelectGDI brush(_dc, BRUSH_TYPE::HOLLOW);
+			CSelectGDI pen(_dc, epen);
+			CSelectGDI brush(_dc, BRUSH_TYPE::HOLLOW);
 
-		Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
+			Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
 
-		Rectangle(_dc,
-			static_cast<int>(vRenderPos.x - m_vScale.x / 2.f),
-			static_cast<int>(vRenderPos.y - m_vScale.y / 2.f),
-			static_cast<int>(vRenderPos.x + m_vScale.x / 2.f),
-			static_cast<int>(vRenderPos.y + m_vScale.y / 2.f));
+			Rectangle(_dc,
+				static_cast<int>(vRenderPos.x - m_vScale.x / 2.f),
+				static_cast<int>(vRenderPos.y - m_vScale.y / 2.f),
+				static_cast<int>(vRenderPos.x + m_vScale.x / 2.f),
+				static_cast<int>(vRenderPos.y + m_vScale.y / 2.f));
+		}
 	}
 
 	// 함수 종료시 CSelectGDI의 소멸자 호출

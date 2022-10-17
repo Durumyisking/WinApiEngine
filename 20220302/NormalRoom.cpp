@@ -14,7 +14,8 @@ CNormalRoom::~CNormalRoom()
 
 void CNormalRoom::update()
 {
-	CRoom::update();
+	if(this ==m_pOwner->GetCurrentRoom())
+		CRoom::update();
 }
 
 void CNormalRoom::render(HDC _dc)
@@ -24,4 +25,5 @@ void CNormalRoom::render(HDC _dc)
 
 void CNormalRoom::Enter()
 {
+	CRoom::Enter();
 }

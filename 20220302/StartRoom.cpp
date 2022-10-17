@@ -17,7 +17,8 @@ CStartRoom::~CStartRoom()
 
 void CStartRoom::update()
 {
-	CRoom::update();
+	if (this == m_pOwner->GetCurrentRoom())
+		CRoom::update();
 }
 
 void CStartRoom::render(HDC _dc)

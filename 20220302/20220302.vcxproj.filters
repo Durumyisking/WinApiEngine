@@ -98,9 +98,6 @@
     <Filter Include="Engine\03. Manager\UIMgr">
       <UniqueIdentifier>{97b65472-bf87-4e72-88af-57b3b308b788}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\05. Scene\Scene_Item">
-      <UniqueIdentifier>{f543cd0e-aff4-4a19-b527-f1fd39079006}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\04. Object\Item">
       <UniqueIdentifier>{25d22daf-186b-4c95-8c1c-23418b5cfde2}</UniqueIdentifier>
     </Filter>
@@ -296,9 +293,6 @@
     <ClInclude Include="UIMgr.h">
       <Filter>Engine\03. Manager\UIMgr</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Item.h">
-      <Filter>Engine\05. Scene\Scene_Item</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Engine\03. Manager\Camera</Filter>
     </ClInclude>
@@ -483,9 +477,6 @@
     </ClCompile>
     <ClCompile Include="UIMgr.cpp">
       <Filter>Engine\03. Manager\UIMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_Item.cpp">
-      <Filter>Engine\05. Scene\Scene_Item</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Engine\03. Manager\Camera</Filter>

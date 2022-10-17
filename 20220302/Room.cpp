@@ -180,5 +180,4 @@ void CRoom::AddDoor()
 void CRoom::Enter()
 {
 	m_pOwner->SetCurrentRoom(this);
-//	AddWall();
 }

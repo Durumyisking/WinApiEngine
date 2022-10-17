@@ -18,12 +18,7 @@ public:
 	virtual void update();
 
 public:
-	virtual void render(HDC _dc);
-
-
-	void SetRoomDir(DIR _eDir) { m_roomDir = _eDir; }
-	DIR GetRoomDir() { return m_roomDir; }
-
+	virtual void render(HDC _dc);	
 
 	void SetPlayerPos(CObject* _pPlayer);
 
@@ -33,7 +28,6 @@ private:
 	
 
 	// 이동 된 방 기준 이전 방의 타입
-	DIR					m_roomDir;
 	CPlayer*			m_pPlayer;
 
 };

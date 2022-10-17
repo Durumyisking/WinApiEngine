@@ -12,6 +12,7 @@
 #include "TimeMgr.h"
 #include "PathMgr.h"
 #include "Collider.h"
+#include "KeyMgr.h"
 
 #include "SelectGDI.h"
 
@@ -65,6 +66,17 @@ void CScene::update()
 {
 	m_fTimeCount += fDT;
 
+	if (KEY_TAP(KEY::T))
+	{
+		for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+		{
+			for (size_t j = 0; j < m_arrObj[i].size(); ++j)
+			{
+				if(nullptr != m_arrObj[i][j]->GetCollider())
+					m_arrObj[i][j]->GetCollider()->ToggleRenderSwitch();
+			}
+		}
+	}
 	
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
