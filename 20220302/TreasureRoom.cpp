@@ -2,7 +2,6 @@
 #include "TreasureRoom.h"
 
 #include "Item.h"
-#include "SadOnion.h"
 
 CTreasureRoom::CTreasureRoom()
 {
@@ -11,12 +10,6 @@ CTreasureRoom::CTreasureRoom()
 	m_eType = ROOM_TYPE::TRESURE;
 
 
-	CObject* pItem = new CSadOnion;
-	Vec2 vPos = GetPos() + Vec2(m_vResolution.x / 2, m_vResolution.y / 2);
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
-	pItem->SetPos(vPos);
-	pItem->SetName(L"Item");
-	CreateObject(pItem, GROUP_TYPE::ITEM);
 
 }
 

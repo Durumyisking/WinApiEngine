@@ -8,6 +8,7 @@
 #include "CollisionMgr.h"
 #include "EventMgr.h"
 #include "UIMgr.h"
+#include "ItemMgr.h"
 #include "Camera.h"
 
 #include "Texture.h"
@@ -78,6 +79,7 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 	CSceneMgr::GetInst()->init();
 	CCollisionMgr::GetInst()->init();
 	CEventMgr::GetInst()->init();
+//	CItemMgr::GetInst()->init();
 
 
 	return S_OK;
@@ -105,7 +107,6 @@ void CCore::progress()
 
 	// 화면 클리어
 	Clear();
-//	Rectangle(m_pMemTex->GetDC(), -1, -1, (int)m_vResolution.x + 1, (int)m_vResolution.y + 1);
 
 	CSceneMgr::GetInst()->render(m_pMemTex->GetDC());
 	CCamera::GetInst()->render(m_pMemTex->GetDC());

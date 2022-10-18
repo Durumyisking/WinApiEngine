@@ -21,13 +21,6 @@ CMap::CMap()
 CMap::~CMap()
 {
 
-	//for (int y = 0; y < MAP_SIZE; y++)
-	//{
-	//	for (int x = 0; x < MAP_SIZE; x++)
-	//	{
-	//		delete m_MapData[y][x];
-	//	}
-	//}
 }
 
 void CMap::LoadMap(const wstring& _strRelativePath)

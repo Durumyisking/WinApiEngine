@@ -4,15 +4,23 @@
 #include "Texture.h"
 #include "Collider.h"
 
-CItem::CItem()
-	:m_pTex(nullptr)
-	, m_stat{ 0, 0, 0, 0.f, 0.f }
+#include "ResMgr.h"
+
+CItem::CItem(int _iIdx, wstring _strName, Stat _Stat, wstring _strTexPath)
+	: m_iIdx(_iIdx)
+	, m_stat(_Stat)
 {
+	SetName(_strName);
+
+	m_pTex = CResMgr::GetInst()->LoadTexture(_strName+L"Tex", _strTexPath); // L"texture\\Tear\\effect_015_tearpoofa.bmp" 
+
+
 	SetScale(Vec2(64.f, 64.f));
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 	GetCollider()->SetScale(Vec2(64.f, 64.f));
+	
 }
 
 CItem::~CItem()

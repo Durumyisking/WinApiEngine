@@ -9,10 +9,11 @@ class CItem :
 
 protected:
 	CTexture*		m_pTex;
-	Stat m_stat;
+	int				m_iIdx;
+	Stat			m_stat;
 
 public:
-	CItem();
+	CItem(int _iIdx, wstring _strName, Stat _Stat, wstring _strTexPath);
 	~CItem();
 
 	CLONE(CItem);

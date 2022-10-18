@@ -101,9 +101,6 @@
     <Filter Include="Engine\04. Object\Item">
       <UniqueIdentifier>{25d22daf-186b-4c95-8c1c-23418b5cfde2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. Object\Item\C1. SadOnion">
-      <UniqueIdentifier>{05ec2db6-66d4-4b4b-9058-53449b5c5841}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\04. Object\UI\BtnUI">
       <UniqueIdentifier>{d3c4a910-f1ba-47bc-8387-1a4f165cc977}</UniqueIdentifier>
     </Filter>
@@ -187,6 +184,9 @@
     </Filter>
     <Filter Include="Engine\04. Object\Room\RoomSub">
       <UniqueIdentifier>{f8ecf2fd-ed9e-48e9-82f6-116693bf8abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\ItemMgr">
+      <UniqueIdentifier>{de25e662-d7ac-41a0-a8f1-c187338dee66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +299,6 @@
     <ClInclude Include="Item.h">
       <Filter>Engine\04. Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="SadOnion.h">
-      <Filter>Engine\04. Object\Item\C1. SadOnion</Filter>
-    </ClInclude>
     <ClInclude Include="PanelUI.h">
       <Filter>Engine\04. Object\UI\PanelUI</Filter>
     </ClInclude>
@@ -382,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="TreasureRoom.h">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemMgr.h">
+      <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -484,9 +484,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>Engine\04. Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="SadOnion.cpp">
-      <Filter>Engine\04. Object\Item\C1. SadOnion</Filter>
-    </ClCompile>
     <ClCompile Include="PanelUI.cpp">
       <Filter>Engine\04. Object\UI\PanelUI</Filter>
     </ClCompile>
@@ -567,6 +564,9 @@
     </ClCompile>
     <ClCompile Include="TreasureRoom.cpp">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemMgr.cpp">
+      <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
