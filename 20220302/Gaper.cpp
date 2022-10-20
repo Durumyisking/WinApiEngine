@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "Gaper.h"
 
-#include "Texture.h"
-#include "Animation.h"
-#include "Animator.h"
-#include "ResMgr.h"
 
 
 
@@ -18,7 +14,7 @@ CGaper::CGaper()
 	GetAnimator()->CreateAnimation(L"GAPER_TRACE", m_pTex, Vec2(0.f, 38.f), Vec2(30.f, 37.f), Vec2(32.f, 0.f), 0.1f, 10, false);
 
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 }
 
 CGaper::~CGaper()
@@ -33,8 +29,12 @@ void CGaper::update()
 	if (GetAI()->GetCurState() == GetAI()->GetState(MON_STATE::TRACE))
 	{
 		m_strAnimName = L"GAPER_TRACE";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
+}
+
+void CGaper::Attack()
+{
 }
 
 

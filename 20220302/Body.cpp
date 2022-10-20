@@ -33,7 +33,7 @@ CBody::CBody()
 	GetAnimator()->CreateAnimation(L"BODY_LEFT", m_pTex, Vec2(15.f, 154.f), Vec2(19.f, 14.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 	GetAnimator()->CreateAnimation(L"BODY_RIGHT", m_pTex, Vec2(15.f, 123.f), Vec2(18.f, 14.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 
-	PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+	PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 }
 
 
@@ -53,14 +53,14 @@ void CBody::update()
 	if (m_finvincibilityTime > 0.5f)
 	{
 		m_strAnimName = L"BODY_IDLE";
-		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 	}
 
 	if (KEY_HOLD(KEY::W))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"BODY_UP";
-		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 
 
 	}
@@ -68,19 +68,19 @@ void CBody::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"BODY_DOWN";
-		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 	}
 	if (KEY_HOLD(KEY::A))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"BODY_LEFT";
-		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 	}
 	if (KEY_HOLD(KEY::D))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"BODY_RIGHT";
-		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 	}
 
 	if (KEY_AWAY(KEY::W) || KEY_AWAY(KEY::S) ||
@@ -88,7 +88,7 @@ void CBody::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"BODY_IDLE";
-		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP);
+		PlayAnim(m_pAnim, m_strAnimName, HEAD_BODY_GAP, true);
 	}
 
 	if (KEY_HOLD(KEY::E))

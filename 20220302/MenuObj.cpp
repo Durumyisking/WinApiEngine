@@ -23,7 +23,7 @@ CMenuObj::CMenuObj(const wstring & _animname)
 	if (L"titlemenu" == m_strAnimName)
 	{
 		SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(-185.f, -100.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(-185.f, -100.f), true);
 	}
 	if (L"title" == m_strAnimName)
 	{

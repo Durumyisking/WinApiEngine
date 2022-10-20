@@ -29,8 +29,9 @@ void CStartRoom::render(HDC _dc)
 void CStartRoom::Enter()
 {
 	CRoom::Enter();
-
+	
 	//// 몬스터 생성
-	//CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, GetPos() + m_vResolution / 4);
-	//CSceneMgr::GetInst()->GetCurScene()->AddObject(pGaper, GROUP_TYPE::MONSTER);
+	CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Fly, GetPos() + m_vResolution / 4, this);
+	CSceneMgr::GetInst()->GetCurScene()->AddObject(pGaper, GROUP_TYPE::MONSTER);
+	++m_iMonsterCount;
 }

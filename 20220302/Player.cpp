@@ -65,6 +65,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
+
 	if (0 >= m_pStat->m_iHP)
 		m_pStat->m_iHP = 0;
 
@@ -124,6 +125,7 @@ void CPlayer::update()
 
 
 	SetPos(vPos);
+	SetPosTemp();
 
 	// 부모객체만 자식들 setpos
 	if (nullptr != pBody && nullptr != pHead)
@@ -197,12 +199,6 @@ void CPlayer::init()
 	pBody->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 
-	pBody->CreateCollider();
-	pBody->CreateCollider();
-	pBody->CreateCollider();
-	pBody->CreateCollider();
-
-
 
 	m_Pickup.SetBomb(9);
 
@@ -251,8 +247,6 @@ void CPlayer::OnCollision(CCollider * _pOther)
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-
-
 	// door
 	if (L"Door" == pOtherObj->GetName())
 	{
@@ -293,13 +287,21 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				break;
 			}
 		}
+		else
+		{
+			// 플레이어의 이동을 막습니다.
+
+		}
 	}
 
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
-		SetPosTemp();
+
+		//Vec2 vTemp = GetPosTemp() - GetPos();
+		//GetCollider()->SetFinalPos(GetCollider()->GetFinalPos() + vTemp);
+		//SetPos(GetPosTemp());
 
 		switch (pWall->GetDir())
 		{

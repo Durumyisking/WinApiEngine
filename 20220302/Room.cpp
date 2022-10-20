@@ -22,11 +22,23 @@ void CRoom::update()
 	{
 		m_bIsClear = true;
 	}
+	else
+	{
+		m_bIsClear = false;
+	}
+
 	if (m_bIsClear)
 	{
 		for (size_t i = 0; i < m_Door.size(); i++)
 		{
 			m_Door[i]->openDoor();
+		}
+	}
+	else
+	{
+		for (size_t i = 0; i < m_Door.size(); i++)
+		{
+			m_Door[i]->closeDoor();
 		}
 	}
 }

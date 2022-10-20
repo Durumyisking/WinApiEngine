@@ -188,6 +188,12 @@
     <Filter Include="Engine\03. Manager\ItemMgr">
       <UniqueIdentifier>{de25e662-d7ac-41a0-a8f1-c187338dee66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\host">
+      <UniqueIdentifier>{46609fcf-4cf7-4eeb-b794-03c5ac1a270a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08. Module\AI\State\Patrol">
+      <UniqueIdentifier>{10b387a1-4cb4-4dbb-a0bc-5672ec03f63b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -383,6 +389,18 @@
     <ClInclude Include="ItemMgr.h">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Host.h">
+      <Filter>Engine\04. Object\Monster\host</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>Engine\08. Module\AI\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="PatrolState.h">
+      <Filter>Engine\08. Module\AI\State\Patrol</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>Engine\08. Module\AI\State\Dead</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -567,6 +585,18 @@
     </ClCompile>
     <ClCompile Include="ItemMgr.cpp">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Host.cpp">
+      <Filter>Engine\04. Object\Monster\host</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackState.cpp">
+      <Filter>Engine\08. Module\AI\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="PatrolState.cpp">
+      <Filter>Engine\08. Module\AI\State\Patrol</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

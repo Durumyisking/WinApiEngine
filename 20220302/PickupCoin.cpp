@@ -19,7 +19,7 @@ CPickupCoin::CPickupCoin()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PickupCoin", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.1f, 6, false);
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), 2.f);
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 }
 
 CPickupCoin::~CPickupCoin()

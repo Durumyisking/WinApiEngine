@@ -19,7 +19,7 @@ CPickupKey::CPickupKey()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PickupKey", m_pTex, Vec2(0.f, 0.f), Vec2(16.f, 32.f), Vec2(64.f, 0.f), 0.1f, 1, false);
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), 2.f);
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f),  true);
 }
 
 CPickupKey::~CPickupKey()

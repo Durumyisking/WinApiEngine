@@ -28,7 +28,7 @@ CBomb::CBomb()
 	GetAnimator()->CreateAnimation(L"Bomb", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 1, false);
 	GetAnimator()->CreateAnimation(L"Explode", m_pEffectTex, Vec2(0.f, 0.f), Vec2(96.f, 96.f), Vec2(96.f, 0.f), 0.1f, 15, false);
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(-10.f, -7.f), 2.f);
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(-10.f, -7.f),  true);
 }
 
 CBomb::~CBomb()
@@ -56,7 +56,7 @@ void CBomb::update()
 		{
 
 			m_strAnimName = L"Explode";
-			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), 1.f);
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), false);
 			m_bExplosionAnim = true;
 			m_bPassFrame = true;
 			GetCollider()->SetScale(Vec2(500.f, 500.f));

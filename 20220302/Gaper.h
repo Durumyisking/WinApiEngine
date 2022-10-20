@@ -10,6 +10,7 @@ public:
 
 public:
 	virtual void update();
+	virtual void Attack();
 
 public:
 	virtual void OnCollision(CCollider* _pOther);

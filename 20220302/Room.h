@@ -52,6 +52,7 @@ public:
 	void AddWall();
 	void AddDoor();
 	virtual void Enter();
+	void MonsterDead() { --m_iMonsterCount; }
 //	void IsClear();
 
 protected:

@@ -8,7 +8,8 @@ class CMonster;
 enum class MON_TYPE
 {
 	Gaper,
-	RANGE,
+	Fly,
+	Host,
 
 };
 
@@ -16,7 +17,7 @@ class CMonsterFactory
 {
 public:
 	// 객체 없어도 호출 가능한 멤버함수 = 정적 멤버함수
-	static CMonster* CreateMonster(MON_TYPE _eType, Vec2 _vPos);
+	static CMonster* CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _pRoom);
 
 	// 객체도 안만들거고 싱글톤도 아니니까 private
 private:

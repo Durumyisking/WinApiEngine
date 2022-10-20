@@ -35,6 +35,7 @@ using std::string;
 using std::wstring;
 
 #include <math.h>
+#include <time.h>
 
 #include <Commdlg.h>
 

@@ -21,7 +21,7 @@ void CItemMgr::init()
 
 	FILE* pFile = nullptr;
 
-	_wfopen_s(&pFile, L"E:\IsaacProject\Output\bin\content\item\itemtable.txt", L"rt,ccs=UTF-8");
+//	_wfopen_s(&pFile, L"E:\IsaacProject\Output\bin\content\item\itemtable.txt", L"rt,ccs=UTF-8");
 
 	assert(pFile);
 

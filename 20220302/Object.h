@@ -61,8 +61,8 @@ public:
 	void CreateAnimator();
 	void CreateRigidBody();
 
-	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset, float _fMagnify);
-	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset);
+	//virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset, bool _Repeat, float _fMagnify);
+	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset, bool _Repeat);
 
 
 	virtual void OnCollision(CCollider* _pOther) {};

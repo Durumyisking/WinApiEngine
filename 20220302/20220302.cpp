@@ -55,7 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
-	
+	// initprogram
 	if (FAILED(CCore::GetInst()->init(g_hWnd, Vec2{ 1280, 768 })))
 	{
 		MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR!!", MB_OK);

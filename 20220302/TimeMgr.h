@@ -30,11 +30,8 @@ public:
 	void update();
 
 public:
-	double GetDT() { return m_dDeltaTime; }
-	float GetfDT() { return (float)m_dDeltaTime; }
-
-
-
 	double GetDT() const { return m_dDeltaTime; }
 	float GetfDT() const { return static_cast<float>(m_dDeltaTime); }
+
+	UINT GetCurCount() const { return static_cast<UINT>(m_llCurCount.QuadPart); }
 };

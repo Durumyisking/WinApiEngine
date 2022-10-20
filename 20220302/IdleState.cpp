@@ -44,7 +44,11 @@ void CIdleState::update()
 
 	if (fLen < fRecogrange)
 	{
-		ChangeAIState(GetAI(), MON_STATE::TRACE);
+		if(nullptr != GetAI()->GetState(MON_STATE::TRACE))
+			ChangeAIState(GetAI(), MON_STATE::TRACE);
+		if (nullptr != GetAI()->GetState(MON_STATE::ATTACK))
+			ChangeAIState(GetAI(), MON_STATE::ATTACK);
+
 	}
 
 }

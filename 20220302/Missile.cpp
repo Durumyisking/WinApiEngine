@@ -51,7 +51,7 @@ CMissile::CMissile(float _fSpeed, int _iDmg)
 	pRigid->SetMass(0.5f);
 	pRigid->SetFricCoeff(50.f);
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 }
 CMissile::~CMissile()
@@ -91,7 +91,7 @@ void CMissile::update()
 			pRigid->SetVelocity(Vec2(0.f, 0.f));
 			GetAnimator()->Play(m_strAnimName, false);
 			m_strAnimName = L"TEAR_POOFA";
-			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
 		}
 
 		break;
@@ -130,7 +130,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 			GetRigidBody()->SetMaxVelocity(dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fShotSpeed);
 
 			// 플레이어의 힘/3 받은 후 더함
-			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 3.f;
+			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
 			vForce = vForce + m_vDir * m_fSpeed;
 			GetRigidBody()->AddVelocity(vForce);
 

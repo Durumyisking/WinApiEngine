@@ -31,7 +31,7 @@ CHead::CHead()
 	GetAnimator()->CreateAnimation(L"HEAD_RIGHT", m_pTex, Vec2(90.f, 25.f), Vec2(28.f, 26.f), Vec2(40.f, 0.f), 0.5f, 2, false);
 
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 
 }
@@ -51,7 +51,7 @@ void CHead::update()
 	if (m_finvincibilityTime > 0.5f)
 	{
 		m_strAnimName = L"HEAD_IDLE";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
 
 	// ¹®Á¦Á¡
@@ -61,25 +61,25 @@ void CHead::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_UP";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
 	if (KEY_HOLD(KEY::S))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_DOWN";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
 	if (KEY_HOLD(KEY::A))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_LEFT";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
 	if (KEY_HOLD(KEY::D))
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_RIGHT";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
 
 
@@ -88,7 +88,7 @@ void CHead::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_UP";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 		CreateMissile(Vec2(0.f, -1.f));
 	}
@@ -96,7 +96,7 @@ void CHead::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_DOWN";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 		CreateMissile(Vec2(0.f, 1.f));
 	}
@@ -104,7 +104,7 @@ void CHead::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_LEFT";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 		CreateMissile(Vec2(-1.f, 0.f));
 	}
@@ -112,7 +112,7 @@ void CHead::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_RIGHT";	
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 		CreateMissile(Vec2(1.f, 0.f));
 	}
@@ -126,7 +126,7 @@ void CHead::update()
 	{
 		GetAnimator()->Play(m_strAnimName, false);
 		m_strAnimName = L"HEAD_IDLE";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	}
 }
 

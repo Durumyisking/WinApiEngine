@@ -19,7 +19,7 @@ CPickupBomb::CPickupBomb()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PickupBomb", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(64.f, 0.f), 0.1f, 1, false);
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), 2.f);
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f),  true);
 }
 
 CPickupBomb::~CPickupBomb()

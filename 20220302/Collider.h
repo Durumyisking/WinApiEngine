@@ -50,6 +50,7 @@ public:
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 
 	Vec2 GetFinalPos() { return m_vFinalPos; }
+	void SetFinalPos(Vec2 _vPos) { m_vFinalPos = _vPos; }
 
 
 	CObject* GetObj() const { return m_pOwner; }

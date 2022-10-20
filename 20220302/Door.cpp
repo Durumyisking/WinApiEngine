@@ -38,6 +38,8 @@ void CDoor::update()
 {
 	if (!IsOpen())
 	{
+		GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+
 		switch (m_eDir)
 		{
 		case DIR::N:
@@ -64,15 +66,19 @@ void CDoor::update()
 		{
 		case DIR::N:
 			SetSlice(0, 0);
+			GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
 			break;
 		case DIR::S:
 			SetSlice(0, 48);
+			GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
 			break;
 		case DIR::E:
 			SetSlice(0, 64);
+			GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
 			break;
 		case DIR::W:
 			SetSlice(0, 0);
+			GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
 			break;
 		case DIR::END:
 			break;
