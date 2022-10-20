@@ -19,10 +19,10 @@ CCollider::CCollider()
 {
 }
 
-CCollider::CCollider(CCollider * _origin)
+CCollider::CCollider(const CCollider & _origin)
 	:m_pOwner(nullptr) // 원본을 소유중인 obj를 알 필요가 없다.
-	,m_vOffsetPos(_origin->m_vOffsetPos)
-	,m_vScale(_origin->m_vScale)
+	,m_vOffsetPos(_origin.m_vOffsetPos)
+	,m_vScale(_origin.m_vScale)
 	,m_iID(g_iNextID)
 	, m_bSwitch(true)
 {

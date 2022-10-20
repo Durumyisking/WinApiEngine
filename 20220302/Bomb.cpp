@@ -44,7 +44,7 @@ void CBomb::update()
 
 	if (m_bPassFrame)
 	{
-		GetCollider(L"Bomb")->SwitchOff(); // 3
+		GetCollider()->SwitchOff(); // 3
 		m_bPassFrame = false;
 	}
 
@@ -59,7 +59,7 @@ void CBomb::update()
 			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), false);
 			m_bExplosionAnim = true;
 			m_bPassFrame = true;
-			GetCollider(L"Bomb")->SetScale(Vec2(500.f, 500.f));
+			GetCollider()->SetScale(Vec2(500.f, 500.f));
 			
 		}
 	}	
@@ -129,8 +129,8 @@ void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale)
 
 	SetPos(vBombPos);
 
-	CreateCollider(L"Bomb");
-	GetCollider(L"Bomb")->SetScale(GetScale());
+	CreateCollider();
+	GetCollider()->SetScale(GetScale());
 
 	CreateObject(this, GROUP_TYPE::BOMB);
 }

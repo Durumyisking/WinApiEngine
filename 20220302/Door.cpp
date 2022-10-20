@@ -21,9 +21,9 @@ CDoor::CDoor(CRoom* _pOwner, DIR _eDir)
 	
 	SetScale(Vec2(128.f, 116.f));
 
-	CreateCollider(L"Door");
-	GetCollider(L"Door")->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider(L"Door")->SetScale(Vec2(90.f, 90.f));
+	CreateCollider();
+	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+	GetCollider()->SetScale(Vec2(90.f, 90.f));
 
 	//m_pTex->GetRotatedBitmap(0, 0, GetScale().x, GetScale().y, 180.);
 
@@ -38,7 +38,7 @@ void CDoor::update()
 {
 	if (!IsOpen())
 	{
-		GetCollider(L"Door")->SetOffsetPos(Vec2(0.f, 0.f));
+		GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 
 		switch (m_eDir)
 		{
@@ -66,19 +66,19 @@ void CDoor::update()
 		{
 		case DIR::N:
 			SetSlice(0, 0);
-			GetCollider(L"Door")->SetOffsetPos(Vec2(0.f, -30.f));
+			GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
 			break;
 		case DIR::S:
 			SetSlice(0, 48);
-			GetCollider(L"Door")->SetOffsetPos(Vec2(0.f, 30.f));
+			GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
 			break;
 		case DIR::E:
 			SetSlice(0, 64);
-			GetCollider(L"Door")->SetOffsetPos(Vec2(30.f, 0.f));
+			GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
 			break;
 		case DIR::W:
 			SetSlice(0, 0);
-			GetCollider(L"Door")->SetOffsetPos(Vec2(-30.f, 0.f));
+			GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
 			break;
 		case DIR::END:
 			break;

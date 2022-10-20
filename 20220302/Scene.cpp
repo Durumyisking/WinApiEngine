@@ -72,13 +72,8 @@ void CScene::update()
 		{
 			for (size_t j = 0; j < m_arrObj[i].size(); ++j)
 			{
-				if (!m_arrObj[i][j]->GetColliderVector().empty())
-				{
-					for (size_t k = 0; k < m_arrObj[i][j]->GetColliderVector().size(); k++)
-					{
-						m_arrObj[i][j]->GetColliderVector()[i]->ToggleRenderSwitch();
-					}
-				}
+				if(nullptr != m_arrObj[i][j]->GetCollider())
+					m_arrObj[i][j]->GetCollider()->ToggleRenderSwitch();
 			}
 		}
 	}

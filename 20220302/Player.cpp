@@ -185,9 +185,9 @@ void CPlayer::init()
 	//}
 
 	// ÇÃ·¹ÀÌ¾îÀÇ ¸öµÕ¾Æ¸® Ãæµ¹Ã¼ »óÇÏÁÂ¿ì
-	CreateCollider(L"Player");
-	GetCollider(L"Player")->SetOffsetPos(Vec2(0.f, 45.f));
-	GetCollider(L"Player")->SetScale(Vec2(40.f, 30.f));
+	CreateCollider();
+	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
+	GetCollider()->SetScale(Vec2(40.f, 30.f));
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);

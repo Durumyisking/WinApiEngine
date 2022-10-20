@@ -31,7 +31,7 @@ private:
 
 public:
 	CCollider();
-	CCollider(CCollider* _origin);
+	CCollider(const CCollider &_origin);
 	~CCollider();
 
 	friend class CObject;

@@ -43,8 +43,8 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
 
-		pMon->GetCollider(L"Monster")->SetOffsetPos(Vec2(0.f, 0.f));
-		pMon->GetCollider(L"Monster")->SetScale(Vec2(80.f, 100.f));
+		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+		pMon->GetCollider()->SetScale(Vec2(80.f, 100.f));
 
 	}
 		break;
@@ -72,8 +72,8 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->GetRigidBody()->SetMass(1.f);
 		pMon->GetRigidBody()->SetFricCoeff(0.f);
 
-		pMon->GetCollider(L"Monster")->SetOffsetPos(Vec2(0.f, 0.f));
-		pMon->GetCollider(L"Monster")->SetScale(Vec2(32.f, 32.f));
+		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+		pMon->GetCollider()->SetScale(Vec2(32.f, 32.f));
 
 	}
 		break;
@@ -99,8 +99,8 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
 
-		pMon->GetCollider(L"Monster")->SetOffsetPos(Vec2(0.f, 0.f));
-		pMon->GetCollider(L"Monster")->SetScale(Vec2(64.f, 64.f));
+		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
 
 	}
 	break;

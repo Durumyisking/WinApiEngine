@@ -19,7 +19,7 @@ CMonster::CMonster()
 
 {
 	SetName(L"Monster");
-	CreateCollider(L"Monster");
+	CreateCollider();
 }
 CMonster::~CMonster()
 {

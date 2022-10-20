@@ -13,6 +13,7 @@ public:
 	virtual void update();
 
 private:
-	float m_fDeadAnimTimer;
+	float	m_fDeadAnimTimer;
+	bool	m_bDead;
 };
 
