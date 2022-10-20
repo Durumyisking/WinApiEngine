@@ -401,6 +401,7 @@
     <ClInclude Include="DeadState.h">
       <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClInclude>
+    <ClInclude Include="sadonion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -598,6 +599,7 @@
     <ClCompile Include="DeadState.cpp">
       <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClCompile>
+    <ClCompile Include="sadonion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="20220302.rc">

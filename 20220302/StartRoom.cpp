@@ -31,7 +31,7 @@ void CStartRoom::Enter()
 	CRoom::Enter();
 	
 	//// 몬스터 생성
-	CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, GetPos() + m_vResolution / 4, this);
+	CMonster* pGaper = CMonsterFactory::CreateMonster(MON_TYPE::Host, GetPos() + m_vResolution / 4, this);
 	CSceneMgr::GetInst()->GetCurScene()->AddObject(pGaper, GROUP_TYPE::MONSTER);
 	++m_iMonsterCount;
 }

@@ -13,7 +13,7 @@ protected:
 	Stat			m_stat;
 
 public:
-	CItem(int _iIdx, wstring _strName, Stat _Stat, wstring _strTexPath);
+	CItem();
 	~CItem();
 
 	CLONE(CItem);

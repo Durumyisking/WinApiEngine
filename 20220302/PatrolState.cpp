@@ -22,7 +22,7 @@ void CPatrolState::Enter()
 	if (L"" != pMonster->GetAnimName(MON_STATE::PATROL))
 	{
 		pMonster->SetCurrentAnim(pMonster->GetAnimName(MON_STATE::PATROL));
-		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), Vec2(0.f, 0.f), true);
+		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), pMonster->GetAnimOffset(), true);
 	}
 }
 

@@ -38,6 +38,7 @@ protected:
 	bool			m_bDeadAnim;
 	float			m_fDeadAnimTime;
 
+	Vec2			m_vAnimOffset;
 
 public:
 	CMonster();
@@ -68,6 +69,8 @@ public:
 	void SetCurrentAnim(wstring _strAnimName) { m_strAnimName = _strAnimName; }
 	wstring GetCurrentAnim() const { return m_strAnimName; }
 	wstring GetAnimName(MON_STATE _eStateType) const { return m_arrAnimName[static_cast<UINT>(_eStateType)]; }
+
+	Vec2 GetAnimOffset() const { return m_vAnimOffset; }
 
 	CLONE(CMonster);
 public:

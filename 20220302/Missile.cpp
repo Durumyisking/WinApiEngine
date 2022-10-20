@@ -165,7 +165,7 @@ void CMissile::OnCollisionEnter(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 	if (L"Monster" == pOtherObj->GetName())
 	{
-		DeleteObject(this);
+		m_fAccFall = 0.5f;
 	}
 
 

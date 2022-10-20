@@ -184,7 +184,7 @@ void CPlayer::init()
 	//	m_arrCollider
 	//}
 
-	// ÇÃ·¹ÀÌ¾îÀÇ ¸öµÕ¾Æ¸® Ãæµ¹Ã¼ »óÇÏÁÂ¿ì
+
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
 	GetCollider()->SetScale(Vec2(40.f, 30.f));

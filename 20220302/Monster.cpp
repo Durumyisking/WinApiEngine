@@ -16,6 +16,7 @@ CMonster::CMonster()
 	, m_bDeadAnim(true)
 	, m_fDeadAnimTime(0.f)
 	, m_arrAnimName{}
+	, m_vAnimOffset{}
 
 {
 	SetName(L"Monster");
