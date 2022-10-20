@@ -8,7 +8,7 @@
 CPickup::CPickup()
 	: m_pTex(nullptr)
 {
-	CreateCollider();
+	CreateCollider(L"Pickup");
 	CreateRigidBody();
 
 }

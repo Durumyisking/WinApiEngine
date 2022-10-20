@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Monster.h"
 
+
 #include "TimeMgr.h"
 
 CTraceState::CTraceState()
@@ -19,6 +20,12 @@ CTraceState::~CTraceState()
 
 void CTraceState::Enter()
 {
+	CMonster* pMonster = GetMonster();
+	if (L"" != pMonster->GetAnimName(MON_STATE::TRACE))
+	{
+		pMonster->SetCurrentAnim(pMonster->GetAnimName(MON_STATE::TRACE));
+		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), Vec2(0.f, 0.f), true);
+	}
 
 }
 

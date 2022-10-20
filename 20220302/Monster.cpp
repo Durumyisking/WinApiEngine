@@ -15,11 +15,11 @@ CMonster::CMonster()
 	, m_pTex(nullptr)
 	, m_bDeadAnim(true)
 	, m_fDeadAnimTime(0.f)
-	, m_strDeadAnimName(L"")
+	, m_arrAnimName{}
 
 {
 	SetName(L"Monster");
-	CreateCollider();
+	CreateCollider(L"Monster");
 }
 CMonster::~CMonster()
 {
@@ -33,7 +33,6 @@ CMonster::~CMonster()
 void CMonster::Attack()
 {
 	
-
 }
 
 

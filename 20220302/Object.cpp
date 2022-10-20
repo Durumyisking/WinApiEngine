@@ -17,7 +17,7 @@ CObject::CObject()
 	: m_vPos{}
 	, m_vPosTemp{}
 	, m_vScale{}
-	, m_pCollider(nullptr)
+	, m_pCollider{}
 	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 	, m_vResolution(CCore::GetInst()->GetResolution())
@@ -29,14 +29,16 @@ CObject::CObject(const CObject& _origin)
 	: m_strName(_origin.m_strName)
 	, m_vPos{_origin.m_vPos}
 	, m_vScale{_origin.m_vScale}
-	, m_pCollider(nullptr)
+	, m_pCollider{}
 	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 {
-	if (_origin.m_pCollider)
+	if (!(_origin.m_pCollider.empty()))
 	{
-		m_pCollider = new CCollider(*_origin.m_pCollider);
-		m_pCollider->m_pOwner = this;
+		for (size_t i = 0; i < _origin.m_pCollider.size(); i++)
+		{
+			m_pCollider[i] = new CCollider(_origin.m_pCollider[i]);
+		}
 	}
 	if (_origin.m_pAnimator)
 	{
@@ -47,8 +49,11 @@ CObject::CObject(const CObject& _origin)
 
 CObject::~CObject()
 {
-	if (nullptr != m_pCollider)
-		delete m_pCollider;
+	if (!m_pCollider.empty())
+	for (size_t i = 0; i < m_pCollider.size(); i++)
+	{
+		delete m_pCollider[i];
+	}	
 
 	if (nullptr != m_pAnimator)
 		delete m_pAnimator;
@@ -58,10 +63,12 @@ CObject::~CObject()
 }
 
 
-void CObject::CreateCollider()
+void CObject::CreateCollider(wstring _strColliderName)
 {
-	m_pCollider = new CCollider;
-	m_pCollider->m_pOwner = this;
+	CCollider* pTemp = new CCollider;
+	pTemp->m_pOwner = this;
+	pTemp->SetName(_strColliderName);
+	m_pCollider.push_back(pTemp);
 }
 
 void CObject::CreateAnimator()
@@ -101,8 +108,11 @@ void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOf
 void CObject::finalupdate()
 {
 
-	if (m_pCollider)
-		m_pCollider->finalupdate();
+	if (!m_pCollider.empty())
+	for (size_t i = 0; i < m_pCollider.size(); i++)
+	{
+		m_pCollider[i]->finalupdate();
+	}
 
 	if (m_pAnimator)
 		m_pAnimator->finalupdate();
@@ -129,11 +139,13 @@ void CObject::component_render(HDC _dc)
 
 
 	// Collider가 나중에 rendering되게
-	if (nullptr != m_pCollider)
+	if (!m_pCollider.empty())
+	for (size_t i = 0; i < m_pCollider.size(); i++)
 	{
-		m_pCollider->render(_dc);
+		m_pCollider[i]->render(_dc);
 		// 내부를 공백으로 채우는 hollow brush 사용
 	}
+	
 }
 
 

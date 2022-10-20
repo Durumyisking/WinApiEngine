@@ -31,7 +31,7 @@ protected:
 	CTexture*		m_pTex;
 	CAnimation*		m_pAnim;
 	wstring			m_strAnimName;
-	wstring			m_strDeadAnimName;
+	wstring			m_arrAnimName[static_cast<UINT>(MON_STATE::END)];
 	CAI*			m_pAI;
 	bool			m_arrWallDirCheck[(UINT)DIR::END];
 	CRoom*			m_pOwner;
@@ -67,7 +67,7 @@ public:
 	void SetDeadAnimTime(float _fValue) { m_fDeadAnimTime = _fValue; }
 	void SetCurrentAnim(wstring _strAnimName) { m_strAnimName = _strAnimName; }
 	wstring GetCurrentAnim() const { return m_strAnimName; }
-	wstring GetDeadAnimName() const { return m_strDeadAnimName; }
+	wstring GetAnimName(MON_STATE _eStateType) const { return m_arrAnimName[static_cast<UINT>(_eStateType)]; }
 
 	CLONE(CMonster);
 public:

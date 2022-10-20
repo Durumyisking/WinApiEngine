@@ -13,6 +13,12 @@ CAttackState::~CAttackState()
 
 void CAttackState::Enter()
 {
+	CMonster* pMonster = GetMonster();
+	if (L"" != pMonster->GetAnimName(MON_STATE::ATTACK))
+	{
+		pMonster->SetCurrentAnim(pMonster->GetAnimName(MON_STATE::ATTACK));
+		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), Vec2(0.f, 0.f), true);
+	}
 }
 
 void CAttackState::Exit()

@@ -1,6 +1,6 @@
 #pragma once
 #include "Camera.h"
-
+#include "Collider.h"
 class CCollider;
 class CAnimator;
 class CAnimation;
@@ -16,7 +16,7 @@ private:
 	Vec2		m_vPosTemp;
 	Vec2		m_vScale;
 
-	CCollider*	m_pCollider; // 충돌체 필요하면 얘 가지고 없으면 안가지면 되는 것
+	vector<CCollider*>	m_pCollider; // 충돌체 필요하면 얘 가지고 없으면 안가지면 되는 것
 	CAnimator*	m_pAnimator;
 	CRigidBody* m_pRigidBody;
 
@@ -35,13 +35,23 @@ public:
 	void SetPosTemp() { m_vPosTemp = m_vPos; }
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 
-	CCollider* GetCollider() { return m_pCollider; }
+	CCollider* GetCollider(wstring _strColliderName) 
+	{ 
+		for (int i =0; i<m_pCollider.size(); ++i)
+		{
+			if (_strColliderName == m_pCollider[i]->GetName())
+				return m_pCollider[i];
+		}
+		return nullptr;
+	}
+
 	CAnimator* GetAnimator() { return m_pAnimator; }
 	CRigidBody* GetRigidBody() { return m_pRigidBody; }
 
 	Vec2 GetPos() const { return m_vPos; }
 	Vec2 GetPosTemp() const { return m_vPosTemp; }
 	Vec2 GetScale() const { return m_vScale; }
+	vector<CCollider*> GetColliderVector() const { return m_pCollider; }
 
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() const { return m_strName; }
@@ -57,7 +67,7 @@ public:
 
 	virtual void render(HDC _dc);
 
-	void CreateCollider();
+	void CreateCollider(wstring _strColliderName);
 	void CreateAnimator();
 	void CreateRigidBody();
 

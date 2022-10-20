@@ -40,9 +40,9 @@ CMissile::CMissile(float _fSpeed, int _iDmg)
 
 	m_vDir.Normalize();
 
-	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(32.f, 32.f));
+	CreateCollider(L"Tear");
+	GetCollider(L"Tear")->SetOffsetPos(Vec2(0.f, 0.f));
+	GetCollider(L"Tear")->SetScale(Vec2(32.f, 32.f));
 	SetScale(Vec2(32.f, 32.f));
 
 	CreateRigidBody();

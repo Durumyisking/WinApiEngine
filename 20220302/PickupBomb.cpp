@@ -13,8 +13,8 @@ CPickupBomb::CPickupBomb()
 	SetName(L"PickupBomb");
 	m_strAnimName = L"PickupBomb";
 	SetScale(Vec2(128.f, 128.f));
-	GetCollider()->SetScale(Vec2(64.f, 64.f));
-	GetCollider()->SetOffsetPos(Vec2(-16.f, -16.f));
+	GetCollider(L"Pickup")->SetScale(Vec2(64.f, 64.f));
+	GetCollider(L"Pickup")->SetOffsetPos(Vec2(-16.f, -16.f));
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PickupBomb", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(64.f, 0.f), 0.1f, 1, false);

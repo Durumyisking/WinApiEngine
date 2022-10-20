@@ -9,6 +9,8 @@ private:
 	static UINT	g_iNextID;		// 
 
 	CObject*	m_pOwner;		// collider를 소유중인 obj
+
+	wstring		m_strName;
 	
 	Vec2		m_vOffsetPos;	// 기준위치로부터 얼마나 떨어졌는지 상대적 거리
 								// OBJ의 pos를 기준으로 받아와 
@@ -29,7 +31,7 @@ private:
 
 public:
 	CCollider();
-	CCollider(const CCollider &_origin);
+	CCollider(CCollider* _origin);
 	~CCollider();
 
 	friend class CObject;
@@ -46,12 +48,16 @@ public:
 	CCollider& operator = (CCollider& _origin) = delete; // collider class의 기본 대입연산자를 삭제한다
 
 public:
+	void SetName(wstring _strName) { m_strName = _strName; }
+	wstring GetName() const { return m_strName; }
+
 	void SetOffsetPos(Vec2 _vPos) { m_vOffsetPos = _vPos; }
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 
 	Vec2 GetFinalPos() { return m_vFinalPos; }
 	void SetFinalPos(Vec2 _vPos) { m_vFinalPos = _vPos; }
 
+	void SetOwner(CObject* _pOwner) { m_pOwner = _pOwner; }
 
 	CObject* GetObj() const { return m_pOwner; }
 	Vec2 GetOffsetPos() const { return m_vOffsetPos; }

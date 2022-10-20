@@ -17,9 +17,9 @@ CItem::CItem(int _iIdx, wstring _strName, Stat _Stat, wstring _strTexPath)
 
 	SetScale(Vec2(64.f, 64.f));
 
-	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(64.f, 64.f));
+	CreateCollider(L"Item");
+	GetCollider(L"Item")->SetOffsetPos(Vec2(0.f, 0.f));
+	GetCollider(L"Item")->SetScale(Vec2(64.f, 64.f));
 	
 }
 

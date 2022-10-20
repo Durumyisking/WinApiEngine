@@ -2,6 +2,7 @@
 #include "DeadState.h"
 #include "Monster.h"
 #include "Collider.h"
+#include "RigidBody.h"
 
 
 CDeadState::CDeadState()
@@ -18,11 +19,15 @@ void CDeadState::Enter()
 {
 	CMonster* pMonster = GetMonster();
 	// 죽음애니메이션 있으면 죽음 애니메이션 실행
-	if (L"" != pMonster->GetDeadAnimName())
+	if (L"" != pMonster->GetAnimName(MON_STATE::DEAD))
 	{
-		pMonster->SetCurrentAnim(pMonster->GetDeadAnimName());
+		pMonster->GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
+		pMonster->SetCurrentAnim(pMonster->GetAnimName(MON_STATE::DEAD));
 		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), Vec2(0.f, 0.f), false);
-		pMonster->GetCollider()->SwitchOff();
+		for (size_t i = 0; i < pMonster->GetColliderVector().size(); i++)
+		{
+			pMonster->GetColliderVector()[i]->SwitchOff();
+		}
 	}
 	else
 	{

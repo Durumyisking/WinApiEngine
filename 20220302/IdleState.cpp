@@ -20,6 +20,12 @@ CIdleState::~CIdleState()
 
 void CIdleState::Enter()
 {
+	CMonster* pMonster = GetMonster();
+	if (L"" != pMonster->GetAnimName(MON_STATE::IDLE))
+	{
+		pMonster->SetCurrentAnim(pMonster->GetAnimName(MON_STATE::IDLE));
+		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), Vec2(0.f, 0.f), true);
+	}
 }
 
 void CIdleState::Exit()
@@ -31,8 +37,6 @@ void CIdleState::update()
 	// player의 위치 체크
 	CPlayer* pPlayer = (CPlayer*)CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
 	Vec2 vPlayerPos = pPlayer->GetPos();
-
-
 
 	// 몬스터 범위 안에 들어오면 추적상태로 전환
 	CMonster* pMonster = GetMonster();

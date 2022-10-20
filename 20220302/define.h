@@ -191,6 +191,7 @@ enum class MON_STATE
 	ATTACK,
 	AWAY,
 	DEAD,
+	END,
 };
 
 enum class PICKUP_TYPE

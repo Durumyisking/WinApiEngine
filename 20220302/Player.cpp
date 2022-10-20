@@ -39,6 +39,7 @@ CPlayer::CPlayer()
 	, m_fMaxAcc(1.f)
 	, m_arrWallDirCheck{}
 	, m_finvincibilityTime(1.f)
+	, m_arrCollider{}
 {
 	m_Stat = { 6, 6, 5, 400.f, 1000.f, 2.f ,0.38f };
 	m_pStat = &m_Stat;
@@ -175,10 +176,18 @@ void CPlayer::init()
 {
 	SetScale(Vec2(138.f, 91.f));
 
+	// 플레이어의 상하좌우 충돌체 // 이동을 막기 위함입니다.
+	//for (UINT i = static_cast<UINT>(DIR::N); i < static_cast<UINT>(DIR::END); i++)
+	//{
+	//	m_arrCollider[i] = new CCollider;
+	//	m_arrCollider[i]->SetOwner(dynamic_cast<CObject*>(this));
+	//	m_arrCollider
+	//}
 
-	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 45.f));
-	GetCollider()->SetScale(Vec2(40.f, 30.f));
+	// 플레이어의 몸둥아리 충돌체 상하좌우
+	CreateCollider(L"Player");
+	GetCollider(L"Player")->SetOffsetPos(Vec2(0.f, 45.f));
+	GetCollider(L"Player")->SetScale(Vec2(40.f, 30.f));
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
@@ -299,11 +308,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	{
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 
-		//Vec2 vTemp = GetPosTemp() - GetPos();
-		//GetCollider()->SetFinalPos(GetCollider()->GetFinalPos() + vTemp);
-		//SetPos(GetPosTemp());
 
-		switch (pWall->GetDir())
+		/*switch (pWall->GetDir())
 		{
 		case DIR::N:
 			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
@@ -321,7 +327,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		default:
 			break;
 		}
-		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
+		this->GetRigidBody()->SetVelocity(Vec2(0, 0));*/
 	}
 	
 	// item

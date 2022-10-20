@@ -7,10 +7,7 @@ CHost::CHost()
 	m_strAnimName = L"Host_IDLE";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Host_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.1f, 1, false);
-//	GetAnimator()->FindAnimation(L"Host_IDLE")->SetMagnify(2.f);
 	GetAnimator()->CreateAnimation(L"Host_ATTACK", m_pTex, Vec2(32.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.1f, 1, false);
-//	GetAnimator()->FindAnimation(L"Host_Attack")->SetMagnify(2.f);
-
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 	m_bDeadAnim = false;
@@ -27,6 +24,7 @@ void CHost::update()
 
 void CHost::Attack()
 {
+
 }
 
 void CHost::OnCollision(CCollider* _pOther)

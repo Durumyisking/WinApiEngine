@@ -84,7 +84,7 @@ void CEventMgr::Execute(const tEvent & _eve)
 		// lParam : ¹Ù²Ü ai state type
 	{
 		CAI* pAI = (CAI*)_eve.lParam;
-		pAI->SetCurState(static_cast<MON_STATE>(_eve.wParam));
+		pAI->ChangeState(static_cast<MON_STATE>(_eve.wParam));
 	}
 	default:
 		break;

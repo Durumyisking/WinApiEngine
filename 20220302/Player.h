@@ -47,8 +47,8 @@ protected:
 
 	// 회복 계산을 위한 임시 hp
 	UINT			m_iPrevHp;
-
-
+	
+	CCollider* m_arrCollider[static_cast<UINT>(DIR::END)];
 
 public:
 	CPlayer();

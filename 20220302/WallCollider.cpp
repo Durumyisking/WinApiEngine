@@ -10,13 +10,13 @@ CWallCollider::CWallCollider()
 
 CWallCollider::CWallCollider(Vec2 _vPos, Vec2 _vScale, DIR _eDir)
 {
-	CreateCollider();
+	CreateCollider(L"Wall");
 
 	SetPos(_vPos);
 	SetScale(_vScale);
 
 	//GetCollider()->SetOffsetPos(_vPos);
-	GetCollider()->SetScale(_vScale);
+	GetCollider(L"Wall")->SetScale(_vScale);
 	m_eDir = _eDir;
 
 }
