@@ -12,7 +12,7 @@ private:
 	
 	MISSILE_TYPE m_eType;	
 
-	float		m_fSpeed;
+	float		m_fShotSpeed;
 	int			m_iDmg;
 
 	float		m_fAccFall;
@@ -23,7 +23,7 @@ private:
 	CObject*	m_pOwner;
 
 public:
-	CMissile(float _fSpeed, int _iDmg);
+	CMissile(float _fShotSpeed, int _iDmg);
 	~CMissile();
 public:
 	void SetDir(float _fTheta) { m_fTheta = _fTheta; }
@@ -43,7 +43,7 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 public:
-	void CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _eShooter, CObject* _pShooter);
+	void CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter);
 	CLONE(CMissile);
 
 

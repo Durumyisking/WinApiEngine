@@ -78,6 +78,9 @@ void CMonster::render(HDC _dc)
 
 	component_render(_dc);
 }
+void CMonster::CreateMissile()
+{
+}
 void CMonster::OnCollision(CCollider * _pOther)
 {
 

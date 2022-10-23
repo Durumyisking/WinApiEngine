@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "Host.h"
+#include "Missile.h"
+#include "SceneMgr.h"
+#include "Scene.h"
 
 CHost::CHost()
 	: m_bInvisible(true)
+	, m_bAttacked(false)
 	, m_fAttackCooldown(0.f)
 	, m_fHideCoolDown(0.f)
 {
@@ -35,9 +39,21 @@ void CHost::Attack()
 	{
 		GetCollider()->SetOffsetPos(Vec2(0.f, -20.f));
 		GetCollider()->SetScale(Vec2(64.f, 120.f));
-		m_bInvisible = false;
 
+		if (!m_bAttacked)
+		{
+			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
+			vTargetDir += Vec2(0.f, 45.f);
+			vTargetDir = vTargetDir.Normalize();
+			CreateMissile(vTargetDir);
+
+			CreateMissile(vTargetDir.Rotate(15));
+			CreateMissile(vTargetDir.Rotate(-15));
+		}
+
+		m_bInvisible = false;
 		m_fAttackCooldown += fDT;
+
 		if (m_fAttackCooldown > 1.5f)
 		{
 			m_bInvisible = true;
@@ -50,6 +66,7 @@ void CHost::Attack()
 		GetCollider()->SetScale(Vec2(64.f, 64.f));
 		GetAI()->ChangeState(MON_STATE::IDLE);
 		m_fAttackCooldown = 0;
+		m_bAttacked = false;
 
 	}
 }
@@ -80,4 +97,13 @@ void CHost::OnCollisionExit(CCollider* _pOther)
 {
 	CMonster::OnCollisionExit(_pOther);
 
+}
+
+void CHost::CreateMissile(Vec2 _vDir)
+{
+	CMissile* pMissile = new CMissile(m_Stat.m_fShotSpeed, m_Stat.m_iDmg);
+	pMissile->SetDir(_vDir);
+	pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_MONSTER, this);
+
+	m_bAttacked = true;
 }

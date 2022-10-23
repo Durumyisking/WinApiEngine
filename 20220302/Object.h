@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Camera.h"
 
 class CCollider;
@@ -12,15 +12,15 @@ class CObject
 private:
 	wstring		m_strName;
 
-	Vec2		m_vPos;		// ¹°Á¦ÀÇ ½ÇÁ¦ À§Ä¡
+	Vec2		m_vPos;		// ë¬¼ì œì˜ ì‹¤ì œ ìœ„ì¹˜
 	Vec2		m_vPosTemp;
 	Vec2		m_vScale;
 
-	CCollider*	m_pCollider; // Ãæµ¹Ã¼ ÇÊ¿äÇÏ¸é ¾ê °¡Áö°í ¾øÀ¸¸é ¾È°¡Áö¸é µÇ´Â °Í
+	CCollider*	m_pCollider; // ì¶©ëŒì²´ í•„ìš”í•˜ë©´ ì–˜ ê°€ì§€ê³  ì—†ìœ¼ë©´ ì•ˆê°€ì§€ë©´ ë˜ëŠ” ê²ƒ
 	CAnimator*	m_pAnimator;
 	CRigidBody* m_pRigidBody;
 
-	bool		m_bAlive;	// »ì¾Ò´Ï Á×¾ú´Ï
+	bool		m_bAlive;	// ì‚´ì•˜ë‹ˆ ì£½ì—ˆë‹ˆ
 
 protected:
 	Vec2		m_vResolution;
@@ -71,14 +71,14 @@ public:
 
 	void component_render(HDC _dc);
 
-	// ÀÚ±â ÀÚ½ÅÀÇ °´Ã¼¸¦ »ı¼º½ÃÄÑ¼­ µÇµ¹·ÁÁÜ
+	// ìê¸° ìì‹ ì˜ ê°ì²´ë¥¼ ìƒì„±ì‹œì¼œì„œ ë˜ëŒë ¤ì¤Œ
 	virtual CObject* Clone() = 0;
 
 
 
 private:
-	// ÀÚ½Ä obj Á¶Â÷µµ ÀÌ ÇÔ¼ö¸¦ »ç¿ë ºÒ°¡´ÉÇÏ´Ù
-	// ¿À·ÎÁö eventmgr¿¡¼­¸¸ »ç¿ëÇÏ°Ô ÇÒ °Í
+	// ìì‹ obj ì¡°ì°¨ë„ ì´ í•¨ìˆ˜ë¥¼ ì‚¬ìš© ë¶ˆê°€ëŠ¥í•˜ë‹¤
+	// ì˜¤ë¡œì§€ eventmgrì—ì„œë§Œ ì‚¬ìš©í•˜ê²Œ í•  ê²ƒ
 	friend class CEventMgr;
 	void SetDead() { m_bAlive = false; }
 

@@ -19,11 +19,11 @@
 
 #include "RigidBody.h"
 
-CMissile::CMissile(float _fSpeed, int _iDmg)
+CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	: m_fTheta(static_cast<float>(PI / 2.f))
 	, m_vDir(Vec2(0.f, -1.f))
 	, m_eType(MISSILE_TYPE::DEFAULT)
-	, m_fSpeed(_fSpeed)
+	, m_fShotSpeed(_fShotSpeed)
 	, m_iDmg(_iDmg)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"TEAR_IDLE")
@@ -109,9 +109,10 @@ void CMissile::render(HDC _dc)
 {
 	component_render(_dc);
 }
-void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _eShooter, CObject* _pShooter)
+void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter)
 {
-	Vec2 vMissilePos = _vStartPos; // 현재 플레이어의 위치 가져옴
+
+	Vec2 vMissilePos = _pShooter->GetPos(); // 눈물을 쏜 어의 위치 가져옴
 	vMissilePos.y -= GetScale().y / 2.f;
 
 	SetPos(vMissilePos);
@@ -127,27 +128,28 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, Vec2 _vStartPos, GROUP_TYPE _e
 			m_pOwner = _pShooter;
 
 			// 플레이어의 스텟에서 눈물 최대속도 받음
-			GetRigidBody()->SetMaxVelocity(dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fShotSpeed);
+			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
 
 			// 플레이어의 힘/3 받은 후 더함
 			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
-			vForce = vForce + m_vDir * m_fSpeed;
+			vForce = vForce + m_vDir * m_fShotSpeed;
 			GetRigidBody()->AddVelocity(vForce);
 
-			if (L"Head" == m_pOwner->GetName())
-			{
-				m_fAccFall = dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fRange;
-			}
-			else
-			{
-				m_fAccFall = dynamic_cast<CMonster*>(m_pOwner)->GetStat().m_fRange;
-			}
-
+			m_fAccFall = dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fRange;
+		
 		}
-
 		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
 		{
 			SetName(L"Missile_Monster");
+			m_pOwner = _pShooter;
+
+			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
+
+			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
+			vForce = vForce + m_vDir * m_fShotSpeed;
+			GetRigidBody()->AddVelocity(vForce);
+
+			m_fAccFall = dynamic_cast<CMonster*>(m_pOwner)->GetStat().m_fRange;
 		}
 		break;
 

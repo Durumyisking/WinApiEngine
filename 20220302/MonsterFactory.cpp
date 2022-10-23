@@ -81,7 +81,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Host:
 	{
 		pMon = new CHost;
-		Stat Stat = { 15, 15, 1, 0.f, 1200.f, 3.f ,0.f };
+		Stat Stat = { 15, 15, 1, 0.f, 600.f, 3.f ,0.f };
 		pMon->SetScale(Vec2(32.f, 64.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(300.f);

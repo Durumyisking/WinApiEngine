@@ -159,7 +159,7 @@ void CHead::CreateMissile(Vec2 _vDir)
 	{
 		CMissile* pMissile = new CMissile(m_pStat->m_fSpeed, m_pStat->m_iDmg);
 		pMissile->SetDir(_vDir);
-		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GetPos(), GROUP_TYPE::PROJ_PLAYER, this);
+		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this);
 
 		m_dAttackDealy = 0.f;
 	}

@@ -72,6 +72,9 @@ public:
 
 	Vec2 GetAnimOffset() const { return m_vAnimOffset; }
 
+	virtual void CreateMissile();
+
+
 	CLONE(CMonster);
 public:
 	virtual void OnCollision(CCollider* _pOther);

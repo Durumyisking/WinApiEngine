@@ -187,9 +187,9 @@ void CUI::MouseOnCheck()
 		m_bMouseOn = false;
 	}
 
-	wchar_t szBuffer[255] = {};
-	swprintf_s(szBuffer, L"MXY : %f, %f		on : %d", vMousePos.x, vMousePos.y, m_bMouseOn);
-	SetWindowText(CCore::GetInst()->GetMainHwnd(), szBuffer);
+	//wchar_t szBuffer[255] = {};
+	//swprintf_s(szBuffer, L"MXY : %f, %f		on : %d", vMousePos.x, vMousePos.y, m_bMouseOn);
+	//SetWindowText(CCore::GetInst()->GetMainHwnd(), szBuffer);
 
 
 }

@@ -58,6 +58,11 @@ public:
 	{
 		return(Vec2(x * (float)_i, y * (float)_i));
 	}
+	Vec2 operator *(double _i)
+	{
+		return(Vec2(x * (float)_i, y * (float)_i));
+	}
+
 	Vec2 operator *(float _f)
 	{
 		return(Vec2(x * _f, y * _f));
@@ -85,6 +90,15 @@ public:
 
 		return *this;
 	}
+	Vec2 Rotate(int _iValue)
+	{
+		Vec2 vTemp = *this;
+		vTemp.x = vTemp.x * static_cast<float>(cos(_iValue * PI / 180)) + vTemp.y * static_cast<float>(sin(_iValue * PI / 180));
+		vTemp.y = -vTemp.x * static_cast<float>(sin(_iValue * PI / 180)) + vTemp.y * static_cast<float>(cos(_iValue * PI / 180));
+
+		return vTemp;
+	}
+
 
 public:
 	Vec2()
@@ -105,7 +119,6 @@ public:
 		: x((float)_vec.x)
 		, y((float)_vec.y)
 	{}
-
 };
 
 /** 게임 캐릭터와 아이템들의 스펙 */

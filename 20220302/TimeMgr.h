@@ -11,9 +11,9 @@ private:
 
 
 
-	LARGE_INTEGER	m_llCurCount;
-	LARGE_INTEGER	m_llPrevCount;
-	LARGE_INTEGER	m_llFrequency;
+	LARGE_INTEGER	m_llCurCount;  // 부팅 후로부터 현재 cpu의 틱값 반환
+	LARGE_INTEGER	m_llPrevCount; 
+	LARGE_INTEGER	m_llFrequency; // cpu의 고유 진동수
 	double			m_dDeltaTime;
 	double			m_dAcc;
 	UINT			m_iCallCount;

@@ -168,6 +168,8 @@ void CScene_Start::Enter()
 
 
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_PLAYER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_MONSTER);
+
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::WALL, GROUP_TYPE::PICKUP);
 
 	
