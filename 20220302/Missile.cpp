@@ -140,7 +140,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 		}
 		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
 		{
-			SetName(L"Missile_Monster");
+			SetName(L"Tear_Player");
 			m_pOwner = _pShooter;
 
 			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);

@@ -18,43 +18,50 @@ CRoom::~CRoom()
 
 void CRoom::update()
 {
-	if (m_iMonsterCount <= 0)
+	if (this == m_pOwner->GetCurrentRoom())
 	{
-		m_bIsClear = true;
-	}
-	else
-	{
-		m_bIsClear = false;
-	}
-
-	if (m_bIsClear)
-	{
-		for (size_t i = 0; i < m_Door.size(); i++)
+		if (m_iMonsterCount <= 0)
 		{
-			m_Door[i]->openDoor();
+			m_bIsClear = true;
 		}
-	}
-	else
-	{
-		for (size_t i = 0; i < m_Door.size(); i++)
+		else
 		{
-			m_Door[i]->closeDoor();
+			m_bIsClear = false;
+		}
+
+		if (m_bIsClear)
+		{
+			for (size_t i = 0; i < m_Door.size(); i++)
+			{
+				m_Door[i]->openDoor();
+			}
+		}
+		else
+		{
+			for (size_t i = 0; i < m_Door.size(); i++)
+			{
+				m_Door[i]->closeDoor();
+			}
 		}
 	}
 }
 
 void CRoom::render(HDC _dc)
 {
-	int iWidth = m_pBgTex->GetWidth();
-	int iHeight = m_pBgTex->GetHeight();
+	if (this == m_pOwner->GetCurrentRoom())
+	{
 
-	float posx = GetPos().x - (GetScale().x / 2);
-	float posy = GetPos().y - (GetScale().y / 2);
+		int iWidth = m_pBgTex->GetWidth();
+		int iHeight = m_pBgTex->GetHeight();
 
-	Vec2 vPos(posx, posy);
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+		float posx = GetPos().x - (GetScale().x / 2);
+		float posy = GetPos().y - (GetScale().y / 2);
 
-	StretchBlt(_dc, vPos.x, vPos.y, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+		Vec2 vPos(posx, posy);
+		vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
+		StretchBlt(_dc, vPos.x, vPos.y, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+	}
 }
 
 

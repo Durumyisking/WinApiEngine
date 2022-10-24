@@ -72,10 +72,15 @@ public:
 
 	Vec2 GetAnimOffset() const { return m_vAnimOffset; }
 
-	virtual void CreateMissile();
-
+	void CreateMissile();
+	bool AxisPlayerCheck();
+	DIR AxisPatrol();
+	DIR AxisCharge();
 
 	CLONE(CMonster);
+
+
+
 public:
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);

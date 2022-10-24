@@ -81,6 +81,118 @@ void CMonster::render(HDC _dc)
 void CMonster::CreateMissile()
 {
 }
+bool CMonster::AxisPlayerCheck()
+{
+	CPlayer* pPlayer = (CPlayer*)CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
+	int Playerx = static_cast<int>(pPlayer->GetCollider()->GetFinalPos().x);
+	int Playery = static_cast<int>(pPlayer->GetCollider()->GetFinalPos().y);
+	int fRecogrange = static_cast<int>(GetRecogRange());
+	int Monsterx = static_cast<int>(GetPos().x);
+	int Monstery = static_cast<int>(GetPos().y);
+
+	// 범위 10내에 일치할때
+	if ((Playerx >= Monsterx - 10 && Playerx <= Monsterx + 10)
+		|| (Playery >= Monstery - 10 && Playery <= Monstery + 10))
+	{
+		return true;
+	}
+	else
+		return false;
+}
+DIR CMonster::AxisPatrol()
+{
+
+	// 가로이동인지 세로이동인지 받는다.
+	float x = 0.f;
+	float y = 0.f;
+
+	srand(CTimeMgr::GetInst()->GetCurCount());
+	int iflag = static_cast<float>(rand() % 2);
+	srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
+	if (0 == iflag)
+	{
+		x = (rand() % 3) - 1;
+		if (-1 == x)
+		{
+			GetRigidBody()->SetVelocity(Vec2(static_cast<float>(x * m_Stat.m_fSpeed), 0.f));
+			return DIR::W;
+		}
+		else if (1 == x)
+		{
+			GetRigidBody()->SetVelocity(Vec2(static_cast<float>(x * m_Stat.m_fSpeed), 0.f));
+			return DIR::E;
+		}
+		else
+			return DIR::END;
+	}
+	else if (iflag == 1)
+	{
+		y = (rand() % 3) - 1;
+		if (-1 == y)
+		{
+			GetRigidBody()->SetVelocity(Vec2(0.f , static_cast<float>(y * m_Stat.m_fSpeed)));
+			return DIR::N;
+		}
+		else if (1 == y)
+		{
+			GetRigidBody()->SetVelocity(Vec2(0.f, static_cast<float>(y * m_Stat.m_fSpeed)));
+			return DIR::S;
+		}
+		else
+			return DIR::END;
+	}
+}
+
+DIR CMonster::AxisCharge()
+{
+	for (size_t i = 0; i < 4; i++)
+	{
+		m_arrWallDirCheck[i] = false;
+	}
+
+
+	CPlayer* pPlayer = (CPlayer*)CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
+	int Playerx = static_cast<int>(pPlayer->GetCollider()->GetFinalPos().x);
+	int Playery = static_cast<int>(pPlayer->GetCollider()->GetFinalPos().y);
+	int fRecogrange = static_cast<int>(GetRecogRange());
+	int Monsterx = static_cast<int>(GetPos().x);
+	int Monstery = static_cast<int>(GetPos().y);
+
+	// 세로이동
+	if ((Playerx >= Monsterx - 10 && Playerx <= Monsterx + 10))
+	{
+		// 플레이어가 아래
+		if (Playery > Monstery)
+		{
+			GetRigidBody()->SetVelocity(Vec2(0.f, m_Stat.m_fSpeed * 2));
+			return DIR::S;
+		}
+		else
+		{
+			GetRigidBody()->SetVelocity(Vec2(0.f, -m_Stat.m_fSpeed * 2));
+			return DIR::N;
+		}
+	}
+
+	// 가로이동
+	else if ((Playery >= Monstery - 10 && Playery <= Monstery + 10))
+	{
+		// 플레이어가 오른쪽
+		if (Playerx > Monsterx)
+		{
+			GetRigidBody()->SetVelocity(Vec2(m_Stat.m_fSpeed * 2, 0.f));
+			return DIR::E;
+		}
+		else
+		{
+			GetRigidBody()->SetVelocity(Vec2(-m_Stat.m_fSpeed * 2, 0.f));
+			return DIR::W;
+		}
+	}
+
+}
+
+
 void CMonster::OnCollision(CCollider * _pOther)
 {
 
@@ -92,6 +204,10 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 	if (L"Tear_Player" == pOtherObj->GetName())
 	{
 		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
+		Vec2 vTearForce = pOtherObj->GetRigidBody()->GetForce();
+		Vec2 vMonsterVelocity = GetRigidBody()->GetVelocity();
+		Vec2 vResult = vMonsterVelocity - vTearForce;
+		GetRigidBody()->SetVelocity(vResult);
 
 		m_Stat.m_iHP -= pMissileObj->GetDmg();
 	}
@@ -118,8 +234,12 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 			break;
 		}
 		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
+	}
 
-
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		
+		GetStat().InflictDamage(100);
 	}
 }
 void CMonster::OnCollisionExit(CCollider * _pOther)

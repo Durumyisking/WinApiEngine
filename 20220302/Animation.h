@@ -55,7 +55,13 @@ public:
 		m_fAccTime = 0.f;
 	}
 	void SetMagnify(float _fValue) { m_fMagnify = _fValue; }
-
+	void SetDuration(float _fValue) 
+	{
+		for (size_t i = 0; i < m_vecFrm.size(); i++)
+		{
+			m_vecFrm[i].fDuration = _fValue;
+		}
+	}
 
 	// 받아간쪽에서 수정 가능하게 레퍼런스
 	tAnimFrm& GetFrame(int _iIdx) { return m_vecFrm[_iIdx]; }

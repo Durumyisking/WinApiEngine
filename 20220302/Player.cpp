@@ -221,7 +221,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 
 	// monster
-	if (L"Monster" == pOtherObj->GetName())
+	if (L"Monster" == pOtherObj->GetName() || L"Tear_Player" == pOtherObj->GetName())
 	{
 //		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
@@ -309,7 +309,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 
 
-		/*switch (pWall->GetDir())
+		switch (pWall->GetDir())
 		{
 		case DIR::N:
 			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
@@ -327,7 +327,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		default:
 			break;
 		}
-		this->GetRigidBody()->SetVelocity(Vec2(0, 0));*/
+		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
 	// item
@@ -347,6 +347,12 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
 		vec = vec  * 50.f;
 		this->GetRigidBody()->AddForce(vec);
+	}
+
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		SetPrevHp(GetStat()->m_iHP);
+		GetStat()->InflictDamage(2);
 	}
 }
 

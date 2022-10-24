@@ -194,6 +194,12 @@
     <Filter Include="Engine\08. Module\AI\State\Patrol">
       <UniqueIdentifier>{10b387a1-4cb4-4dbb-a0bc-5672ec03f63b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\charger">
+      <UniqueIdentifier>{fd0fb2cd-1ed4-463f-b59d-c0bcce8fed79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\kamikazeleech">
+      <UniqueIdentifier>{385eccf4-0f6b-4649-ae3d-361f627811c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -401,7 +407,15 @@
     <ClInclude Include="DeadState.h">
       <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClInclude>
-    <ClInclude Include="sadonion.h" />
+    <ClInclude Include="sadonion.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Charger.h">
+      <Filter>Engine\04. Object\Monster\charger</Filter>
+    </ClInclude>
+    <ClInclude Include="Kamikazeleech.h">
+      <Filter>Engine\04. Object\Monster\kamikazeleech</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -599,7 +613,15 @@
     <ClCompile Include="DeadState.cpp">
       <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClCompile>
-    <ClCompile Include="sadonion.cpp" />
+    <ClCompile Include="sadonion.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Charger.cpp">
+      <Filter>Engine\04. Object\Monster\charger</Filter>
+    </ClCompile>
+    <ClCompile Include="Kamikazeleech.cpp">
+      <Filter>Engine\04. Object\Monster\kamikazeleech</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="20220302.rc">

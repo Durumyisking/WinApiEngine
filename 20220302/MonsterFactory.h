@@ -10,6 +10,8 @@ enum class MON_TYPE
 	Gaper,
 	Fly,
 	Host,
+	Charger,
+	Kamikazeleech,
 
 };
 

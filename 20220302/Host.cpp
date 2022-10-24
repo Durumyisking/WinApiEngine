@@ -46,7 +46,6 @@ void CHost::Attack()
 			vTargetDir += Vec2(0.f, 45.f);
 			vTargetDir = vTargetDir.Normalize();
 			CreateMissile(vTargetDir);
-
 			CreateMissile(vTargetDir.Rotate(15));
 			CreateMissile(vTargetDir.Rotate(-15));
 		}
