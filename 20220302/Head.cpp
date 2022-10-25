@@ -157,10 +157,21 @@ void CHead::CreateMissile(Vec2 _vDir)
 {
 	if (m_dAttackDealy > m_pStat->m_fRate)
 	{
-		CMissile* pMissile = new CMissile(m_pStat->m_fSpeed, m_pStat->m_iDmg);
-		pMissile->SetDir(_vDir);
-		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this);
-
+		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::innereye)] > 0)
+		{
+			for (int  i = -1; i < 2; i++)
+			{
+				CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
+				pMissile->SetDir(_vDir.Rotate(5 * i));
+				pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this);
+			}
+		}
+		else
+		{
+			CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
+			pMissile->SetDir(_vDir);
+			pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this);
+		}
 		m_dAttackDealy = 0.f;
 	}
 

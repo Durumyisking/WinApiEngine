@@ -7,6 +7,7 @@
 CItem::CItem()
 	:m_pTex(nullptr)
 	, m_stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f }
+	, m_eName(ITEM_TABLE::end)
 {
 	SetScale(Vec2(64.f, 64.f));
 

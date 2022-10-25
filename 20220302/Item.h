@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 
+
+
 class CTexture;
 
 class CItem :
@@ -9,8 +11,8 @@ class CItem :
 
 protected:
 	CTexture*		m_pTex;
-	int				m_iIdx;
 	Stat			m_stat;
+	ITEM_TABLE		m_eName;
 
 public:
 	CItem();
@@ -30,6 +32,6 @@ public:
 
 public:
 	Stat GetStat() { return m_stat; }
-
+	ITEM_TABLE GetItemName() const { return m_eName; }
 };
 

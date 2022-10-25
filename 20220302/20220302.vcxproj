@@ -189,6 +189,7 @@
     <ClInclude Include="Heart.h" />
     <ClInclude Include="Host.h" />
     <ClInclude Include="IdleState.h" />
+    <ClInclude Include="innereye.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemMgr.h" />
     <ClInclude Include="Kamikazeleech.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="Charger.cpp" />
     <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="Host.cpp" />
+    <ClCompile Include="innereye.cpp" />
     <ClCompile Include="ItemMgr.cpp" />
     <ClCompile Include="Kamikazeleech.cpp" />
     <ClCompile Include="NormalRoom.cpp" />

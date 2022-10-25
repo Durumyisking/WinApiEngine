@@ -55,13 +55,12 @@ void CBomb::update()
 	{
 		if (m_fBombTime < 1.4f)
 		{
-
 			m_strAnimName = L"Explode";
 			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), false);
 			SetName(L"Explode");
 			m_bExplosionAnim = true;
 			m_bPassFrame = true;
-			GetCollider()->SetScale(Vec2(500.f, 500.f));
+			GetCollider()->SetScale(Vec2(300.f, 300.f));
 			
 		}
 	}	
@@ -100,6 +99,23 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 
 	CObject* pOtherObj = _pOther->GetObj();
 
+
+	// Player | Monster 
+	if (m_bPassFrame)
+	{
+		if (L"Player" == pOtherObj->GetName())
+		{
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+
+			pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
+			pPlayer->GetStat()->InflictDamage(2);
+		}
+		if (L"Monster" == pOtherObj->GetName())
+		{
+			CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
+			pMonster->GetStat().InflictDamage(100);
+		}
+	}
 }
 
 void CBomb::OnCollisionExit(CCollider * _pOther)

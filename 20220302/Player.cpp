@@ -41,7 +41,7 @@ CPlayer::CPlayer()
 	, m_finvincibilityTime(1.f)
 	, m_arrCollider{}
 {
-	m_Stat = { 6, 6, 5, 400.f, 1000.f, 2.f ,0.38f };
+	m_Stat = { 6, 6, 5, 400.f, 450.f, 2.f ,0.38f };
 	m_pStat = &m_Stat;
 
 	m_strAnimName = L"Hurt";
@@ -309,24 +309,24 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 
 
-		switch (pWall->GetDir())
-		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
-			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
-			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
-			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
-			break;
+		//switch (pWall->GetDir())
+		//{
+		//case DIR::N:
+		//	m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+		//	break;
+		//case DIR::S:
+		//	m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+		//	break;
+		//case DIR::E:
+		//	m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+		//	break;
+		//case DIR::W:
+		//	m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+		//	break;
 
-		default:
-			break;
-		}
+		//default:
+		//	break;
+		//}
 		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
@@ -334,7 +334,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	if (L"Item" == pOtherObj->GetName())
 	{
 		CItem* pItem = dynamic_cast<CItem*>(pOtherObj);
-		m_vInventory.push_back(pItem);
+		++(m_vInventory[static_cast<UINT>(pItem->GetItemName())]);
 		m_GetItemCheck = pItem;
 	}	
 
@@ -351,8 +351,34 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"Explode" == pOtherObj->GetName())
 	{
-		SetPrevHp(GetStat()->m_iHP);
-		GetStat()->InflictDamage(2);
+		Vec2 vDir = pOtherObj->GetPos() - GetPos();
+		vDir.Normalize();
+		vDir = vDir * 500.f;
+		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
+		GetRigidBody()->SetVelocity(vResult);
+	}
+
+	if (L"Monster" == pOtherObj->GetName())
+	{
+		Vec2 vDir = pOtherObj->GetPos() - GetPos();
+		vDir.Normalize();
+		vDir = vDir * 500.f;
+		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
+		GetRigidBody()->SetVelocity(vResult);
+
+		if (m_finvincibilityTime >= 1.f)
+		{
+			m_finvincibilityTime = 0;
+			// hurt 애니메이션 재생
+			m_iPrevHp = m_pStat->m_iHP;
+			--m_pStat->m_iHP;
+
+		}
+		else if (m_finvincibilityTime < 1.f)
+		{
+			// 
+		}
+
 	}
 }
 
@@ -395,7 +421,6 @@ void CPlayer::CreateMissile(Vec2 _vDir)
 void CPlayer::ItemCheck()
 {
 	*m_pStat += m_GetItemCheck->GetStat();
-
 
 	pBody->SetStat(this->m_pStat);
 	pHead->SetStat(this->m_pStat);

@@ -111,7 +111,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Charger:
 	{
 		pMon = new CCharger;
-		Stat Stat = { 40, 40, 1, 200.f, 0.f, 3.f ,0.f };
+		Stat Stat = { 40, 40, 1, 300.f, 0.f, 3.f ,0.f };
 		pMon->SetScale(Vec2(32.f, 32.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(300.f);
@@ -122,8 +122,6 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		CAI* pAI = new CAI;
 		pAI->AddState(new CIdleState);
 
-
-
 		pAI->SetCurState(MON_STATE::IDLE);
 		pMon->SetAI(pAI);
 
@@ -133,7 +131,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 
 		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-		pMon->GetCollider()->SetScale(Vec2(64.f, 32.f));
+		pMon->GetCollider()->SetScale(Vec2(32.f, 32.f));
 
 	}
 	break;
@@ -148,7 +146,6 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 		pMon->SetDeadAnimTime(1.4f);
-		pMon->SetName(L"Explode");
 
 		CAI* pAI = new CAI;
 		pAI->AddState(new CIdleState);
@@ -162,7 +159,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 
 		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-		pMon->GetCollider()->SetScale(Vec2(64.f, 32.f));
+		pMon->GetCollider()->SetScale(Vec2(32.f, 32.f));
 
 	}
 	break;

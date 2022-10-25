@@ -65,9 +65,9 @@ public:
 	UINT GetID() const { return m_iID; }
 
 
+	bool IsOn() { return m_bSwitch; }
 	void SwitchOn() { m_bSwitch = true; }
 	void SwitchOff() { m_bSwitch = false; }
-
 	void ToggleRenderSwitch	() { m_bRenderSwitch = !m_bRenderSwitch; }
 
 	

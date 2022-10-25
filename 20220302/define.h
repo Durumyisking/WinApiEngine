@@ -123,20 +123,12 @@ enum class SCENE_TYPE
 	END,
 };
 
-enum class ITEM_TYPE
-{
-	STR,
-	SPEED,
-	RATE,
-
-
-	END,
-};
 
 enum class MISSILE_TYPE
 {
 	DEFAULT, // 직선
 	ZIGJAG, // 지그재그
+	TRIPLE,
 	
 
 	MONSTER_DEFAULT, // 몬스터 직선
@@ -208,4 +200,15 @@ enum class ROOM_TYPE
 	NORMAL,
 	TRESURE,
 	BOSS,
+};
+
+
+enum class ITEM_TABLE
+{
+	sadonion,
+	innereye,
+
+
+
+	end,
 };

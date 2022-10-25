@@ -96,6 +96,7 @@ void CMissile::update()
 
 		break;
 	}
+
 	default:
 		break;
 	}
@@ -113,9 +114,8 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 {
 
 	Vec2 vMissilePos = _pShooter->GetPos(); // ´«¹°À» ½ð ¾îÀÇ À§Ä¡ °¡Á®¿È
-	vMissilePos.y -= GetScale().y / 2.f;
+	vMissilePos.y -= GetScale().y / 2.f; // Áß¾Ó¿¡¼­
 
-	SetPos(vMissilePos);
 	SetScale(Vec2(100.f, 80.f));
 
 	switch (_eType)
@@ -126,6 +126,9 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 		{
 			SetName(L"Tear_Player");
 			m_pOwner = _pShooter;
+
+			vMissilePos  += Vec2(0.f, 20.f);
+			SetPos(vMissilePos);
 
 			// ÇÃ·¹ÀÌ¾îÀÇ ½ºÅÝ¿¡¼­ ´«¹° ÃÖ´ë¼Óµµ ¹ÞÀ½
 			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
@@ -142,6 +145,8 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 		{
 			SetName(L"Tear_Player");
 			m_pOwner = _pShooter;
+
+			SetPos(vMissilePos);
 
 			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
 
@@ -173,6 +178,7 @@ void CMissile::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"Wall_Tear" == pOtherObj->GetName())
 	{
+//		GetCollider()->SwitchOff();
 		m_fAccFall = 0.5f;
 	}
 }

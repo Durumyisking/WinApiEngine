@@ -18,8 +18,6 @@ CAI::~CAI()
 
 void CAI::update()
 {
-
-
 	m_pCurState->update();
 }
 

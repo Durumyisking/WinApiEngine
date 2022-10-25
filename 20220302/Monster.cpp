@@ -44,31 +44,32 @@ void CMonster::update()
 		m_pOwner->MonsterDead();
 		GetAI()->ChangeState(MON_STATE::DEAD);
 	}
-
-	if (nullptr != GetRigidBody())
+	else
 	{
-		if (m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+		if (nullptr != GetRigidBody())
 		{
-			if(GetRigidBody()->GetVelocity().y < 0)
-				GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
-		}
-		if (m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
-		{
-			if (GetRigidBody()->GetVelocity().y > 0)
-				GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
-		}
-		if (m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
-		{
-			if (GetRigidBody()->GetVelocity().x > 0)
-				GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
-		}
-		if (m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
-		{
-			if (GetRigidBody()->GetVelocity().x < 0)
-				GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+			{
+				if (GetRigidBody()->GetVelocity().y < 0)
+					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
+			}
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
+			{
+				if (GetRigidBody()->GetVelocity().y > 0)
+					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
+			}
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
+			{
+				if (GetRigidBody()->GetVelocity().x > 0)
+					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+			}
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
+			{
+				if (GetRigidBody()->GetVelocity().x < 0)
+					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+			}
 		}
 	}
-
 	m_pAI->update();
 }
 
@@ -99,6 +100,7 @@ bool CMonster::AxisPlayerCheck()
 	else
 		return false;
 }
+
 DIR CMonster::AxisPatrol()
 {
 
@@ -150,11 +152,9 @@ DIR CMonster::AxisCharge()
 		m_arrWallDirCheck[i] = false;
 	}
 
-
 	CPlayer* pPlayer = (CPlayer*)CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
 	int Playerx = static_cast<int>(pPlayer->GetCollider()->GetFinalPos().x);
 	int Playery = static_cast<int>(pPlayer->GetCollider()->GetFinalPos().y);
-	int fRecogrange = static_cast<int>(GetRecogRange());
 	int Monsterx = static_cast<int>(GetPos().x);
 	int Monstery = static_cast<int>(GetPos().y);
 
@@ -164,6 +164,7 @@ DIR CMonster::AxisCharge()
 		// 플레이어가 아래
 		if (Playery > Monstery)
 		{
+
 			GetRigidBody()->SetVelocity(Vec2(0.f, m_Stat.m_fSpeed * 2));
 			return DIR::S;
 		}
@@ -204,11 +205,18 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 	if (L"Tear_Player" == pOtherObj->GetName())
 	{
 		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
-		Vec2 vTearForce = pOtherObj->GetRigidBody()->GetForce();
+		Vec2 vTearForce = pOtherObj->GetRigidBody()->GetVelocity();
 		Vec2 vMonsterVelocity = GetRigidBody()->GetVelocity();
-		Vec2 vResult = vMonsterVelocity - vTearForce;
+		Vec2 vResult = vMonsterVelocity + vTearForce;
+		if (vResult.x > 200.f)
+		{
+			vResult.x = 200.f;
+		}
+		else if ((vResult.y > 200.f))
+		{
+			vResult.y = 200.f;
+		}
 		GetRigidBody()->SetVelocity(vResult);
-
 		m_Stat.m_iHP -= pMissileObj->GetDmg();
 	}
 

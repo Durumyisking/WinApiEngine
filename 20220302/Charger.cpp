@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "Collider.h"
 #include "WallCollider.h"
+#include "Missile.h"
 
 CCharger::CCharger()
 	: m_iAttackType(0)
@@ -45,6 +46,8 @@ CCharger::~CCharger()
 
 void CCharger::update()
 {
+	CMonster::update();
+
 	// 돌진중이 아닐때
 	if (!m_bCharging)
 	{
@@ -60,19 +63,15 @@ void CCharger::update()
 			{
 			case DIR::N:
 				m_strAnimName = L"Charger_IDLE_U";
-				GetCollider()->SetScale(Vec2(32.f, 64.f));
 				break;
 			case DIR::S:
 				m_strAnimName = L"Charger_IDLE_D";
-				GetCollider()->SetScale(Vec2(32.f, 64.f));
 				break;
 			case DIR::E:
 				m_strAnimName = L"Charger_IDLE_R";
-				GetCollider()->SetScale(Vec2(64.f, 32.f));
 				break;
 			case DIR::W:
 				m_strAnimName = L"Charger_IDLE_L";
-				GetCollider()->SetScale(Vec2(64.f, 32.f));
 				break;
 			case DIR::END:
 				m_fMoveTimer = 0.5f;
@@ -86,7 +85,6 @@ void CCharger::update()
 		if(AxisPlayerCheck())
 			Attack();		
 	}
-	CMonster::update();
 
 }
 
@@ -100,19 +98,15 @@ void CCharger::Attack()
 		{
 		case DIR::N:
 			m_strAnimName = L"Charger_ATTACK_U";
-			GetCollider()->SetScale(Vec2(32.f, 64.f));
 			break;
 		case DIR::S:
 			m_strAnimName = L"Charger_ATTACK_D";
-			GetCollider()->SetScale(Vec2(32.f, 64.f));
 			break;
 		case DIR::E:
 			m_strAnimName = L"Charger_ATTACK_R";
-			GetCollider()->SetScale(Vec2(64.f, 32.f));
 			break;
 		case DIR::W:
 			m_strAnimName = L"Charger_ATTACK_L";
-			GetCollider()->SetScale(Vec2(64.f, 32.f));
 			break;
 		case DIR::END:
 			break;
@@ -133,6 +127,12 @@ void CCharger::OnCollisionEnter(CCollider* _pOther)
 {
 
 	CObject* pOtherObj = _pOther->GetObj();
+	if (L"Tear_Player" == pOtherObj->GetName())
+	{
+		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
+		m_Stat.m_iHP -= pMissileObj->GetDmg();
+		return;
+	}
 
 	if (L"Wall" == pOtherObj->GetName())
 	{

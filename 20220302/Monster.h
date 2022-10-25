@@ -37,8 +37,8 @@ protected:
 	CRoom*			m_pOwner;
 	bool			m_bDeadAnim;
 	float			m_fDeadAnimTime;
-
 	Vec2			m_vAnimOffset;
+
 
 public:
 	CMonster();

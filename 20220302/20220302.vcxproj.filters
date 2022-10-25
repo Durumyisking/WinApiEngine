@@ -416,6 +416,9 @@
     <ClInclude Include="Kamikazeleech.h">
       <Filter>Engine\04. Object\Monster\kamikazeleech</Filter>
     </ClInclude>
+    <ClInclude Include="innereye.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -621,6 +624,9 @@
     </ClCompile>
     <ClCompile Include="Kamikazeleech.cpp">
       <Filter>Engine\04. Object\Monster\kamikazeleech</Filter>
+    </ClCompile>
+    <ClCompile Include="innereye.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

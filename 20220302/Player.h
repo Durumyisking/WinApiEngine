@@ -24,7 +24,7 @@ protected:
 
 	double			m_dAttackDealy; // 평타 쿨타임
 
-	vector<CItem*>	m_vInventory;
+	int				m_vInventory [static_cast<UINT>(ITEM_TABLE::end) + 1];
 	CItem*			m_GetItemCheck;
 
 	CPlayer*		m_pOwner;
@@ -49,6 +49,7 @@ protected:
 	UINT			m_iPrevHp;
 	
 	CCollider* m_arrCollider[static_cast<UINT>(DIR::END)];
+
 
 public:
 	CPlayer();
