@@ -2,12 +2,12 @@
 #include "Object.h"
 #include"Texture.h"
 
-
 class CAnimation;
 class CTexture;
 class CItem;
 class CBody;
 class CHead;
+class CCostume;
 
 class CPlayer :
 	public CObject
@@ -26,6 +26,7 @@ protected:
 
 	int				m_vInventory [static_cast<UINT>(ITEM_TABLE::end) + 1];
 	CItem*			m_GetItemCheck;
+	vector<CCostume*>	m_pCostume;
 
 	CPlayer*		m_pOwner;
 
@@ -38,7 +39,7 @@ protected:
 	// 플레이어의 이동을 막기위한 변수입니다
 	// 만약 bool이 true면 해당 방향으로 움직일수 없음
 	bool			m_arrWallDirCheck[(UINT)DIR::END];
-
+	bool			m_bGetHpMax;
 
 
 	CTexture*		m_pTex;
@@ -68,6 +69,12 @@ public:
 
 	UINT GetPrevHp() { return m_iPrevHp;}
 	void SetPrevHp(UINT _Prevhp) { m_iPrevHp = _Prevhp; }
+
+	bool GetHpMax() const { return m_bGetHpMax; }
+	void EndGetHpMax() { m_bGetHpMax = false; }
+
+	vector<CCostume*> GetCostumeVec() const { return m_pCostume; }
+
 
 	CBody* Body();
 	CHead* Head();

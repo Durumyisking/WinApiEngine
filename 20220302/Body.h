@@ -23,6 +23,7 @@ public:
 	float GetAnimFrame() const { return m_fAnimFrame; }
 	void SetAnimFrame(float _value) { m_fAnimFrame = _value; }
 
+
 private:
 	float		m_fAnimFrame;
 	float		m_fBombCooldown;

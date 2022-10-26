@@ -61,6 +61,8 @@ CPlayer::~CPlayer()
 	//{
 	//	delete this;
 	//}
+
+	m_pCostume.clear();
 }
 
 
@@ -86,8 +88,8 @@ void CPlayer::update()
 
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-	
-	
+
+
 	if (KEY_HOLD(KEY::W)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
 		{
@@ -122,9 +124,6 @@ void CPlayer::update()
 	{
 	}
 
-
-
-
 	SetPos(vPos);
 	SetPosTemp();
 
@@ -134,7 +133,12 @@ void CPlayer::update()
 		pBody->SetPos(vPos);
 		pHead->SetPos(vPos);
 	}
-	GetAnimator()->update();
+
+	for (size_t i = 0; i < m_pCostume.size(); i++)
+	{
+		if (nullptr != m_pCostume[i])
+			m_pCostume[i]->update();
+	}
 
 
 	// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
@@ -151,8 +155,14 @@ void CPlayer::update()
 
 void CPlayer::render(HDC _dc)
 {
+	for (size_t i = 0; i < m_pCostume.size(); i++)
+	{
+		if (nullptr != m_pCostume[i])
+			m_pCostume[i]->render(_dc);
+	}
 	component_render(_dc);
 }
+
 
 
 
@@ -309,24 +319,24 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 
 
-		//switch (pWall->GetDir())
-		//{
-		//case DIR::N:
-		//	m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
-		//	break;
-		//case DIR::S:
-		//	m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
-		//	break;
-		//case DIR::E:
-		//	m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
-		//	break;
-		//case DIR::W:
-		//	m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
-		//	break;
+		switch (pWall->GetDir())
+		{
+		case DIR::N:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+			break;
+		case DIR::S:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+			break;
+		case DIR::E:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+			break;
+		case DIR::W:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+			break;
 
-		//default:
-		//	break;
-		//}
+		default:
+			break;
+		}
 		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
@@ -336,6 +346,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CItem* pItem = dynamic_cast<CItem*>(pOtherObj);
 		++(m_vInventory[static_cast<UINT>(pItem->GetItemName())]);
 		m_GetItemCheck = pItem;
+
+
 	}	
 
 	if (L"PickupHeart" == pOtherObj->GetName())
@@ -420,9 +432,35 @@ void CPlayer::CreateMissile(Vec2 _vDir)
 
 void CPlayer::ItemCheck()
 {
+	float fFricCoeffRatio = GetRigidBody()->GetFricCoeff() / m_pStat->m_fSpeed;
+
 	*m_pStat += m_GetItemCheck->GetStat();
 
 	pBody->SetStat(this->m_pStat);
 	pHead->SetStat(this->m_pStat);
+		
+	GetRigidBody()->SetMaxVelocity(m_pStat->m_fSpeed);
+	GetRigidBody()->SetFricCoeff(fFricCoeffRatio * m_pStat->m_fSpeed);
+
+	if (ITEM_TABLE::lunch == m_GetItemCheck->GetItemName())
+	{
+		m_bGetHpMax = true;
+	}
+	CCostume* pCosTemp = new CCostume(m_GetItemCheck->GetItemName());
+	// 이미 있는 아이템이면 코스튬추가 필요없음
+	for (size_t i = 0; i < m_pCostume.size(); i++)
+	{
+		if (m_pCostume[i]->GetItemName() == pCosTemp->GetItemName())
+		{
+			return;
+		}
+	}
+	// 코스튬이 있는 아이템일때만
+	if (ITEM_TABLE::end != pCosTemp->GetItemName())
+	{
+		pCosTemp->SetPlayer(this);
+		CreateObject(pCosTemp, GROUP_TYPE::COSTUME);
+		m_pCostume.push_back(pCosTemp);
+	}
 }
 

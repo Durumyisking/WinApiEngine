@@ -4,6 +4,7 @@
 // 기능만 사용할 것
 
 class CMonster;
+class CRoom;
 
 enum class MON_TYPE
 {

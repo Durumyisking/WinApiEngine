@@ -11,6 +11,8 @@
 #include "KeyMgr.h"
 #include "TimeMgr.h"
 
+#include "Item.h"
+
 
 CHead::CHead()
 {
@@ -152,6 +154,7 @@ void CHead::OnCollisionEnter(CCollider * _pOther)
 void CHead::OnCollisionExit(CCollider * _pOther)
 {
 }
+
 
 void CHead::CreateMissile(Vec2 _vDir)
 {

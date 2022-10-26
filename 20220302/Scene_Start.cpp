@@ -222,6 +222,15 @@ void CScene_Start::update()
 	// UI贸府
 	////////////////////////////////////////////////////////////////////
 	// 敲饭捞绢 HP贸府
+	if (m_pPlayer->GetHpMax())
+	{
+		CUI* pHeartUI = new CHeart(static_cast<int>(vecHeartUI.size() + 1));
+		vecHeartUI.push_back(pHeartUI);
+		AddObject(pHeartUI, GROUP_TYPE::UI);
+
+		m_pPlayer->EndGetHpMax();
+	}
+
 	if (m_pPlayer->GetStat()->m_iMaxHP == m_pPlayer->GetStat()->m_iHP)
 	{
 		for (size_t i = 0; i < vecHeartUI.size(); i++)

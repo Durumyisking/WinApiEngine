@@ -128,7 +128,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 			m_pOwner = _pShooter;
 
 			vMissilePos  += Vec2(0.f, 20.f);
-			SetPos(vMissilePos);
+			SetPos(vMissilePos)	;
 
 			// 플레이어의 스텟에서 눈물 최대속도 받음
 			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);

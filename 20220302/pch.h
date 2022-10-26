@@ -17,7 +17,7 @@
 
 #include <Windows.h>
 // 라이브러리 참조
-#pragma comment(lib, "Msimg32.lib")
+#pragma comment(lib, "Msimg32.lib") // 이미지 관리 라이브러리
 
 #include <assert.h>
 

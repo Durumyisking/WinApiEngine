@@ -105,11 +105,11 @@ DIR CMonster::AxisPatrol()
 {
 
 	// 가로이동인지 세로이동인지 받는다.
-	float x = 0.f;
-	float y = 0.f;
+	int x = 0;
+	int y = 0;
 
 	srand(CTimeMgr::GetInst()->GetCurCount());
-	int iflag = static_cast<float>(rand() % 2);
+	int iflag = static_cast<int>(rand() % 2);
 	srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
 	if (0 == iflag)
 	{
@@ -124,8 +124,6 @@ DIR CMonster::AxisPatrol()
 			GetRigidBody()->SetVelocity(Vec2(static_cast<float>(x * m_Stat.m_fSpeed), 0.f));
 			return DIR::E;
 		}
-		else
-			return DIR::END;
 	}
 	else if (iflag == 1)
 	{
@@ -140,9 +138,8 @@ DIR CMonster::AxisPatrol()
 			GetRigidBody()->SetVelocity(Vec2(0.f, static_cast<float>(y * m_Stat.m_fSpeed)));
 			return DIR::S;
 		}
-		else
-			return DIR::END;
 	}
+	return DIR::END;
 }
 
 DIR CMonster::AxisCharge()
@@ -190,7 +187,7 @@ DIR CMonster::AxisCharge()
 			return DIR::W;
 		}
 	}
-
+	return DIR::END;
 }
 
 

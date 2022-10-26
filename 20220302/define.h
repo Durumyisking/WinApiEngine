@@ -83,6 +83,10 @@ enum class GROUP_TYPE
 
 	DOOR,
 
+	ALTER,
+
+	ITEM,
+
 	TEAR,
 
 	BOMB,
@@ -91,13 +95,14 @@ enum class GROUP_TYPE
 
 	PLAYER,
 
+	COSTUME,
+
 	MONSTER,
 
 	PROJ_PLAYER,
 
 	PROJ_MONSTER,
 
-	ITEM,
 
 
 
@@ -207,8 +212,9 @@ enum class ITEM_TABLE
 {
 	sadonion,
 	innereye,
-
-
+	lunch,
+	belt,
+	momsheels,
 
 	end,
 };

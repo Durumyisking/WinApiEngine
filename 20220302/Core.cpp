@@ -8,7 +8,6 @@
 #include "CollisionMgr.h"
 #include "EventMgr.h"
 #include "UIMgr.h"
-#include "ItemMgr.h"
 #include "Camera.h"
 
 #include "Texture.h"
@@ -79,7 +78,6 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 	CSceneMgr::GetInst()->init();
 	CCollisionMgr::GetInst()->init();
 	CEventMgr::GetInst()->init();
-//	CItemMgr::GetInst()->init();
 
 
 	return S_OK;
@@ -123,7 +121,7 @@ void CCore::progress()
 void CCore::Clear()
 {
 	CSelectGDI gdi(m_pMemTex->GetDC(), BRUSH_TYPE::BLACK);
-	Rectangle(m_pMemTex->GetDC(), -1, -1, m_vResolution.x + 1, m_vResolution.y + 1);
+	Rectangle(m_pMemTex->GetDC(), -1, -1, static_cast<int>(m_vResolution.x + 1), static_cast<int>(m_vResolution.y + 1));
 }
 
 void CCore::CreateBrushPen()
@@ -154,7 +152,7 @@ void CCore::DivideMenu()
 
 void CCore::ChangeWindowSize(bool _bMenu)
 {
-	RECT rt = { 0,0,m_vResolution.x, m_vResolution.y };
+	RECT rt = { 0,0,static_cast<LONG>(m_vResolution.x), static_cast<LONG>(m_vResolution.y) };
 	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, _bMenu);
 	SetWindowPos(m_hWnd, nullptr, 100, 100, rt.right - rt.left, rt.bottom - rt.top, 0);
 }

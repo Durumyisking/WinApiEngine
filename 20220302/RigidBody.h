@@ -37,13 +37,15 @@ public:
 	float GetMass() const { return m_fMass; }
 
 	void SetForce(Vec2 _vF) { m_vForce = _vF; }
-	Vec2 GetForce() { return m_vForce; }
+	Vec2 GetForce() const { return m_vForce; }
 
 	void SetVelocity(Vec2 _v) { m_vVelocity = _v; }
 	Vec2 GetVelocity() const { return m_vVelocity; }
 	void AddVelocity(Vec2 _v) { m_vVelocity += _v; }
 	void SetMaxVelocity(float _f) { m_fMaxSpeed = _f; }
 	void SetFricCoeff(float _f) { m_fFricCoeff = _f; }
+	float GetFricCoeff() const { return m_fFricCoeff; }
+
 
 private:
 	void Move();

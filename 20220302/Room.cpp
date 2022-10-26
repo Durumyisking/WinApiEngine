@@ -54,13 +54,13 @@ void CRoom::render(HDC _dc)
 		int iWidth = m_pBgTex->GetWidth();
 		int iHeight = m_pBgTex->GetHeight();
 
-		float posx = GetPos().x - (GetScale().x / 2);
-		float posy = GetPos().y - (GetScale().y / 2);
+		float posx = GetPos().x - (GetScale().x / 2.f);
+		float posy = GetPos().y - (GetScale().y / 2.f);
 
 		Vec2 vPos(posx, posy);
 		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
-		StretchBlt(_dc, vPos.x, vPos.y, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
+		StretchBlt(_dc, static_cast<int>(vPos.x), static_cast<int>(vPos.y), static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y), m_pBgTex->GetDC(), 0, 0, iWidth, iHeight, SRCCOPY);
 	}
 }
 

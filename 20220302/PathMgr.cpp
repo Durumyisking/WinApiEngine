@@ -29,7 +29,7 @@ void CPathMgr::init()
 	// 문자열의 끝을 변경해서 상위로 올라갈거임
 	// 우리는 한 단계만 올라가면 되니까 제일 첫번째 \\만남에 break 걸어둠
 
-	int iLen = wcslen(m_szContentPath);
+	int iLen = static_cast<int>(wcslen(m_szContentPath));
 
 	for (int i = iLen - 1; i >= 0; --i)
 	{

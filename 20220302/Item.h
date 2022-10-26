@@ -1,9 +1,9 @@
 #pragma once
 #include "Object.h"
-
-
+#include "Costume.h"
 
 class CTexture;
+class CItemAlter;
 
 class CItem :
 	public CObject
@@ -13,9 +13,14 @@ protected:
 	CTexture*		m_pTex;
 	Stat			m_stat;
 	ITEM_TABLE		m_eName;
+	float			m_fRenderOffset;
+	float			m_fRenderTimer;
+	bool			m_bRenderSwitch; // true면 올라가기 false면 내려가기
+	CItemAlter*		m_pAlter;
+
 
 public:
-	CItem();
+	CItem(Vec2 _vPos);
 	~CItem();
 
 	CLONE(CItem);
@@ -33,5 +38,7 @@ public:
 public:
 	Stat GetStat() { return m_stat; }
 	ITEM_TABLE GetItemName() const { return m_eName; }
+	void CreateAlter();
+
 };
 

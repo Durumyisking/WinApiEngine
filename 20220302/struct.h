@@ -46,6 +46,13 @@ public:
 
 		return *this;
 	}
+	Vec2 operator -= (Vec2 _vOther)
+	{
+		(*this).x -= _vOther.x;
+		(*this).y -= _vOther.y;
+
+		return *this;
+	}
 	Vec2 operator -(Vec2 _vOther)
 	{
 		return(Vec2(x - _vOther.x, y - _vOther.y));
@@ -90,6 +97,7 @@ public:
 
 		return *this;
 	}
+
 	Vec2 Rotate(int _iValue)
 	{
 		Vec2 vTemp = *this;
@@ -139,6 +147,8 @@ public:
 		(*this).m_iHP += _vOther.m_iHP;
 		(*this).m_iDmg += _vOther.m_iDmg;
 		(*this).m_fSpeed += _vOther.m_fSpeed;
+		(*this).m_fShotSpeed += _vOther.m_fShotSpeed;
+		(*this).m_fRange += _vOther.m_fRange;
 		(*this).m_fRate += _vOther.m_fRate;
 
 		return *this;

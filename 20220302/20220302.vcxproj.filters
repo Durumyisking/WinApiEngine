@@ -185,9 +185,6 @@
     <Filter Include="Engine\04. Object\Room\RoomSub">
       <UniqueIdentifier>{f8ecf2fd-ed9e-48e9-82f6-116693bf8abf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\03. Manager\ItemMgr">
-      <UniqueIdentifier>{de25e662-d7ac-41a0-a8f1-c187338dee66}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\04. Object\Monster\host">
       <UniqueIdentifier>{46609fcf-4cf7-4eeb-b794-03c5ac1a270a}</UniqueIdentifier>
     </Filter>
@@ -199,6 +196,9 @@
     </Filter>
     <Filter Include="Engine\04. Object\Monster\kamikazeleech">
       <UniqueIdentifier>{385eccf4-0f6b-4649-ae3d-361f627811c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Item\Costume">
+      <UniqueIdentifier>{3118c6d6-693e-4f6d-bd1d-bf8d6246605e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -392,9 +392,6 @@
     <ClInclude Include="TreasureRoom.h">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClInclude>
-    <ClInclude Include="ItemMgr.h">
-      <Filter>Engine\03. Manager\ItemMgr</Filter>
-    </ClInclude>
     <ClInclude Include="Host.h">
       <Filter>Engine\04. Object\Monster\host</Filter>
     </ClInclude>
@@ -418,6 +415,21 @@
     </ClInclude>
     <ClInclude Include="innereye.h">
       <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="lunch.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemAlter.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="belt.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="momsheels.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Costume.h">
+      <Filter>Engine\04. Object\Item\Costume</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -601,9 +613,6 @@
     <ClCompile Include="TreasureRoom.cpp">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
-    <ClCompile Include="ItemMgr.cpp">
-      <Filter>Engine\03. Manager\ItemMgr</Filter>
-    </ClCompile>
     <ClCompile Include="Host.cpp">
       <Filter>Engine\04. Object\Monster\host</Filter>
     </ClCompile>
@@ -627,6 +636,21 @@
     </ClCompile>
     <ClCompile Include="innereye.cpp">
       <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="lunch.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAlter.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="belt.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="momsheels.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Costume.cpp">
+      <Filter>Engine\04. Object\Item\Costume</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
