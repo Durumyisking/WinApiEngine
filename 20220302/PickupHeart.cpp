@@ -24,9 +24,6 @@ CPickupHeart::CPickupHeart()
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f),  true);
 
-	CreateRigidBody();
-	GetRigidBody()->SetMass(0.5f);
-	GetRigidBody()->SetFricCoeff(550.f);
 
 }
 

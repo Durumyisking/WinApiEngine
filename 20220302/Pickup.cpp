@@ -11,6 +11,10 @@ CPickup::CPickup()
 	CreateCollider();
 	CreateRigidBody();
 
+	GetRigidBody()->SetMass(0.5f);
+	GetRigidBody()->SetFricCoeff(550.f);
+	GetRigidBody()->SetMaxVelocity(500.f);
+
 }
 
 CPickup::~CPickup()
@@ -37,6 +41,15 @@ void CPickup::OnCollision(CCollider * _pOther)
 	//	_v *= -1.f;
 	//	this->GetRigidBody()->SetVelocity(_v);
 	//}
+
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		Vec2 vDir = pOtherObj->GetPos() - GetPos();
+		vDir.Normalize();
+		vDir = vDir * 500.f;
+		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
+		GetRigidBody()->SetVelocity(vResult);
+	}
 }
 
 void CPickup::OnCollisionEnter(CCollider * _pOther)
@@ -77,9 +90,17 @@ void CPickup::OnCollisionEnter(CCollider * _pOther)
 	{
 		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 		Vec2 _v = this->GetRigidBody()->GetVelocity();
-		_v *= -1.f;
-		_v *= 2.f;
+		_v *= -0.5f;
 		this->GetRigidBody()->SetVelocity(_v);
+	}
+
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		Vec2 vDir = pOtherObj->GetPos() - GetPos();
+		vDir.Normalize();
+		vDir = vDir * 500.f;
+		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
+		GetRigidBody()->SetVelocity(vResult);
 	}
 }
 

@@ -72,7 +72,7 @@ public:
 
 	Vec2 GetAnimOffset() const { return m_vAnimOffset; }
 
-	void CreateMissile();
+	void CreateMissile(Vec2 _vDir, CTexture* _pTex, wstring _strShooterName);
 	bool AxisPlayerCheck();
 	DIR AxisPatrol();
 	DIR AxisCharge();

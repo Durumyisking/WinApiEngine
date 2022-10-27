@@ -180,6 +180,7 @@
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Costume.h" />
+    <ClInclude Include="Dangle.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Door.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Charger.cpp" />
     <ClCompile Include="Costume.cpp" />
+    <ClCompile Include="Dangle.cpp" />
     <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="innereye.cpp" />

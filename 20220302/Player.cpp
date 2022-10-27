@@ -231,7 +231,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 
 	// monster
-	if (L"Monster" == pOtherObj->GetName() || L"Tear_Player" == pOtherObj->GetName())
+	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName())
 	{
 //		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
@@ -260,6 +260,16 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
 		vec = vec * 50.f;
 		this->GetRigidBody()->AddForce(vec);
+	}
+
+
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		Vec2 vDir = pOtherObj->GetPos() - GetPos();
+		vDir.Normalize();
+		vDir = vDir * 500.f;
+		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
+		GetRigidBody()->SetVelocity(vResult);
 	}
 }
 

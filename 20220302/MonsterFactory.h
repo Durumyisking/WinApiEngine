@@ -8,12 +8,16 @@ class CRoom;
 
 enum class MON_TYPE
 {
+	// monster
 	Gaper,
 	Fly,
 	Host,
 	Charger,
 	Kamikazeleech,
 
+
+	// boss
+	Dangle,
 };
 
 class CMonsterFactory

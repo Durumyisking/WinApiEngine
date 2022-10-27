@@ -27,15 +27,14 @@ public:
 	// 최근에 create 한 animation객체를 현재 animation으로 지정
 	void Play(const wstring& _strName, bool _bRepeat);
 
-
-
 	void update();
 	void finalupdate();
 	void render(HDC _dc);
 
 
 public:
-	CObject* GetObj() { return m_pOwner; }
+	CObject* GetObj() const { return m_pOwner; }
+	CAnimation* GetCurAnim() const { return m_pCurAnim; }
 
 	friend class CObject;
 };

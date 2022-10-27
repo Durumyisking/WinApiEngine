@@ -89,28 +89,6 @@ void CScene_Start::Enter()
 
 	CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
 
-
-
-	// 픽업 생성
-	CObject* pHeart = new CPickupHeart;
-	pHeart->SetPos(Vec2(300.f, 400.f));
-
-	CObject* pCoin = new CPickupCoin;
-	pCoin->SetPos(Vec2(300.f, 500.f));
-
-	CObject* pBomb = new CPickupBomb;
-	pBomb->SetPos(Vec2(500.f, 400.f));
-
-	CObject* pKey = new CPickupKey;
-	pKey->SetPos(Vec2(500.f, 500.f));
-	
-	AddObject(pHeart, GROUP_TYPE::PICKUP);
-	AddObject(pCoin, GROUP_TYPE::PICKUP);
-	AddObject(pBomb, GROUP_TYPE::PICKUP);
-	AddObject(pKey, GROUP_TYPE::PICKUP);
-
-	
-
 	// ui 세팅
 	
 	// 체력 ui
@@ -170,7 +148,8 @@ void CScene_Start::Enter()
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_PLAYER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::TEARWALL, GROUP_TYPE::PROJ_MONSTER);
 
-	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::WALL, GROUP_TYPE::PICKUP);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PICKUP, GROUP_TYPE::WALL);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PICKUP, GROUP_TYPE::BOMB);
 
 	
 

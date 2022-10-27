@@ -200,6 +200,9 @@
     <Filter Include="Engine\04. Object\Item\Costume">
       <UniqueIdentifier>{3118c6d6-693e-4f6d-bd1d-bf8d6246605e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\Boss">
+      <UniqueIdentifier>{1c556615-fd2e-4e64-bf36-7bc59a81431c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -431,6 +434,9 @@
     <ClInclude Include="Costume.h">
       <Filter>Engine\04. Object\Item\Costume</Filter>
     </ClInclude>
+    <ClInclude Include="Dangle.h">
+      <Filter>Engine\04. Object\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -651,6 +657,9 @@
     </ClCompile>
     <ClCompile Include="Costume.cpp">
       <Filter>Engine\04. Object\Item\Costume</Filter>
+    </ClCompile>
+    <ClCompile Include="Dangle.cpp">
+      <Filter>Engine\04. Object\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

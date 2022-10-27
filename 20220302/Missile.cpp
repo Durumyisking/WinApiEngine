@@ -26,17 +26,11 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	, m_fShotSpeed(_fShotSpeed)
 	, m_iDmg(_iDmg)
 	, m_pTex(nullptr)
-	, m_strAnimName(L"TEAR_IDLE")
+	, m_strAnimName(L"")
 	, m_pOwner(nullptr)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
 	CreateAnimator();
-
-	GetAnimator()->CreateAnimation(L"TEAR_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.5f, 1, false);
-	GetAnimator()->CreateAnimation(L"TEAR_POOFA", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 16, false);
-	
-	GetAnimator()->FindAnimation(L"TEAR_IDLE")->SetMagnify(2.f);
-	GetAnimator()->FindAnimation(L"TEAR_POOFA")->SetMagnify(2.f);
 
 	m_vDir.Normalize();
 
@@ -51,7 +45,6 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	pRigid->SetMass(0.5f);
 	pRigid->SetFricCoeff(50.f);
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 
 }
 CMissile::~CMissile()
@@ -90,7 +83,7 @@ void CMissile::update()
 		{
 			pRigid->SetVelocity(Vec2(0.f, 0.f));
 			GetAnimator()->Play(m_strAnimName, false);
-			m_strAnimName = L"TEAR_POOFA";
+			m_strAnimName = L"TEAR_POOFA" + m_strShooterName;
 			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
 		}
 
@@ -110,8 +103,26 @@ void CMissile::render(HDC _dc)
 {
 	component_render(_dc);
 }
-void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter)
+void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName)
 {
+	m_strShooterName = _strShooterName;
+	if (_strShooterName == L"Dangle")
+	{
+		GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
+		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(192.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 16, false);
+	}
+	else
+	{
+		GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.5f, 1, false);
+		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 16, false);
+	}
+	GetAnimator()->FindAnimation(L"TEAR_IDLE" + m_strShooterName)->SetMagnify(2.f);
+	GetAnimator()->FindAnimation(L"TEAR_POOFA" + m_strShooterName)->SetMagnify(2.f);
+
+	m_strAnimName = L"TEAR_IDLE" + m_strShooterName;
+
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+
 
 	Vec2 vMissilePos = _pShooter->GetPos(); // ´«¹°À» ½ð ¾îÀÇ À§Ä¡ °¡Á®¿È
 	vMissilePos.y -= GetScale().y / 2.f; // Áß¾Ó¿¡¼­
@@ -143,7 +154,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 		}
 		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
 		{
-			SetName(L"Tear_Player");
+			SetName(L"Tear_Monster");
 			m_pOwner = _pShooter;
 
 			SetPos(vMissilePos);
@@ -170,7 +181,7 @@ void CMissile::OnCollision(CCollider * _pOther)
 void CMissile::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	if (L"Monster" == pOtherObj->GetName())
+	if (L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName())
 	{
 		m_fAccFall = 0.5f;
 	}
@@ -178,7 +189,7 @@ void CMissile::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"Wall_Tear" == pOtherObj->GetName())
 	{
-//		GetCollider()->SwitchOff();
+		//GetCollider()->SwitchOff();
 		m_fAccFall = 0.5f;
 	}
 }

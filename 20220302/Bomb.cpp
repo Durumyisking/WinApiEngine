@@ -40,7 +40,7 @@ void CBomb::update()
 {
 	m_fBombTime -= fDT;
 
-	if (m_fBombTime < 0)
+	if (GetAnimator()->GetCurAnim()->IsFinish())
 		DeleteObject(this);
 
 	if (m_bPassFrame)
@@ -48,7 +48,7 @@ void CBomb::update()
 		GetCollider()->SwitchOff(); // 3
 		m_bPassFrame = false;
 	}
-
+		
 
 
 	if (!m_bExplosionAnim) // 1
@@ -58,7 +58,6 @@ void CBomb::update()
 			m_strAnimName = L"Explode";
 			PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), false);
 			SetName(L"Explode");
-			m_bExplosionAnim = true;
 			m_bPassFrame = true;
 			GetCollider()->SetScale(Vec2(300.f, 300.f));
 			

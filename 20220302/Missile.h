@@ -20,6 +20,8 @@ private:
 	CTexture*	m_pTex;
 	CAnimation*	m_pAnim;
 	wstring		m_strAnimName;
+	wstring		m_strShooterName;
+
 	CObject*	m_pOwner;
 
 public:
@@ -43,7 +45,9 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 public:
-	void CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter);
+	void CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName);
+	void ChangeTexture(CTexture* _pTex) { m_pTex = _pTex; }
+
 	CLONE(CMissile);
 
 

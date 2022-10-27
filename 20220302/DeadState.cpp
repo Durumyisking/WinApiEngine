@@ -7,8 +7,6 @@
 
 CDeadState::CDeadState()
 	: CState(MON_STATE::DEAD)
-	, m_fDeadAnimTimer(0.f)
-	, m_bDead(false)
 {
 }
 
@@ -25,11 +23,14 @@ void CDeadState::Enter()
 		pMonster->GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
 		pMonster->SetCurrentAnim(pMonster->GetAnimName(MON_STATE::DEAD));
 		pMonster->PlayAnim(pMonster->GetAnimInstance(), pMonster->GetCurrentAnim(), pMonster->GetAnimOffset(), false);
+
+		if (pMonster->GetCollider()->IsOn())
+			pMonster->GetCollider()->SwitchOff();
+
 	}
 	else
 	{
 		DeleteObject(pMonster);
-		m_bDead = true;
 	}
 }
 
@@ -39,20 +40,13 @@ void CDeadState::Exit()
 
 void CDeadState::update()
 {
-	if (!m_bDead)
-	{
-		m_fDeadAnimTimer += fDT;
 		CMonster* pMonster = GetMonster();
 
 		if(pMonster->GetCollider()->IsOn())
 			pMonster->GetCollider()->SwitchOff();
 
-		if (pMonster->GetDeadAnimTime() < m_fDeadAnimTimer)
+		if(pMonster->GetAnimator()->GetCurAnim()->IsFinish())
 		{
 			DeleteObject(pMonster);
-			m_bDead = true;
 		}
-
-
-	}
 }

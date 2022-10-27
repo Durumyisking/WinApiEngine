@@ -9,8 +9,11 @@ CHost::CHost()
 	, m_bAttacked(false)
 	, m_fAttackCooldown(0.f)
 	, m_fHideCoolDown(0.f)
+	, m_pTearTex(nullptr)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"HostTex", L"texture\\Monster\\monster_122_host.bmp");
+	m_pTearTex = CResMgr::GetInst()->LoadTexture(L"TearTexBlood", L"texture\\Tear\\effect_012_poof04.bmp");
+
 	m_strAnimName = L"Host_IDLE";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Host_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.1f, 1, false);
@@ -45,9 +48,11 @@ void CHost::Attack()
 			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
 			vTargetDir += Vec2(0.f, 45.f);
 			vTargetDir = vTargetDir.Normalize();
-			CreateMissile(vTargetDir);
-			CreateMissile(vTargetDir.Rotate(15));
-			CreateMissile(vTargetDir.Rotate(-15));
+			for (int i = -1; i < 2; i++)
+			{
+				CreateMissile(vTargetDir.Rotate(20 * i), m_pTearTex, L"Host");
+			}
+			m_bAttacked = true;
 		}
 
 		m_bInvisible = false;
@@ -98,11 +103,3 @@ void CHost::OnCollisionExit(CCollider* _pOther)
 
 }
 
-void CHost::CreateMissile(Vec2 _vDir)
-{
-	CMissile* pMissile = new CMissile(m_Stat.m_fShotSpeed, m_Stat.m_iDmg);
-	pMissile->SetDir(_vDir);
-	pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_MONSTER, this);
-
-	m_bAttacked = true;
-}

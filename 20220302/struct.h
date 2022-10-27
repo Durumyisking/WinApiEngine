@@ -28,7 +28,7 @@ public:
 	{
 		float fLen = Length();
 
-//		assert(fLen != 0.f); // 분모가 0이면 inf되니까 예외처리
+		assert(fLen != 0.f); // 분모가 0이면 inf되니까 예외처리
 		x /= fLen;
 		y /= fLen;
 

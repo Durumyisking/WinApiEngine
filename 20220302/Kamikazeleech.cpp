@@ -32,7 +32,7 @@ CKamikazeleech::CKamikazeleech()
 
 	m_vAnimOffset = Vec2(-20.f, -20.f);
 	PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
-	m_bDeadAnim = false;
+
 
 }
 CKamikazeleech::~CKamikazeleech()

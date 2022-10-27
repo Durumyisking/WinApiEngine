@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "Missile.h"
 #include "Camera.h"
+#include "MonsterFactory.h"
 
 #include "WallCollider.h"
 #include "Room.h"
@@ -79,8 +80,13 @@ void CMonster::render(HDC _dc)
 
 	component_render(_dc);
 }
-void CMonster::CreateMissile()
+void CMonster::CreateMissile(Vec2 _vDir, CTexture* _pTex, wstring _strShooterName)
 {
+	CMissile* pMissile = new CMissile(m_Stat.m_fShotSpeed, m_Stat.m_iDmg);
+	pMissile->ChangeTexture(_pTex);
+	pMissile->SetDir(_vDir);
+	pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_MONSTER, this, _strShooterName);
+
 }
 bool CMonster::AxisPlayerCheck()
 {

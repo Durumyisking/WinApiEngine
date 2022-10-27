@@ -12,8 +12,5 @@ public:
 	virtual void Exit();
 	virtual void update();
 
-private:
-	float	m_fDeadAnimTimer;
-	bool	m_bDead;
 };
 
