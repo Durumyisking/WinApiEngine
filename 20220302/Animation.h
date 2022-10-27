@@ -46,7 +46,11 @@ private:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 
 public:
-	const wstring& GetName() { return m_strName; }
+	const wstring& GetName() 
+	{
+		if(nullptr != this)
+			return m_strName; 
+	}
 	bool IsFinish() { return m_bFinish; }
 	void SetFrame(int _iFrameIdx)
 	{

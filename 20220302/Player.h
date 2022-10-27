@@ -30,16 +30,15 @@ protected:
 
 	CPlayer*		m_pOwner;
 
-	float			m_fAcc;
-	float			m_fMaxAcc;
 	float			m_fPrevSpeed;
-
 	float			m_finvincibilityTime;
 
 	// 플레이어의 이동을 막기위한 변수입니다
 	// 만약 bool이 true면 해당 방향으로 움직일수 없음
 	bool			m_arrWallDirCheck[(UINT)DIR::END];
 	bool			m_bGetHpMax;
+	bool			m_bFramePass;
+
 
 
 	CTexture*		m_pTex;

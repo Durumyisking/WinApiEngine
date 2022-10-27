@@ -203,6 +203,9 @@
     <Filter Include="Engine\04. Object\Monster\Boss">
       <UniqueIdentifier>{1c556615-fd2e-4e64-bf36-7bc59a81431c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Intro">
+      <UniqueIdentifier>{e4b9f2e4-4354-410b-ac23-27dc10dabb99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -437,6 +440,9 @@
     <ClInclude Include="Dangle.h">
       <Filter>Engine\04. Object\Monster\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Intro.h">
+      <Filter>Engine\05. Scene\Scene_Intro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -660,6 +666,9 @@
     </ClCompile>
     <ClCompile Include="Dangle.cpp">
       <Filter>Engine\04. Object\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Intro.cpp">
+      <Filter>Engine\05. Scene\Scene_Intro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include "SceneMgr.h"
 #include "ResMgr.h"
 #include "Texture.h"
+#include "Core.h"
 
 #include "MenuObj.h"
 #include "Camera.h"
@@ -26,6 +27,10 @@ CScene_Menu::~CScene_Menu()
 
 void CScene_Menu::Enter()
 {
+	CCamera::GetInst()->FadeIn(0.5f);
+
+	CCore::GetInst()->DivideMenu();
+
 	CObject* pTitle = new CMenuObj(L"titlemenu");
 	CObject* pTitleMenu = new CMenuObj(L"title");
 	CObject* pGameMenu = new CMenuObj(L"gamemenu");
@@ -39,6 +44,7 @@ void CScene_Menu::Enter()
 
 void CScene_Menu::Exit()
 {
+//	m_pMap
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);
 	
 	DeleteAll();

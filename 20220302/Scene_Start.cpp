@@ -70,7 +70,7 @@ void CScene_Start::Enter()
 	m_pMap->GetCurrentRoom()->Enter();
 
 	// start room의 위치로 카메라 이동
-	CCamera::GetInst()->SetLookAt(m_pMap->GetStartPos());
+	CCamera::GetInst()->SetLookAtDirect(m_pMap->GetStartPos());
 
 
 	// Object 추가

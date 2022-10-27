@@ -5,6 +5,7 @@
 #include "Scene_Start.h"
 #include "Scene_Tool.h"
 #include "Scene_Menu.h"
+#include "Scene_Intro.h"
 
 #include"EventMgr.h"
 
@@ -40,6 +41,8 @@ void CSceneMgr::ChangeScene(SCENE_TYPE _eNext)
 void CSceneMgr::init()
 {
 	// Scene »ý¼º
+	m_arrScene[(UINT)SCENE_TYPE::INTRO] = new CScene_Intro;
+	m_arrScene[(UINT)SCENE_TYPE::INTRO]->SetName(L"Intro Scene");
 	m_arrScene[(UINT)SCENE_TYPE::MENU] = new CScene_Menu;
 	m_arrScene[(UINT)SCENE_TYPE::MENU]->SetName(L"Menu Scene");
 	m_arrScene[(UINT)SCENE_TYPE::START] = new CScene_Start;

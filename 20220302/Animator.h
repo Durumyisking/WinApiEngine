@@ -34,7 +34,11 @@ public:
 
 public:
 	CObject* GetObj() const { return m_pOwner; }
-	CAnimation* GetCurAnim() const { return m_pCurAnim; }
+	CAnimation* GetCurAnim() const
+	{
+		if(nullptr != m_pCurAnim)
+			return m_pCurAnim; 
+	}
 
 	friend class CObject;
 };

@@ -35,11 +35,10 @@ CPlayer::CPlayer()
 	, m_pTex(nullptr)
 	, m_pStat(nullptr)
 	, m_Pickup{}
-	, m_fAcc(0.f)
-	, m_fMaxAcc(1.f)
 	, m_arrWallDirCheck{}
-	, m_finvincibilityTime(1.f)
+	, m_finvincibilityTime(1.0f)
 	, m_arrCollider{}
+	, m_bFramePass(false)
 {
 	m_Stat = { 6, 6, 5, 400.f, 450.f, 2.f ,0.38f };
 	m_pStat = &m_Stat;
@@ -50,8 +49,7 @@ CPlayer::CPlayer()
 	CreateRigidBody();
 	GetRigidBody()->SetMaxVelocity(m_pStat->m_fSpeed);
 	
-	//GetRigidBody()->SetFricCoeff(0.f);
-
+	
 }
 
 
@@ -68,7 +66,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-
+	// 추후 죽음처리 해야합니다///
 	if (0 >= m_pStat->m_iHP)
 		m_pStat->m_iHP = 0;
 
@@ -76,12 +74,8 @@ void CPlayer::update()
 	m_dAttackDealy += fDT;
 
 	// 무적시간
-	if (m_finvincibilityTime < 1.f)
+	if (m_finvincibilityTime < 1.0f)
 		m_finvincibilityTime += fDT;
-	if (m_finvincibilityTime > 0.5f)
-	{
-		// GetAnimator()->Play(m_strAnimName, false);
-	}
 
 	// 이동
 	CRigidBody* pRigid = GetRigidBody();
@@ -155,12 +149,52 @@ void CPlayer::update()
 
 void CPlayer::render(HDC _dc)
 {
-	for (size_t i = 0; i < m_pCostume.size(); i++)
+	// 무적시간 동안 프레임마다 깜빡이게 합니다.
+	if (m_finvincibilityTime < 1.0f)
 	{
-		if (nullptr != m_pCostume[i])
-			m_pCostume[i]->render(_dc);
+		if (m_bFramePass)
+		{
+			// 깜빡임 토글 true일때 렌더링 X
+			m_bFramePass = false;
+			return;
+		}
+		else
+		{
+			// false일때는 렌더링하러 내려감
+			m_bFramePass = true;
+		}
 	}
-	component_render(_dc);
+	
+	// body와 head는
+	if (nullptr != m_pOwner)
+	{
+		// 부모의 hurt가 진행중이면 렌더링 하지 않는다
+		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
+		{
+			return;
+		}
+		else
+		{
+			for (size_t i = 0; i < m_pCostume.size(); i++)
+			{
+				if (nullptr != m_pCostume[i])
+					m_pCostume[i]->render(_dc);
+			}
+			component_render(_dc);
+		}
+	}
+	// 부모는 무적권 렌더링
+	else
+	{
+
+		//for (size_t i = 0; i < m_pCostume.size(); i++)
+		//{
+		//	if (nullptr != m_pCostume[i])
+		//		m_pCostume[i]->render(_dc);
+		//}
+		component_render(_dc);
+	}
+	
 }
 
 
@@ -235,19 +269,23 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	{
 //		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
 
+
+
 		CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
 
-		if (m_finvincibilityTime >= 1.f)
+		if (m_finvincibilityTime >= 1.0f)
 		{
+			if (GetAnimator()->GetCurAnim()->IsFinish())
+			{
+				GetAnimator()->GetCurAnim()->SetFrame(0);
+			}
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+
 			m_finvincibilityTime = 0;
 			// hurt 애니메이션 재생
 			m_iPrevHp = m_pStat->m_iHP;
 			--m_pStat->m_iHP;
 
-		}
-		else if (m_finvincibilityTime < 1.f)
-		{
-			// 
 		}
 	}
 
@@ -276,7 +314,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	// door
+	// doord
 	if (L"Door" == pOtherObj->GetName())
 	{
 		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
@@ -380,7 +418,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		GetRigidBody()->SetVelocity(vResult);
 	}
 
-	if (L"Monster" == pOtherObj->GetName())
+	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName())
 	{
 		Vec2 vDir = pOtherObj->GetPos() - GetPos();
 		vDir.Normalize();
@@ -388,18 +426,21 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
 
-		if (m_finvincibilityTime >= 1.f)
+		if(GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"Hurt"))
 		{
+			if (GetAnimator()->GetCurAnim()->IsFinish())
+			{
+				GetAnimator()->GetCurAnim()->SetFrame(0);
+			}
+
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+
 			m_finvincibilityTime = 0;
-			// hurt 애니메이션 재생
 			m_iPrevHp = m_pStat->m_iHP;
 			--m_pStat->m_iHP;
 
 		}
-		else if (m_finvincibilityTime < 1.f)
-		{
-			// 
-		}
+
 
 	}
 }

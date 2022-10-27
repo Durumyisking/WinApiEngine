@@ -118,11 +118,9 @@ enum class SCENE_TYPE
 	NONE,
 
 	TOOL, // 게임 만드는 씬
+	INTRO,
 	MENU,
 	START,
-	STAGE_01,
-	STAGE_02,
-	ITEM,
 
 
 	END,
