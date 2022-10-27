@@ -5,13 +5,13 @@
 #include "Core.h"
 
 #include "SelectGDI.h"
-
 #include "Camera.h"
 
 UINT CCollider::g_iNextID = 0;
 
 CCollider::CCollider()
 	: m_pOwner(nullptr)
+	, m_pOpponent(nullptr)
 	, m_iID(g_iNextID++) // static 변수가 증가하면서 새로운 collider에 새로운 id부여
 	, m_iCol(0)
 	, m_bSwitch(true)
@@ -21,9 +21,10 @@ CCollider::CCollider()
 
 CCollider::CCollider(const CCollider & _origin)
 	:m_pOwner(nullptr) // 원본을 소유중인 obj를 알 필요가 없다.
-	,m_vOffsetPos(_origin.m_vOffsetPos)
-	,m_vScale(_origin.m_vScale)
-	,m_iID(g_iNextID)
+	, m_pOpponent(nullptr)
+	, m_vOffsetPos(_origin.m_vOffsetPos)
+	, m_vScale(_origin.m_vScale)
+	, m_iID(g_iNextID)
 	, m_bSwitch(true)
 {
 	// 디폴트 대입연산자가 발생했을때 id가 복사되는 오류가 생김
@@ -40,6 +41,7 @@ CCollider::~CCollider()
 
 void CCollider::finalupdate()
 {
+
 	if (m_bSwitch)
 	{
 		Vec2 vObjectPos = m_pOwner->GetPos();
@@ -88,6 +90,7 @@ void CCollider::OnCollisionEnter(CCollider * _pOther)
 	if (m_bSwitch)
 	{
 		++m_iCol;
+		m_pOpponent = _pOther->m_pOwner;
 		m_pOwner->OnCollisionEnter(_pOther);
 
 	}

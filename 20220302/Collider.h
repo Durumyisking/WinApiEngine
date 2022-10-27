@@ -6,9 +6,10 @@ class CCollider
 {
 
 private:
-	static UINT	g_iNextID;		// 
+	static UINT	g_iNextID;		// 콜라이더 새로 추가할때마다 새로운 아이디를 부여해주기 위함
 
 	CObject*	m_pOwner;		// collider를 소유중인 obj
+	CObject*	m_pOpponent;	// 충돌중인 상대방
 
 	wstring		m_strName;
 	
@@ -67,7 +68,11 @@ public:
 
 	bool IsOn() { return m_bSwitch; }
 	void SwitchOn() { m_bSwitch = true; }
-	void SwitchOff() { m_bSwitch = false; }
+	void SwitchOff() 
+	{
+		m_pOpponent->OnCollisionExit(this);
+		m_bSwitch = false; 
+	}
 	void ToggleRenderSwitch	() { m_bRenderSwitch = !m_bRenderSwitch; }
 
 	
