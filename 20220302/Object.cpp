@@ -21,7 +21,20 @@ CObject::CObject()
 	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 	, m_vResolution(CCore::GetInst()->GetResolution())
+	, m_pOwner(nullptr)
 
+{
+}
+
+CObject::CObject(CRoom* _pOwner)
+	: m_vPos{}
+	, m_vPosTemp{}
+	, m_vScale{}
+	, m_pCollider(nullptr)
+	, m_pAnimator(nullptr)
+	, m_bAlive(true)
+	, m_vResolution(CCore::GetInst()->GetResolution())
+	, m_pOwner(_pOwner)
 {
 }
 
@@ -32,6 +45,7 @@ CObject::CObject(const CObject& _origin)
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
 	, m_bAlive(true)
+	, m_pOwner(nullptr)
 {
 	if (_origin.m_pCollider)
 	{

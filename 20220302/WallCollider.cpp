@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "WallCollider.h"
-#include "Object.h"
 #include "Collider.h"
+
+#include "Scene.h"
+#include "SceneMgr.h"
+#include "Map.h"
 
 CWallCollider::CWallCollider()
 {
@@ -31,7 +34,9 @@ void CWallCollider::update()
 
 void CWallCollider::render(HDC _dc)
 {
-	component_render(_dc);
+	// 현재 방이 주인이면 렌더링합니다.
+	if(CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom() == GetOwner())
+		component_render(_dc);
 }
 
 void CWallCollider::OnCollision(CCollider * _pOther)

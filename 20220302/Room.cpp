@@ -71,49 +71,61 @@ void CRoom::AddWall()
 	// collider for body
 	CObject* pWallColliderN1 = new CWallCollider(GetPos() + Vec2(-280.f, -256.f), Vec2(500.f, 1.f), DIR::N);
 	pWallColliderN1->SetName(L"Wall");
+	pWallColliderN1->SetOwner(this);
 	CreateObject(pWallColliderN1, GROUP_TYPE::WALL);
 	CObject* pWallColliderN2 = new CWallCollider(GetPos() + Vec2(280.f, -256.f), Vec2(500.f, 1.f), DIR::N);
 	pWallColliderN2->SetName(L"Wall");
+	pWallColliderN2->SetOwner(this);
 	CreateObject(pWallColliderN2, GROUP_TYPE::WALL);
 
 
 	CObject* pWallColliderS1 = new CWallCollider(GetPos() + Vec2(-280.f, 256.f), Vec2(500.f, 1.f), DIR::S);
 	pWallColliderS1->SetName(L"Wall");
+	pWallColliderS1->SetOwner(this);
 	CreateObject(pWallColliderS1, GROUP_TYPE::WALL);
 	CObject* pWallColliderS2 = new CWallCollider(GetPos() + Vec2(280.f, 256.f), Vec2(500.f, 1.f), DIR::S);
 	pWallColliderS2->SetName(L"Wall");
+	pWallColliderS2->SetOwner(this);
 	CreateObject(pWallColliderS2, GROUP_TYPE::WALL);
 
 	CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, -160.f), Vec2(1.f, 265.f), DIR::W);
 	pWallColliderW1->SetName(L"Wall");
+	pWallColliderW1->SetOwner(this);
 	CreateObject(pWallColliderW1, GROUP_TYPE::WALL);
 	CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-500.f, 160.f), Vec2(1.f, 265.f), DIR::W);
 	pWallColliderW2->SetName(L"Wall");
+	pWallColliderW2->SetOwner(this);
 	CreateObject(pWallColliderW2, GROUP_TYPE::WALL);
 
 	CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, -160.f), Vec2(1.f, 265.f), DIR::E);
 	pWallColliderE1->SetName(L"Wall");
+	pWallColliderE1->SetOwner(this);
 	CreateObject(pWallColliderE1, GROUP_TYPE::WALL);
 	CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(500.f, 160.f), Vec2(1.f, 265.f), DIR::E);
 	pWallColliderE2->SetName(L"Wall");
+	pWallColliderE2->SetOwner(this);
 	CreateObject(pWallColliderE2, GROUP_TYPE::WALL);
 
 
 	// collider for tear
 	CObject* pWallTearColliderN = new CWallCollider(GetPos() + Vec2(0.f, -286.f), Vec2(1050.f, 1.f), DIR::N);
 	pWallTearColliderN->SetName(L"Wall_Tear");
+	pWallTearColliderN->SetOwner(this);
 	CreateObject(pWallTearColliderN, GROUP_TYPE::TEARWALL);
 
 	CObject* pWallTearColliderS = new CWallCollider(GetPos() + Vec2(0.f, 286.f), Vec2(1050.f, 1.f), DIR::S);
 	pWallTearColliderS->SetName(L"Wall_Tear");
+	pWallTearColliderS->SetOwner(this);
 	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
 
 	CObject* pWallTearColliderW = new CWallCollider(GetPos() + Vec2(-530.f, 0.f), Vec2(1.f, 600.f), DIR::W);
 	pWallTearColliderW->SetName(L"Wall_Tear");
+	pWallTearColliderW->SetOwner(this);
 	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
 
 	CObject* pWallTearColliderE = new CWallCollider(GetPos() + Vec2(530.f, 0.f), Vec2(1.f, 600.f), DIR::E);
 	pWallTearColliderE->SetName(L"Wall_Tear");
+	pWallTearColliderE->SetOwner(this);
 	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
 
 }
@@ -139,6 +151,7 @@ void CRoom::AddDoor()
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
 		m_Door.push_back(pDoorObj);
+		pDoor->SetOwner(this);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 	}
 
@@ -156,6 +169,7 @@ void CRoom::AddDoor()
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
 		m_Door.push_back(pDoorObj);
+		pDoor->SetOwner(this);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 
 	}
@@ -174,6 +188,7 @@ void CRoom::AddDoor()
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
 		m_Door.push_back(pDoorObj);
+		pDoor->SetOwner(this);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 
 	}
@@ -192,6 +207,7 @@ void CRoom::AddDoor()
 		pDoor->SetName(L"Door");
 		pDoor->GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
 		m_Door.push_back(pDoorObj);
+		pDoor->SetOwner(this);
 		CreateObject(pDoor, GROUP_TYPE::DOOR);
 
 	}

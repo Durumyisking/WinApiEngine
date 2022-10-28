@@ -91,23 +91,28 @@ void CDoor::update()
 
 void CDoor::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->GetWidth() / m_iSliceCountX;
-	int iHeight = (int)m_pTex->GetHeight() / m_iSliceCountY;
+	// 현재 방이 주인이면 렌더링합니다.
+	if (CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom() == GetOwner())
+	{
+
+		int iWidth = (int)m_pTex->GetWidth() / m_iSliceCountX;
+		int iHeight = (int)m_pTex->GetHeight() / m_iSliceCountY;
 
 
-	Vec2 vScale = GetScale();
-	Vec2 vPos = GetPos();
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+		Vec2 vScale = GetScale();
+		Vec2 vPos = GetPos();
+		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
-	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - (float)(vScale.x / 2))
-		, static_cast<int>(vPos.y - (float)(vScale.y / 2))
-		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
-		, m_pTex->GetDC()
-		, m_iSliceX, m_iSliceY, iWidth, iHeight
-		, RGB(255, 0, 255));
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - (float)(vScale.x / 2))
+			, static_cast<int>(vPos.y - (float)(vScale.y / 2))
+			, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+			, m_pTex->GetDC()
+			, m_iSliceX, m_iSliceY, iWidth, iHeight
+			, RGB(255, 0, 255));
 
-	component_render(_dc);
+		component_render(_dc);
+	}
 }
 
 void CDoor::SetTextureType(ROOM_TYPE _eType)

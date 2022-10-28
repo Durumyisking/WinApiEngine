@@ -85,21 +85,22 @@ void CPlayer::update()
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
 
+	float fTemp = m_Stat.m_fSpeed / 8.f;
 
 	if (KEY_HOLD(KEY::W)) {
-		pRigid->AddVelocity(Vec2(0.f, -50.f));
+		pRigid->AddVelocity(Vec2(0.f, -fTemp));
 		pRigid->AddForce(Vec2(0.f, -200.f));
 	}
 	if (KEY_HOLD(KEY::S)) {
-		pRigid->AddVelocity(Vec2(0.f, 50.f));
+		pRigid->AddVelocity(Vec2(0.f, fTemp));
 		pRigid->AddForce(Vec2(0.f, 200.f));
 	}
 	if (KEY_HOLD(KEY::A)) {
-		pRigid->AddVelocity(Vec2(-50.f, 0.f));
+		pRigid->AddVelocity(Vec2(-fTemp, 0.f));
 		pRigid->AddForce(Vec2(-200.f, 0.f));
 	}
 	if (KEY_HOLD(KEY::D)) {
-		pRigid->AddVelocity(Vec2(50.f, 0.f));
+		pRigid->AddVelocity(Vec2(fTemp, 0.f));
 		pRigid->AddForce(Vec2(200.f, 0.f));
 	}
 

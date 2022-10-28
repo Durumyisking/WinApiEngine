@@ -74,7 +74,7 @@ public:
 	CPlayer* GetPlayer() const { return m_pPlayer; }
 	void AddPlayer(CPlayer* _pPlayer) { m_pPlayer = _pPlayer; };
 	void SetMap(CMap* _pMap) { m_pMap = _pMap; }
-
+	CMap* GetMap() const { return m_pMap; }
 
 
 public:

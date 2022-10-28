@@ -30,6 +30,7 @@ protected:
 
 public:
 	CObject();
+	CObject(CRoom* _pOwner);
 	CObject(const CObject& _origin);
 	virtual ~CObject();
 
@@ -51,7 +52,8 @@ public:
 
 	bool IsDead() { return !m_bAlive; }
 
-
+	void SetOwner(CRoom* _pRoom) { m_pOwner = _pRoom; }
+	CRoom* GetOwner() const { return m_pOwner; }
 
 public:
 	virtual void update() = 0;
