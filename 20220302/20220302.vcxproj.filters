@@ -443,6 +443,9 @@
     <ClInclude Include="Scene_Intro.h">
       <Filter>Engine\05. Scene\Scene_Intro</Filter>
     </ClInclude>
+    <ClInclude Include="BossRoom.h">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -669,6 +672,9 @@
     </ClCompile>
     <ClCompile Include="Scene_Intro.cpp">
       <Filter>Engine\05. Scene\Scene_Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="BossRoom.cpp">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

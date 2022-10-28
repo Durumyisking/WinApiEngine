@@ -18,7 +18,8 @@ CRoom::~CRoom()
 
 void CRoom::update()
 {
-	if (this == m_pOwner->GetCurrentRoom())
+	// 이전방과 현재방만 업뎃해줍니다.
+	if (this == m_pOwner->GetCurrentRoom() || this == m_pOwner->GetPrevRoom())
 	{
 		if (m_iMonsterCount <= 0)
 		{
@@ -48,7 +49,7 @@ void CRoom::update()
 
 void CRoom::render(HDC _dc)
 {
-	if (this == m_pOwner->GetCurrentRoom())
+	if (this == m_pOwner->GetCurrentRoom() || this == m_pOwner->GetPrevRoom())
 	{
 
 		int iWidth = m_pBgTex->GetWidth();

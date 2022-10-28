@@ -5,7 +5,6 @@ class CTreasureRoom :
 {
 public:
 	CTreasureRoom();
-
 	~CTreasureRoom();
 
 public:

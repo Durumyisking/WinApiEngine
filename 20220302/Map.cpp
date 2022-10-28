@@ -56,6 +56,7 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 						m_MapData[y][x] = new CStartRoom();
 						m_vStartPos = Vec2(x * vResolution.x + (vResolution.x / 2), y * vResolution.y + (vResolution.y / 2));
 						SetCurrentRoom(dynamic_cast<CRoom*>(m_MapData[y][x]));
+						m_pPrevRoom = dynamic_cast<CRoom*>(m_MapData[y][x]);
 						break;
 					case L'2':
 						m_MapData[y][x] = new CNormalRoom();

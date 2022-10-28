@@ -35,10 +35,11 @@ CPlayer::CPlayer()
 	, m_pTex(nullptr)
 	, m_pStat(nullptr)
 	, m_Pickup{}
-	, m_arrWallDirCheck{}
 	, m_finvincibilityTime(1.0f)
 	, m_arrCollider{}
 	, m_bFramePass(false)
+	, m_vPrevPos()
+	, m_bCollisionwall(false)
 {
 	m_Stat = { 6, 6, 5, 400.f, 450.f, 2.f ,0.38f };
 	m_pStat = &m_Stat;
@@ -77,6 +78,7 @@ void CPlayer::update()
 	if (m_finvincibilityTime < 1.0f)
 		m_finvincibilityTime += fDT;
 
+
 	// 이동
 	CRigidBody* pRigid = GetRigidBody();
 
@@ -85,32 +87,20 @@ void CPlayer::update()
 
 
 	if (KEY_HOLD(KEY::W)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
-		{
-			pRigid->AddVelocity(Vec2(0.f, -50.f));
-				pRigid->AddForce(Vec2(0.f, -200.f));
-		}
+		pRigid->AddVelocity(Vec2(0.f, -50.f));
+		pRigid->AddForce(Vec2(0.f, -200.f));
 	}
 	if (KEY_HOLD(KEY::S)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
-		{
-			pRigid->AddVelocity(Vec2(0.f, 50.f));
-			pRigid->AddForce(Vec2(0.f, 200.f));
-		}
+		pRigid->AddVelocity(Vec2(0.f, 50.f));
+		pRigid->AddForce(Vec2(0.f, 200.f));
 	}
 	if (KEY_HOLD(KEY::A)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
-		{
-			pRigid->AddVelocity(Vec2(-50.f, 0.f));
-			pRigid->AddForce(Vec2(-200.f, 0.f));
-		}
+		pRigid->AddVelocity(Vec2(-50.f, 0.f));
+		pRigid->AddForce(Vec2(-200.f, 0.f));
 	}
 	if (KEY_HOLD(KEY::D)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
-		{
-			pRigid->AddVelocity(Vec2(50.f, 0.f));
-			pRigid->AddForce(Vec2(200.f, 0.f));
-		}
+		pRigid->AddVelocity(Vec2(50.f, 0.f));
+		pRigid->AddForce(Vec2(200.f, 0.f));
 	}
 
 	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
@@ -118,15 +108,28 @@ void CPlayer::update()
 	{
 	}
 
-	SetPos(vPos);
-	SetPosTemp();
+	if (m_bCollisionwall)
+	{
+		//pRigid->SetVelocity(Vec2(0.f, 0.f));
+		//pRigid->SetForce(Vec2(0.f, 0.f));
+		//vPos = GetPrevPos();
 
+		
+
+		m_bCollisionwall = false;
+	}
+	//else
+	//{
+		SetPrevPos();
+//	}
+	SetPos(vPos);
 	// 부모객체만 자식들 setpos
 	if (nullptr != pBody && nullptr != pHead)
-	{	
+	{
 		pBody->SetPos(vPos);
 		pHead->SetPos(vPos);
 	}
+
 
 	for (size_t i = 0; i < m_pCostume.size(); i++)
 	{
@@ -134,16 +137,13 @@ void CPlayer::update()
 			m_pCostume[i]->update();
 	}
 
-
 	// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
 	if (nullptr != m_GetItemCheck)
 	{
 		ItemCheck();
-
 		m_GetItemCheck = nullptr;
 	}
 
-	
 
 }
 
@@ -309,6 +309,12 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
 	}
+
+	if (L"Wall" == pOtherObj->GetName())
+	{
+		m_bCollisionwall = true;
+	}
+
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
@@ -357,6 +363,14 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		else
 		{
 			// 플레이어의 이동을 막습니다.
+			CRigidBody* pRigid = GetRigidBody();
+			Vec2 vDir = pRigid->GetVelocity().Normalize();
+			Vec2 vtemp = (-vDir * (_pOther->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
+			//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
+			vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
+
+
+			SetPos(vDir);
 
 		}
 	}
@@ -364,28 +378,19 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
+		//m_bCollisionwall = true;
+		/*
+		충돌체 위치 + 역벡터 * (적 충돌체 스케일 / 2) + 역벡터 * (자기 충돌체 스케일 / 2)
+		*/
+		CRigidBody* pRigid = GetRigidBody();
+		Vec2 vDir = pRigid->GetVelocity().Normalize();
+		Vec2 vtemp = (-vDir * (_pOther->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
+				//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
+		vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
 
+		
+		SetPos(vDir);
 
-		switch (pWall->GetDir())
-		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
-			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
-			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
-			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
-			break;
-
-		default:
-			break;
-		}
-		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
 	// item
@@ -452,26 +457,7 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
-
-		switch (pWall->GetDir())
-		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
-			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
-			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
-			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
-			break;
-
-		default:
-			break;
-		}
+		
 	}
 }
 

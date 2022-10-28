@@ -19,27 +19,22 @@ private:
 
 
 protected:
+	// 스텟 관련
 	Stat*	m_pStat;
 	Stat	m_Stat;
-
 	double			m_dAttackDealy; // 평타 쿨타임
 
-	int				m_vInventory [static_cast<UINT>(ITEM_TABLE::end) + 1];
-	CItem*			m_GetItemCheck;
+	// 아이템 관련
+	int					m_vInventory [static_cast<UINT>(ITEM_TABLE::end) + 1];
+	CItem*				m_GetItemCheck;
 	vector<CCostume*>	m_pCostume;
 
 	CPlayer*		m_pOwner;
 
-	float			m_fPrevSpeed;
 	float			m_finvincibilityTime;
 
-	// 플레이어의 이동을 막기위한 변수입니다
-	// 만약 bool이 true면 해당 방향으로 움직일수 없음
-	bool			m_arrWallDirCheck[(UINT)DIR::END];
 	bool			m_bGetHpMax;
 	bool			m_bFramePass;
-
-
 
 	CTexture*		m_pTex;
 	CAnimation*		m_pAnim;
@@ -50,6 +45,8 @@ protected:
 	
 	CCollider* m_arrCollider[static_cast<UINT>(DIR::END)];
 
+	Vec2			m_vPrevPos;
+	bool			m_bCollisionwall;
 
 public:
 	CPlayer();
@@ -74,6 +71,8 @@ public:
 
 	vector<CCostume*> GetCostumeVec() const { return m_pCostume; }
 
+	void SetPrevPos() { m_vPrevPos = GetPos(); }
+	Vec2 GetPrevPos() const { return m_vPrevPos; }
 
 	CBody* Body();
 	CHead* Head();

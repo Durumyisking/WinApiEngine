@@ -173,6 +173,7 @@
     <ClInclude Include="belt.h" />
     <ClInclude Include="Body.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BossRoom.h" />
     <ClInclude Include="BtnUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Charger.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="belt.cpp" />
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BossRoom.cpp" />
     <ClCompile Include="BtnUI.cpp" />
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Camera.cpp" />

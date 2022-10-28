@@ -258,6 +258,8 @@ void CDangle::OnCollision(CCollider* _pOther)
 void CDangle::OnCollisionEnter(CCollider* _pOther)
 {
 	CMonster::OnCollisionEnter(_pOther);
+
+
 }
 
 void CDangle::OnCollisionExit(CCollider* _pOther)

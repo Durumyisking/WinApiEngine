@@ -5,12 +5,15 @@ class CCollider;
 class CAnimator;
 class CAnimation;
 class CRigidBody;
+class CRoom;
 
 class CObject
 {
 
 private:
 	wstring		m_strName;
+
+	CRoom*		 m_pOwner;
 
 	Vec2		m_vPos;		// 물제의 실제 위치
 	Vec2		m_vPosTemp;

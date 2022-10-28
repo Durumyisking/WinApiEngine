@@ -11,11 +11,8 @@
 
 CTreasureRoom::CTreasureRoom()
 {
-
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexTreasure", L"texture\\BackGround\\bg_basement_normal.bmp");
 	m_eType = ROOM_TYPE::TRESURE;
-
-
 
 }
 
