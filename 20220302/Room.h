@@ -59,7 +59,9 @@ protected:
 	CTexture*	m_pBgTex;
 	Vec2		m_vPos;
 	CMap*		m_pOwner;
-	ROOM_TYPE m_eType;
+	ROOM_TYPE	m_eType;
+
+
 
 	vector<CDoor*> m_Door;
 

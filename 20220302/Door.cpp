@@ -103,9 +103,31 @@ void CDoor::render(HDC _dc)
 		Vec2 vPos = GetPos();
 		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
+		Vec2 vOffset;
+
+		switch (m_eDir)
+		{
+		case DIR::N:
+			vOffset = Vec2(96.f, 108.f);
+			break;
+		case DIR::S:
+			vOffset = Vec2(96.f, 68.f);
+			break;
+		case DIR::E:
+			vOffset = Vec2(68.f, 96.f);
+			break;
+		case DIR::W:
+			vOffset = Vec2(120.f, 96.f);
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+
 		TransparentBlt(_dc
-			, static_cast<int>(vPos.x - (float)(vScale.x / 2))
-			, static_cast<int>(vPos.y - (float)(vScale.y / 2))
+			, static_cast<int>(vPos.x - (float)(vOffset.x))
+			, static_cast<int>(vPos.y - (float)(vOffset.y))
 			, static_cast<int>(vScale.x * 1.5f), static_cast<int>(vScale.y * 1.5f)
 			, m_pTex->GetDC()
 			, m_iSliceX, m_iSliceY, iWidth, iHeight

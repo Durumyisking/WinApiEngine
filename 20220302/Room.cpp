@@ -180,7 +180,7 @@ void CRoom::AddDoor()
 		CDoor* pDoorObj = (CDoor*)pDoor;
 		pDoor->SetPos(GetPos() + 
 			Vec2(
-				(pDoor->GetScale().x / 2) - 610.f, 
+				(pDoor->GetScale().x / 2) - 609.f, 
 				0.f
 			));
 		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x - 1))->GetType());
