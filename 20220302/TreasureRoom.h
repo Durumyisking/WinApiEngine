@@ -12,5 +12,8 @@ public:
 	virtual void render(HDC _dc);
 	virtual void Enter();
 
+
+private:
+	bool		m_bFirstEnter;
 };
 

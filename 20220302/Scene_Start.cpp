@@ -43,8 +43,8 @@
 
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
+	, m_bBossRoomEnter(false)
 {
-	//m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTex", L"texture\\BackGround\\bg_basement_start.bmp");
 }
 
 
@@ -173,6 +173,13 @@ void CScene_Start::Exit()
 void CScene_Start::update()
 {
 	CScene::update();
+
+	if (ROOM_TYPE::BOSS == m_pMap->GetCurrentRoom()->GetType() && !m_bBossRoomEnter)
+	{
+		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::BOSS);
+		m_bBossRoomEnter = true;
+	}
+
 
 
 	if (KEY_TAP(KEY::ENTER))

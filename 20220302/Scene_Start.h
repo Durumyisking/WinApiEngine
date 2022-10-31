@@ -29,6 +29,7 @@ private:
 
 	// 이동 된 방 기준 이전 방의 타입
 	CPlayer*			m_pPlayer;
+	bool				m_bBossRoomEnter;
 
 };
 

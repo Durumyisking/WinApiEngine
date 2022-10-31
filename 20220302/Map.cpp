@@ -12,6 +12,7 @@
 #include "StartRoom.h"
 #include "NormalRoom.h"
 #include "TreasureRoom.h"
+#include "BossRoom.h"
 
 CMap::CMap()
 	: m_MapData{}
@@ -65,8 +66,8 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 						m_MapData[y][x] = new CTreasureRoom();
 						break;
 					case L'9':
-						//m_MapData[y][x] = new CRoom(ROOM_TYPE::BOSS, Vec2(x, y), this);
-						//break;
+						m_MapData[y][x] = new CBossRoom();
+						break;
 					default:
 						break;
 					}

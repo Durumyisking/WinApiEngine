@@ -106,7 +106,7 @@ void CDoor::render(HDC _dc)
 		TransparentBlt(_dc
 			, static_cast<int>(vPos.x - (float)(vScale.x / 2))
 			, static_cast<int>(vPos.y - (float)(vScale.y / 2))
-			, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+			, static_cast<int>(vScale.x * 1.5f), static_cast<int>(vScale.y * 1.5f)
 			, m_pTex->GetDC()
 			, m_iSliceX, m_iSliceY, iWidth, iHeight
 			, RGB(255, 0, 255));
@@ -123,13 +123,13 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 		switch (m_eDir)
 		{
 		case DIR::N: case DIR::S:
-			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\BackGround\\DoorNS.bmp"));
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\Props\\DoorNS.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 2;
 
 			break;
 		case DIR::E: case DIR::W:
-			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\BackGround\\DoorEW.bmp"));
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\Props\\DoorEW.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 2;
 
@@ -144,12 +144,12 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 		switch (m_eDir)
 		{
 		case DIR::N: case DIR::S:
-			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNStreasure", L"texture\\BackGround\\DoorNStreasure.bmp"));
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNStreasure", L"texture\\Props\\DoorNStreasure.bmp"));
 			m_iSliceCountX = 3;
 			m_iSliceCountY = 2;
 			break;
 		case DIR::E: case DIR::W:
-			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWtreasure", L"texture\\BackGround\\DoorEWtreasure.bmp"));
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWtreasure", L"texture\\Props\\DoorEWtreasure.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 3;
 			break;
@@ -160,6 +160,23 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 		}
 		break;
 	case ROOM_TYPE::BOSS:
+		switch (m_eDir)
+		{
+		case DIR::N: case DIR::S:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNSboss", L"texture\\Props\\DoorNSboss.bmp"));
+			m_iSliceCountX = 2;
+			m_iSliceCountY = 2;
+			break;
+		case DIR::E: case DIR::W:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWboss", L"texture\\Props\\DoorEWboss.bmp"));
+			m_iSliceCountX = 2;
+			m_iSliceCountY = 2;
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		break;
