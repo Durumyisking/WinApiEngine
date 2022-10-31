@@ -227,6 +227,7 @@
     <ClInclude Include="sadonion.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="Scene_Boss.h" />
     <ClInclude Include="Scene_Intro.h" />
     <ClInclude Include="Scene_Menu.h" />
     <ClInclude Include="Scene_Start.h" />
@@ -314,6 +315,7 @@
     <ClCompile Include="sadonion.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="Scene_Boss.cpp" />
     <ClCompile Include="Scene_Intro.cpp" />
     <ClCompile Include="Scene_Menu.cpp" />
     <ClCompile Include="Scene_Start.cpp" />

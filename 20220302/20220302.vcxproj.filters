@@ -206,6 +206,9 @@
     <Filter Include="Engine\05. Scene\Scene_Intro">
       <UniqueIdentifier>{e4b9f2e4-4354-410b-ac23-27dc10dabb99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Boss">
+      <UniqueIdentifier>{33404e7f-50a6-415b-bb4e-362cf86bb8f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -446,6 +449,9 @@
     <ClInclude Include="BossRoom.h">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Boss.h">
+      <Filter>Engine\05. Scene\Scene_Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -675,6 +681,9 @@
     </ClCompile>
     <ClCompile Include="BossRoom.cpp">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Boss.cpp">
+      <Filter>Engine\05. Scene\Scene_Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

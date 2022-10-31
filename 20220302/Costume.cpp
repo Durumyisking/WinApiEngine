@@ -105,12 +105,12 @@ void CCostume::update()
 				}
 				if (KEY_HOLD(KEY::RIGHT))
 				{
-					m_strAnimName = GetName() + L"_RIGHT";
+					m_strAnimName = GetName() + L"_LEFT";
 					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 				}
 				if (KEY_HOLD(KEY::LEFT))
 				{
-					m_strAnimName = GetName() + L"_LEFT";
+					m_strAnimName = GetName() + L"_RIGHT";
 					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 				}
 			}

@@ -244,7 +244,7 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 		default:
 			break;
 		}
-//		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
+		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 
 	if (L"Explode" == pOtherObj->GetName())

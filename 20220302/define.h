@@ -121,7 +121,7 @@ enum class SCENE_TYPE
 	INTRO,
 	MENU,
 	START,
-
+	BOSS,
 
 	END,
 };

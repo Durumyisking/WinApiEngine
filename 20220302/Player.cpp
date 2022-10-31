@@ -39,6 +39,7 @@ CPlayer::CPlayer()
 	, m_arrCollider{}
 	, m_bFramePass(false)
 	, m_vPrevPos()
+	, m_pWallcollider(nullptr)
 	, m_bCollisionwall(false)
 {
 	m_Stat = { 6, 6, 5, 400.f, 450.f, 2.f ,0.38f };
@@ -67,7 +68,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-	// 추후 죽음처리 해야합니다///
+	// 추후 죽음처리 해야합니다/
 	if (0 >= m_pStat->m_iHP)
 		m_pStat->m_iHP = 0;
 
@@ -111,18 +112,15 @@ void CPlayer::update()
 
 	if (m_bCollisionwall)
 	{
-		//pRigid->SetVelocity(Vec2(0.f, 0.f));
-		//pRigid->SetForce(Vec2(0.f, 0.f));
-		//vPos = GetPrevPos();
-
-		
-
+		CRigidBody* pRigid = GetRigidBody();
+		Vec2 vDir = pRigid->GetVelocity().Normalize();
+		Vec2 vtemp = (-vDir * (m_pWallcollider->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
+		//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
+		vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
+		vPos = vDir;
 		m_bCollisionwall = false;
 	}
-	//else
-	//{
-		SetPrevPos();
-//	}
+
 	SetPos(vPos);
 	// 부모객체만 자식들 setpos
 	if (nullptr != pBody && nullptr != pHead)
@@ -187,12 +185,6 @@ void CPlayer::render(HDC _dc)
 	// 부모는 무적권 렌더링
 	else
 	{
-
-		//for (size_t i = 0; i < m_pCostume.size(); i++)
-		//{
-		//	if (nullptr != m_pCostume[i])
-		//		m_pCostume[i]->render(_dc);
-		//}
 		component_render(_dc);
 	}
 	
@@ -220,14 +212,6 @@ CHead* CPlayer::Head()
 void CPlayer::init()
 {
 	SetScale(Vec2(138.f, 91.f));
-
-	// 플레이어의 상하좌우 충돌체 // 이동을 막기 위함입니다.
-	//for (UINT i = static_cast<UINT>(DIR::N); i < static_cast<UINT>(DIR::END); i++)
-	//{
-	//	m_arrCollider[i] = new CCollider;
-	//	m_arrCollider[i]->SetOwner(dynamic_cast<CObject*>(this));
-	//	m_arrCollider
-	//}
 
 
 	CreateCollider();
@@ -313,6 +297,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 
 	if (L"Wall" == pOtherObj->GetName())
 	{
+		m_pWallcollider = _pOther;
 		m_bCollisionwall = true;
 	}
 
@@ -363,15 +348,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 		else
 		{
-			// 플레이어의 이동을 막습니다.
-			CRigidBody* pRigid = GetRigidBody();
-			Vec2 vDir = pRigid->GetVelocity().Normalize();
-			Vec2 vtemp = (-vDir * (_pOther->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
-			//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
-			vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
-
-
-			SetPos(vDir);
+			m_pWallcollider = _pOther;
+			m_bCollisionwall = true;
 
 		}
 	}
@@ -379,19 +357,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		//m_bCollisionwall = true;
-		/*
-		충돌체 위치 + 역벡터 * (적 충돌체 스케일 / 2) + 역벡터 * (자기 충돌체 스케일 / 2)
-		*/
-		CRigidBody* pRigid = GetRigidBody();
-		Vec2 vDir = pRigid->GetVelocity().Normalize();
-		Vec2 vtemp = (-vDir * (_pOther->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
-				//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
-		vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
-
-		
-		SetPos(vDir);
-
+		m_pWallcollider = _pOther;
+		m_bCollisionwall = true;
 	}
 	
 	// item
@@ -458,7 +425,9 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		
+		m_pWallcollider = nullptr;
+		m_bCollisionwall = false;
+
 	}
 }
 

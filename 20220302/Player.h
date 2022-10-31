@@ -46,6 +46,8 @@ protected:
 	CCollider* m_arrCollider[static_cast<UINT>(DIR::END)];
 
 	Vec2			m_vPrevPos;
+
+	CCollider*		m_pWallcollider;
 	bool			m_bCollisionwall;
 
 public:

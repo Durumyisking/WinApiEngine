@@ -2,7 +2,6 @@
 #include "Scene.h"
 
 class CTexture;
-
 class CScene_Menu :
 	public CScene
 {
@@ -17,7 +16,7 @@ public:
 	~CScene_Menu();
 
 public:
-	virtual void Enter();	// virtual 안적어도 되는데 헷갈릴까봐 적어줌
+	virtual void Enter();
 	virtual void Exit();
 	virtual void update();
 
