@@ -242,6 +242,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TraceState.h" />
+    <ClInclude Include="Trapdoor.h" />
     <ClInclude Include="TreasureRoom.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIMgr.h" />
@@ -328,6 +329,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TraceState.cpp" />
+    <ClCompile Include="Trapdoor.cpp" />
     <ClCompile Include="TreasureRoom.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIMgr.cpp" />

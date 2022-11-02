@@ -19,6 +19,7 @@
 #include "PickupKey.h"
 #include "PickupCoin.h"
 #include "PickupBomb.h"
+#include "Trapdoor.h"
 
 #include "MonsterFactory.h"
 
@@ -51,9 +52,10 @@ public:
 	CMap* GetOwner() const { return m_pOwner; }
 	void AddWall();
 	void AddDoor();
-	virtual void Enter();
 	void MonsterDead() { --m_iMonsterCount; }
-//	void IsClear();
+	virtual void Enter();
+	virtual void Exit();
+	//	void IsClear();
 
 protected:
 	CTexture*	m_pBgTex;

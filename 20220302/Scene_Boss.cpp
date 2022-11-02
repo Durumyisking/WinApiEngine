@@ -25,12 +25,15 @@ CScene_Boss::CScene_Boss()
 	, m_fAnimTimer(0.f)
 	, m_bIsAnimTimerOn(false)
 	, m_fAnimMoveQuan(1500.f)
-{
+	, m_pTexPlayerfloor(nullptr)
+	, m_pTexBossfloor(nullptr) {
 
 	m_pTexBG = CResMgr::GetInst()->LoadTexture(L"BossSceneBG", L"texture\\Boss\\bgblack.bmp");
 	m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss", L"texture\\Boss\\portrait_dangle.bmp");
 	m_pTexName = CResMgr::GetInst()->LoadTexture(L"BossSceneName", L"texture\\Boss\\vsnames.bmp");
 	m_pTexPlayer = CResMgr::GetInst()->LoadTexture(L"BossScenePlayer", L"texture\\Boss\\playerportrait_01_isaac.bmp");
+	m_pTexBossfloor = CResMgr::GetInst()->LoadTexture(L"BossSceneBossFloor", L"texture\\Boss\\bossspot.bmp");
+	m_pTexPlayerfloor = CResMgr::GetInst()->LoadTexture(L"BossScenePlayerFloor", L"texture\\Boss\\playerspot.bmp");
 
 }
 
@@ -84,6 +87,7 @@ void CScene_Boss::update()
 
 	if (m_bAnimReverse && m_fAnimValue < 0.f)
 	{
+		CCamera::GetInst()->FadeIn(1.f);
 		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::START);
 	}
 	
@@ -92,8 +96,8 @@ void CScene_Boss::update()
 
 	if (KEY_TAP(KEY::SPACE))
 	{
-		ChangeScene(SCENE_TYPE::MENU);
-
+		CCamera::GetInst()->FadeIn(1.f);
+		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::START);
 	}
 }
 
@@ -108,7 +112,27 @@ void CScene_Boss::render(HDC _dc)
 			, static_cast<int>(m_vResolution.x), static_cast<int>(m_vResolution.y)
 			, m_pTexBG->GetDC()
 			, 0, 0, iWidth, iHeight, SRCCOPY);
-		
+
+		// 보스 바닥
+		iWidth = static_cast<int>(m_pTexBossfloor->GetWidth());
+		iHeight = static_cast<int>(m_pTexBossfloor->GetHeight());
+
+		TransparentBlt(_dc
+			, 1250 - static_cast<int>(m_fAnimValue), 500 
+			, 260 * 2, 70 * 2
+			, m_pTexBossfloor->GetDC()
+			, 0, 0, iWidth, iHeight, RGB(255, 0, 255));
+	
+		// 플레이어 바닥
+		iWidth = static_cast<int>(m_pTexPlayerfloor->GetWidth());
+		iHeight = static_cast<int>(m_pTexPlayerfloor->GetHeight());
+
+		TransparentBlt(_dc
+			, -356 + static_cast<int>(m_fAnimValue), 580 // , 150, 400
+			, 172 * 2, 46 * 2
+			, m_pTexPlayerfloor->GetDC()
+			, 0, 0, iWidth, iHeight, RGB(255, 0, 255));
+
 		// 보스 초상화
 		iWidth = static_cast<int>(m_pTexBoss->GetWidth());
 		iHeight = static_cast<int>(m_pTexBoss->GetHeight());

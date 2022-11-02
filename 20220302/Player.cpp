@@ -322,24 +322,28 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, -225.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				// 들어간 방을 현재 방으로 설정합니다.
+				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y - 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
 			case DIR::S:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y + 1);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 275.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y + 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
 			case DIR::E:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x + 1, pdoor->GetOwner()->GetRoomPos().y);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(500.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x + 1)))->Enter();
 				break;
 			case DIR::W:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x - 1, pdoor->GetOwner()->GetRoomPos().y);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-500.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
+				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x - 1)))->Enter();
 				break;
 			default:
@@ -413,7 +417,10 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			--m_pStat->m_iHP;
 
 		}
+	}
 
+	if (L"Trapdoor" == pOtherObj->GetName())
+	{
 
 	}
 }

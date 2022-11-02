@@ -11,6 +11,9 @@ private:
 	CTexture*	m_pTexPlayer;
 	CTexture*	m_pTexBoss;
 	CTexture*	m_pTexName;
+	CTexture*	m_pTexPlayerfloor;
+	CTexture*	m_pTexBossfloor;
+
 
 	Vec2		m_vPlayerSlice;
 	Vec2		m_vBossSlice;

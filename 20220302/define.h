@@ -79,6 +79,8 @@ enum class GROUP_TYPE
 
 	WALL,
 
+	TRAPDOOR,
+
 	TEARWALL,
 
 	DOOR,
