@@ -26,25 +26,29 @@ void CStartRoom::render(HDC _dc)
 
 void CStartRoom::Enter()
 {
-	CRoom::Enter();
 	
-	// 픽업 생성
-	CObject* pHeart = new CPickupHeart;
-	pHeart->SetPos(GetPos() - m_vResolution/2 + Vec2(300.f, 400.f));
+	if (m_bFirstEnter)
+	{
+		// 픽업 생성
+		CObject* pHeart = new CPickupHeart;
+		pHeart->SetPos(GetPos() - m_vResolution / 2 + Vec2(300.f, 400.f));
 
-	CObject* pCoin = new CPickupCoin;
-	pCoin->SetPos(GetPos() - m_vResolution / 2 + Vec2(300.f, 500.f));
+		CObject* pCoin = new CPickupCoin;
+		pCoin->SetPos(GetPos() - m_vResolution / 2 + Vec2(300.f, 500.f));
 
-	CObject* pBomb = new CPickupBomb;
-	pBomb->SetPos(GetPos() - m_vResolution / 2 + Vec2(500.f, 400.f));
+		CObject* pBomb = new CPickupBomb;
+		pBomb->SetPos(GetPos() - m_vResolution / 2 + Vec2(500.f, 400.f));
 
-	CObject* pKey = new CPickupKey;
-	pKey->SetPos(GetPos() - m_vResolution / 2 + Vec2(500.f, 500.f));
+		CObject* pKey = new CPickupKey;
+		pKey->SetPos(GetPos() - m_vResolution / 2 + Vec2(500.f, 500.f));
 
-	CreateObject(pHeart, GROUP_TYPE::PICKUP);
-	CreateObject(pCoin, GROUP_TYPE::PICKUP);
-	CreateObject(pBomb, GROUP_TYPE::PICKUP);
-	CreateObject(pKey, GROUP_TYPE::PICKUP);
+		CreateObject(pHeart, GROUP_TYPE::PICKUP);
+		CreateObject(pCoin, GROUP_TYPE::PICKUP);
+		CreateObject(pBomb, GROUP_TYPE::PICKUP);
+		CreateObject(pKey, GROUP_TYPE::PICKUP);
+
+	}
+	CRoom::Enter();
 
 	//// 몬스터 생성
 

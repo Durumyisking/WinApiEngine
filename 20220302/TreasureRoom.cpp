@@ -10,7 +10,6 @@
 #include "momsheels.h"
 
 CTreasureRoom::CTreasureRoom()
-	: m_bFirstEnter(true)
 {
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexTreasure", L"texture\\BackGround\\bg_basement_treasure.bmp");
 	m_eType = ROOM_TYPE::TRESURE;
@@ -34,9 +33,7 @@ void CTreasureRoom::render(HDC _dc)
 }
 
 void CTreasureRoom::Enter()
-{
-	CRoom::Enter();
-		
+{		
 	if (m_bFirstEnter)
 	{
 		m_bFirstEnter = false;
@@ -69,4 +66,6 @@ void CTreasureRoom::Enter()
 		pItemInstance4->CreateAlter();
 		CreateObject(pItemInstance4, GROUP_TYPE::ITEM);
 	}
+	CRoom::Enter();
+
 }

@@ -7,6 +7,7 @@
 #include "Scene_Menu.h"
 #include "Scene_Intro.h"
 #include "Scene_Boss.h"
+#include "Scene_StageCut.h"
 
 #include"EventMgr.h"
 
@@ -57,6 +58,8 @@ void CSceneMgr::init()
 	m_arrScene[(UINT)SCENE_TYPE::TOOL]->SetName(L"Tool Scene");
 	m_arrScene[(UINT)SCENE_TYPE::BOSS] = new CScene_Boss;
 	m_arrScene[(UINT)SCENE_TYPE::BOSS]->SetName(L"Boss Scene");
+	m_arrScene[(UINT)SCENE_TYPE::STAGECUT] = new CScene_StageCut;
+	m_arrScene[(UINT)SCENE_TYPE::STAGECUT]->SetName(L"StageCut Scene");
 
 	// 현재 씬 설정
 	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::START];

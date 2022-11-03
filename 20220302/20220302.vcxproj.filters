@@ -212,6 +212,9 @@
     <Filter Include="Engine\04. Object\Room\Trapdoor">
       <UniqueIdentifier>{219ed9b9-eeef-4622-b1b2-20827c4e829b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene\Scene_StageCut">
+      <UniqueIdentifier>{8ed6225d-f015-435e-b6b1-bd2f6f986c46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -458,6 +461,9 @@
     <ClInclude Include="Trapdoor.h">
       <Filter>Engine\04. Object\Room\Trapdoor</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_StageCut.h">
+      <Filter>Engine\05. Scene\Scene_StageCut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -693,6 +699,9 @@
     </ClCompile>
     <ClCompile Include="Trapdoor.cpp">
       <Filter>Engine\04. Object\Room\Trapdoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_StageCut.cpp">
+      <Filter>Engine\05. Scene\Scene_StageCut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

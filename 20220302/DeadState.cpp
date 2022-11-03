@@ -47,6 +47,8 @@ void CDeadState::update()
 
 		if(pMonster->GetAnimator()->GetCurAnim()->IsFinish())
 		{
+			// 몬스터 죽을때 시체 나가는 효과 넣자
+
 			DeleteObject(pMonster);
 		}
 }

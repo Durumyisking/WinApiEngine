@@ -61,6 +61,7 @@ public:
 	const vector <CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; }
 	void DeleteGroup(GROUP_TYPE _eTarget);
 	void DeleteAll();
+	void DeleteAll_IncludePlayer();
 
 
 	// 모든 Scene이 같은 update와 render를 쓸꺼니까 굳이 virtual 안씀

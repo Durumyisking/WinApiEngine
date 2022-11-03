@@ -3,10 +3,6 @@
 
 #include "Object.h"
 #include "Player.h"
-#include "Monster.h"
-#include "Head.h"
-#include "Body.h"
-
 
 #include "Core.h"
 
@@ -25,25 +21,18 @@
 #include"PanelUI.h"
 #include"BtnUI.h"
 
-#include "AI.h"
-#include "IdleState.h"
-#include "TraceState.h"
-
 #include "PickupUI.h"
 #include "PickupCount.h"
-#include "PickupHeart.h"
-#include "PickupKey.h"
-#include "PickupCoin.h"
-#include "PickupBomb.h"
 
 #include "Map.h"
 #include "Room.h"
 
 
-
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
 	, m_bBossRoomEnter(false)
+	, m_CurrentStage(1)
+	, m_bFirst(false)
 {
 }
 
@@ -59,15 +48,8 @@ void CScene_Start::Enter()
 	CCore::GetInst()->DivideMenu();
 
 	// map 추가
-	wchar_t szName[256] = L"E:\\IsaacProject\\Output\\bin\\content\\map\\Stage1.txt";
-
-	wstring strStageFolder = CPathMgr::GetInst()->GetContentPath();
-	strStageFolder += L"map";
-	m_pMap = new CMap();
-	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
-	m_pMap->LoadMap(strRelativePath);
-
-	m_pMap->GetCurrentRoom()->Enter();
+	
+	SetStage(m_CurrentStage);
 
 	// start room의 위치로 카메라 이동
 	CCamera::GetInst()->SetLookAtDirect(m_pMap->GetStartPos());
@@ -76,18 +58,22 @@ void CScene_Start::Enter()
 	// Object 추가
 		
 
-	// Player 생성
-	m_pPlayer = new CPlayer;
-
-	m_pPlayer->init();
-
-	m_pPlayer->SetPos(m_pMap->GetStartPos()+ Vec2(0.f, -40.f));
-	m_pPlayer->SetName(L"Player");
-
-	AddPlayer(m_pPlayer);
+	// Player 생성 1스테이지에서만 생성함 Delete때 생략해야할듯
+	if (!m_bFirst)
+	{
+		m_pPlayer = new CPlayer;
+		m_bFirst = true;
 
 
-	CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
+		m_pPlayer->init();
+		m_pPlayer->SetName(L"Player");
+
+		AddPlayer(m_pPlayer);
+
+		CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
+	}
+	m_pPlayer->SetPos(m_pMap->GetStartPos() + Vec2(0.f, -40.f));
+
 
 	// ui 세팅
 	
@@ -121,8 +107,6 @@ void CScene_Start::Enter()
 	}
 
 
-
-
 	// 타일 로딩
 	// LoadTile(L"Tile\\start.tile");
 
@@ -152,18 +136,27 @@ void CScene_Start::Enter()
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PICKUP, GROUP_TYPE::BOMB);
 
 	
-
-	
-
-
 	// 카메라 효과 지정
-	CCamera::GetInst()->FadeIn(1.f);
+	//CCamera::GetInst()->FadeIn(1.f);
 
 }
 
 void CScene_Start::Exit()
 {
-	DeleteAll();
+	DeleteAll_IncludePlayer();
+	vecHeartUI.clear();
+	CCollisionMgr::GetInst()->Reset();
+}
+
+void CScene_Start::Exit(int _type)
+{
+	if (0 == _type)
+		DeleteAll_IncludePlayer();
+	else if (1 == _type)
+		DeleteAll();
+	
+	vecHeartUI.clear(); // 벡터는 클리어 시켜놓자
+
 
 	// 다른 씬에서는 다른 충돌 그룹을 쓸 수 있기 때문에 해제시켜주어야함
 	CCollisionMgr::GetInst()->Reset();
@@ -178,6 +171,18 @@ void CScene_Start::update()
 	{
 		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::BOSS);
 		m_bBossRoomEnter = true;
+
+	}
+	else if (ROOM_TYPE::BOSS != m_pMap->GetCurrentRoom()->GetType())
+	{
+		m_bBossRoomEnter = false;
+	}
+	if (GetPlayer()->IsStateClear())
+	{
+		GetPlayer()->SetStateUnclear();
+		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::STAGECUT);
+		CCamera::GetInst()->FadeIn(1.f);
+
 	}
 
 
@@ -267,10 +272,7 @@ void CScene_Start::update()
 
 void CScene_Start::render(HDC _dc)
 {
-
-
 	CScene::render(_dc);
-
 }
 
 
@@ -279,4 +281,22 @@ void CScene_Start::SetPlayerPos(CObject* _pPlayer)
 	_pPlayer->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 
 	
+}
+
+void CScene_Start::SetStage(int _iStage)
+{
+	wstring strStage = std::to_wstring(m_CurrentStage);
+	wstring strPathEnd = L".txt";
+	wstring szName = L"E:\\IsaacProject\\Output\\bin\\content\\map\\Stage";
+
+	szName += strStage;
+	szName += strPathEnd;
+
+	wstring strStageFolder = CPathMgr::GetInst()->GetContentPath();
+	strStageFolder += L"map";
+	m_pMap = new CMap();
+	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
+	m_pMap->LoadMap(strRelativePath);
+
+	m_pMap->GetCurrentRoom()->Enter();
 }

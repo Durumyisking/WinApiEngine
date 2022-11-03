@@ -19,6 +19,24 @@ public:
 	CAnimator();
 	~CAnimator();
 
+public:
+	struct AnimEvent
+	{
+		void operator=(std::function<void()> _func)
+		{
+			m_Event = std::move(_func);
+		}
+
+		// 이벤트를 함수처럼 호출하기 위한 오퍼레이터 like startevent();
+		void operator()()
+		{
+			if (m_Event)
+				m_Event();
+		}
+
+		std::function<void()> m_Event; // 함수포인터처럼 사용 가능한 객체
+	};
+
 
 public:
 	// createanimation(애니메이션 이름, 텍스처 객체, 왼쪽 위, 애니메이션1개 사이즈, 애니메이션 한칸 , 유지 시간값, 한줄에 모션 몇 개인지
@@ -31,7 +49,6 @@ public:
 	void finalupdate();
 	void render(HDC _dc);
 
-
 public:
 	CObject* GetObj() const { return m_pOwner; }
 	CAnimation* GetCurAnim() const
@@ -39,6 +56,11 @@ public:
 		if(nullptr != m_pCurAnim)
 			return m_pCurAnim; 
 	}
+
+	AnimEvent m_StartEvent;
+	AnimEvent m_CompleteEvent;
+	AnimEvent m_EndEvent;
+
 
 	friend class CObject;
 };

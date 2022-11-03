@@ -69,5 +69,6 @@ protected:
 
 	int			m_iMonsterCount;
 	bool		m_bIsClear;
+	bool		m_bFirstEnter;
 
 };

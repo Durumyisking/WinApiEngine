@@ -22,7 +22,7 @@ public:
 	void SetCurScene(SCENE_TYPE _eNext);
 
 
-private:
+public:
 	void ChangeScene(SCENE_TYPE _eNext);
 	friend class CEventMgr;
 

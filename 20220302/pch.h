@@ -31,6 +31,7 @@ using std::list;
 
 
 #include <string>
+#include <sstream>
 using std::string;
 using std::wstring;
 
@@ -38,6 +39,9 @@ using std::wstring;
 #include <time.h>
 
 #include <Commdlg.h>
+
+// 함수포인터 관련 라이브러리
+#include <functional>
 
 // custom header
 #include "define.h"

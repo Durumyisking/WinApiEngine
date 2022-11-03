@@ -79,6 +79,7 @@ public:
 
 	CLONE(CMonster);
 
+	void DEAD();
 
 
 public:

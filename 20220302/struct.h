@@ -39,20 +39,7 @@ public:
 	{
 		return(Vec2(x + _vOther.x , y + _vOther.y));
 	}
-	Vec2 operator += (Vec2 _vOther)
-	{
-		(*this).x += _vOther.x;
-		(*this).y += _vOther.y;
 
-		return *this;
-	}
-	Vec2 operator -= (Vec2 _vOther)
-	{
-		(*this).x -= _vOther.x;
-		(*this).y -= _vOther.y;
-
-		return *this;
-	}
 	Vec2 operator -(Vec2 _vOther)
 	{
 		return(Vec2(x - _vOther.x, y - _vOther.y));
@@ -97,7 +84,28 @@ public:
 
 		return *this;
 	}
+	Vec2 operator += (Vec2 _vOther)
+	{
+		(*this).x += _vOther.x;
+		(*this).y += _vOther.y;
 
+		return *this;
+	}
+	Vec2 operator -= (Vec2 _vOther)
+	{
+		(*this).x -= _vOther.x;
+		(*this).y -= _vOther.y;
+
+		return *this;
+	}
+	bool operator == (Vec2 _vOther)
+	{
+		return ((*this).x == _vOther.x) && ((*this).y -= _vOther.y);
+	}
+	bool operator != (Vec2 _vOther)
+	{
+		return !(*this == _vOther);
+	}
 	Vec2 Rotate(int _iValue)
 	{
 		Vec2 vTemp = *this;

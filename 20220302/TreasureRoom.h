@@ -13,7 +13,5 @@ public:
 	virtual void Enter();
 
 
-private:
-	bool		m_bFirstEnter;
 };
 

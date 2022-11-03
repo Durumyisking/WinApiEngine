@@ -27,6 +27,8 @@
 #include "Room.h"
 #include "Map.h"
 
+#include "BossRoom.h"
+
 
 CPlayer::CPlayer()
 	: m_dAttackDealy(fDT)
@@ -41,6 +43,9 @@ CPlayer::CPlayer()
 	, m_vPrevPos()
 	, m_pWallcollider(nullptr)
 	, m_bCollisionwall(false)
+	, m_bGoTrapdoor(false)
+	, m_bStateClear(false)
+	, m_bClearAnimTimer(0.f)
 {
 	m_Stat = { 6, 6, 5, 400.f, 450.f, 2.f ,0.38f };
 	m_pStat = &m_Stat;
@@ -72,6 +77,44 @@ void CPlayer::update()
 	if (0 >= m_pStat->m_iHP)
 		m_pStat->m_iHP = 0;
 
+	// 트랩도어 애니메이션
+	if (m_bGoTrapdoor)
+	{
+		m_bClearAnimTimer += fDT;
+			
+		Vec2 vPos = dynamic_cast<CBossRoom*>(CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom())->m_pTrapdoor->GetPos();
+		if (m_bClearAnimTimer <= 0.5f)
+		{
+			vPos.y -= 120.f;
+		}
+		else if (m_bClearAnimTimer > 0.5f && m_bClearAnimTimer <= 1.f)
+		{
+			vPos.y -= 50.f;
+			Vec2 vOffset = GetAnimator()->GetCurAnim()->GetOffset();
+			vOffset.x += fDT * 230;
+			vOffset.y += fDT * 300;
+			GetAnimator()->GetCurAnim()->SetOffset(vOffset);
+			GetAnimator()->GetCurAnim()->SetMagnify(GetAnimator()->GetCurAnim()->GetMagnify() - (fDT * 10));
+		}
+		else if (m_bClearAnimTimer > 1.f)
+		{
+			SetPos(Vec2(0.f, 0.f));
+			m_bStateClear = true;
+			m_bGoTrapdoor = false;
+			m_bClearAnimTimer = 0.f;
+			return;
+		}
+
+		Vec2 vDir = (vPos - GetPos()).Normalize();
+		if (vPos != GetPos())
+		{
+			float x = GetPos().x + vDir.x * 500.f * fDT;
+			float y = GetPos().y + vDir.y * 500.f * fDT;
+			SetPos(Vec2(x, y));
+		}
+		
+	}
+
 	// 공격 쿨타임
 	m_dAttackDealy += fDT;
 
@@ -81,54 +124,57 @@ void CPlayer::update()
 
 
 	// 이동
-	CRigidBody* pRigid = GetRigidBody();
-
-	Vec2 vPos = GetPos();
-	Vec2 vScale = GetScale();
-
-	float fTemp = m_Stat.m_fSpeed / 8.f;
-
-	if (KEY_HOLD(KEY::W)) {
-		pRigid->AddVelocity(Vec2(0.f, -fTemp));
-		pRigid->AddForce(Vec2(0.f, -200.f));
-	}
-	if (KEY_HOLD(KEY::S)) {
-		pRigid->AddVelocity(Vec2(0.f, fTemp));
-		pRigid->AddForce(Vec2(0.f, 200.f));
-	}
-	if (KEY_HOLD(KEY::A)) {
-		pRigid->AddVelocity(Vec2(-fTemp, 0.f));
-		pRigid->AddForce(Vec2(-200.f, 0.f));
-	}
-	if (KEY_HOLD(KEY::D)) {
-		pRigid->AddVelocity(Vec2(fTemp, 0.f));
-		pRigid->AddForce(Vec2(200.f, 0.f));
-	}
-
-	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
-		!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
-	{
-	}
-
-	if (m_bCollisionwall)
+	if (!m_bGoTrapdoor)
 	{
 		CRigidBody* pRigid = GetRigidBody();
-		Vec2 vDir = pRigid->GetVelocity().Normalize();
-		Vec2 vtemp = (-vDir * (m_pWallcollider->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
-		//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
-		vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
-		vPos = vDir;
-		m_bCollisionwall = false;
-	}
 
-	SetPos(vPos);
-	// 부모객체만 자식들 setpos
-	if (nullptr != pBody && nullptr != pHead)
-	{
-		pBody->SetPos(vPos);
-		pHead->SetPos(vPos);
-	}
+		Vec2 vPos = GetPos();
+		Vec2 vScale = GetScale();
 
+		float fTemp = m_Stat.m_fSpeed / 8.f;
+
+		if (KEY_HOLD(KEY::W)) {
+			pRigid->AddVelocity(Vec2(0.f, -fTemp));
+			pRigid->AddForce(Vec2(0.f, -200.f));
+		}
+		if (KEY_HOLD(KEY::S)) {
+			pRigid->AddVelocity(Vec2(0.f, fTemp));
+			pRigid->AddForce(Vec2(0.f, 200.f));
+		}
+		if (KEY_HOLD(KEY::A)) {
+			pRigid->AddVelocity(Vec2(-fTemp, 0.f));
+			pRigid->AddForce(Vec2(-200.f, 0.f));
+		}
+		if (KEY_HOLD(KEY::D)) {
+			pRigid->AddVelocity(Vec2(fTemp, 0.f));
+			pRigid->AddForce(Vec2(200.f, 0.f));
+		}
+
+		if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
+			!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
+		{
+		}
+
+		if (m_bCollisionwall)
+		{
+			CRigidBody* pRigid = GetRigidBody();
+			Vec2 vDir = pRigid->GetVelocity().Normalize();
+			Vec2 vtemp = (-vDir * (m_pWallcollider->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
+			//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
+			vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
+			vPos = vDir;
+			m_bCollisionwall = false;
+		}
+
+		SetPos(vPos);
+
+		// 부모객체만 자식들 setpos
+		if (nullptr != pBody && nullptr != pHead)
+		{
+			pBody->SetPos(vPos);
+			pHead->SetPos(vPos);
+		}
+	}
 
 	for (size_t i = 0; i < m_pCostume.size(); i++)
 	{
@@ -168,7 +214,8 @@ void CPlayer::render(HDC _dc)
 	if (nullptr != m_pOwner)
 	{
 		// 부모의 hurt가 진행중이면 렌더링 하지 않는다
-		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
+		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+			|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
 		{
 			return;
 		}
@@ -220,6 +267,7 @@ void CPlayer::init()
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
+	GetAnimator()->CreateAnimation(L"Jump", m_pTex, Vec2(0.f, 200.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 1.f, 2, false);
 
 	
 	pBody = new CBody;
@@ -239,6 +287,8 @@ void CPlayer::init()
 
 
 	m_Pickup.SetBomb(9);
+	m_bGoTrapdoor = false;
+	m_bStateClear = false;
 
 	CreateObject(pBody, GROUP_TYPE::PLAYER);
 	CreateObject(pHead, GROUP_TYPE::PLAYER);
@@ -421,7 +471,12 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"Trapdoor" == pOtherObj->GetName())
 	{
-
+		m_bGoTrapdoor = true;
+		m_strAnimName = L"Jump";
+		pBody->SetStateClear();
+		pHead->SetStateClear();
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+	
 	}
 }
 

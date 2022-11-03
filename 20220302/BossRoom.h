@@ -13,9 +13,11 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 
-private:
+public:
 	CObject*	m_pTrapdoor;
+private:
 	bool		m_bTrapdoor;
+	bool		m_bExit;
 
 };
 

@@ -28,12 +28,12 @@ CScene_Boss::CScene_Boss()
 	, m_pTexPlayerfloor(nullptr)
 	, m_pTexBossfloor(nullptr) {
 
-	m_pTexBG = CResMgr::GetInst()->LoadTexture(L"BossSceneBG", L"texture\\Boss\\bgblack.bmp");
-	m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss", L"texture\\Boss\\portrait_dangle.bmp");
-	m_pTexName = CResMgr::GetInst()->LoadTexture(L"BossSceneName", L"texture\\Boss\\vsnames.bmp");
-	m_pTexPlayer = CResMgr::GetInst()->LoadTexture(L"BossScenePlayer", L"texture\\Boss\\playerportrait_01_isaac.bmp");
-	m_pTexBossfloor = CResMgr::GetInst()->LoadTexture(L"BossSceneBossFloor", L"texture\\Boss\\bossspot.bmp");
-	m_pTexPlayerfloor = CResMgr::GetInst()->LoadTexture(L"BossScenePlayerFloor", L"texture\\Boss\\playerspot.bmp");
+	m_pTexBG = CResMgr::GetInst()->LoadTexture(L"BossSceneBG", L"texture\\CutScene\\bgblack.bmp");
+	m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss", L"texture\\CutScene\\portrait_dangle.bmp");
+	m_pTexName = CResMgr::GetInst()->LoadTexture(L"BossSceneName", L"texture\\CutScene\\vsnames.bmp");
+	m_pTexPlayer = CResMgr::GetInst()->LoadTexture(L"BossScenePlayer", L"texture\\CutScene\\playerportrait_01_isaac.bmp");
+	m_pTexBossfloor = CResMgr::GetInst()->LoadTexture(L"BossSceneBossFloor", L"texture\\CutScene\\bossspot.bmp");
+	m_pTexPlayerfloor = CResMgr::GetInst()->LoadTexture(L"BossScenePlayerFloor", L"texture\\CutScene\\playerspot.bmp");
 
 }
 
@@ -85,6 +85,7 @@ void CScene_Boss::update()
 		m_bAnimReverse = true;
 	}
 
+	// 다시 스타트씬으로 전환
 	if (m_bAnimReverse && m_fAnimValue < 0.f)
 	{
 		CCamera::GetInst()->FadeIn(1.f);

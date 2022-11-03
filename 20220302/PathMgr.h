@@ -16,6 +16,7 @@ public:
 
 	// 경로를 받으면 contentpath 부분을 잘라주고 상대경로만 주는 함수
 	wstring GetRelativePath(const wchar_t* _filepath);
+	wstring GetRelativePath(const wstring _filepath);
 
 };
 

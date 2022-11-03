@@ -13,5 +13,6 @@ public:
 	virtual void render(HDC _dc);
 	virtual void Enter();
 
+
 };
 

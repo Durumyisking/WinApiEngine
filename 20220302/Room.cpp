@@ -6,6 +6,7 @@
 
 
 CRoom::CRoom()
+	: m_bFirstEnter(true)
 {
 	m_bIsClear = false;
 
@@ -13,7 +14,6 @@ CRoom::CRoom()
 
 CRoom::~CRoom()
 {
-
 }
 
 void CRoom::update()
@@ -144,9 +144,9 @@ void CRoom::AddWall()
 		CreateObject(pWallColliderE2, GROUP_TYPE::WALL);
 
 	}
-	else if (nullptr != m_pOwner->GetMapData(y, x + 1))
+	else if (nullptr == m_pOwner->GetMapData(y, x + 1))
 	{
-		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, 0.f), Vec2(1.f, 500.f), DIR::E);
+		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, 0.f), Vec2(1.f, 550.f), DIR::E);
 		pWallColliderE1->SetName(L"Wall");
 		pWallColliderE1->SetOwner(this);
 		CreateObject(pWallColliderE1, GROUP_TYPE::WALL);
@@ -187,82 +187,93 @@ void CRoom::AddDoor()
 
 	if (nullptr != m_pOwner->GetMapData(y - 1, x))
 	{
-		CObject* pDoor = new CDoor(this, DIR::N);
-		CDoor* pDoorObj = (CDoor*)pDoor;
-		pDoor->SetPos(GetPos() +
+		if (y != 0)
+		{
+			CObject* pDoor = new CDoor(this, DIR::N);
+			CDoor* pDoorObj = (CDoor*)pDoor;
+			pDoor->SetPos(GetPos() +
 			Vec2(
 				0.f,
 				(pDoor->GetScale().y / 2) - 359.f
 			));
-		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y - 1, x))->GetType());
-		pDoorObj->SetSlice(0, 0);
-		pDoor->SetName(L"Door");
-		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
-		m_Door.push_back(pDoorObj);
-		pDoor->SetOwner(this);
-		CreateObject(pDoor, GROUP_TYPE::DOOR);
+			pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y - 1, x))->GetType());
+			pDoorObj->SetSlice(0, 0);
+			pDoor->SetName(L"Door");
+			pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
+			m_Door.push_back(pDoorObj);
+			pDoor->SetOwner(this);
+			CreateObject(pDoor, GROUP_TYPE::DOOR);
+		}
 	}
 
 	if (nullptr != m_pOwner->GetMapData(y + 1, x))
 	{
-		CObject* pDoor = new CDoor(this, DIR::S);
-		CDoor* pDoorObj = (CDoor*)pDoor;
-		pDoor->SetPos(GetPos() +
-			Vec2(
-				0.f,
-				(pDoor->GetScale().y / 2 + 242.f)
-			));
-		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y + 1, x))->GetType());
-		pDoorObj->SetSlice(0, 48);
-		pDoor->SetName(L"Door");
-		pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
-		m_Door.push_back(pDoorObj);
-		pDoor->SetOwner(this);
-		CreateObject(pDoor, GROUP_TYPE::DOOR);
+		if (y != 6)
+		{
+			CObject* pDoor = new CDoor(this, DIR::S);
+			CDoor* pDoorObj = (CDoor*)pDoor;
+			pDoor->SetPos(GetPos() +
+				Vec2(
+					0.f,
+					(pDoor->GetScale().y / 2 + 242.f)
+				));
+			pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y + 1, x))->GetType());
+			pDoorObj->SetSlice(0, 48);
+			pDoor->SetName(L"Door");
+			pDoor->GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
+			m_Door.push_back(pDoorObj);
+			pDoor->SetOwner(this);
+			CreateObject(pDoor, GROUP_TYPE::DOOR);
+		}
 
 	}
 
 	if (nullptr != m_pOwner->GetMapData(y, x - 1))
 	{
-		CObject* pDoor = new CDoor(this, DIR::W);
-		CDoor* pDoorObj = (CDoor*)pDoor;
-		pDoor->SetPos(GetPos() + 
-			Vec2(
-				(pDoor->GetScale().x / 2) - 609.f, 
-				0.f
-			));
-		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x - 1))->GetType());
-		pDoorObj->SetSlice(0, 0);
-		pDoor->SetName(L"Door");
-		pDoor->GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
-		m_Door.push_back(pDoorObj);
-		pDoor->SetOwner(this);
-		CreateObject(pDoor, GROUP_TYPE::DOOR);
-
+		if (x != 0)
+		{
+			CObject* pDoor = new CDoor(this, DIR::W);
+			CDoor* pDoorObj = (CDoor*)pDoor;
+			pDoor->SetPos(GetPos() +
+				Vec2(
+					(pDoor->GetScale().x / 2) - 609.f,
+					0.f
+				));
+			pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x - 1))->GetType());
+			pDoorObj->SetSlice(0, 0);
+			pDoor->SetName(L"Door");
+			pDoor->GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
+			m_Door.push_back(pDoorObj);
+			pDoor->SetOwner(this);
+			CreateObject(pDoor, GROUP_TYPE::DOOR);
+		}
 	}
 
 	if (nullptr != m_pOwner->GetMapData(y, x + 1))
 	{
-		CObject* pDoor = new CDoor(this, DIR::E);
-		CDoor* pDoorObj = (CDoor*)pDoor;
-		pDoor->SetPos(GetPos() +
-			Vec2(
-				(pDoor->GetScale().x / 2) + 480.f,
-				0.f
-			));
-		pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x + 1))->GetType());
-		pDoorObj->SetSlice(0, 64);
-		pDoor->SetName(L"Door");
-		pDoor->GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
-		m_Door.push_back(pDoorObj);
-		pDoor->SetOwner(this);
-		CreateObject(pDoor, GROUP_TYPE::DOOR);
-
+		if (x != 6)
+		{
+			CObject* pDoor = new CDoor(this, DIR::E);
+			CDoor* pDoorObj = (CDoor*)pDoor;
+			pDoor->SetPos(GetPos() +
+				Vec2(
+					(pDoor->GetScale().x / 2) + 480.f,
+					0.f
+				));
+			pDoorObj->SetTextureType(dynamic_cast<CRoom*>(m_pOwner->GetMapData(y, x + 1))->GetType());
+			pDoorObj->SetSlice(0, 64);
+			pDoor->SetName(L"Door");
+			pDoor->GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
+			m_Door.push_back(pDoorObj);
+			pDoor->SetOwner(this);
+			CreateObject(pDoor, GROUP_TYPE::DOOR);
+		}
 	}
 }
 
 void CRoom::Enter()
 {
+	m_bFirstEnter = false;
 	m_pOwner->SetCurrentRoom(this);
 }
 

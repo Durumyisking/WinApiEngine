@@ -50,6 +50,11 @@ protected:
 	CCollider*		m_pWallcollider;
 	bool			m_bCollisionwall;
 
+	bool			m_bGoTrapdoor;
+	bool			m_bStateClear;
+	float			m_bClearAnimTimer;
+
+
 public:
 	CPlayer();
 	~CPlayer();
@@ -78,6 +83,9 @@ public:
 
 	CBody* Body();
 	CHead* Head();
+	void SetStateClear() { m_bStateClear = true; }
+	void SetStateUnclear() { m_bStateClear = false; }
+	bool IsStateClear() { return m_bStateClear; }
 
 public:
 	void init();

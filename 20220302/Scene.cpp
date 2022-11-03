@@ -56,6 +56,18 @@ void CScene::DeleteAll()
 {
 	for (size_t i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
+		if ((UINT)GROUP_TYPE::PLAYER == i)
+			continue;
+			Safe_Delete_Vec<CObject*>(m_arrObj[i]);
+	}
+	m_pMap->~CMap();
+	delete m_pMap;
+}
+
+void CScene::DeleteAll_IncludePlayer()
+{
+	for (size_t i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+	{
 		Safe_Delete_Vec<CObject*>(m_arrObj[i]);
 	}
 	m_pMap->~CMap();

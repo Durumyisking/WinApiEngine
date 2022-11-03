@@ -49,10 +49,10 @@ void CDoor::update()
 			SetSlice(64, 48);
 			break;
 		case DIR::E:
-			SetSlice(48, 64);
+			SetSlice(0, 48);
 			break;
 		case DIR::W:
-			SetSlice(48, 0);
+			SetSlice(0, 0);
 			break;
 		case DIR::END:
 			break;
@@ -172,8 +172,8 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 			break;
 		case DIR::E: case DIR::W:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWtreasure", L"texture\\Props\\DoorEWtreasure.bmp"));
-			m_iSliceCountX = 2;
-			m_iSliceCountY = 3;
+			m_iSliceCountX = 3;
+			m_iSliceCountY = 2;
 			break;
 		case DIR::END:
 			break;

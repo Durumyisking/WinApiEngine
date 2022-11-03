@@ -30,6 +30,7 @@ private:
 	bool				m_bFinish; // 애니메이션이 끝났는지 체크
 	bool				m_bReverse; // 애니메이션 좌우 반전 여부
 
+	Vec2				m_vOffset;
 
 
 public:
@@ -59,7 +60,13 @@ public:
 		m_fAccTime = 0.f;
 	}
 	void SetMagnify(float _fValue) { m_fMagnify = _fValue; }
-	void SetDuration(float _fValue) 
+	float GetMagnify() const { return m_fMagnify; }
+
+	void SetOffset(Vec2 _vOffset) { m_vOffset = _vOffset; }
+	Vec2 GetOffset() const { return m_vOffset; }
+
+
+	void SetDuration(float _fValue)
 	{
 		for (size_t i = 0; i < m_vecFrm.size(); i++)
 		{

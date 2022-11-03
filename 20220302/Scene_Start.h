@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 
+
 class CUI;
 class CPlayer;
 class CMap;
@@ -21,7 +22,11 @@ public:
 	virtual void render(HDC _dc);	
 
 	void SetPlayerPos(CObject* _pPlayer);
+	void SetStage(int _iStage);
+	int GetStage() const { return m_CurrentStage; }
+	void SetStageIdx(int _iStage) { m_CurrentStage = _iStage; }
 
+	void Exit(int _type);
 
 private:
 	vector<CUI*> vecHeartUI;
@@ -30,6 +35,8 @@ private:
 	// 이동 된 방 기준 이전 방의 타입
 	CPlayer*			m_pPlayer;
 	bool				m_bBossRoomEnter;
+	int					m_CurrentStage;	
+	bool				m_bFirst;
 
 };
 

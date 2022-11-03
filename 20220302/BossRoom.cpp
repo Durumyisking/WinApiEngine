@@ -4,6 +4,7 @@
 
 CBossRoom::CBossRoom()
 	:m_pTrapdoor(false)
+	,m_bExit(false)
 
 {
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexBoss", L"texture\\BackGround\\bg_basement_boss.bmp");
@@ -16,18 +17,21 @@ CBossRoom::~CBossRoom()
 
 void CBossRoom::update()
 {
-	if (this == m_pOwner->GetCurrentRoom())	
-		CRoom::update();
-
-	if (m_bIsClear)
+	if (!m_bExit)
 	{
-		if (!m_bTrapdoor)
+		if (this == m_pOwner->GetCurrentRoom())
+			CRoom::update();
+
+		if (m_bIsClear)
 		{
-			m_pTrapdoor = new CTrapdoor;
-			m_pTrapdoor->SetPos(GetPos() - Vec2(0.f, 150.f));
-			CreateObject(m_pTrapdoor, GROUP_TYPE::DOOR);
-			dynamic_cast<CTrapdoor*>(m_pTrapdoor)->Appear();
-			m_bTrapdoor = true;
+			if (!m_bTrapdoor)
+			{
+				m_pTrapdoor = new CTrapdoor;
+				m_pTrapdoor->SetPos(GetPos() - Vec2(0.f, 150.f));
+				CreateObject(m_pTrapdoor, GROUP_TYPE::DOOR);
+				dynamic_cast<CTrapdoor*>(m_pTrapdoor)->Appear();
+				m_bTrapdoor = true;
+			}
 		}
 	}
 
@@ -41,6 +45,7 @@ void CBossRoom::render(HDC _dc)
 void CBossRoom::Enter()
 {
 	CRoom::Enter();
+	m_bExit = false;
 	
 
 	// 몬스터 생성
@@ -58,5 +63,7 @@ void CBossRoom::Enter()
 void CBossRoom::Exit()
 {
 	DeleteObject(m_pTrapdoor);
+	m_bTrapdoor = false;
+	m_bExit = true;
 	
 }
