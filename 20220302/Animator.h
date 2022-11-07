@@ -55,6 +55,7 @@ public:
 	{
 		if(nullptr != m_pCurAnim)
 			return m_pCurAnim; 
+
 	}
 	void ResetCurAnim();
 

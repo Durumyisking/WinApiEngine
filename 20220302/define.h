@@ -216,6 +216,13 @@ enum class ITEM_TABLE
 	lunch,
 	belt,
 	momsheels,
+	cricketshead,
+	bobbybomb,
+	mrmega,
+	mutantspider,
+	polyphemus,
+	sagittarius,
+	thewafer,
 
 	end,
 };

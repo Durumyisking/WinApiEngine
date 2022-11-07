@@ -22,12 +22,15 @@
 CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	: m_fTheta(static_cast<float>(PI / 2.f))
 	, m_vDir(Vec2(0.f, -1.f))
+	, m_vOffset(Vec2(8.f, 8.f))
+	, m_fMagnify(2.f)
 	, m_eType(MISSILE_TYPE::DEFAULT)
 	, m_fShotSpeed(_fShotSpeed)
 	, m_iDmg(_iDmg)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"")
 	, m_pOwner(nullptr)
+	, m_bpoofa(false)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
 	CreateAnimator();
@@ -35,8 +38,7 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	m_vDir.Normalize();
 
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(32.f, 32.f));
+	GetCollider()->SetScale(Vec2(16.f, 16.f));
 	SetScale(Vec2(32.f, 32.f));
 
 	CreateRigidBody();
@@ -44,7 +46,6 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	pRigid->SetMaxVelocity(500.f);
 	pRigid->SetMass(0.5f);
 	pRigid->SetFricCoeff(50.f);
-
 
 }
 CMissile::~CMissile()
@@ -56,6 +57,7 @@ CMissile::~CMissile()
 
 void CMissile::update()
 {
+
 	Vec2 vPos = GetPos();
 
 	switch (m_eType)
@@ -78,15 +80,22 @@ void CMissile::update()
 			pRigid->AddForce(Vec2(0.f, 300.f));
 		}
 
-
 		if (m_fAccFall <= 0.5f)
 		{
 			pRigid->SetVelocity(Vec2(0.f, 0.f));
-			GetAnimator()->Play(m_strAnimName, false);
+			//			GetAnimator()->Play(m_strAnimName, false);
 			m_strAnimName = L"TEAR_POOFA" + m_strShooterName;
-			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-		}
 
+			if (!m_bpoofa)
+			{
+				m_vOffset += Vec2(8.f, 8.f);
+				PlayAnim(m_pAnim, m_strAnimName, m_vOffset, false);
+				GetAnimator()->GetCurAnim()->SetMagnify(m_fMagnify);
+			}
+			//			GetAnimator()->GetCurAnim()->SetOffset(m_vOffset);
+
+			m_bpoofa = true;
+		}
 		break;
 	}
 
@@ -94,10 +103,7 @@ void CMissile::update()
 		break;
 	}
 
-
 	SetPos(vPos);
-
-
 }
 void CMissile::render(HDC _dc)
 {
@@ -121,7 +127,9 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 
 	m_strAnimName = L"TEAR_IDLE" + m_strShooterName;
 
-	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+
+	PlayAnim(m_pAnim, m_strAnimName, m_vOffset, true);
+
 
 
 	Vec2 vMissilePos = _pShooter->GetPos(); // ´«¹°À» ½ð ¾îÀÇ À§Ä¡ °¡Á®¿È
@@ -172,6 +180,7 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 	default:
 		break;
 	}
+
 	CreateObject(this, _eShooter);
 
 }

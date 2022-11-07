@@ -155,27 +155,57 @@ void CHead::OnCollisionExit(CCollider * _pOther)
 {
 }
 
+void CHead::ChangeTearSize(CMissile* _pMissile, float _fMagnify)
+{
+	CAnimation* pAnim = _pMissile->GetAnimator()->GetCurAnim();
+	
+	pAnim->SetMagnify(pAnim->GetMagnify() + _fMagnify);
+	_pMissile->SetMagnify(pAnim->GetMagnify());
+
+
+	CCollider* pCollider = _pMissile->GetCollider();
+	Vec2 vCollderScale = pCollider->GetScale();
+	pCollider->SetScale(vCollderScale + (vCollderScale * _fMagnify));
+	vCollderScale = pCollider->GetScale();
+}
+
+
 
 void CHead::CreateMissile(Vec2 _vDir)
 {
 	if (m_dAttackDealy > m_pStat->m_fRate)
 	{
+		CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
+
 		// innereye
 		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::innereye)] > 0)
 		{
 			for (int  i = -1; i < 2; i++)
 			{
-				CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
 				pMissile->SetDir(_vDir.Rotate(5 * i));
-				pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this, L"Player");
 			}
 		}
 		else // ³ë¸»´«¹°
 		{
-			CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
 			pMissile->SetDir(_vDir);
-			pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this, L"Player");
 		}
+		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this, L"Player");
+
+		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::cricketshead)] > 0)
+		{
+			ChangeTearSize(pMissile, 0.5f);
+			pMissile->SetOffset(pMissile->GetOffset() + Vec2(-24.f, -28.f));
+		}
+
+		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::polyphemus)] > 0)
+		{
+			ChangeTearSize(pMissile, 1.f);
+			pMissile->SetOffset(pMissile->GetOffset() + Vec2(-48.f, -48.f));
+		}
+		pMissile->GetAnimator()->GetCurAnim()->SetOffset(pMissile->GetOffset());
+
+
+
 		m_dAttackDealy = 0.f;
 	}
 

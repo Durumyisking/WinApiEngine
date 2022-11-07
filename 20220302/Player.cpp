@@ -47,7 +47,7 @@ CPlayer::CPlayer()
 	, m_bStateClear(false)
 	, m_bClearAnimTimer(0.f)
 {
-	m_Stat = { 6, 6, 5, 400.f, 450.f, 2.f ,0.38f };
+	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
 
 	m_strAnimName = L"Hurt";

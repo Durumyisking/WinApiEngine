@@ -8,6 +8,13 @@
 #include "lunch.h"
 #include "belt.h"
 #include "momsheels.h"
+#include "cricketshead.h"
+#include "polyphemus.h"
+#include "mutantspider.h"
+#include "bobbybomb.h"
+#include "mrmega.h"
+#include "sagittarius.h"
+#include "thewafer.h"
 
 CTreasureRoom::CTreasureRoom()
 {
@@ -65,6 +72,24 @@ void CTreasureRoom::Enter()
 		pItemInstance4->SetPos(GetPos() + Vec2((m_vResolution.x / 4.f), -(m_vResolution.y / 4.f)));
 		pItemInstance4->CreateAlter();
 		CreateObject(pItemInstance4, GROUP_TYPE::ITEM);
+
+
+		//
+		CItem* pItemInstance5 = new CItem(GetPos());
+		pItemInstance5= new Ccricketshead;
+		pItemInstance5->SetName(L"Item");
+		pItemInstance5->SetPos(GetPos());
+		pItemInstance5->CreateAlter();
+		CreateObject(pItemInstance5, GROUP_TYPE::ITEM);
+
+
+		CItem* pItemInstance6 = new CItem(GetPos());
+		pItemInstance6 = new Cpolyphemus;
+		pItemInstance6->SetName(L"Item");
+		pItemInstance6->SetPos(GetPos() + Vec2(80.f, 0.f));
+		pItemInstance6->CreateAlter();
+		CreateObject(pItemInstance6, GROUP_TYPE::ITEM);
+
 	}
 	CRoom::Enter();
 
