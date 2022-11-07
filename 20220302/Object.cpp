@@ -94,6 +94,7 @@ void CObject::CreateRigidBody()
 
 void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset, bool _Repeat)
 {
+
 	GetAnimator()->Play(_AnimName, _Repeat);
 
 	_pAnim = GetAnimator()->FindAnimation(_AnimName);

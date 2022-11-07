@@ -100,8 +100,13 @@ void CPlayer::update()
 		{
 			SetPos(Vec2(0.f, 0.f));
 			m_bStateClear = true;
+			pBody->SetStateClear();
+			pHead->SetStateClear();
+
 			m_bGoTrapdoor = false;
 			m_bClearAnimTimer = 0.f;
+			GetAnimator()->GetCurAnim()->SetFinish();
+			GetAnimator()->ResetCurAnim();
 			return;
 		}
 
@@ -112,7 +117,7 @@ void CPlayer::update()
 			float y = GetPos().y + vDir.y * 500.f * fDT;
 			SetPos(Vec2(x, y));
 		}
-		
+		return;
 	}
 
 	// 공격 쿨타임
@@ -124,57 +129,55 @@ void CPlayer::update()
 
 
 	// 이동
-	if (!m_bGoTrapdoor)
+	CRigidBody* pRigid = GetRigidBody();
+
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+
+	float fTemp = m_Stat.m_fSpeed / 8.f;
+
+	if (KEY_HOLD(KEY::W)) {
+		pRigid->AddVelocity(Vec2(0.f, -fTemp));
+		pRigid->AddForce(Vec2(0.f, -200.f));
+	}
+	if (KEY_HOLD(KEY::S)) {
+		pRigid->AddVelocity(Vec2(0.f, fTemp));
+		pRigid->AddForce(Vec2(0.f, 200.f));
+	}
+	if (KEY_HOLD(KEY::A)) {
+		pRigid->AddVelocity(Vec2(-fTemp, 0.f));
+		pRigid->AddForce(Vec2(-200.f, 0.f));
+	}
+	if (KEY_HOLD(KEY::D)) {
+		pRigid->AddVelocity(Vec2(fTemp, 0.f));
+		pRigid->AddForce(Vec2(200.f, 0.f));
+	}
+
+	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
+		!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
+	{
+	}
+
+	if (m_bCollisionwall)
 	{
 		CRigidBody* pRigid = GetRigidBody();
-
-		Vec2 vPos = GetPos();
-		Vec2 vScale = GetScale();
-
-		float fTemp = m_Stat.m_fSpeed / 8.f;
-
-		if (KEY_HOLD(KEY::W)) {
-			pRigid->AddVelocity(Vec2(0.f, -fTemp));
-			pRigid->AddForce(Vec2(0.f, -200.f));
-		}
-		if (KEY_HOLD(KEY::S)) {
-			pRigid->AddVelocity(Vec2(0.f, fTemp));
-			pRigid->AddForce(Vec2(0.f, 200.f));
-		}
-		if (KEY_HOLD(KEY::A)) {
-			pRigid->AddVelocity(Vec2(-fTemp, 0.f));
-			pRigid->AddForce(Vec2(-200.f, 0.f));
-		}
-		if (KEY_HOLD(KEY::D)) {
-			pRigid->AddVelocity(Vec2(fTemp, 0.f));
-			pRigid->AddForce(Vec2(200.f, 0.f));
-		}
-
-		if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
-			!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
-		{
-		}
-
-		if (m_bCollisionwall)
-		{
-			CRigidBody* pRigid = GetRigidBody();
-			Vec2 vDir = pRigid->GetVelocity().Normalize();
-			Vec2 vtemp = (-vDir * (m_pWallcollider->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
-			//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
-			vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
-			vPos = vDir;
-			m_bCollisionwall = false;
-		}
-
-		SetPos(vPos);
-
-		// 부모객체만 자식들 setpos
-		if (nullptr != pBody && nullptr != pHead)
-		{
-			pBody->SetPos(vPos);
-			pHead->SetPos(vPos);
-		}
+		Vec2 vDir = pRigid->GetVelocity().Normalize();
+		Vec2 vtemp = (-vDir * (m_pWallcollider->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
+		//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
+		vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
+		vPos = vDir;
+		m_bCollisionwall = false;
 	}
+
+	SetPos(vPos);
+
+	// 부모객체만 자식들 setpos
+	if (nullptr != pBody && nullptr != pHead)
+	{
+		pBody->SetPos(vPos);
+		pHead->SetPos(vPos);
+	}
+	
 
 	for (size_t i = 0; i < m_pCostume.size(); i++)
 	{
@@ -213,7 +216,7 @@ void CPlayer::render(HDC _dc)
 	// body와 head는
 	if (nullptr != m_pOwner)
 	{
-		// 부모의 hurt가 진행중이면 렌더링 하지 않는다
+		// 부모의 애니메이션이 진행중이면 렌더링 하지 않는다
 		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
 			|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
 		{
@@ -254,6 +257,18 @@ CHead* CPlayer::Head()
 		return pHead;
 
 	return nullptr;
+}
+
+void CPlayer::AnimOper()
+{
+	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+
+	if (GetAnimator()->GetCurAnim()->IsFinish())
+	{
+		GetAnimator()->GetCurAnim()->SetFrame(0);
+		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+
+	}
 }
 
 void CPlayer::init()
@@ -310,14 +325,10 @@ void CPlayer::OnCollision(CCollider * _pOther)
 
 		if (m_finvincibilityTime >= 1.0f)
 		{
-			if (GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				GetAnimator()->GetCurAnim()->SetFrame(0);
-			}
-			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-
+			m_strAnimName = L"Hurt";
+			AnimOper();
 			m_finvincibilityTime = 0;
-			// hurt 애니메이션 재생
+
 			m_iPrevHp = m_pStat->m_iHP;
 			--m_pStat->m_iHP;
 
@@ -343,6 +354,12 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		vDir = vDir * 500.f;
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
+		if (m_finvincibilityTime >= 1.0f)
+		{
+			m_strAnimName = L"Hurt";
+			AnimOper();
+			m_finvincibilityTime = 0;
+		}
 	}
 
 	if (L"Wall" == pOtherObj->GetName())
@@ -443,24 +460,29 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		vDir = vDir * 500.f;
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
+
+		m_strAnimName = L"Hurt";
+		if (GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"Hurt"))
+		{
+			AnimOper();
+			m_finvincibilityTime = 0;
+		}
+
 	}
 
 	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName())
 	{
+
 		Vec2 vDir = pOtherObj->GetPos() - GetPos();
 		vDir.Normalize();
 		vDir = vDir * 500.f;
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
 
+		m_strAnimName = L"Hurt";
 		if(GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"Hurt"))
 		{
-			if (GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				GetAnimator()->GetCurAnim()->SetFrame(0);
-			}
-
-			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+			AnimOper();
 
 			m_finvincibilityTime = 0;
 			m_iPrevHp = m_pStat->m_iHP;
@@ -469,14 +491,18 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 	}
 
-	if (L"Trapdoor" == pOtherObj->GetName())
+	if (!m_bGoTrapdoor)
 	{
-		m_bGoTrapdoor = true;
-		m_strAnimName = L"Jump";
-		pBody->SetStateClear();
-		pHead->SetStateClear();
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-	
+		if (L"Trapdoor" == pOtherObj->GetName())
+		{
+			m_bGoTrapdoor = true;
+			m_strAnimName = L"Jump";
+			if (GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"Jump"))
+			{
+				AnimOper();
+			}
+		}
+
 	}
 }
 

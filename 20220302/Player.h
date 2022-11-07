@@ -87,6 +87,8 @@ public:
 	void SetStateUnclear() { m_bStateClear = false; }
 	bool IsStateClear() { return m_bStateClear; }
 
+	void AnimOper();
+
 public:
 	void init();
 

@@ -53,6 +53,7 @@ public:
 			return m_strName; 
 	}
 	bool IsFinish() { return m_bFinish; }
+	void SetFinish() { m_bFinish = true; }
 	void SetFrame(int _iFrameIdx)
 	{
 		m_bFinish = false;

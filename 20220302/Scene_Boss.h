@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "MonsterFactory.h"
-
+#include "ResMgr.h"
 class CTexture;
 class CScene_Boss :
 	public CScene

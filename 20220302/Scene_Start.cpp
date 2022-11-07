@@ -3,6 +3,8 @@
 
 #include "Object.h"
 #include "Player.h"
+#include "Head.h"
+#include "Body.h"
 
 #include "Core.h"
 
@@ -72,6 +74,7 @@ void CScene_Start::Enter()
 
 		CreateObject(m_pPlayer, GROUP_TYPE::PLAYER);
 	}
+
 	m_pPlayer->SetPos(m_pMap->GetStartPos() + Vec2(0.f, -40.f));
 
 
@@ -85,7 +88,6 @@ void CScene_Start::Enter()
 		vecHeartUI.push_back(pHeartUI);
 		AddObject(pHeartUI, GROUP_TYPE::UI);
 	}
-
 	// 픽업 카운트
 	// 1 = 코인 2 = 폭탄 3 = 열쇠
 
@@ -137,7 +139,7 @@ void CScene_Start::Enter()
 
 	
 	// 카메라 효과 지정
-	//CCamera::GetInst()->FadeIn(1.f);
+	CCamera::GetInst()->FadeIn(1.f);
 
 }
 
@@ -180,6 +182,9 @@ void CScene_Start::update()
 	if (GetPlayer()->IsStateClear())
 	{
 		GetPlayer()->SetStateUnclear();
+		GetPlayer()->Body()->SetStateUnclear();
+		GetPlayer()->Head()->SetStateUnclear();
+
 		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::STAGECUT);
 		CCamera::GetInst()->FadeIn(1.f);
 

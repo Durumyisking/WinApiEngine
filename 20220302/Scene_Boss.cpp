@@ -26,7 +26,8 @@ CScene_Boss::CScene_Boss()
 	, m_bIsAnimTimerOn(false)
 	, m_fAnimMoveQuan(1500.f)
 	, m_pTexPlayerfloor(nullptr)
-	, m_pTexBossfloor(nullptr) {
+	, m_pTexBossfloor(nullptr) 
+{
 
 	m_pTexBG = CResMgr::GetInst()->LoadTexture(L"BossSceneBG", L"texture\\CutScene\\bgblack.bmp");
 	m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss", L"texture\\CutScene\\portrait_dangle.bmp");
@@ -86,20 +87,18 @@ void CScene_Boss::update()
 	}
 
 	// 다시 스타트씬으로 전환
-	if (m_bAnimReverse && m_fAnimValue < 0.f)
+	if (m_bAnimReverse && m_fAnimValue < 0.f || KEY_TAP(KEY::SPACE))
 	{
+		m_bIsAnimTimerOn = false;
+		m_fAnimMoveQuan= 1500.f;
+		m_fAnimTimer = 0.f;
+		m_fAnimValue = 0.f;
+		m_bAnimReverse = false;
+
 		CCamera::GetInst()->FadeIn(1.f);
 		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::START);
 	}
 	
-
-
-
-	if (KEY_TAP(KEY::SPACE))
-	{
-		CCamera::GetInst()->FadeIn(1.f);
-		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::START);
-	}
 }
 
 void CScene_Boss::render(HDC _dc)

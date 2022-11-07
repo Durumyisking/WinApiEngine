@@ -56,6 +56,7 @@ public:
 		if(nullptr != m_pCurAnim)
 			return m_pCurAnim; 
 	}
+	void ResetCurAnim();
 
 	AnimEvent m_StartEvent;
 	AnimEvent m_CompleteEvent;

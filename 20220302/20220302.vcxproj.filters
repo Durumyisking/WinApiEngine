@@ -464,6 +464,27 @@
     <ClInclude Include="Scene_StageCut.h">
       <Filter>Engine\05. Scene\Scene_StageCut</Filter>
     </ClInclude>
+    <ClInclude Include="bobbybomb.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="cricketshead.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="mrmega.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="mutantspider.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="polyphemus.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="sagittarius.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="thewafer.h">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -702,6 +723,27 @@
     </ClCompile>
     <ClCompile Include="Scene_StageCut.cpp">
       <Filter>Engine\05. Scene\Scene_StageCut</Filter>
+    </ClCompile>
+    <ClCompile Include="bobbybomb.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="cricketshead.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="mrmega.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="mutantspider.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="polyphemus.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="sagittarius.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="thewafer.cpp">
+      <Filter>Engine\04. Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
