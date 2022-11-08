@@ -33,9 +33,14 @@ void CTreasureRoom::Enter()
 	{
 		m_bFirstEnter = false;
 
-		srand(CTimeMgr::GetInst()->GetCurCount());
-		UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::end));
-//		CItemMgr::GetInst()->CreateItem(item, GetPos());
+		// 아이템 추가
+
+		// 랜덤추가
+		//srand(CTimeMgr::GetInst()->GetCurCount());
+		//UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::end));
+		// CItemMgr::GetInst()->CreateItem(item, GetPos());
+
+		// 명시적
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::polyphemus), GetPos());
 	}
 	CRoom::Enter();

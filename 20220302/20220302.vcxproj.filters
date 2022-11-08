@@ -422,28 +422,13 @@
     <ClInclude Include="DeadState.h">
       <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClInclude>
-    <ClInclude Include="sadonion.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Charger.h">
       <Filter>Engine\04. Object\Monster\charger</Filter>
     </ClInclude>
     <ClInclude Include="Kamikazeleech.h">
       <Filter>Engine\04. Object\Monster\kamikazeleech</Filter>
     </ClInclude>
-    <ClInclude Include="innereye.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="lunch.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
     <ClInclude Include="ItemAlter.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="belt.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="momsheels.h">
       <Filter>Engine\04. Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Costume.h">
@@ -466,27 +451,6 @@
     </ClInclude>
     <ClInclude Include="Scene_StageCut.h">
       <Filter>Engine\05. Scene\Scene_StageCut</Filter>
-    </ClInclude>
-    <ClInclude Include="bobbybomb.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="cricketshead.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="mrmega.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="mutantspider.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="polyphemus.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="sagittarius.h">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="thewafer.h">
-      <Filter>Engine\04. Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemMgr.h">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
@@ -685,28 +649,13 @@
     <ClCompile Include="DeadState.cpp">
       <Filter>Engine\08. Module\AI\State\Dead</Filter>
     </ClCompile>
-    <ClCompile Include="sadonion.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Charger.cpp">
       <Filter>Engine\04. Object\Monster\charger</Filter>
     </ClCompile>
     <ClCompile Include="Kamikazeleech.cpp">
       <Filter>Engine\04. Object\Monster\kamikazeleech</Filter>
     </ClCompile>
-    <ClCompile Include="innereye.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="lunch.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
     <ClCompile Include="ItemAlter.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="belt.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="momsheels.cpp">
       <Filter>Engine\04. Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Costume.cpp">
@@ -729,27 +678,6 @@
     </ClCompile>
     <ClCompile Include="Scene_StageCut.cpp">
       <Filter>Engine\05. Scene\Scene_StageCut</Filter>
-    </ClCompile>
-    <ClCompile Include="bobbybomb.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="cricketshead.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="mrmega.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="mutantspider.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="polyphemus.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="sagittarius.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="thewafer.cpp">
-      <Filter>Engine\04. Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="ItemMgr.cpp">
       <Filter>Engine\03. Manager\ItemMgr</Filter>

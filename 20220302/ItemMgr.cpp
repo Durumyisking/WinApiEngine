@@ -7,18 +7,6 @@
 #include "Texture.h"
 #include "ResMgr.h"
 
-#include "sadonion.h"
-#include "innereye.h"
-#include "lunch.h"
-#include "belt.h"
-#include "momsheels.h"
-#include "cricketshead.h"
-#include "polyphemus.h"
-#include "mutantspider.h"
-#include "bobbybomb.h"
-#include "mrmega.h"
-#include "sagittarius.h"
-#include "thewafer.h"
 
 
 
@@ -34,54 +22,11 @@ CItemMgr::~CItemMgr()
 CItem* CItemMgr::CreateItem(UINT _iItem, Vec2 _vPos)
 {
 	ITEM_TABLE eItem = static_cast<ITEM_TABLE>(_iItem);
-	CItem* pNewItem = nullptr;
+	CItem* pNewItem = new CItem(_vPos);
 
-	switch (eItem)
-	{
-	case ITEM_TABLE::sadonion:
-		pNewItem = new CSadOnion();
-		break;
-	case ITEM_TABLE::innereye:
-		pNewItem = new Cinnereye();
-		break;
-	case ITEM_TABLE::lunch:
-		pNewItem = new Clunch();
-		break;
-	case ITEM_TABLE::belt:
-		pNewItem = new Cbelt();
-		break;
-	case ITEM_TABLE::momsheels:
-		pNewItem = new Cmomsheels();
-		break;
-	case ITEM_TABLE::cricketshead:
-		pNewItem = new Ccricketshead();
-		break;
-	case ITEM_TABLE::bobbybomb:
-		pNewItem = new Cbobbybomb();
-		break;
-	case ITEM_TABLE::mrmega:
-		pNewItem = new Cmrmega();
-		break;
-	case ITEM_TABLE::mutantspider:
-		pNewItem = new Cmutantspider();
-		break;
-	case ITEM_TABLE::polyphemus:
-		pNewItem = new Cpolyphemus();
-		break;
-	case ITEM_TABLE::sagittarius:
-		pNewItem = new Csagittarius();
-		break;
-	case ITEM_TABLE::thewafer:
-		pNewItem = new Cthewafer();
-		break;
-	case ITEM_TABLE::end:
-		break;
-	default:
-		break;
-	}
 
 	pNewItem->SetName(L"Item");
-	pNewItem->SetPos(_vPos);
+//	pNewItem->SetPos(_vPos);
 	pNewItem->SetItemInfo(m_arrItem[static_cast<UINT>(eItem)]);
 	pNewItem->CreateAlter();
 	CreateObject(pNewItem, GROUP_TYPE::ITEM);
@@ -126,21 +71,21 @@ void CItemMgr::init()
 			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"CricketsHead", L"texture\\Item\\collectibles_004_cricketshead.bmp");
 			m_arrItem[i].m_stat = Stat{ 0, 0, 2, 0.f, 0.f, 0.f, 0.f };
 			break;
-		/*case 6:
+		case 6:
 			m_arrItem[i].m_eName = ITEM_TABLE::bobbybomb;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"SadOnion", L"texture\\Item\\collectibles_001_thesadonion.bmp");
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"BobbyBomb", L"texture\\Item\\collectibles_001_thesadonion.bmp");
 			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
 			break;
 		case 7:
 			m_arrItem[i].m_eName = ITEM_TABLE::mrmega;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"SadOnion", L"texture\\Item\\collectibles_001_thesadonion.bmp");
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"MrMega", L"texture\\Item\\collectibles_001_thesadonion.bmp");
 			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
 			break;
 		case 8:
 			m_arrItem[i].m_eName = ITEM_TABLE::mutantspider;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"SadOnion", L"texture\\Item\\collectibles_001_thesadonion.bmp");
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"MutantSpider", L"texture\\Item\\collectibles_001_thesadonion.bmp");
 			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
-			break;*/
+			break;
 		case 9:
 			m_arrItem[i].m_eName = ITEM_TABLE::polyphemus;
 			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"Polyphemus", L"texture\\Item\\collectibles_169_polyphemus.bmp");
