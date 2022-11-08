@@ -32,17 +32,9 @@ void CTreasureRoom::Enter()
 	if (m_bFirstEnter)
 	{
 		m_bFirstEnter = false;
-		
-/*
-		CItem* pItemInstance5 = new CItem(GetPos());
-		pItemInstance5= new Ccricketshead;
-		pItemInstance5->SetName(L"Item");
-		pItemInstance5->SetPos(GetPos());
-		pItemInstance5->CreateAlter();
-		CreateObject(pItemInstance5, GROUP_TYPE::ITEM);
 
-*/
-		
+		CItemMgr::GetInst()->CreateItem(ITEM_TABLE::sadonion, GetPos());
+				
 	}
 	CRoom::Enter();
 

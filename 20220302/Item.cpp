@@ -10,7 +10,8 @@
 #include "TimeMgr.h"
 
 CItem::CItem(Vec2 _vPos)
-	: m_pTex(nullptr)
+	: m_ItemInfo{}
+	, m_pTex(nullptr)
 	, m_stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f }
 	, m_eName(ITEM_TABLE::end)
 	, m_bRenderSwitch(false)
@@ -65,8 +66,8 @@ void CItem::update()
 
 void CItem::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->GetWidth();
-	int iHeight = (int)m_pTex->GetHeight();
+	int iWidth = static_cast<int>(m_ItemInfo.m_pTex->GetWidth());
+	int iHeight = static_cast<int>(m_ItemInfo.m_pTex->GetHeight());
 
 
 	Vec2 vScale = GetScale();
@@ -79,10 +80,10 @@ void CItem::render(HDC _dc)
 	vPos += Vec2(0.f, m_fRenderOffset);
 
 	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - (float)(vScale.x / 2))
-		, static_cast<int>(vPos.y - (float)(vScale.y / 2))
+		, static_cast<int>(vPos.x - (vScale.x / 2.f))
+		, static_cast<int>(vPos.y - (vScale.y / 2.f))
 		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
-		, m_pTex->GetDC()
+		, m_ItemInfo.m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
 

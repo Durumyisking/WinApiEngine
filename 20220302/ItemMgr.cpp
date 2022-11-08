@@ -34,8 +34,6 @@ CItemMgr::~CItemMgr()
 CItem* CItemMgr::CreateItem(ITEM_TABLE _eItem, Vec2 _vPos)
 {
 	CItem* pNewItem = nullptr;
-	pNewItem->SetName(L"Item");
-	pNewItem->SetPos(_vPos);
 
 	switch (_eItem)
 	{
@@ -80,6 +78,13 @@ CItem* CItemMgr::CreateItem(ITEM_TABLE _eItem, Vec2 _vPos)
 	default:
 		break;
 	}
+
+	pNewItem->SetName(L"Item");
+	pNewItem->SetPos(_vPos);
+	pNewItem->SetItemInfo(m_arrItem[static_cast<UINT>(_eItem)]);
+	pNewItem->CreateAlter();
+	CreateObject(pNewItem, GROUP_TYPE::ITEM);
+
 
 	return nullptr;
 }
