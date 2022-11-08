@@ -31,11 +31,12 @@ CItemMgr::~CItemMgr()
 {
 }
 
-CItem* CItemMgr::CreateItem(ITEM_TABLE _eItem, Vec2 _vPos)
+CItem* CItemMgr::CreateItem(UINT _iItem, Vec2 _vPos)
 {
+	ITEM_TABLE eItem = static_cast<ITEM_TABLE>(_iItem);
 	CItem* pNewItem = nullptr;
 
-	switch (_eItem)
+	switch (eItem)
 	{
 	case ITEM_TABLE::sadonion:
 		pNewItem = new CSadOnion();
@@ -81,7 +82,7 @@ CItem* CItemMgr::CreateItem(ITEM_TABLE _eItem, Vec2 _vPos)
 
 	pNewItem->SetName(L"Item");
 	pNewItem->SetPos(_vPos);
-	pNewItem->SetItemInfo(m_arrItem[static_cast<UINT>(_eItem)]);
+	pNewItem->SetItemInfo(m_arrItem[static_cast<UINT>(eItem)]);
 	pNewItem->CreateAlter();
 	CreateObject(pNewItem, GROUP_TYPE::ITEM);
 

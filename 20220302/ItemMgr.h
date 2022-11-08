@@ -18,7 +18,7 @@ class CItemMgr
 
 public:
 	void init();
-	CItem* CreateItem(ITEM_TABLE _eItem, Vec2 _vPos);
+	CItem* CreateItem(UINT _iItem, Vec2 _vPos);
 
 private:
 	ItemInfo m_arrItem[static_cast<UINT>(ITEM_TABLE::end)];

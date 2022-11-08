@@ -4,7 +4,7 @@
 
 #include "Camera.h"
 #include "Texture.h"
-#include "ResMgr.h"
+
 #include "Collider.h"
 
 #include "TimeMgr.h"

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "SadOnion.h"
-#include "ResMgr.h"
 
 
 CSadOnion::CSadOnion()

@@ -33,8 +33,10 @@ void CTreasureRoom::Enter()
 	{
 		m_bFirstEnter = false;
 
-		CItemMgr::GetInst()->CreateItem(ITEM_TABLE::sadonion, GetPos());
-				
+		srand(CTimeMgr::GetInst()->GetCurCount());
+		UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::end));
+//		CItemMgr::GetInst()->CreateItem(item, GetPos());
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::polyphemus), GetPos());
 	}
 	CRoom::Enter();
 
