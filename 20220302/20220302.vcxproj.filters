@@ -215,6 +215,9 @@
     <Filter Include="Engine\05. Scene\Scene_StageCut">
       <UniqueIdentifier>{8ed6225d-f015-435e-b6b1-bd2f6f986c46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\ItemMgr">
+      <UniqueIdentifier>{02f70fc9-e5d8-4357-a31a-13a7b15e54e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -485,6 +488,9 @@
     <ClInclude Include="thewafer.h">
       <Filter>Engine\04. Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="ItemMgr.h">
+      <Filter>Engine\03. Manager\ItemMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -744,6 +750,9 @@
     </ClCompile>
     <ClCompile Include="thewafer.cpp">
       <Filter>Engine\04. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemMgr.cpp">
+      <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

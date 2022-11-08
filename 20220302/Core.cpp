@@ -9,6 +9,7 @@
 #include "EventMgr.h"
 #include "UIMgr.h"
 #include "Camera.h"
+#include "ItemMgr.h"
 
 #include "Texture.h"
 #include "ResMgr.h"
@@ -78,6 +79,7 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 	CSceneMgr::GetInst()->init();
 	CCollisionMgr::GetInst()->init();
 	CEventMgr::GetInst()->init();
+	CItemMgr::GetInst()->init();
 
 
 	return S_OK;

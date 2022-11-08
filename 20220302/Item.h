@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "Costume.h"
+#include "ItemMgr.h"
 
 class CTexture;
 class CItemAlter;
@@ -10,6 +11,8 @@ class CItem :
 {
 
 protected:
+	ItemInfo		m_ItemInfo;
+
 	CTexture*		m_pTex;
 	Stat			m_stat;
 	ITEM_TABLE		m_eName;

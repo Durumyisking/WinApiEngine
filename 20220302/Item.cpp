@@ -18,6 +18,7 @@ CItem::CItem(Vec2 _vPos)
 	, m_fRenderTimer(0.f)
 	, m_pAlter(nullptr)
 {
+
 	SetScale(Vec2(64.f, 64.f));
 
 	CreateCollider();

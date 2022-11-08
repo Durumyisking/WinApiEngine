@@ -198,6 +198,7 @@
     <ClInclude Include="innereye.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemAlter.h" />
+    <ClInclude Include="ItemMgr.h" />
     <ClInclude Include="Kamikazeleech.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="lunch.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="innereye.cpp" />
     <ClCompile Include="ItemAlter.cpp" />
+    <ClCompile Include="ItemMgr.cpp" />
     <ClCompile Include="Kamikazeleech.cpp" />
     <ClCompile Include="lunch.cpp" />
     <ClCompile Include="momsheels.cpp" />
