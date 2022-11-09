@@ -92,6 +92,8 @@ public:
 	void AnimOper();
 	bool IsWafer() const { return m_bIsWafer; }
 
+	int CheckInventory(ITEM_TABLE _eItemName) { return m_vInventory[static_cast<UINT>(_eItemName)]; }
+
 public:
 	void init();
 

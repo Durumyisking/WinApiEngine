@@ -47,9 +47,11 @@ void CCollider::finalupdate()
 		Vec2 vObjectPos = m_pOwner->GetPos();
 		m_vFinalPos = vObjectPos + m_vOffsetPos;
 
+		if (m_iCol < 0)
+			int i = 0;
 		assert(0 <= m_iCol);
 	}
-}
+}	
 
 void CCollider::render(HDC _dc)
 {
@@ -98,11 +100,9 @@ void CCollider::OnCollisionEnter(CCollider * _pOther)
 
 void CCollider::OnCollisionExit(CCollider* _pOther)
 {
-	if (m_bSwitch)
-	{
 		--m_iCol;
+		m_pOpponent = nullptr;
 		m_pOwner->OnCollisionExit(_pOther);
-	}
 }
 
 // 충돌할때 오브젝트끼리 충돌하면 오브젝트들을 일일히 연산시켜야댐 (너무 비효율적)

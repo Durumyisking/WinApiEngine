@@ -7,6 +7,7 @@
 #include "Map.h"
 
 CWallCollider::CWallCollider()
+	:m_eDir(DIR::END)
 {
 //	Rectangle(_dc, 142, 128, 1138, 640);
 }
@@ -44,6 +45,10 @@ void CWallCollider::OnCollision(CCollider * _pOther)
 }
 
 void CWallCollider::OnCollisionEnter(CCollider * _pOther)
+{
+}
+
+void CWallCollider::OnCollisionExit(CCollider* _pOther)
 {
 }
 

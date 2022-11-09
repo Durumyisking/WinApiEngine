@@ -12,9 +12,13 @@
 
 
 CDoor::CDoor(CRoom* _pOwner, DIR _eDir)
-	:m_pTex(nullptr)
-	,m_pOwner(_pOwner)
-	,m_eDir(_eDir)
+	: m_pTex(nullptr)
+	, m_pOwner(_pOwner)
+	, m_eDir(_eDir)
+	, m_iSliceX(0)
+	, m_iSliceY(0)
+	, m_iSliceCountX(0)
+	, m_iSliceCountY(0)
 {
 	
 	m_bOpen = false;
@@ -25,7 +29,6 @@ CDoor::CDoor(CRoom* _pOwner, DIR _eDir)
 	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 	GetCollider()->SetScale(Vec2(90.f, 90.f));
 
-	//m_pTex->GetRotatedBitmap(0, 0, GetScale().x, GetScale().y, 180.);
 
 }
 
@@ -49,10 +52,10 @@ void CDoor::update()
 			SetSlice(64, 48);
 			break;
 		case DIR::E:
-			SetSlice(0, 48);
+			SetSlice(48, 64);
 			break;
 		case DIR::W:
-			SetSlice(0, 0);
+			SetSlice(48, 0);
 			break;
 		case DIR::END:
 			break;

@@ -195,6 +195,8 @@ enum class ROOM_TYPE
 	NORMAL,
 	TRESURE,
 	BOSS,
+
+	END,
 };
 
 

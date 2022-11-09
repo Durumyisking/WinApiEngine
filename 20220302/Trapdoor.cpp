@@ -11,7 +11,7 @@ CTrapdoor::CTrapdoor()
 	:m_pTex(nullptr)
 	,m_vSlice()
 {
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"DoorEWboss", L"texture\\Props\\door_11_trapdoor.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"Trapdoor", L"texture\\Props\\door_11_trapdoor.bmp");
 
 	SetName(L"Trapdoor");
 	m_strAnimName = L"TrapdoorAppear";

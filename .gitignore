@@ -36,6 +36,7 @@ bld/
 [Oo]bj/
 .vs/
 *.tlog
+*.log
 *.pdb
 Unity/
 *.db 

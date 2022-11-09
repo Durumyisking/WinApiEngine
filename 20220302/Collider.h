@@ -70,11 +70,20 @@ public:
 	void SwitchOn() { m_bSwitch = true; }
 	void SwitchOff() 
 	{
-		m_pOpponent->OnCollisionExit(this);
+		if (m_bSwitch)
+		{
+			if (nullptr != m_pOpponent)
+			{
+				m_pOpponent->OnCollisionExit(this);
+				m_pOpponent->GetCollider()->OnCollisionExit(this);
+			}
+		}
+	
 		m_bSwitch = false; 
 	}
 	void ToggleRenderSwitch	() { m_bRenderSwitch = !m_bRenderSwitch; }
 
+	void SetOpponent(CObject* _pOppo) { m_pOpponent = _pOppo; }
 	
 };
 

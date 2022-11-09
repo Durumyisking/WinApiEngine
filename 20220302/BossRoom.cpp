@@ -3,8 +3,8 @@
 
 
 CBossRoom::CBossRoom()
-	:m_pTrapdoor(false)
-	,m_bExit(false)
+	: m_pTrapdoor(nullptr)
+	, m_bExit(false)
 
 {
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexBoss", L"texture\\BackGround\\bg_basement_boss.bmp");

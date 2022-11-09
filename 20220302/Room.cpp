@@ -7,6 +7,10 @@
 
 CRoom::CRoom()
 	: m_bFirstEnter(true)
+	, m_eType(ROOM_TYPE::END)
+	, m_iMonsterCount(0)
+	, m_pOwner(nullptr)
+	, m_pBgTex(nullptr)
 {
 	m_bIsClear = false;
 
@@ -113,11 +117,11 @@ void CRoom::AddWall()
 
 	if (nullptr != m_pOwner->GetMapData(y, x - 1))
 	{
-		CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, -160.f), Vec2(1.f, 265.f), DIR::W);
+		CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, -163.f), Vec2(1.f, 265.f), DIR::W);
 		pWallColliderW1->SetName(L"Wall");
 		pWallColliderW1->SetOwner(this);
 		CreateObject(pWallColliderW1, GROUP_TYPE::WALL);
-		CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-500.f, 160.f), Vec2(1.f, 265.f), DIR::W);
+		CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-500.f, 155.f), Vec2(1.f, 265.f), DIR::W);
 		pWallColliderW2->SetName(L"Wall");
 		pWallColliderW2->SetOwner(this);
 		CreateObject(pWallColliderW2, GROUP_TYPE::WALL);
@@ -134,11 +138,11 @@ void CRoom::AddWall()
 
 	if (nullptr != m_pOwner->GetMapData(y, x + 1))
 	{
-		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, -160.f), Vec2(1.f, 265.f), DIR::E);
+		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, -163.f), Vec2(1.f, 265.f), DIR::E);
 		pWallColliderE1->SetName(L"Wall");
 		pWallColliderE1->SetOwner(this);
 		CreateObject(pWallColliderE1, GROUP_TYPE::WALL);
-		CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(500.f, 160.f), Vec2(1.f, 265.f), DIR::E);
+		CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(500.f, 155.f), Vec2(1.f, 265.f), DIR::E);
 		pWallColliderE2->SetName(L"Wall");
 		pWallColliderE2->SetOwner(this);
 		CreateObject(pWallColliderE2, GROUP_TYPE::WALL);

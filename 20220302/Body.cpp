@@ -97,8 +97,22 @@ void CBody::update()
 			if (1.f <= m_fBombCooldown)
 			{
 				m_pOwner->GetPickup().SetBomb(-1);
-				CBomb* pnewBomb = new CBomb();
-				pnewBomb->CreateBomb(GetPos(), GetScale());
+				CBomb* pnewBomb = new CBomb(this);
+				wstring strBombName = L"Bomb";
+				int	iBombTypeBit = 1;
+
+				if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::mrmega)])
+				{
+					strBombName = L"MegaBomb";
+					iBombTypeBit |= 2;
+				}
+				if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::bobbybomb)])
+				{
+					strBombName = L"BobbyBomb";
+					iBombTypeBit |= 4;
+				}
+
+				pnewBomb->CreateBomb(GetPos(), GetScale(), strBombName, iBombTypeBit);
 				m_fBombCooldown = 0;
 			}
 	}

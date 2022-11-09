@@ -4,6 +4,7 @@
 class CAnimation;
 class CRigidBody;
 
+
 class CBomb :
 	public CObject
 {
@@ -20,9 +21,16 @@ private:
 	float			m_fBombTime;
 	bool			m_bExplosionAnim;
 	bool			m_bPassFrame;
+	
+//	CObject*		m_pOwner;
+	CObject*		m_pTarget;
+	int				m_iBombTypeBit;
+	/*
+		0	1 : Bomb	2 : Mega	4 : Bobby
+	*/
 
 public:
-	CBomb();
+	CBomb(CObject* _pOwner);
 	~CBomb();
 
 	CLONE(CBomb);
@@ -40,7 +48,7 @@ public:
 	virtual void OnCollisionExit(CCollider* _pOther);
 
 public:
-	void CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale);
+	void CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int _iBombTypeBit);
 
 
 
