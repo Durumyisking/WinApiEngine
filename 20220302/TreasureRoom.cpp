@@ -41,7 +41,7 @@ void CTreasureRoom::Enter()
 		// CItemMgr::GetInst()->CreateItem(item, GetPos());
 
 		// ¸í½ÃÀû
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::sagittarius), GetPos());
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::thewafer), GetPos());
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::innereye), GetPos() - Vec2(200.f, 0.f));
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::mutantspider), GetPos() + Vec2(200.f, 0.f));
 	}

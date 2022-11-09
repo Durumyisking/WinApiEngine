@@ -37,8 +37,9 @@ public:
 
 public:
 	void SetItemInfo(ItemInfo _iteminfo) { m_ItemInfo = _iteminfo; }
-	Stat GetStat() { return m_ItemInfo.m_stat; }
+	Stat GetStat() const { return m_ItemInfo.m_stat; }
 	ITEM_TABLE GetItemName() const { return m_ItemInfo.m_eName; }
+	CTexture* GetItemTex() const { return m_ItemInfo.m_pTex; }
 	void CreateAlter();
 
 };

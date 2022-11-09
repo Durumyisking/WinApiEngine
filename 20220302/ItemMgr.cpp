@@ -97,6 +97,7 @@ void CItemMgr::init()
 			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
 			break;
 		case 11:
+			m_arrItem[i].m_eName = ITEM_TABLE::thewafer;
 			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"TheWafer", L"texture\\Item\\collectibles_108_thewafer.bmp");
 			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
 			break;

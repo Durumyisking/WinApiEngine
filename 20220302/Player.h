@@ -54,6 +54,9 @@ protected:
 	bool			m_bStateClear;
 	float			m_bClearAnimTimer;
 
+	bool			m_bIsWafer;
+
+	CTexture*		m_pItemTex;
 
 public:
 	CPlayer();
@@ -86,8 +89,8 @@ public:
 	void SetStateClear() { m_bStateClear = true; }
 	void SetStateUnclear() { m_bStateClear = false; }
 	bool IsStateClear() { return m_bStateClear; }
-
 	void AnimOper();
+	bool IsWafer() const { return m_bIsWafer; }
 
 public:
 	void init();

@@ -118,9 +118,7 @@ void CMissile::CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _
 
 	m_strAnimName = L"TEAR_IDLE" + m_strShooterName;
 
-
 	PlayAnim(m_pAnim, m_strAnimName, m_vOffset, true);
-
 
 
 	Vec2 vMissilePos = _pShooter->GetPos(); // 눈물을 쏜 어의 위치 가져옴

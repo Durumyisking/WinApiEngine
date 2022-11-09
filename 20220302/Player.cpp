@@ -46,6 +46,8 @@ CPlayer::CPlayer()
 	, m_bGoTrapdoor(false)
 	, m_bStateClear(false)
 	, m_bClearAnimTimer(0.f)
+	, m_bIsWafer(false)
+	, m_pItemTex(nullptr)
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
@@ -193,12 +195,12 @@ void CPlayer::update()
 			m_pCostume[i]->update();
 	}
 
-	// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
-	if (nullptr != m_GetItemCheck)
-	{
-		ItemCheck();
-		m_GetItemCheck = nullptr;
-	}
+	//// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
+	//if (nullptr != m_GetItemCheck)
+	//{
+	//	ItemCheck();
+	//	//m_GetItemCheck = nullptr;
+	//}
 
 
 }
@@ -225,11 +227,12 @@ void CPlayer::render(HDC _dc)
 	if (nullptr != m_pOwner)
 	{
 		// 부모의 애니메이션이 진행중이면 렌더링 하지 않는다
-		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
-			|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
-		{
-			return;
-		}
+			if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+				|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+				|| L"GetItem" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
+			{
+				return;
+			}
 		else
 		{
 			for (size_t i = 0; i < m_pCostume.size(); i++)
@@ -245,7 +248,34 @@ void CPlayer::render(HDC _dc)
 	{
 		component_render(_dc);
 	}
-	
+
+	// 부모 애니메이션 리셋
+	if (GetAnimator()->GetCurAnim()->IsFinish())
+	{
+		if (GetAnimator()->GetCurAnim() == GetAnimator()->FindAnimation(L"GetItem"))
+			m_pItemTex = nullptr;
+		GetAnimator()->ResetCurAnim();
+
+	}
+
+	// 아이템을 획득했을때
+	if (GetAnimator()->GetCurAnim() == GetAnimator()->FindAnimation(L"GetItem"))
+	{
+		Vec2 vPos = GetPos() - Vec2(0.f, 40.f);
+
+		// 카메라 시점 동기화
+		vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - (64.f / 2.f))
+			, static_cast<int>(vPos.y - (64.f / 2.f))
+			, 64, 64
+			, m_pItemTex->GetDC()
+			, 0, 0, 32, 32
+			, RGB(255, 0, 255));
+
+	}
+
 }
 
 
@@ -291,6 +321,7 @@ void CPlayer::init()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Hurt", m_pTex, Vec2(0.f, 325.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 0.5f, 2, false);
 	GetAnimator()->CreateAnimation(L"Jump", m_pTex, Vec2(0.f, 200.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 1.f, 2, false);
+	GetAnimator()->CreateAnimation(L"GetItem", m_pTex, Vec2(193.f, 262.f), Vec2(48.f, 37.f), Vec2(65.f, 0.f), 1.5f, 1, false);
 
 	
 	pBody = new CBody;
@@ -366,7 +397,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		{
 			m_strAnimName = L"Hurt";
 			AnimOper();
-			m_finvincibilityTime = 0;
+			m_finvincibilityTime = 0.f;
 		}
 	}
 
@@ -447,6 +478,20 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		++(m_vInventory[static_cast<UINT>(pItem->GetItemName())]);
 		m_GetItemCheck = pItem;
 
+		// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
+		if (nullptr != m_GetItemCheck)
+		{
+			ItemCheck();
+
+			m_GetItemCheck = nullptr;
+		}
+
+		
+		m_strAnimName = L"GetItem";
+		if (GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"GetItem"))
+		{
+			AnimOper();
+		}
 
 	}	
 
@@ -535,6 +580,8 @@ void CPlayer::CreateMissile(Vec2 _vDir)
 
 void CPlayer::ItemCheck()
 {
+	m_pItemTex = m_GetItemCheck->GetItemTex();
+
 	float fFricCoeffRatio = GetRigidBody()->GetFricCoeff() / m_pStat->m_fSpeed;
 
 	*m_pStat += m_GetItemCheck->GetStat();
@@ -549,6 +596,12 @@ void CPlayer::ItemCheck()
 	{
 		m_bGetHpMax = true;
 	}
+	if (ITEM_TABLE::thewafer == m_GetItemCheck->GetItemName())
+	{
+		m_bIsWafer = true;
+	}
+
+
 	CCostume* pCosTemp = new CCostume(m_GetItemCheck->GetItemName());
 	// 이미 있는 아이템이면 코스튬추가 필요없음
 	for (size_t i = 0; i < m_pCostume.size(); i++)

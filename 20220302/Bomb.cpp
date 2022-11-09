@@ -80,9 +80,13 @@ void CBomb::OnCollision(CCollider * _pOther) // 2
 		if (L"Player" == pOtherObj->GetName())
 		{
 			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+			int iDamage = 2;
 
 			pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
-			pPlayer->GetStat()->InflictDamage(2);
+			if (pPlayer->IsWafer())
+				iDamage = 1;
+
+			pPlayer->GetStat()->InflictDamage(iDamage);
 		}
 		if (L"Monster" == pOtherObj->GetName())
 		{
@@ -105,9 +109,14 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 		if (L"Player" == pOtherObj->GetName())
 		{
 			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+			int iDamage = 2;
 
 			pPlayer->SetPrevHp(pPlayer->GetStat()->m_iHP);
-			pPlayer->GetStat()->InflictDamage(2);
+			if (pPlayer->IsWafer())
+				iDamage = 1;
+
+			pPlayer->GetStat()->InflictDamage(iDamage);
+
 		}
 		if (L"Monster" == pOtherObj->GetName())
 		{
