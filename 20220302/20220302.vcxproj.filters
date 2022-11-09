@@ -266,9 +266,6 @@
     <ClInclude Include="Object.h">
       <Filter>Engine\04. Object</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Engine\06. Resource\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Engine\06. Resource\Texture</Filter>
     </ClInclude>
@@ -455,6 +452,7 @@
     <ClInclude Include="ItemMgr.h">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Sound.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -489,9 +487,6 @@
     </ClCompile>
     <ClCompile Include="Missile.cpp">
       <Filter>Engine\04. Object\Tear</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Engine\06. Resource\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Engine\06. Resource\Texture</Filter>
@@ -682,6 +677,7 @@
     <ClCompile Include="ItemMgr.cpp">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="20220302.rc">
