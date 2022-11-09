@@ -73,33 +73,33 @@ void CItemMgr::init()
 			break;
 		case 6:
 			m_arrItem[i].m_eName = ITEM_TABLE::bobbybomb;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"BobbyBomb", L"texture\\Item\\collectibles_001_thesadonion.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"BobbyBomb", L"texture\\Item\\collectibles_125_bobbybomb.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
 			break;
 		case 7:
 			m_arrItem[i].m_eName = ITEM_TABLE::mrmega;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"MrMega", L"texture\\Item\\collectibles_001_thesadonion.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"MrMega", L"texture\\Item\\collectibles_106_mrmega.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
 			break;
 		case 8:
 			m_arrItem[i].m_eName = ITEM_TABLE::mutantspider;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"MutantSpider", L"texture\\Item\\collectibles_001_thesadonion.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"MutantSpider", L"texture\\Item\\collectibles_153_mutantspider.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.32f };
 			break;
 		case 9:
 			m_arrItem[i].m_eName = ITEM_TABLE::polyphemus;
 			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"Polyphemus", L"texture\\Item\\collectibles_169_polyphemus.bmp");
 			m_arrItem[i].m_stat = Stat{ 0, 0, 10, 0.f, 0.f, 0.f, 0.55f };
 			break;
-		/*case 10:
+		case 10:
 			m_arrItem[i].m_eName = ITEM_TABLE::sagittarius;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"SadOnion", L"texture\\Item\\collectibles_001_thesadonion.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"Sagittarius", L"texture\\Item\\collectibles_306_sagittarius.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
 			break;
 		case 11:
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"SadOnion", L"texture\\Item\\collectibles_001_thesadonion.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, -0.1f };
-			break;*/
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"TheWafer", L"texture\\Item\\collectibles_108_thewafer.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
+			break;
 		default:
 			break;
 		}

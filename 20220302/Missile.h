@@ -12,8 +12,7 @@ private:
 	Vec2		m_vOffset;
 	float		m_fMagnify;
 	
-	MISSILE_TYPE m_eType;	
-
+	
 	float		m_fShotSpeed;
 	int			m_iDmg;
 
@@ -27,6 +26,7 @@ private:
 	CObject*	m_pOwner;
 
 	bool		m_bpoofa;
+	bool		m_bPierce;
 
 
 public:
@@ -40,7 +40,6 @@ public:
 		m_vDir.Normalize();
 	}
 
-	void SetType(MISSILE_TYPE _eType) { m_eType = _eType; }
 
 	int	GetDmg() { return m_iDmg; }
 	
@@ -53,8 +52,9 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 public:
-	void CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName);
+	void CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName);
 	void ChangeTexture(CTexture* _pTex) { m_pTex = _pTex; }
+	void SetPierce(bool _bPierce) { m_bPierce = _bPierce; }
 
 	CLONE(CMissile);
 

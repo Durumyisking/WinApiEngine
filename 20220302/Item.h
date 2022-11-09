@@ -13,9 +13,6 @@ class CItem :
 protected:
 	ItemInfo		m_ItemInfo;
 
-	CTexture*		m_pTex;
-	Stat			m_stat;
-	ITEM_TABLE		m_eName;
 	float			m_fRenderOffset;
 	float			m_fRenderTimer;
 	bool			m_bRenderSwitch; // true면 올라가기 false면 내려가기

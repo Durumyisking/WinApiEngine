@@ -169,44 +169,79 @@ void CHead::ChangeTearSize(CMissile* _pMissile, float _fMagnify)
 	vCollderScale = pCollider->GetScale();
 }
 
+void CHead::CheckSizeItem(CMissile* _pMissile)
+{
+
+	if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::cricketshead)] > 0)
+	{
+		ChangeTearSize(_pMissile, 0.5f);
+		_pMissile->SetOffset(_pMissile->GetOffset() + Vec2(-24.f, -28.f));
+	}
+
+	if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::polyphemus)] > 0)
+	{
+		ChangeTearSize(_pMissile, 1.f);
+		_pMissile->SetOffset(_pMissile->GetOffset() + Vec2(-48.f, -48.f));
+	}
+
+	_pMissile->GetAnimator()->GetCurAnim()->SetOffset(_pMissile->GetOffset());
+}
+
 
 
 void CHead::CreateMissile(Vec2 _vDir)
 {
 	if (m_dAttackDealy > m_pStat->m_fRate)
 	{
-		CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
+		CMissile* pMissileNormal = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
+		pMissileNormal->SetDir(_vDir);
+		m_vecMissile.push_back(pMissileNormal);
 
 		// innereye
 		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::innereye)] > 0)
 		{
 			for (int  i = -1; i < 2; i++)
 			{
+				if (0 == i)
+					continue;
+				CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
 				pMissile->SetDir(_vDir.Rotate(5 * i));
+				m_vecMissile.push_back(pMissile);
 			}
 		}
-		else // 노말눈물
+		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::mutantspider)] > 0)
 		{
-			pMissile->SetDir(_vDir);
+			for (int i = -2; i <= 2; i++)
+			{
+				if (0 == i)
+					continue;
+				if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::innereye)] > 0 && (-1 == i || 1 == i))
+				{
+					continue;
+				}
+				CMissile* pMissile = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
+				pMissile->SetDir(_vDir.Rotate(5 * i));
+				m_vecMissile.push_back(pMissile);
+			}
 		}
-		pMissile->CreateMissile(MISSILE_TYPE::DEFAULT, GROUP_TYPE::PROJ_PLAYER, this, L"Player");
-
-		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::cricketshead)] > 0)
+		// 미사일 벡터에 담긴 미사일들을 한꺼번에 처리한다 // 텍스처, 관통
+		for (size_t i = 0; i < m_vecMissile.size(); i++)
 		{
-			ChangeTearSize(pMissile, 0.5f);
-			pMissile->SetOffset(pMissile->GetOffset() + Vec2(-24.f, -28.f));
+			if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::sagittarius)] > 0)
+			{
+				m_vecMissile[i]->ChangeTexture(CResMgr::GetInst()->LoadTexture(L"TearTexArrow", L"texture\\Tear\\effect_998_arrowpoofa.bmp"));
+				m_vecMissile[i]->SetPierce(true);
+			}
+
+			
+			m_vecMissile[i]->CreateMissile(GROUP_TYPE::PROJ_PLAYER, this, L"Player");
+			CheckSizeItem(m_vecMissile[i]);
 		}
-
-		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::polyphemus)] > 0)
-		{
-			ChangeTearSize(pMissile, 1.f);
-			pMissile->SetOffset(pMissile->GetOffset() + Vec2(-48.f, -48.f));
-		}
-		pMissile->GetAnimator()->GetCurAnim()->SetOffset(pMissile->GetOffset());
-
-
 
 		m_dAttackDealy = 0.f;
+
+		// 미사일 벡터 클리어
+		m_vecMissile.clear();
 	}
 
 }

@@ -104,8 +104,8 @@ void CAnimation::render(HDC _dc)
 
 
 	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - (vScale.x / m_fMagnify) + m_vOffset.x)
-		, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - (vScale.y / m_fMagnify) + m_vOffset.y)
+		, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - vScale.x / m_fMagnify + m_vOffset.x)
+		, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - vScale.y / m_fMagnify + m_vOffset.y)
 		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x * m_fMagnify)
 		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y * m_fMagnify)
 		, Outputdc

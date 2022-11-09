@@ -91,10 +91,14 @@ void CPlayer::update()
 		{
 			vPos.y -= 50.f;
 			Vec2 vOffset = GetAnimator()->GetCurAnim()->GetOffset();
-			vOffset.x += fDT * 230;
-			vOffset.y += fDT * 300;
-			GetAnimator()->GetCurAnim()->SetOffset(vOffset);
-			GetAnimator()->GetCurAnim()->SetMagnify(GetAnimator()->GetCurAnim()->GetMagnify() - (fDT * 10));
+
+			//if (GetAnimator()->GetCurAnim()->GetMagnify() > 1.f)
+			//{
+			//	vOffset.x += fDT * 725.f;
+			//	vOffset.y += fDT * 725.f;
+			//	GetAnimator()->GetCurAnim()->SetOffset(vOffset);
+			//	GetAnimator()->GetCurAnim()->SetMagnify(GetAnimator()->GetCurAnim()->GetMagnify() - (fDT * 10));
+			//}
 		}
 		else if (m_bClearAnimTimer > 1.f)
 		{
@@ -107,12 +111,16 @@ void CPlayer::update()
 			m_bClearAnimTimer = 0.f;
 			GetAnimator()->GetCurAnim()->SetFinish();
 			GetAnimator()->ResetCurAnim();
+			SetScale(Vec2(138.f, 91.f));
+
 			return;
 		}
 
+		// 현재 위치랑 트랩도어 위치랑 다르면
 		Vec2 vDir = (vPos - GetPos()).Normalize();
 		if (vPos != GetPos())
 		{
+			// 트랩도어 방향으로 이동한다.
 			float x = GetPos().x + vDir.x * 500.f * fDT;
 			float y = GetPos().y + vDir.y * 500.f * fDT;
 			SetPos(Vec2(x, y));

@@ -50,10 +50,5 @@ void CStartRoom::Enter()
 	}
 	CRoom::Enter();
 
-	//// 몬스터 생성
-
-	//CMonster* M2 = CMonsterFactory::CreateMonster(MON_TYPE::Charger, GetPos() + m_vResolution / 4 - Vec2(400.f, 0.f), this);
-	//CSceneMgr::GetInst()->GetCurScene()->AddObject(M2, GROUP_TYPE::MONSTER);
-	//++m_iMonsterCount;
 
 }

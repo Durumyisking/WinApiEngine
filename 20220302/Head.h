@@ -23,6 +23,10 @@ public:
 
 public:
 	void ChangeTearSize(CMissile* _pMissile, float _fMagnify);
+	void CheckSizeItem(CMissile* _pMissile);
 
+
+private:
+	vector<CMissile*> m_vecMissile;
 };
 

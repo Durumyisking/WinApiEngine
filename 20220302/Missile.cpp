@@ -22,15 +22,15 @@
 CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	: m_fTheta(static_cast<float>(PI / 2.f))
 	, m_vDir(Vec2(0.f, -1.f))
-	, m_vOffset(Vec2(8.f, 8.f))
+	, m_vOffset(Vec2(8.f, 4.f))
 	, m_fMagnify(2.f)
-	, m_eType(MISSILE_TYPE::DEFAULT)
 	, m_fShotSpeed(_fShotSpeed)
 	, m_iDmg(_iDmg)
 	, m_pTex(nullptr)
 	, m_strAnimName(L"")
 	, m_pOwner(nullptr)
 	, m_bpoofa(false)
+	, m_bPierce(false)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
 	CreateAnimator();
@@ -60,10 +60,6 @@ void CMissile::update()
 
 	Vec2 vPos = GetPos();
 
-	switch (m_eType)
-	{
-	case MISSILE_TYPE::DEFAULT:
-	{
 		CRigidBody* pRigid = GetRigidBody();
 
 		m_fAccFall -= fDT;
@@ -88,7 +84,7 @@ void CMissile::update()
 
 			if (!m_bpoofa)
 			{
-				m_vOffset += Vec2(8.f, 8.f);
+				m_vOffset += Vec2(8.f, 4.f);
 				PlayAnim(m_pAnim, m_strAnimName, m_vOffset, false);
 				GetAnimator()->GetCurAnim()->SetMagnify(m_fMagnify);
 			}
@@ -96,12 +92,7 @@ void CMissile::update()
 
 			m_bpoofa = true;
 		}
-		break;
-	}
-
-	default:
-		break;
-	}
+	
 
 	SetPos(vPos);
 }
@@ -109,18 +100,18 @@ void CMissile::render(HDC _dc)
 {
 	component_render(_dc);
 }
-void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName)
+void CMissile::CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName)
 {
 	m_strShooterName = _strShooterName;
 	if (_strShooterName == L"Dangle")
 	{
 		GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
-		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(192.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 16, false);
+		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(192.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 15, false);
 	}
 	else
 	{
 		GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.5f, 1, false);
-		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 16, false);
+		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(64.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 15, false);
 	}
 	GetAnimator()->FindAnimation(L"TEAR_IDLE" + m_strShooterName)->SetMagnify(2.f);
 	GetAnimator()->FindAnimation(L"TEAR_POOFA" + m_strShooterName)->SetMagnify(2.f);
@@ -137,48 +128,39 @@ void CMissile::CreateMissile(MISSILE_TYPE _eType, GROUP_TYPE _eShooter, CObject*
 
 	SetScale(Vec2(100.f, 80.f));
 
-	switch (_eType)
+	if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
 	{
-	case MISSILE_TYPE::DEFAULT:
-		SetType(MISSILE_TYPE::DEFAULT);
-		if (GROUP_TYPE::PROJ_PLAYER == _eShooter)
-		{
-			SetName(L"Tear_Player");
-			m_pOwner = _pShooter;
+		SetName(L"Tear_Player");
+		m_pOwner = _pShooter;
 
-			vMissilePos  += Vec2(0.f, 20.f);
-			SetPos(vMissilePos)	;
+		vMissilePos  += Vec2(0.f, 20.f);
+		SetPos(vMissilePos)	;
 
-			// 플레이어의 스텟에서 눈물 최대속도 받음
-			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
+		// 플레이어의 스텟에서 눈물 최대속도 받음
+		GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
 
-			// 플레이어의 힘/3 받은 후 더함
-			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
-			vForce = vForce + m_vDir * m_fShotSpeed;
-			GetRigidBody()->AddVelocity(vForce);
+		// 플레이어의 힘/3 받은 후 더함
+		Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
+		vForce = vForce + m_vDir * m_fShotSpeed;
+		GetRigidBody()->AddVelocity(vForce);
 
-			m_fAccFall = dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fRange;
+		m_fAccFall = dynamic_cast<CPlayer*>(m_pOwner)->GetStat()->m_fRange;
 		
-		}
-		else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
-		{
-			SetName(L"Tear_Monster");
-			m_pOwner = _pShooter;
+	}
+	else if (GROUP_TYPE::PROJ_MONSTER == _eShooter)
+	{
+		SetName(L"Tear_Monster");
+		m_pOwner = _pShooter;
 
-			SetPos(vMissilePos);
+		SetPos(vMissilePos);
 
-			GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
+		GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
 
-			Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
-			vForce = vForce + m_vDir * m_fShotSpeed;
-			GetRigidBody()->AddVelocity(vForce);
+		Vec2 vForce = m_pOwner->GetRigidBody()->GetForce() / 2.f;
+		vForce = vForce + m_vDir * m_fShotSpeed;
+		GetRigidBody()->AddVelocity(vForce);
 
-			m_fAccFall = dynamic_cast<CMonster*>(m_pOwner)->GetStat().m_fRange;
-		}
-		break;
-
-	default:
-		break;
+		m_fAccFall = dynamic_cast<CMonster*>(m_pOwner)->GetStat().m_fRange;
 	}
 
 	CreateObject(this, _eShooter);
@@ -192,15 +174,22 @@ void CMissile::OnCollisionEnter(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 	if (L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName())
 	{
+		if (m_bPierce)
+		{
+			return;
+		}
+
 		m_fAccFall = 0.5f;
 	}
 
 
 	if (L"Wall_Tear" == pOtherObj->GetName())
 	{
-		//GetCollider()->SwitchOff();
 		m_fAccFall = 0.5f;
 	}
+
+//	GetCollider()->SwitchOff();
+
 }
 void CMissile::OnCollisionExit(CCollider * _pOther)
 {

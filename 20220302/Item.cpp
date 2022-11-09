@@ -11,9 +11,6 @@
 
 CItem::CItem(Vec2 _vPos)
 	: m_ItemInfo{}
-	, m_pTex(nullptr)
-	, m_stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f }
-	, m_eName(ITEM_TABLE::end)
 	, m_bRenderSwitch(false)
 	, m_fRenderOffset(0.f)
 	, m_fRenderTimer(0.f)
