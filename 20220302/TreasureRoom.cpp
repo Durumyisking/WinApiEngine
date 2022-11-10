@@ -41,10 +41,22 @@ void CTreasureRoom::Enter()
 		// CItemMgr::GetInst()->CreateItem(item, GetPos());
 
 		// ¸í½ÃÀû
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::bobbybomb), GetPos());
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::mrmega), GetPos() - Vec2(0.f, 200.f));
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::innereye), GetPos() - Vec2(200.f, 0.f));
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::mutantspider), GetPos() + Vec2(200.f, 0.f));
+
+		Vec2 vSpace = Vec2(100.f, 0.f);
+
+		int j = -3;
+		float y = -200;
+		for (UINT i = 0; i < static_cast<UINT>(ITEM_TABLE::end); i++)
+		{
+			if (j > 3)
+			{
+				j = -3;
+				y += 100;
+			}
+			CItemMgr::GetInst()->CreateItem(i, GetPos() + (vSpace * j) + Vec2(0.f, y) );
+
+			++j;
+		}
 	}
 	CRoom::Enter();
 

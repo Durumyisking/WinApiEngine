@@ -288,19 +288,20 @@ void CScene_Start::SetPlayerPos(CObject* _pPlayer)
 	
 }
 
+
 void CScene_Start::SetStage(int _iStage)
 {
+	wstring strFolder = CPathMgr::GetInst()->GetContentPath();
+	strFolder += L"map\\Stage";
+
 	wstring strStage = std::to_wstring(m_CurrentStage);
 	wstring strPathEnd = L".txt";
-	wstring szName = L"E:\\IsaacProject\\Output\\bin\\content\\map\\Stage";
 
-	szName += strStage;
-	szName += strPathEnd;
+	strFolder += strStage;
+	strFolder += strPathEnd;
 
-	wstring strStageFolder = CPathMgr::GetInst()->GetContentPath();
-	strStageFolder += L"map";
 	m_pMap = new CMap();
-	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
+	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(strFolder);
 	m_pMap->LoadMap(strRelativePath);
 
 	m_pMap->GetCurrentRoom()->Enter();

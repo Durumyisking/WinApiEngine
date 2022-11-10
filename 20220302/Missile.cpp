@@ -32,6 +32,7 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	, m_bpoofa(false)
 	, m_bPierce(false)
 	, m_fAccFall(0.f)
+
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
 	CreateAnimator();
@@ -81,7 +82,6 @@ void CMissile::update()
 		{
 
 			pRigid->SetVelocity(Vec2(0.f, 0.f));
-			//			GetAnimator()->Play(m_strAnimName, false);
 			m_strAnimName = L"TEAR_POOFA" + m_strShooterName;
 
 			if (!m_bpoofa)
@@ -91,7 +91,6 @@ void CMissile::update()
 				PlayAnim(m_pAnim, m_strAnimName, m_vOffset, false);
 				GetAnimator()->GetCurAnim()->SetMagnify(m_fMagnify);
 			}
-			//			GetAnimator()->GetCurAnim()->SetOffset(m_vOffset);
 
 			m_bpoofa = true;
 		}

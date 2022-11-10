@@ -29,6 +29,8 @@ private:
 	bool		m_bPierce;
 
 
+
+
 public:
 	CMissile(float _fShotSpeed, int _iDmg);
 	~CMissile();
