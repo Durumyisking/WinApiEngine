@@ -177,6 +177,7 @@
     <ClInclude Include="Charger.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="Coltty.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Costume.h" />
     <ClInclude Include="Dangle.h" />
@@ -229,7 +230,6 @@
     <ClInclude Include="Scene_Start.h" />
     <ClInclude Include="Scene_Tool.h" />
     <ClInclude Include="SelectGDI.h" />
-    <ClInclude Include="Sound.h" />
     <ClInclude Include="StartRoom.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="struct.h" />
@@ -259,6 +259,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Charger.cpp" />
+    <ClCompile Include="Coltty.cpp" />
     <ClCompile Include="Costume.cpp" />
     <ClCompile Include="Dangle.cpp" />
     <ClCompile Include="DeadState.cpp" />
@@ -315,7 +316,6 @@
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="Scene_Tool.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
-    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StartRoom.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Texture.cpp" />

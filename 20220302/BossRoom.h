@@ -18,6 +18,7 @@ public:
 private:
 	bool		m_bTrapdoor;
 	bool		m_bExit;
+	bool		m_bItemCreated;
 
 };
 

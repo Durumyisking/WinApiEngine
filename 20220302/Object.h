@@ -15,6 +15,7 @@ private:
 
 	CRoom*		 m_pOwner;
 
+	Vec2		m_vPrevPos;	// pp
 	Vec2		m_vPos;		// 물제의 실제 위치
 	Vec2		m_vPosTemp;
 	Vec2		m_vScale;
@@ -24,6 +25,7 @@ private:
 	CRigidBody* m_pRigidBody;
 
 	bool		m_bAlive;	// 살았니 죽었니
+
 
 protected:
 	Vec2		m_vResolution;

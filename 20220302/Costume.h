@@ -45,5 +45,6 @@ private:
 	Vec2		m_vAnimOffset;
 
 	bool		m_bIsHead;
+	bool		m_bHaveUp;
 };
 

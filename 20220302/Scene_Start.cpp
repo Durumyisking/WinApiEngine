@@ -169,7 +169,7 @@ void CScene_Start::update()
 {
 	CScene::update();
 
-	if (ROOM_TYPE::BOSS == m_pMap->GetCurrentRoom()->GetType() && !m_bBossRoomEnter)
+	if (ROOM_TYPE::BOSS == m_pMap->GetCurrentRoom()->GetType() && !m_bBossRoomEnter && !(m_pMap->GetCurrentRoom()->IsClear()))
 	{
 		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::BOSS);
 		m_bBossRoomEnter = true;

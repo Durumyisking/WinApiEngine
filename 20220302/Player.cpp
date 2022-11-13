@@ -168,16 +168,7 @@ void CPlayer::update()
 	{
 	}
 
-	if (m_bCollisionwall)
-	{
-		CRigidBody* pRigid = GetRigidBody();
-		Vec2 vDir = pRigid->GetVelocity().Normalize();
-		Vec2 vtemp = (-vDir * (m_pWallcollider->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
-		//    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
-		vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
-		vPos = vDir;
-		m_bCollisionwall = false;
-	}
+	
 
 	SetPos(vPos);
 
@@ -208,7 +199,7 @@ void CPlayer::update()
 void CPlayer::render(HDC _dc)
 {
 	// 무적시간 동안 프레임마다 깜빡이게 합니다.
-	if (m_finvincibilityTime < 1.0f)
+	if (m_finvincibilityTime < 1.0f)	
 	{
 		if (m_bFramePass)
 		{
@@ -458,8 +449,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 		else
 		{
-			m_pWallcollider = _pOther;
-			m_bCollisionwall = true;
+			//m_pWallcollider = _pOther;
+			//m_bCollisionwall = true;
 
 		}
 	}
@@ -467,8 +458,15 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		m_pWallcollider = _pOther;
-		m_bCollisionwall = true;
+		//Vec2 vPos = GetPos();
+		////m_pWallcollider = _pOther;
+		//CRigidBody* pRigid = GetRigidBody();
+		//Vec2 vDir = pRigid->GetVelocity().Normalize();
+		//Vec2 vtemp = (-vDir * (_pOther->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
+		////    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
+		//vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
+		//vPos = vDir;
+		SetPos(m_vPrevPos);
 	}
 	
 	// item

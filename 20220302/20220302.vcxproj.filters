@@ -218,6 +218,9 @@
     <Filter Include="Engine\03. Manager\ItemMgr">
       <UniqueIdentifier>{02f70fc9-e5d8-4357-a31a-13a7b15e54e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\coltty">
+      <UniqueIdentifier>{3e39c946-4eb0-4697-8160-55f1e212ad3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -452,7 +455,9 @@
     <ClInclude Include="ItemMgr.h">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h" />
+    <ClInclude Include="Coltty.h">
+      <Filter>Engine\04. Object\Monster\coltty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -677,7 +682,9 @@
     <ClCompile Include="ItemMgr.cpp">
       <Filter>Engine\03. Manager\ItemMgr</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Coltty.cpp">
+      <Filter>Engine\04. Object\Monster\coltty</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="20220302.rc">

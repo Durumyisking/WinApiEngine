@@ -11,8 +11,9 @@ CRoom::CRoom()
 	, m_iMonsterCount(0)
 	, m_pOwner(nullptr)
 	, m_pBgTex(nullptr)
+	, m_bGetReward(false)
+	, m_bIsClear(false)
 {
-	m_bIsClear = false;
 
 }
 

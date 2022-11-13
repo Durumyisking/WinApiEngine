@@ -53,6 +53,7 @@ public:
 	void AddWall();
 	void AddDoor();
 	void MonsterDead() { --m_iMonsterCount; }
+	bool IsClear() const { return m_bIsClear; }
 	virtual void Enter();
 	virtual void Exit();
 	//	void IsClear();
@@ -70,5 +71,5 @@ protected:
 	int			m_iMonsterCount;
 	bool		m_bIsClear;
 	bool		m_bFirstEnter;
-
+	bool		m_bGetReward;
 };

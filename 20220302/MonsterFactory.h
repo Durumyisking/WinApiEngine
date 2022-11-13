@@ -14,7 +14,7 @@ enum class MON_TYPE
 	Host,
 	Charger,
 	Kamikazeleech,
-
+	Coltty,
 
 	// boss
 	Dangle,

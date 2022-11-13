@@ -16,6 +16,9 @@ void CNormalRoom::update()
 {
 	if(this ==m_pOwner->GetCurrentRoom())
 		CRoom::update();
+
+	// 클리어시 픽업생성
+//	if()
 }
 
 void CNormalRoom::render(HDC _dc)
@@ -31,7 +34,7 @@ void CNormalRoom::Enter()
 	{
 		// 몬스터 생성
 
-		CMonster* M5 = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, GetPos() , this);
+		CMonster* M5 = CMonsterFactory::CreateMonster(MON_TYPE::Coltty, GetPos() , this);
 		CSceneMgr::GetInst()->GetCurScene()->AddObject(M5, GROUP_TYPE::MONSTER);
 		++m_iMonsterCount;
 
