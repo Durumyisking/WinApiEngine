@@ -186,7 +186,10 @@ enum class PICKUP_TYPE
 	HEART,
 	COIN,
 	BOMB,
-	KEY
+	KEY,
+
+
+	END,
 };
 
 enum class ROOM_TYPE

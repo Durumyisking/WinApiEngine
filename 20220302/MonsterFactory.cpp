@@ -173,7 +173,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Coltty:
 	{
 		pMon = new CColtty;
-		Stat Stat = { 50, 50, 1, 100.f, 0.f, 0.f , 0.f };
+		Stat Stat = { 50, 50, 1, 100.f, 600.f, 3.f ,0.f };
 		pMon->SetScale(Vec2(64.f, 64.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(10.f);
@@ -187,7 +187,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetAI(pAI);
 
 		pMon->CreateRigidBody();
-		pMon->GetRigidBody()->SetMass(1.f);
+		pMon->GetRigidBody()->SetMass(2.f);
 		pMon->GetRigidBody()->SetFricCoeff(300.f);
 
 

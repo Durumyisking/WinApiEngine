@@ -3,6 +3,11 @@
 
 #include "WallCollider.h"
 
+#include "Pickup.h"
+#include "PickupHeart.h"
+#include "PickupCoin.h"
+#include "PickupBomb.h"
+#include "PickupKey.h"
 
 
 CRoom::CRoom()
@@ -13,6 +18,7 @@ CRoom::CRoom()
 	, m_pBgTex(nullptr)
 	, m_bGetReward(false)
 	, m_bIsClear(false)
+	, m_bIsLock(false)
 {
 
 }
@@ -29,6 +35,38 @@ void CRoom::update()
 		if (m_iMonsterCount <= 0)
 		{
 			m_bIsClear = true;
+			
+			// ¹æº¸»ó ÁÜ
+			if (!m_bGetReward)
+			{
+				m_bGetReward = true;
+
+				srand(CTimeMgr::GetInst()->GetCurCount());
+				int iCount = rand() % 3;
+
+				// ÇÏÆ® µ· ÆøÅº ¿­¼è »óÀÚ
+				switch (iCount)
+				{
+				case 0:
+					break;
+					// Áß¾Ó
+				case 1:
+					DropPickupType(GetPos());
+					break;
+					// Áß¾Ó ¾ç¿·
+				case 2:
+					for (int i = -1; i <= 1; i++)
+					{
+						if (0 == i)
+							continue;
+						DropPickupType(GetPos() + (Vec2(64.f, 0.f) * i));
+					}
+					break;
+
+				default:
+					break;
+				}
+			}	
 		}
 		else
 		{
@@ -285,3 +323,36 @@ void CRoom::Enter()
 void CRoom::Exit()
 {
 }
+
+void CRoom::DropPickupType(Vec2 _vPos)
+{
+	void* p = new int();
+	srand((int)p);
+
+	int iType = rand() % static_cast<int>(PICKUP_TYPE::END);
+
+
+	CObject* pPickup = nullptr;
+	switch (iType)
+	{
+	case 0: // ÇÏÆ®
+		pPickup = new CPickupHeart;
+		break;
+	case 1: // µ·
+		pPickup = new CPickupCoin;
+		break;
+	case 2: // ÆøÅº
+		pPickup = new CPickupBomb;
+		break;
+	case 3: // ¿­¼è
+		pPickup = new CPickupKey;
+		break;
+	default:
+		break;
+	}
+	pPickup->SetPos(_vPos);
+	CreateObject(pPickup, GROUP_TYPE::PICKUP);
+
+	delete p;
+}
+

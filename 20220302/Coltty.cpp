@@ -65,9 +65,9 @@ void CColtty::Attack()
 
 
 	srand(CTimeMgr::GetInst()->GetCurCount());
-	float x = static_cast<float>(rand() % 5000 - 2400);
+	float x = static_cast<float>(rand() % 10000 - 4800);
 	srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
-	float y = static_cast<float>(rand() % 5000 - 2400);
+	float y = static_cast<float>(rand() % 10000 - 4800);
 	GetRigidBody()->AddForce(Vec2(x, y));
 }
 

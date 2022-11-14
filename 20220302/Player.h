@@ -41,14 +41,11 @@ protected:
 	wstring			m_strAnimName;
 
 	// 회복 계산을 위한 임시 hp
-	UINT			m_iPrevHp;
-	
-	CCollider* m_arrCollider[static_cast<UINT>(DIR::END)];
-
+	UINT			m_iPrevHp;	
 	Vec2			m_vPrevPos;
 
-	CCollider*		m_pWallcollider;
-	bool			m_bCollisionwall;
+	bool			m_arrWallDirCheck[static_cast<UINT>(DIR::END)];
+
 
 	bool			m_bGoTrapdoor;
 	bool			m_bStateClear;
@@ -93,6 +90,7 @@ public:
 	bool IsWafer() const { return m_bIsWafer; }
 
 	int CheckInventory(ITEM_TABLE _eItemName) { return m_vInventory[static_cast<UINT>(_eItemName)]; }
+	void StartTrapdoorAnim();
 
 public:
 	void init();

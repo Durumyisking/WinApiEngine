@@ -58,6 +58,9 @@ public:
 	virtual void Exit();
 	//	void IsClear();
 
+private:
+	void DropPickupType(Vec2 _vPos);
+
 protected:
 	CTexture*	m_pBgTex;
 	Vec2		m_vPos;
@@ -72,4 +75,5 @@ protected:
 	bool		m_bIsClear;
 	bool		m_bFirstEnter;
 	bool		m_bGetReward;
+	bool		m_bIsLock;
 };

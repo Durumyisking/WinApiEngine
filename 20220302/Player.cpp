@@ -38,11 +38,9 @@ CPlayer::CPlayer()
 	, m_pStat(nullptr)
 	, m_Pickup{}
 	, m_finvincibilityTime(1.0f)
-	, m_arrCollider{}
 	, m_bFramePass(false)
 	, m_vPrevPos()
-	, m_pWallcollider(nullptr)
-	, m_bCollisionwall(false)
+	, m_arrWallDirCheck()
 	, m_bGoTrapdoor(false)
 	, m_bStateClear(false)
 	, m_bClearAnimTimer(0.f)
@@ -82,52 +80,7 @@ void CPlayer::update()
 	// 트랩도어 애니메이션
 	if (m_bGoTrapdoor)
 	{
-		m_bClearAnimTimer += fDT;
-			
-		Vec2 vPos = dynamic_cast<CBossRoom*>(CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom())->m_pTrapdoor->GetPos();
-		if (m_bClearAnimTimer <= 0.5f)
-		{
-			vPos.y -= 120.f;
-		}
-		else if (m_bClearAnimTimer > 0.5f && m_bClearAnimTimer <= 1.f)
-		{
-			vPos.y -= 50.f;
-			Vec2 vOffset = GetAnimator()->GetCurAnim()->GetOffset();
-
-			//if (GetAnimator()->GetCurAnim()->GetMagnify() > 1.f)
-			//{
-			//	vOffset.x += fDT * 725.f;
-			//	vOffset.y += fDT * 725.f;
-			//	GetAnimator()->GetCurAnim()->SetOffset(vOffset);
-			//	GetAnimator()->GetCurAnim()->SetMagnify(GetAnimator()->GetCurAnim()->GetMagnify() - (fDT * 10));
-			//}
-		}
-		else if (m_bClearAnimTimer > 1.f)
-		{
-			SetPos(Vec2(0.f, 0.f));
-			m_bStateClear = true;
-			pBody->SetStateClear();
-			pHead->SetStateClear();
-
-			m_bGoTrapdoor = false;
-			m_bClearAnimTimer = 0.f;
-			GetAnimator()->GetCurAnim()->SetFinish();
-			GetAnimator()->ResetCurAnim();
-			SetScale(Vec2(138.f, 91.f));
-
-			return;
-		}
-
-		// 현재 위치랑 트랩도어 위치랑 다르면
-		Vec2 vDir = (vPos - GetPos()).Normalize();
-		if (vPos != GetPos())
-		{
-			// 트랩도어 방향으로 이동한다.
-			float x = GetPos().x + vDir.x * 500.f * fDT;
-			float y = GetPos().y + vDir.y * 500.f * fDT;
-			SetPos(Vec2(x, y));
-		}
-		return;
+		StartTrapdoorAnim();
 	}
 
 	// 공격 쿨타임
@@ -147,20 +100,32 @@ void CPlayer::update()
 	float fTemp = m_Stat.m_fSpeed / 8.f;
 
 	if (KEY_HOLD(KEY::W)) {
-		pRigid->AddVelocity(Vec2(0.f, -fTemp));
-		pRigid->AddForce(Vec2(0.f, -200.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+		{
+			pRigid->AddVelocity(Vec2(0.f, -fTemp));
+			pRigid->AddForce(Vec2(0.f, -200.f));
+		}
 	}
 	if (KEY_HOLD(KEY::S)) {
-		pRigid->AddVelocity(Vec2(0.f, fTemp));
-		pRigid->AddForce(Vec2(0.f, 200.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
+		{
+			pRigid->AddVelocity(Vec2(0.f, fTemp));
+			pRigid->AddForce(Vec2(0.f, 200.f));
+		}
 	}
 	if (KEY_HOLD(KEY::A)) {
-		pRigid->AddVelocity(Vec2(-fTemp, 0.f));
-		pRigid->AddForce(Vec2(-200.f, 0.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
+		{
+			pRigid->AddVelocity(Vec2(-fTemp, 0.f));
+			pRigid->AddForce(Vec2(-200.f, 0.f));
+		}
 	}
 	if (KEY_HOLD(KEY::D)) {
-		pRigid->AddVelocity(Vec2(fTemp, 0.f));
-		pRigid->AddForce(Vec2(200.f, 0.f));
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
+		{
+			pRigid->AddVelocity(Vec2(fTemp, 0.f));
+			pRigid->AddForce(Vec2(200.f, 0.f));
+		}
 	}
 
 	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
@@ -300,6 +265,56 @@ void CPlayer::AnimOper()
 	}
 }
 
+void CPlayer::StartTrapdoorAnim()
+{
+	m_bClearAnimTimer += fDT;
+
+	Vec2 vPos = dynamic_cast<CBossRoom*>(CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom())->m_pTrapdoor->GetPos();
+	if (m_bClearAnimTimer <= 0.5f)
+	{
+		vPos.y -= 120.f;
+	}
+	else if (m_bClearAnimTimer > 0.5f && m_bClearAnimTimer <= 1.f)
+	{
+		vPos.y -= 50.f;
+		Vec2 vOffset = GetAnimator()->GetCurAnim()->GetOffset();
+
+		//if (GetAnimator()->GetCurAnim()->GetMagnify() > 1.f)
+		//{
+		//	vOffset.x += fDT * 725.f;
+		//	vOffset.y += fDT * 725.f;
+		//	GetAnimator()->GetCurAnim()->SetOffset(vOffset);
+		//	GetAnimator()->GetCurAnim()->SetMagnify(GetAnimator()->GetCurAnim()->GetMagnify() - (fDT * 10));
+		//}
+	}
+	else if (m_bClearAnimTimer > 1.f)
+	{
+		SetPos(Vec2(0.f, 0.f));
+		m_bStateClear = true;
+		pBody->SetStateClear();
+		pHead->SetStateClear();
+
+		m_bGoTrapdoor = false;
+		m_bClearAnimTimer = 0.f;
+		GetAnimator()->GetCurAnim()->SetFinish();
+		GetAnimator()->ResetCurAnim();
+		SetScale(Vec2(138.f, 91.f));
+
+		return;
+	}
+
+	// 현재 위치랑 트랩도어 위치랑 다르면
+	Vec2 vDir = (vPos - GetPos()).Normalize();
+	if (vPos != GetPos())
+	{
+		// 트랩도어 방향으로 이동한다.
+		float x = GetPos().x + vDir.x * 500.f * fDT;
+		float y = GetPos().y + vDir.y * 500.f * fDT;
+		SetPos(Vec2(x, y));
+	}
+	return;
+}
+
 void CPlayer::init()
 {
 	SetScale(Vec2(138.f, 91.f));
@@ -392,11 +407,10 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		}
 	}
 
-	if (L"Wall" == pOtherObj->GetName())
-	{
-		m_pWallcollider = _pOther;
-		m_bCollisionwall = true;
-	}
+	//if (L"Wall" == pOtherObj->GetName())
+	//{
+
+	//}
 
 }
 
@@ -449,8 +463,24 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 		else
 		{
-			//m_pWallcollider = _pOther;
-			//m_bCollisionwall = true;
+			switch (pdoor->Dir())
+			{
+			case DIR::N:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+				break;
+			case DIR::S:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+				break;
+			case DIR::E:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+				break;
+			case DIR::W:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+				break;
+			default:
+				break;
+			}
+			this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 
 		}
 	}
@@ -458,15 +488,26 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		//Vec2 vPos = GetPos();
-		////m_pWallcollider = _pOther;
-		//CRigidBody* pRigid = GetRigidBody();
-		//Vec2 vDir = pRigid->GetVelocity().Normalize();
-		//Vec2 vtemp = (-vDir * (_pOther->GetScale() / 2)) + (-vDir * (GetCollider()->GetScale() / 2));
-		////    역벡터  *  적 충돌체스케일 / 2        +   역벡터   *    자기 충돌체 스케일 / 2
-		//vDir = GetCollider()->GetFinalPos() - GetCollider()->GetOffsetPos() + vtemp;
-		//vPos = vDir;
-		SetPos(m_vPrevPos);
+		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
+
+		switch (pWall->GetDir())
+		{
+		case DIR::N:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+			break;
+		case DIR::S:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+			break;
+		case DIR::E:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+			break;
+		case DIR::W:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+			break;		
+		default:
+			break;
+		}
+		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
 	}
 	
 	// item
@@ -564,10 +605,51 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
-		m_pWallcollider = nullptr;
-		m_bCollisionwall = false;
+		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
 
+		switch (pWall->GetDir())
+		{
+		case DIR::N:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
+			break;
+		case DIR::S:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
+			break;
+		case DIR::E:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
+			break;
+		case DIR::W:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
+			break;
+
+		default:
+			break;
+		}
 	}
+	if (L"Door" == pOtherObj->GetName())
+	{
+		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+
+		switch (pdoor->Dir())
+		{
+		case DIR::N:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
+			break;
+		case DIR::S:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
+			break;
+		case DIR::E:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
+			break;
+		case DIR::W:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
+			break;
+
+		default:
+			break;
+		}
+	}
+
 }
 
 void CPlayer::CreateMissile(Vec2 _vDir)

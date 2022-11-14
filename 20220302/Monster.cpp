@@ -47,29 +47,29 @@ void CMonster::update()
 	}
 	else
 	{
-		//if (nullptr != GetRigidBody())
-		//{
-		//	if (m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
-		//	{
-		//		if (GetRigidBody()->GetVelocity().y < 0)
-		//			GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
-		//	}
-		//	if (m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
-		//	{
-		//		if (GetRigidBody()->GetVelocity().y > 0)
-		//			GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
-		//	}
-		//	if (m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
-		//	{
-		//		if (GetRigidBody()->GetVelocity().x > 0)
-		//			GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
-		//	}
-		//	if (m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
-		//	{
-		//		if (GetRigidBody()->GetVelocity().x < 0)
-		//			GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
-		//	}
-		//}
+		if (nullptr != GetRigidBody())
+		{
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+			{
+				if (GetRigidBody()->GetVelocity().y < 0)
+					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
+			}
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
+			{
+				if (GetRigidBody()->GetVelocity().y > 0)
+					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
+			}
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
+			{
+				if (GetRigidBody()->GetVelocity().x > 0)
+					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+			}
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
+			{
+				if (GetRigidBody()->GetVelocity().x < 0)
+					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+			}
+		}
 	}
 	m_pAI->update();
 }
