@@ -28,6 +28,8 @@ CScene::CScene()
 	, m_pBgTex(nullptr)
 	, m_iTileX(0)
 	, m_iTileY(0)
+	, m_pMap(nullptr)
+	, m_pPlayer(nullptr)
 {
 
 	CCamera::GetInst()->SetLookAt(m_vResolution / 2.f);

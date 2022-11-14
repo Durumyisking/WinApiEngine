@@ -27,8 +27,10 @@ private:
 	bool		m_bAlive;	// 살았니 죽었니
 
 
+
 protected:
 	Vec2		m_vResolution;
+	int			m_MoveFlag;
 
 public:
 	CObject();
@@ -56,6 +58,8 @@ public:
 
 	void SetOwner(CRoom* _pRoom) { m_pOwner = _pRoom; }
 	CRoom* GetOwner() const { return m_pOwner; }
+
+	Vec2 IntersectArea(CObject* _pOther);
 
 public:
 	virtual void update() = 0;

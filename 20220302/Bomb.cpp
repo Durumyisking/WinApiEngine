@@ -184,15 +184,15 @@ void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int
 
 	if (L"Bomb" == _strName)
 	{
-		GetAnimator()->CreateAnimation(_strName, m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 1, false);
+		GetAnimator()->CreateAnimation(_strName, m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 2, false);
 	}
 	else if (L"MegaBomb" == _strName)
 	{
-		GetAnimator()->CreateAnimation(_strName, m_pTex, Vec2(128.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 1, false);
+		GetAnimator()->CreateAnimation(_strName, m_pTex, Vec2(128.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 2, false);
 	}
 	else if (L"BobbyBomb" == _strName)
 	{
-		GetAnimator()->CreateAnimation(_strName, m_pTex, Vec2(0.f, 160.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 4, false);
+		GetAnimator()->CreateAnimation(_strName, m_pTex, Vec2(0.f, 160.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 8, false);
 	}
 
 	PlayAnim(m_pAnim, _strName, Vec2(-10.f, -7.f), true);
@@ -200,7 +200,7 @@ void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int
 	SetPos(vBombPos);
 
 	CreateCollider();
-	
+		
 	if (4 & m_iBombTypeBit)
 		GetCollider()->SetScale(Vec2(500.f, 500.f));
 	else

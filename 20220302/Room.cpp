@@ -38,35 +38,7 @@ void CRoom::update()
 			
 			// ¹æº¸»ó ÁÜ
 			if (!m_bGetReward)
-			{
-				m_bGetReward = true;
-
-				srand(CTimeMgr::GetInst()->GetCurCount());
-				int iCount = rand() % 3;
-
-				// ÇÏÆ® µ· ÆøÅº ¿­¼è »óÀÚ
-				switch (iCount)
-				{
-				case 0:
-					break;
-					// Áß¾Ó
-				case 1:
-					DropPickupType(GetPos());
-					break;
-					// Áß¾Ó ¾ç¿·
-				case 2:
-					for (int i = -1; i <= 1; i++)
-					{
-						if (0 == i)
-							continue;
-						DropPickupType(GetPos() + (Vec2(64.f, 0.f) * i));
-					}
-					break;
-
-				default:
-					break;
-				}
-			}	
+				GiveReward();
 		}
 		else
 		{
@@ -117,11 +89,11 @@ void CRoom::AddWall()
 	// collider for body
 	if (nullptr != m_pOwner->GetMapData(y - 1, x))
 	{
-		CObject* pWallColliderN1 = new CWallCollider(GetPos() + Vec2(-280.f, -256.f), Vec2(500.f, 1.f), DIR::N);
+		CObject* pWallColliderN1 = new CWallCollider(GetPos() + Vec2(-280.f, -256.f), Vec2(500.f, 1.f), DIR::UP);
 		pWallColliderN1->SetName(L"Wall");
 		pWallColliderN1->SetOwner(this);
 		CreateObject(pWallColliderN1, GROUP_TYPE::WALL);
-		CObject* pWallColliderN2 = new CWallCollider(GetPos() + Vec2(280.f, -256.f), Vec2(500.f, 1.f), DIR::N);
+		CObject* pWallColliderN2 = new CWallCollider(GetPos() + Vec2(280.f, -256.f), Vec2(500.f, 1.f), DIR::UP);
 		pWallColliderN2->SetName(L"Wall");
 		pWallColliderN2->SetOwner(this);
 		CreateObject(pWallColliderN2, GROUP_TYPE::WALL);
@@ -129,7 +101,7 @@ void CRoom::AddWall()
 	}
 	else if (nullptr == m_pOwner->GetMapData(y - 1, x))
 	{
-		CObject* pWallColliderN1 = new CWallCollider(GetPos() + Vec2(0.f, -256.f), Vec2(1000.f, 1.f), DIR::N);
+		CObject* pWallColliderN1 = new CWallCollider(GetPos() + Vec2(0.f, -256.f), Vec2(1000.f, 1.f), DIR::UP);
 		pWallColliderN1->SetName(L"Wall");
 		pWallColliderN1->SetOwner(this);
 		CreateObject(pWallColliderN1, GROUP_TYPE::WALL);
@@ -137,18 +109,18 @@ void CRoom::AddWall()
 
 	if (nullptr != m_pOwner->GetMapData(y + 1, x))
 	{
-		CObject* pWallColliderS1 = new CWallCollider(GetPos() + Vec2(-280.f, 256.f), Vec2(500.f, 1.f), DIR::S);
+		CObject* pWallColliderS1 = new CWallCollider(GetPos() + Vec2(-280.f, 256.f), Vec2(500.f, 1.f), DIR::DOWN);
 		pWallColliderS1->SetName(L"Wall");
 		pWallColliderS1->SetOwner(this);
 		CreateObject(pWallColliderS1, GROUP_TYPE::WALL);
-		CObject* pWallColliderS2 = new CWallCollider(GetPos() + Vec2(280.f, 256.f), Vec2(500.f, 1.f), DIR::S);
+		CObject* pWallColliderS2 = new CWallCollider(GetPos() + Vec2(280.f, 256.f), Vec2(500.f, 1.f), DIR::DOWN);
 		pWallColliderS2->SetName(L"Wall");
 		pWallColliderS2->SetOwner(this);
 		CreateObject(pWallColliderS2, GROUP_TYPE::WALL);
 	}
 	else if (nullptr == m_pOwner->GetMapData(y + 1, x))
 	{
-		CObject* pWallColliderS1 = new CWallCollider(GetPos() + Vec2(0.f, 256.f), Vec2(1000.f, 1.f), DIR::S);
+		CObject* pWallColliderS1 = new CWallCollider(GetPos() + Vec2(0.f, 256.f), Vec2(1000.f, 1.f), DIR::DOWN);
 		pWallColliderS1->SetName(L"Wall");
 		pWallColliderS1->SetOwner(this);
 		CreateObject(pWallColliderS1, GROUP_TYPE::WALL);
@@ -156,11 +128,11 @@ void CRoom::AddWall()
 
 	if (nullptr != m_pOwner->GetMapData(y, x - 1))
 	{
-		CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, -163.f), Vec2(1.f, 265.f), DIR::W);
+		CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, -163.f), Vec2(1.f, 265.f), DIR::LEFT);
 		pWallColliderW1->SetName(L"Wall");
 		pWallColliderW1->SetOwner(this);
 		CreateObject(pWallColliderW1, GROUP_TYPE::WALL);
-		CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-500.f, 155.f), Vec2(1.f, 265.f), DIR::W);
+		CObject* pWallColliderW2 = new CWallCollider(GetPos() + Vec2(-500.f, 155.f), Vec2(1.f, 265.f), DIR::LEFT);
 		pWallColliderW2->SetName(L"Wall");
 		pWallColliderW2->SetOwner(this);
 		CreateObject(pWallColliderW2, GROUP_TYPE::WALL);
@@ -168,7 +140,7 @@ void CRoom::AddWall()
 	}
 	else if (nullptr == m_pOwner->GetMapData(y, x - 1))
 	{
-		CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, 0.f), Vec2(1.f, 550.f), DIR::W);
+		CObject* pWallColliderW1 = new CWallCollider(GetPos() + Vec2(-500.f, 0.f), Vec2(1.f, 550.f), DIR::LEFT);
 		pWallColliderW1->SetName(L"Wall");
 		pWallColliderW1->SetOwner(this);
 		CreateObject(pWallColliderW1, GROUP_TYPE::WALL);
@@ -177,11 +149,11 @@ void CRoom::AddWall()
 
 	if (nullptr != m_pOwner->GetMapData(y, x + 1))
 	{
-		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, -163.f), Vec2(1.f, 265.f), DIR::E);
+		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, -163.f), Vec2(1.f, 265.f), DIR::RIGHT);
 		pWallColliderE1->SetName(L"Wall");
 		pWallColliderE1->SetOwner(this);
 		CreateObject(pWallColliderE1, GROUP_TYPE::WALL);
-		CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(500.f, 155.f), Vec2(1.f, 265.f), DIR::E);
+		CObject* pWallColliderE2 = new CWallCollider(GetPos() + Vec2(500.f, 155.f), Vec2(1.f, 265.f), DIR::RIGHT);
 		pWallColliderE2->SetName(L"Wall");
 		pWallColliderE2->SetOwner(this);
 		CreateObject(pWallColliderE2, GROUP_TYPE::WALL);
@@ -189,7 +161,7 @@ void CRoom::AddWall()
 	}
 	else if (nullptr == m_pOwner->GetMapData(y, x + 1))
 	{
-		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, 0.f), Vec2(1.f, 550.f), DIR::E);
+		CObject* pWallColliderE1 = new CWallCollider(GetPos() + Vec2(500.f, 0.f), Vec2(1.f, 550.f), DIR::RIGHT);
 		pWallColliderE1->SetName(L"Wall");
 		pWallColliderE1->SetOwner(this);
 		CreateObject(pWallColliderE1, GROUP_TYPE::WALL);
@@ -199,22 +171,22 @@ void CRoom::AddWall()
 
 
 	// collider for tear
-	CObject* pWallTearColliderN = new CWallCollider(GetPos() + Vec2(0.f, -286.f), Vec2(1050.f, 1.f), DIR::N);
+	CObject* pWallTearColliderN = new CWallCollider(GetPos() + Vec2(0.f, -286.f), Vec2(1050.f, 1.f), DIR::UP);
 	pWallTearColliderN->SetName(L"Wall_Tear");
 	pWallTearColliderN->SetOwner(this);
 	CreateObject(pWallTearColliderN, GROUP_TYPE::TEARWALL);
 
-	CObject* pWallTearColliderS = new CWallCollider(GetPos() + Vec2(0.f, 286.f), Vec2(1050.f, 1.f), DIR::S);
+	CObject* pWallTearColliderS = new CWallCollider(GetPos() + Vec2(0.f, 286.f), Vec2(1050.f, 1.f), DIR::DOWN);
 	pWallTearColliderS->SetName(L"Wall_Tear");
 	pWallTearColliderS->SetOwner(this);
 	CreateObject(pWallTearColliderS, GROUP_TYPE::TEARWALL);
 
-	CObject* pWallTearColliderW = new CWallCollider(GetPos() + Vec2(-530.f, 0.f), Vec2(1.f, 600.f), DIR::W);
+	CObject* pWallTearColliderW = new CWallCollider(GetPos() + Vec2(-530.f, 0.f), Vec2(1.f, 600.f), DIR::LEFT);
 	pWallTearColliderW->SetName(L"Wall_Tear");
 	pWallTearColliderW->SetOwner(this);
 	CreateObject(pWallTearColliderW, GROUP_TYPE::TEARWALL);
 
-	CObject* pWallTearColliderE = new CWallCollider(GetPos() + Vec2(530.f, 0.f), Vec2(1.f, 600.f), DIR::E);
+	CObject* pWallTearColliderE = new CWallCollider(GetPos() + Vec2(530.f, 0.f), Vec2(1.f, 600.f), DIR::RIGHT);
 	pWallTearColliderE->SetName(L"Wall_Tear");
 	pWallTearColliderE->SetOwner(this);
 	CreateObject(pWallTearColliderE, GROUP_TYPE::TEARWALL);
@@ -232,7 +204,7 @@ void CRoom::AddDoor()
 	{
 		if (y != 0)
 		{
-			CObject* pDoor = new CDoor(this, DIR::N);
+			CObject* pDoor = new CDoor(this, DIR::UP);
 			CDoor* pDoorObj = (CDoor*)pDoor;
 			pDoor->SetPos(GetPos() +
 			Vec2(
@@ -253,7 +225,7 @@ void CRoom::AddDoor()
 	{
 		if (y != 6)
 		{
-			CObject* pDoor = new CDoor(this, DIR::S);
+			CObject* pDoor = new CDoor(this, DIR::DOWN);
 			CDoor* pDoorObj = (CDoor*)pDoor;
 			pDoor->SetPos(GetPos() +
 				Vec2(
@@ -275,7 +247,7 @@ void CRoom::AddDoor()
 	{
 		if (x != 0)
 		{
-			CObject* pDoor = new CDoor(this, DIR::W);
+			CObject* pDoor = new CDoor(this, DIR::LEFT);
 			CDoor* pDoorObj = (CDoor*)pDoor;
 			pDoor->SetPos(GetPos() +
 				Vec2(
@@ -296,7 +268,7 @@ void CRoom::AddDoor()
 	{
 		if (x != 6)
 		{
-			CObject* pDoor = new CDoor(this, DIR::E);
+			CObject* pDoor = new CDoor(this, DIR::RIGHT);
 			CDoor* pDoorObj = (CDoor*)pDoor;
 			pDoor->SetPos(GetPos() +
 				Vec2(
@@ -322,6 +294,39 @@ void CRoom::Enter()
 
 void CRoom::Exit()
 {
+}
+
+void CRoom::GiveReward()
+{
+		m_bGetReward = true;
+
+		srand(CTimeMgr::GetInst()->GetCurCount());
+		int iCount = rand() % 3;
+
+		// ÇÏÆ® µ· ÆøÅº ¿­¼è »óÀÚ
+		switch (iCount)
+		{
+		case 0:
+			break;
+			// Áß¾Ó
+		case 1:
+			DropPickupType(GetPos());
+			break;
+			// Áß¾Ó ¾ç¿·
+		case 2:
+			for (int i = -1; i <= 1; i++)
+			{
+				if (0 == i)
+					continue;
+				DropPickupType(GetPos() + (Vec2(64.f, 0.f) * i));
+			}
+			break;
+
+		default:
+			break;
+		}
+
+		m_bGetReward = true;
 }
 
 void CRoom::DropPickupType(Vec2 _vPos)

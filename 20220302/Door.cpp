@@ -45,16 +45,16 @@ void CDoor::update()
 
 		switch (m_eDir)
 		{
-		case DIR::N:
+		case DIR::UP:
 			SetSlice(64, 0);
 			break;
-		case DIR::S:
+		case DIR::DOWN:
 			SetSlice(64, 48);
 			break;
-		case DIR::E:
+		case DIR::RIGHT:
 			SetSlice(48, 64);
 			break;
-		case DIR::W:
+		case DIR::LEFT:
 			SetSlice(48, 0);
 			break;
 		case DIR::END:
@@ -67,19 +67,19 @@ void CDoor::update()
 	{
 		switch (m_eDir)
 		{
-		case DIR::N:
+		case DIR::UP:
 			SetSlice(0, 0);
 			GetCollider()->SetOffsetPos(Vec2(0.f, -30.f));
 			break;
-		case DIR::S:
+		case DIR::DOWN:
 			SetSlice(0, 48);
 			GetCollider()->SetOffsetPos(Vec2(0.f, 30.f));
 			break;
-		case DIR::E:
+		case DIR::RIGHT:
 			SetSlice(0, 64);
 			GetCollider()->SetOffsetPos(Vec2(30.f, 0.f));
 			break;
-		case DIR::W:
+		case DIR::LEFT:
 			SetSlice(0, 0);
 			GetCollider()->SetOffsetPos(Vec2(-30.f, 0.f));
 			break;
@@ -110,16 +110,16 @@ void CDoor::render(HDC _dc)
 
 		switch (m_eDir)
 		{
-		case DIR::N:
+		case DIR::UP:
 			vOffset = Vec2(96.f, 108.f);
 			break;
-		case DIR::S:
+		case DIR::DOWN:
 			vOffset = Vec2(96.f, 68.f);
 			break;
-		case DIR::E:
+		case DIR::RIGHT:
 			vOffset = Vec2(68.f, 96.f);
 			break;
-		case DIR::W:
+		case DIR::LEFT:
 			vOffset = Vec2(120.f, 96.f);
 			break;
 		case DIR::END:
@@ -147,13 +147,13 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 	case ROOM_TYPE::START: 	case ROOM_TYPE::NORMAL:
 		switch (m_eDir)
 		{
-		case DIR::N: case DIR::S:
+		case DIR::UP: case DIR::DOWN:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNS", L"texture\\Props\\DoorNS.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 2;
 
 			break;
-		case DIR::E: case DIR::W:
+		case DIR::RIGHT: case DIR::LEFT:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEW", L"texture\\Props\\DoorEW.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 2;
@@ -168,12 +168,12 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 	case ROOM_TYPE::TRESURE:
 		switch (m_eDir)
 		{
-		case DIR::N: case DIR::S:
+		case DIR::UP: case DIR::DOWN:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNStreasure", L"texture\\Props\\DoorNStreasure.bmp"));
 			m_iSliceCountX = 3;
 			m_iSliceCountY = 2;
 			break;
-		case DIR::E: case DIR::W:
+		case DIR::RIGHT: case DIR::LEFT:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWtreasure", L"texture\\Props\\DoorEWtreasure.bmp"));
 			m_iSliceCountX = 3;
 			m_iSliceCountY = 2;
@@ -187,12 +187,12 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 	case ROOM_TYPE::BOSS:
 		switch (m_eDir)
 		{
-		case DIR::N: case DIR::S:
+		case DIR::UP: case DIR::DOWN:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNSboss", L"texture\\Props\\DoorNSboss.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 2;
 			break;
-		case DIR::E: case DIR::W:
+		case DIR::RIGHT: case DIR::LEFT:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWboss", L"texture\\Props\\DoorEWboss.bmp"));
 			m_iSliceCountX = 2;
 			m_iSliceCountY = 2;

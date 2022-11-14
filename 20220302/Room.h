@@ -59,6 +59,7 @@ public:
 	//	void IsClear();
 
 private:
+	void GiveReward();
 	void DropPickupType(Vec2 _vPos);
 
 protected:

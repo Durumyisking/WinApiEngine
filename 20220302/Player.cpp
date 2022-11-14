@@ -47,6 +47,7 @@ CPlayer::CPlayer()
 	, m_bIsWafer(false)
 	, m_pItemTex(nullptr)
 {
+	m_MoveFlag = 0;
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
 
@@ -98,33 +99,37 @@ void CPlayer::update()
 	Vec2 vScale = GetScale();
 
 	float fTemp = m_Stat.m_fSpeed / 8.f;
-
+	m_MoveFlag = 0;
 	if (KEY_HOLD(KEY::W)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
 		{
 			pRigid->AddVelocity(Vec2(0.f, -fTemp));
 			pRigid->AddForce(Vec2(0.f, -200.f));
+			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::UP);
 		}
 	}
 	if (KEY_HOLD(KEY::S)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)])
 		{
 			pRigid->AddVelocity(Vec2(0.f, fTemp));
 			pRigid->AddForce(Vec2(0.f, 200.f));
+			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::DOWN);
 		}
 	}
 	if (KEY_HOLD(KEY::A)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)])
 		{
 			pRigid->AddVelocity(Vec2(-fTemp, 0.f));
 			pRigid->AddForce(Vec2(-200.f, 0.f));
+			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::LEFT);
 		}
 	}
 	if (KEY_HOLD(KEY::D)) {
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)])
 		{
 			pRigid->AddVelocity(Vec2(fTemp, 0.f));
 			pRigid->AddForce(Vec2(200.f, 0.f));
+			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::RIGHT);
 		}
 	}
 
@@ -384,11 +389,15 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 
-		Vec2 vec = this->GetPos() - pHeart->GetPos();
-		vec.Normalize();
-		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
-		vec = vec * 50.f;
-		this->GetRigidBody()->AddForce(vec);
+		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
+		Vec2 vTemp = IntersectArea(pOtherObj);
+		SetPos(GetPos() - vTemp);
+
+		//Vec2 vec = this->GetPos() - pHeart->GetPos();
+		//vec.Normalize();
+		//float _f = pHeart->GetRigidBody()->GetVelocity().Length();
+		//vec = vec * 50.f;
+		//this->GetRigidBody()->AddForce(vec);
 	}
 
 
@@ -427,7 +436,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		{
 			switch (pdoor->Dir())
 			{
-			case DIR::N:
+			case DIR::UP:
 				// 문 뒤에있는 방의 위치를 얻어 그 방으로 이동합니다.
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y - 1);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, -225.f));
@@ -436,21 +445,21 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y - 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
-			case DIR::S:
+			case DIR::DOWN:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y + 1);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 275.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y + 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
-			case DIR::E:
+			case DIR::RIGHT:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x + 1, pdoor->GetOwner()->GetRoomPos().y);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(500.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x + 1)))->Enter();
 				break;
-			case DIR::W:
+			case DIR::LEFT:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x - 1, pdoor->GetOwner()->GetRoomPos().y);
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-500.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
@@ -465,17 +474,17 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		{
 			switch (pdoor->Dir())
 			{
-			case DIR::N:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+			case DIR::UP:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = true;
 				break;
-			case DIR::S:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+			case DIR::DOWN:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = true;
 				break;
-			case DIR::E:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+			case DIR::RIGHT:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = true;
 				break;
-			case DIR::W:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+			case DIR::LEFT:
+				m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = true;
 				break;
 			default:
 				break;
@@ -492,17 +501,17 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 		switch (pWall->GetDir())
 		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+		case DIR::UP:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = true;
 			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+		case DIR::DOWN:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = true;
 			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+		case DIR::RIGHT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = true;
 			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+		case DIR::LEFT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = true;	
 			break;		
 		default:
 			break;
@@ -538,11 +547,15 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 
-		Vec2 vec = this->GetPos() - pHeart->GetPos();
-		vec.Normalize();
-		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
-		vec = vec  * 50.f;
-		this->GetRigidBody()->AddForce(vec);
+		Vec2 vTemp = IntersectArea(pOtherObj);
+		SetPos(GetPos() - vTemp);
+
+
+		//Vec2 vec = this->GetPos() - pHeart->GetPos();
+		//vec.Normalize();
+		//float _f = pHeart->GetRigidBody()->GetVelocity().Length();
+		//vec = vec  * 50.f;
+		//this->GetRigidBody()->AddForce(vec);
 	}
 
 	if (L"Explode" == pOtherObj->GetName())
@@ -609,17 +622,17 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 
 		switch (pWall->GetDir())
 		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
+		case DIR::UP:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = false;
 			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
+		case DIR::DOWN:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = false;
 			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
+		case DIR::RIGHT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = false;
 			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
+		case DIR::LEFT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = false;
 			break;
 
 		default:
@@ -632,17 +645,17 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 
 		switch (pdoor->Dir())
 		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
+		case DIR::UP:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = false;
 			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
+		case DIR::DOWN:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = false;
 			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
+		case DIR::RIGHT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = false;
 			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
+		case DIR::LEFT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = false;
 			break;
 
 		default:

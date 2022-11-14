@@ -49,22 +49,22 @@ void CMonster::update()
 	{
 		if (nullptr != GetRigidBody())
 		{
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::N)])
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
 			{
 				if (GetRigidBody()->GetVelocity().y < 0)
 					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
 			}
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::S)])
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)])
 			{
 				if (GetRigidBody()->GetVelocity().y > 0)
 					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
 			}
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::E)])
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)])
 			{
 				if (GetRigidBody()->GetVelocity().x > 0)
 					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
 			}
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::W)])
+			if (m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)])
 			{
 				if (GetRigidBody()->GetVelocity().x < 0)
 					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
@@ -123,12 +123,12 @@ DIR CMonster::AxisPatrol()
 		if (-1 == x)
 		{
 			GetRigidBody()->SetVelocity(Vec2(static_cast<float>(x * m_Stat.m_fSpeed), 0.f));
-			return DIR::W;
+			return DIR::LEFT;
 		}
 		else if (1 == x)
 		{
 			GetRigidBody()->SetVelocity(Vec2(static_cast<float>(x * m_Stat.m_fSpeed), 0.f));
-			return DIR::E;
+			return DIR::RIGHT;
 		}
 	}
 	else if (iflag == 1)
@@ -137,12 +137,12 @@ DIR CMonster::AxisPatrol()
 		if (-1 == y)
 		{
 			GetRigidBody()->SetVelocity(Vec2(0.f , static_cast<float>(y * m_Stat.m_fSpeed)));
-			return DIR::N;
+			return DIR::UP;
 		}
 		else if (1 == y)
 		{
 			GetRigidBody()->SetVelocity(Vec2(0.f, static_cast<float>(y * m_Stat.m_fSpeed)));
-			return DIR::S;
+			return DIR::DOWN;
 		}
 	}
 	return DIR::END;
@@ -169,12 +169,12 @@ DIR CMonster::AxisCharge()
 		{
 
 			GetRigidBody()->SetVelocity(Vec2(0.f, m_Stat.m_fSpeed * 2));
-			return DIR::S;
+			return DIR::DOWN;
 		}
 		else
 		{
 			GetRigidBody()->SetVelocity(Vec2(0.f, -m_Stat.m_fSpeed * 2));
-			return DIR::N;
+			return DIR::UP;
 		}
 	}
 
@@ -185,12 +185,12 @@ DIR CMonster::AxisCharge()
 		if (Playerx > Monsterx)
 		{
 			GetRigidBody()->SetVelocity(Vec2(m_Stat.m_fSpeed * 2, 0.f));
-			return DIR::E;
+			return DIR::RIGHT;
 		}
 		else
 		{
 			GetRigidBody()->SetVelocity(Vec2(-m_Stat.m_fSpeed * 2, 0.f));
-			return DIR::W;
+			return DIR::LEFT;
 		}
 	}
 	return DIR::END;
@@ -228,17 +228,17 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 		CWallCollider* pWallObj = dynamic_cast<CWallCollider*>(pOtherObj);
 		switch (pWallObj->GetDir())
 		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = true;
+		case DIR::UP:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = true;
 			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = true;
+		case DIR::DOWN:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = true;
 			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = true;
+		case DIR::RIGHT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = true;
 			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = true;
+		case DIR::LEFT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = true;
 			break;
 
 		default:
@@ -263,17 +263,17 @@ void CMonster::OnCollisionExit(CCollider * _pOther)
 
 		switch (pWall->GetDir())
 		{
-		case DIR::N:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::N)] = false;
+		case DIR::UP:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = false;
 			break;
-		case DIR::S:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::S)] = false;
+		case DIR::DOWN:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = false;
 			break;
-		case DIR::E:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::E)] = false;
+		case DIR::RIGHT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = false;
 			break;
-		case DIR::W:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::W)] = false;
+		case DIR::LEFT:
+			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = false;
 			break;
 
 		default:

@@ -6,7 +6,7 @@ CStartRoom::CStartRoom()
 {
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexStart", L"texture\\BackGround\\bg_basement_start.bmp");
 	m_eType = ROOM_TYPE::START;
-
+	m_bGetReward = true;
 }
 
 CStartRoom::~CStartRoom()

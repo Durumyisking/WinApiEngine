@@ -163,10 +163,10 @@ enum class EVENT_TYPE
 
 enum class DIR
 {
-	N,
-	S,
-	E,
-	W,
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT,
 	END,
 };
 
@@ -219,4 +219,14 @@ enum class ITEM_TABLE
 	thewafer,
 
 	end,
+};
+
+enum class MOVE_FLAG
+{
+	UP = 0x01,
+	DOWN = 0x02,
+	LEFT = 0x04,
+	RIGHT = 0x08,
+
+	END,
 };

@@ -26,7 +26,6 @@ private:
 	// 타일 개수
 	UINT				m_iTileX;
 	UINT				m_iTileY;
-	CPlayer*			m_pPlayer;
 
 
 
@@ -34,6 +33,7 @@ protected:
 	float				m_fTimeCount;
 	CTexture*			m_pBgTex;
 	Vec2				m_vResolution;
+	CPlayer* m_pPlayer;
 	CMap* m_pMap;
 
 

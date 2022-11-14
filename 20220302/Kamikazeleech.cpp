@@ -61,16 +61,16 @@ void CKamikazeleech::update()
 				DIR eChargeDir = AxisPatrol();
 				switch (eChargeDir)
 				{
-				case DIR::N:
+				case DIR::UP:
 					m_strAnimName = L"Kamikazeleech_IDLE_U";
 					break;
-				case DIR::S:
+				case DIR::DOWN:
 					m_strAnimName = L"Kamikazeleech_IDLE_D";
 					break;
-				case DIR::E:
+				case DIR::RIGHT:
 					m_strAnimName = L"Kamikazeleech_IDLE_R";
 					break;
-				case DIR::W:
+				case DIR::LEFT:
 					m_strAnimName = L"Kamikazeleech_IDLE_L";
 					break;
 				case DIR::END:
@@ -97,16 +97,16 @@ void CKamikazeleech::Attack()
 		DIR eChargeDir = AxisCharge();
 		switch (eChargeDir)
 		{
-		case DIR::N:
+		case DIR::UP:
 			m_strAnimName = L"Kamikazeleech_IDLE_U";
 			break;
-		case DIR::S:
+		case DIR::DOWN:
 			m_strAnimName = L"Kamikazeleech_IDLE_D";
 			break;
-		case DIR::E:
+		case DIR::RIGHT:
 			m_strAnimName = L"Kamikazeleech_IDLE_R";
 			break;
-		case DIR::W:
+		case DIR::LEFT:
 			m_strAnimName = L"Kamikazeleech_IDLE_L";
 			break;
 		case DIR::END:

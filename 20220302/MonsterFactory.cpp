@@ -234,9 +234,12 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	}
 	
 	// 모든 몬스터는 죽음
-	pMon->GetRigidBody()->SetMaxVelocity(pMon->GetStat().m_fSpeed * 2);
-	pMon->GetAI()->AddState(new CDeadState);
+	if (nullptr != pMon)
+	{
+		pMon->GetRigidBody()->SetMaxVelocity(pMon->GetStat().m_fSpeed * 2);
+		pMon->GetAI()->AddState(new CDeadState);
 
+	}
 	return pMon;
 }
 

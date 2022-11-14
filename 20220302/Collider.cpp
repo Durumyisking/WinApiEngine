@@ -77,7 +77,7 @@ void CCollider::render(HDC _dc)
 				static_cast<int>(vRenderPos.y + m_vScale.y / 2.f));
 		}
 	}
-
+		
 	// 함수 종료시 CSelectGDI의 소멸자 호출
 }
 

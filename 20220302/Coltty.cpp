@@ -39,16 +39,16 @@ void CColtty::Attack()
 
 			switch (i)
 			{
-			case static_cast<UINT>(DIR::E):
+			case static_cast<UINT>(DIR::RIGHT):
 				vDir = Vec2(1.f, 0.f);
 				break;
-			case static_cast<UINT>(DIR::W):
+			case static_cast<UINT>(DIR::LEFT):
 				vDir = Vec2(-1.f, 0.f);
 				break;
-			case static_cast<UINT>(DIR::N):
+			case static_cast<UINT>(DIR::UP):
 				vDir = Vec2(0.f, -1.f);
 				break;
-			case static_cast<UINT>(DIR::S):
+			case static_cast<UINT>(DIR::DOWN):
 				vDir = Vec2(0.f, 1.f);
 				break;
 

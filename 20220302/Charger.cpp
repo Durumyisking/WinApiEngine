@@ -61,16 +61,16 @@ void CCharger::update()
 			DIR eChargeDir = AxisPatrol();
 			switch (eChargeDir)
 			{
-			case DIR::N:
+			case DIR::UP:
 				m_strAnimName = L"Charger_IDLE_U";
 				break;
-			case DIR::S:
+			case DIR::DOWN:
 				m_strAnimName = L"Charger_IDLE_D";
 				break;
-			case DIR::E:
+			case DIR::RIGHT:
 				m_strAnimName = L"Charger_IDLE_R";
 				break;
-			case DIR::W:
+			case DIR::LEFT:
 				m_strAnimName = L"Charger_IDLE_L";
 				break;
 			case DIR::END:
@@ -96,16 +96,16 @@ void CCharger::Attack()
 		DIR eChargeDir = AxisCharge();
 		switch (eChargeDir)
 		{
-		case DIR::N:
+		case DIR::UP:
 			m_strAnimName = L"Charger_ATTACK_U";
 			break;
-		case DIR::S:
+		case DIR::DOWN:
 			m_strAnimName = L"Charger_ATTACK_D";
 			break;
-		case DIR::E:
+		case DIR::RIGHT:
 			m_strAnimName = L"Charger_ATTACK_R";
 			break;
-		case DIR::W:
+		case DIR::LEFT:
 			m_strAnimName = L"Charger_ATTACK_L";
 			break;
 		case DIR::END:
