@@ -29,8 +29,12 @@ private:
 
 
 protected:
+	CObject*	m_pCollobj;
 	Vec2		m_vResolution;
 	int			m_MoveFlag;
+	int			m_LastMoveFlag;
+	bool		m_bcoll;
+
 
 public:
 	CObject();

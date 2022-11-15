@@ -1,4 +1,8 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: 중간 디렉터리(x64\Debug\)에 다른 프로젝트(20220302.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  unity_31QETWEZYLAZY6T5.cpp
   unity_COLSG919CGO3LJNI.cpp
 E:\IsaacProject\20220302\Animator.h(59): warning C4715: 'CAnimator::GetCurAnim': 모든 제어 경로에서 값을 반환하지는 않습니다.
+E:\IsaacProject\20220302\Animator.h(59): warning C4715: 'CAnimator::GetCurAnim': 모든 제어 경로에서 값을 반환하지는 않습니다.
+E:\IsaacProject\20220302\Animation.h(54): warning C4715: 'CAnimation::GetName': 모든 제어 경로에서 값을 반환하지는 않습니다.
+E:\IsaacProject\20220302\Map.h(28): warning C4715: 'CMap::GetMapData': 모든 제어 경로에서 값을 반환하지는 않습니다.
   20220302.vcxproj -> E:\IsaacProject\Output\bin_debug\MyGame.exe

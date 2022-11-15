@@ -228,5 +228,5 @@ enum class MOVE_FLAG
 	LEFT = 0x04,
 	RIGHT = 0x08,
 
-	END,
+	END = 0x00,
 };

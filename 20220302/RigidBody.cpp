@@ -38,8 +38,6 @@ void CRigidBody::finalupdate()
 
 		// 속도
 		m_vVelocity += m_vAccel * fDT;
-
-		int i = 0;
 	}
 
 	// 속도가 있을때만 마찰력 적용

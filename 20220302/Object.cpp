@@ -48,6 +48,7 @@ CObject::CObject(const CObject& _origin)
 	, m_vScale{_origin.m_vScale}
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
+
 	, m_bAlive(true)
 	, m_pOwner(nullptr)
 	, m_MoveFlag(_origin.m_MoveFlag)
@@ -139,8 +140,11 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 	int y = Result.bottom - Result.top;
 
 	Vec2 vecResult { x, y };
+	Vec2 vOffset {1.f, 1.f};
 	Vec2 vDir = {};
-	switch (static_cast<int>(m_MoveFlag))
+
+
+	switch (static_cast<int>(m_LastMoveFlag))
 	{
 	case static_cast<int>(MOVE_FLAG::UP):
 		vDir = { 0.f , -1.f };
@@ -155,21 +159,38 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 		vDir = { 1.f , 0.f };
 		break;
 
-	case (static_cast<int>(MOVE_FLAG::LEFT)+(int)MOVE_FLAG::UP):
-		vDir = { -1.f , -1.f };
+	case (static_cast<int>(MOVE_FLAG::DOWN) + static_cast<int>(MOVE_FLAG::LEFT)):
+		if (x > y)	
+			vDir = { 0.f , 1.f };
+		else //if (x < y)
+			vDir = { -1.f , 0.f };
 		break;
-	case (static_cast<int>(MOVE_FLAG::LEFT) + (int)MOVE_FLAG::DOWN):
-		vDir = { -1.f , 1.f };
+	case (static_cast<int>(MOVE_FLAG::DOWN) + static_cast<int>(MOVE_FLAG::RIGHT)):
+		if (x > y)
+			vDir = { 0.f , 1.f };
+		else //if (x < y)
+			vDir = { 1.f , 0.f };
 		break;
-	case (static_cast<int>(MOVE_FLAG::RIGHT) + (int)MOVE_FLAG::UP):
-		vDir = { 1.f , -1.f };
+	case (static_cast<int>(MOVE_FLAG::UP) + static_cast<int>(MOVE_FLAG::RIGHT)):
+		if (x > y)
+			vDir = { 0.f , -1.f };
+		else //if (x < y)
+			vDir = { 1.f , 0.f };
 		break;
-	case (static_cast<int>(MOVE_FLAG::RIGHT) + (int)MOVE_FLAG::DOWN):
-		vDir = { 1.f , 1.f };
+	case (static_cast<int>(MOVE_FLAG::UP) + static_cast<int>(MOVE_FLAG::LEFT)):
+		if (x > y)
+			vDir = { 0.f , -1.f };
+		else //if(x < y)
+			vDir = { -1.f , 0.f };
 		break;
+
 	}
 
+	vecResult += vOffset;
 	vecResult = vecResult * vDir;
+
+	if(vDir.IsZero())
+		m_LastMoveFlag = 0;
 
 	return vecResult;
 }

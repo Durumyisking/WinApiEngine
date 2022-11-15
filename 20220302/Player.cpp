@@ -47,7 +47,6 @@ CPlayer::CPlayer()
 	, m_bIsWafer(false)
 	, m_pItemTex(nullptr)
 {
-	m_MoveFlag = 0;
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
 
@@ -99,13 +98,17 @@ void CPlayer::update()
 	Vec2 vScale = GetScale();
 
 	float fTemp = m_Stat.m_fSpeed / 8.f;
-	m_MoveFlag = 0;
+
+	//if(GetRigidBody()->GetVelocity().IsZero())
+	//	m_MoveFlag = 0;
+	
 	if (KEY_HOLD(KEY::W)) {
 		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
 		{
 			pRigid->AddVelocity(Vec2(0.f, -fTemp));
 			pRigid->AddForce(Vec2(0.f, -200.f));
 			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::UP);
+			m_LastMoveFlag = m_MoveFlag;
 		}
 	}
 	if (KEY_HOLD(KEY::S)) {
@@ -114,6 +117,7 @@ void CPlayer::update()
 			pRigid->AddVelocity(Vec2(0.f, fTemp));
 			pRigid->AddForce(Vec2(0.f, 200.f));
 			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::DOWN);
+			m_LastMoveFlag = m_MoveFlag;
 		}
 	}
 	if (KEY_HOLD(KEY::A)) {
@@ -122,6 +126,7 @@ void CPlayer::update()
 			pRigid->AddVelocity(Vec2(-fTemp, 0.f));
 			pRigid->AddForce(Vec2(-200.f, 0.f));
 			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::LEFT);
+			m_LastMoveFlag = m_MoveFlag;
 		}
 	}
 	if (KEY_HOLD(KEY::D)) {
@@ -130,17 +135,12 @@ void CPlayer::update()
 			pRigid->AddVelocity(Vec2(fTemp, 0.f));
 			pRigid->AddForce(Vec2(200.f, 0.f));
 			m_MoveFlag |= static_cast<UINT>(MOVE_FLAG::RIGHT);
+			m_LastMoveFlag = m_MoveFlag;
 		}
 	}
 
-	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
-		!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
-	{
-	}
-
-	
-
 	SetPos(vPos);
+
 
 	// 부모객체만 자식들 setpos
 	if (nullptr != pBody && nullptr != pHead)
@@ -148,6 +148,34 @@ void CPlayer::update()
 		pBody->SetPos(vPos);
 		pHead->SetPos(vPos);
 	}
+
+	if (m_bcoll)
+	{
+		Vec2 vTemp = IntersectArea(m_pCollobj);
+		SetPos(GetPos() - vTemp);
+		m_bcoll = false;
+	}
+
+
+	if (!(KEY_HOLD(KEY::W)) && !(KEY_HOLD(KEY::S)) &&
+		!(KEY_HOLD(KEY::A)) && !(KEY_HOLD(KEY::D)))
+	{
+	}
+
+
+	if (KEY_AWAY(KEY::W)) 
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
+			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::UP);
+	if (KEY_AWAY(KEY::S))
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)])
+			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::DOWN);
+	if (KEY_AWAY(KEY::A))
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)])
+			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::LEFT);
+	if (KEY_AWAY(KEY::D)) 
+		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)])
+			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::RIGHT);
+
 	
 
 	for (size_t i = 0; i < m_pCostume.size(); i++)
@@ -389,9 +417,10 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 
-		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
-		Vec2 vTemp = IntersectArea(pOtherObj);
-		SetPos(GetPos() - vTemp);
+		m_pCollobj = pOtherObj;
+		m_bcoll = true;
+//		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
+
 
 		//Vec2 vec = this->GetPos() - pHeart->GetPos();
 		//vec.Normalize();
@@ -546,9 +575,10 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	if (L"PickupHeart" == pOtherObj->GetName())
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
+		m_pCollobj = pOtherObj;
+		m_bcoll = true;
+		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
 
-		Vec2 vTemp = IntersectArea(pOtherObj);
-		SetPos(GetPos() - vTemp);
 
 
 		//Vec2 vec = this->GetPos() - pHeart->GetPos();
@@ -662,6 +692,7 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 			break;
 		}
 	}
+
 
 }
 
