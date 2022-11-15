@@ -24,6 +24,9 @@ CObject::CObject()
 	, m_pOwner(nullptr)
 	, m_MoveFlag(0x00)
 	, m_pRigidBody(nullptr)
+	, m_pCollobj(nullptr)
+	, m_bcoll(false)
+	, m_LastMoveFlag(0)
 
 {
 }
@@ -39,6 +42,9 @@ CObject::CObject(CRoom* _pOwner)
 	, m_pOwner(_pOwner)
 	, m_MoveFlag(0x00)
 	, m_pRigidBody(nullptr)
+	, m_pCollobj(nullptr)
+	, m_bcoll(false)
+	, m_LastMoveFlag(0)
 {
 }
 
@@ -53,6 +59,9 @@ CObject::CObject(const CObject& _origin)
 	, m_pOwner(nullptr)
 	, m_MoveFlag(_origin.m_MoveFlag)
 	, m_pRigidBody(nullptr)
+	, m_pCollobj(nullptr)
+	, m_bcoll(false)
+	, m_LastMoveFlag(0)
 {
 	if (_origin.m_pCollider)
 	{
@@ -191,6 +200,10 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 
 	if(vDir.IsZero())
 		m_LastMoveFlag = 0;
+
+	//GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
+	//GetRigidBody()->SetForce(Vec2(0.f, 0.f));
+
 
 	return vecResult;
 }

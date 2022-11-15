@@ -44,6 +44,9 @@ void CCollider::finalupdate()
 
 	if (m_bSwitch)
 	{
+		if (nullptr != m_pOpponent && m_pOpponent->IsDead())
+			m_pOpponent = nullptr;
+
 		Vec2 vObjectPos = m_pOwner->GetPos();
 		m_vFinalPos = vObjectPos + m_vOffsetPos;
 

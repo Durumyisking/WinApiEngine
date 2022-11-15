@@ -136,9 +136,8 @@ void CScene::render(HDC _dc)
 			}
 			else
 			{
-				
-				iter = m_arrObj[i].erase(iter);
-				
+
+				iter = m_arrObj[i].erase(iter);				
 			}
 		}
 	}

@@ -395,10 +395,6 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	// monster
 	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName())
 	{
-//		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f));
-
-
-
 		CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
 
 		if (m_finvincibilityTime >= 1.0f)
@@ -417,8 +413,6 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 
-		m_pCollobj = pOtherObj;
-		m_bcoll = true;
 //		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
 
 
@@ -445,11 +439,23 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		}
 	}
 
-	//if (L"Wall" == pOtherObj->GetName())
-	//{
+	if (L"Door" == pOtherObj->GetName())
+	{
+		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+		Vec2 vPos = {};
 
-	//}
+		if (!pdoor->IsOpen())		
+		{
+			m_pCollobj = pOtherObj;
+			m_bcoll = true;
+		}
+	}
 
+	if (L"PickupHeart" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName())
+	{
+		m_pCollobj = pOtherObj;
+		m_bcoll = true;
+	}
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
@@ -483,14 +489,14 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				break;
 			case DIR::RIGHT:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x + 1, pdoor->GetOwner()->GetRoomPos().y);
-				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(500.f, 40.f));
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(450.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x + 1)))->Enter();
 				break;
 			case DIR::LEFT:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x - 1, pdoor->GetOwner()->GetRoomPos().y);
-				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-500.f, 40.f));
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-450.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x - 1)))->Enter();
@@ -501,25 +507,8 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 		else
 		{
-			switch (pdoor->Dir())
-			{
-			case DIR::UP:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = true;
-				break;
-			case DIR::DOWN:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = true;
-				break;
-			case DIR::RIGHT:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = true;
-				break;
-			case DIR::LEFT:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = true;
-				break;
-			default:
-				break;
-			}
-			this->GetRigidBody()->SetVelocity(Vec2(0, 0));
-
+			m_pCollobj = pOtherObj;
+			m_bcoll = true;
 		}
 	}
 
@@ -577,8 +566,6 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 		m_pCollobj = pOtherObj;
 		m_bcoll = true;
-		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
-
 
 
 		//Vec2 vec = this->GetPos() - pHeart->GetPos();
@@ -644,7 +631,6 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 void CPlayer::OnCollisionExit(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	
 	// wall
 	if (L"Wall" == pOtherObj->GetName())
 	{
@@ -671,7 +657,7 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 	}
 	if (L"Door" == pOtherObj->GetName())
 	{
-		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+		/*CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
 
 		switch (pdoor->Dir())
 		{
@@ -690,7 +676,7 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 
 		default:
 			break;
-		}
+		}*/
 	}
 
 

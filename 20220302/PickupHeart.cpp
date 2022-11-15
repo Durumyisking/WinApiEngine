@@ -16,7 +16,7 @@ CPickupHeart::CPickupHeart()
 	SetName(L"PickupHeart");
 	m_strAnimName = L"PickupHeart";
 	SetScale(Vec2(64.f, 64.f));
-	GetCollider()->SetScale(Vec2(48.f, 48.f));
+	GetCollider()->SetScale(Vec2(200.f, 200.f));
 	GetCollider()->SetOffsetPos(Vec2(6.f, 10.f));
 
 	CreateAnimator();
