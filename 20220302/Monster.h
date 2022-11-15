@@ -33,7 +33,6 @@ protected:
 	wstring			m_strAnimName;
 	wstring			m_arrAnimName[static_cast<UINT>(MON_STATE::END)];
 	CAI*			m_pAI;
-	bool			m_arrWallDirCheck[(UINT)DIR::END];
 	CRoom*			m_pOwner;
 	bool			m_bDeadAnim;
 	float			m_fDeadAnimTime;

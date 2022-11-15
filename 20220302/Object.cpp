@@ -147,50 +147,51 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 	switch (static_cast<int>(m_LastMoveFlag))
 	{
 	case static_cast<int>(MOVE_FLAG::UP):
-		vDir = { 0.f , -1.f };
+		m_arrWallDirCheck[static_cast<int>(DIR::UP)] = true;
 		break;
 	case static_cast<int>(MOVE_FLAG::DOWN):
-		vDir = { 0.f , 1.f };
+		m_arrWallDirCheck[static_cast<int>(DIR::DOWN)] = true;
 		break;
 	case static_cast<int>(MOVE_FLAG::LEFT):
-		vDir = { -1.f , 0.f };
+		m_arrWallDirCheck[static_cast<int>(DIR::LEFT)] = true;
 		break;
 	case static_cast<int>(MOVE_FLAG::RIGHT):
-		vDir = { 1.f , 0.f };
+		m_arrWallDirCheck[static_cast<int>(DIR::RIGHT)] = true;
 		break;
 
 	case (static_cast<int>(MOVE_FLAG::DOWN) + static_cast<int>(MOVE_FLAG::LEFT)):
 		if (x > y)	
-			vDir = { 0.f , 1.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::DOWN)] = true;
 		else //if (x < y)
-			vDir = { -1.f , 0.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::LEFT)] = true;
 		break;
 	case (static_cast<int>(MOVE_FLAG::DOWN) + static_cast<int>(MOVE_FLAG::RIGHT)):
 		if (x > y)
-			vDir = { 0.f , 1.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::DOWN)] = true;
 		else //if (x < y)
-			vDir = { 1.f , 0.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::RIGHT)] = true;
 		break;
 	case (static_cast<int>(MOVE_FLAG::UP) + static_cast<int>(MOVE_FLAG::RIGHT)):
 		if (x > y)
-			vDir = { 0.f , -1.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::UP)] = true;
 		else //if (x < y)
-			vDir = { 1.f , 0.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::RIGHT)] = true;
 		break;
 	case (static_cast<int>(MOVE_FLAG::UP) + static_cast<int>(MOVE_FLAG::LEFT)):
 		if (x > y)
-			vDir = { 0.f , -1.f };
-		else //if(x < y)
-			vDir = { -1.f , 0.f };
+			m_arrWallDirCheck[static_cast<int>(DIR::UP)] = true;
+		else //if (x < y)
+			m_arrWallDirCheck[static_cast<int>(DIR::LEFT)] = true;
 		break;
-
 	}
 
 	vecResult += vOffset;
 	vecResult = vecResult * vDir;
-
+	
 	if(vDir.IsZero())
 		m_LastMoveFlag = 0;
+
+	GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
 
 	return vecResult;
 }

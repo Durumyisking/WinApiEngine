@@ -40,7 +40,6 @@ CPlayer::CPlayer()
 	, m_finvincibilityTime(1.0f)
 	, m_bFramePass(false)
 	, m_vPrevPos()
-	, m_arrWallDirCheck()
 	, m_bGoTrapdoor(false)
 	, m_bStateClear(false)
 	, m_bClearAnimTimer(0.f)
@@ -147,13 +146,6 @@ void CPlayer::update()
 	{
 		pBody->SetPos(vPos);
 		pHead->SetPos(vPos);
-	}
-
-	if (m_bcoll)
-	{
-		Vec2 vTemp = IntersectArea(m_pCollobj);
-		SetPos(GetPos() - vTemp);
-		m_bcoll = false;
 	}
 
 
@@ -417,11 +409,6 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 
-		m_pCollobj = pOtherObj;
-		m_bcoll = true;
-//		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
-
-
 		//Vec2 vec = this->GetPos() - pHeart->GetPos();
 		//vec.Normalize();
 		//float _f = pHeart->GetRigidBody()->GetVelocity().Length();
@@ -444,18 +431,13 @@ void CPlayer::OnCollision(CCollider * _pOther)
 			m_finvincibilityTime = 0.f;
 		}
 	}
-
-	//if (L"Wall" == pOtherObj->GetName())
-	//{
-
-	//}
-
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	// doord
+
+
 	if (L"Door" == pOtherObj->GetName())
 	{
 		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
@@ -501,52 +483,10 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 		else
 		{
-			switch (pdoor->Dir())
-			{
-			case DIR::UP:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = true;
-				break;
-			case DIR::DOWN:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = true;
-				break;
-			case DIR::RIGHT:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = true;
-				break;
-			case DIR::LEFT:
-				m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = true;
-				break;
-			default:
-				break;
-			}
-			this->GetRigidBody()->SetVelocity(Vec2(0, 0));
-
+			IntersectArea(pOtherObj);
 		}
 	}
 
-	// wall
-	if (L"Wall" == pOtherObj->GetName())
-	{
-		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
-
-		switch (pWall->GetDir())
-		{
-		case DIR::UP:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = true;
-			break;
-		case DIR::DOWN:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = true;
-			break;
-		case DIR::RIGHT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = true;
-			break;
-		case DIR::LEFT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = true;	
-			break;		
-		default:
-			break;
-		}
-		this->GetRigidBody()->SetVelocity(Vec2(0, 0));
-	}
 	
 	// item
 	if (L"Item" == pOtherObj->GetName())
@@ -575,10 +515,6 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	if (L"PickupHeart" == pOtherObj->GetName())
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
-		m_pCollobj = pOtherObj;
-		m_bcoll = true;
-		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
-
 
 
 		//Vec2 vec = this->GetPos() - pHeart->GetPos();
@@ -639,6 +575,13 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 
 	}
+
+
+	if (L"Wall" == pOtherObj->GetName()  || L"PickupHeart" == pOtherObj->GetName())
+	{
+		IntersectArea(pOtherObj);
+	}
+
 }
 
 void CPlayer::OnCollisionExit(CCollider * _pOther)
@@ -646,51 +589,26 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 	
 	// wall
-	if (L"Wall" == pOtherObj->GetName())
+	if (L"Wall" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName() || L"PickupHeart" == pOtherObj->GetName())
 	{
-		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
-
-		switch (pWall->GetDir())
+		if (0 != (m_LastMoveFlag & static_cast<UINT>(MOVE_FLAG::UP)))
 		{
-		case DIR::UP:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = false;
-			break;
-		case DIR::DOWN:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = false;
-			break;
-		case DIR::RIGHT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = false;
-			break;
-		case DIR::LEFT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = false;
-			break;
-
-		default:
-			break;
+			m_arrWallDirCheck[static_cast<int>(DIR::DOWN)] = false;
 		}
-	}
-	if (L"Door" == pOtherObj->GetName())
-	{
-		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
-
-		switch (pdoor->Dir())
+		if (0 != (m_LastMoveFlag & static_cast<UINT>(MOVE_FLAG::DOWN)))
 		{
-		case DIR::UP:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = false;
-			break;
-		case DIR::DOWN:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = false;
-			break;
-		case DIR::RIGHT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = false;
-			break;
-		case DIR::LEFT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = false;
-			break;
-
-		default:
-			break;
+			m_arrWallDirCheck[static_cast<int>(DIR::UP)] = false;
 		}
+		if (0 != (m_LastMoveFlag & static_cast<UINT>(MOVE_FLAG::LEFT)))
+		{
+			m_arrWallDirCheck[static_cast<int>(DIR::RIGHT)] = false;
+		}
+		if (0 != (m_LastMoveFlag & static_cast<UINT>(MOVE_FLAG::RIGHT)))
+		{
+			m_arrWallDirCheck[static_cast<int>(DIR::LEFT)] = false;
+		}
+
+
 	}
 
 
