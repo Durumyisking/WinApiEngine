@@ -44,6 +44,8 @@ protected:
 	UINT			m_iPrevHp;	
 	Vec2			m_vPrevPos;
 
+	bool			m_arrWallDirCheck[static_cast<UINT>(DIR::END)];
+
 
 	bool			m_bGoTrapdoor;
 	bool			m_bStateClear;

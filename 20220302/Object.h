@@ -34,7 +34,6 @@ protected:
 	int			m_MoveFlag;
 	int			m_LastMoveFlag;
 	bool		m_bcoll;
-	bool		m_arrWallDirCheck[static_cast<UINT>(DIR::END)];
 
 
 public:
