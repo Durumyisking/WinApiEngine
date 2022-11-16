@@ -80,9 +80,9 @@ public:
 	virtual void PlayAnim(CAnimation* _pAnim, const wstring& _AnimName, Vec2 _vOffset, bool _Repeat);
 
 
-	virtual void OnCollision(CCollider* _pOther) {};
-	virtual void OnCollisionEnter(CCollider* _pOther) {};
-	virtual void OnCollisionExit(CCollider* _pOther) {};
+	virtual void OnCollision(CCollider* _pOther);
+	virtual void OnCollisionEnter(CCollider* _pOther);
+	virtual void OnCollisionExit(CCollider* _pOther);
 
 	void component_render(HDC _dc);
 

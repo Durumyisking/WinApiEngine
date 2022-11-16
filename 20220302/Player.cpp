@@ -164,16 +164,12 @@ void CPlayer::update()
 
 
 	if (KEY_AWAY(KEY::W)) 
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
 			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::UP);
 	if (KEY_AWAY(KEY::S))
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)])
 			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::DOWN);
 	if (KEY_AWAY(KEY::A))
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)])
 			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::LEFT);
 	if (KEY_AWAY(KEY::D)) 
-		if (!m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)])
 			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::RIGHT);
 
 	
@@ -413,14 +409,11 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
 
-//		GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
-
-
-		//Vec2 vec = this->GetPos() - pHeart->GetPos();
-		//vec.Normalize();
-		//float _f = pHeart->GetRigidBody()->GetVelocity().Length();
-		//vec = vec * 50.f;
-		//this->GetRigidBody()->AddForce(vec);
+		Vec2 vec = this->GetPos() - pHeart->GetPos();
+		vec.Normalize();
+		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
+		vec = vec * 50.f;
+		this->GetRigidBody()->AddForce(vec);
 	}
 
 
@@ -451,11 +444,8 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		}
 	}
 
-	if (L"PickupHeart" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName())
-	{
-		m_pCollobj = pOtherObj;
-		m_bcoll = true;
-	}
+	CObject::OnCollision(_pOther);
+
 }
 
 void CPlayer::OnCollisionEnter(CCollider * _pOther)
@@ -474,7 +464,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			case DIR::UP:
 				// 문 뒤에있는 방의 위치를 얻어 그 방으로 이동합니다.
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y - 1);
-				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, -225.f));
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, -185.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				// 들어간 방을 현재 방으로 설정합니다.
 				pdoor->GetOwner()->Exit();
@@ -482,7 +472,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				break;
 			case DIR::DOWN:
 				vPos = Vec2(pdoor->GetOwner()->GetRoomPos().x, pdoor->GetOwner()->GetRoomPos().y + 1);
-				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 275.f));
+				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 250.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y + 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
@@ -504,11 +494,6 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			default:
 				break;
 			}
-		}
-		else
-		{
-			m_pCollobj = pOtherObj;
-			m_bcoll = true;
 		}
 	}
 
@@ -564,15 +549,12 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	if (L"PickupHeart" == pOtherObj->GetName())
 	{
 		CPickupHeart* pHeart = dynamic_cast<CPickupHeart*>(pOtherObj);
-		m_pCollobj = pOtherObj;
-		m_bcoll = true;
 
-
-		//Vec2 vec = this->GetPos() - pHeart->GetPos();
-		//vec.Normalize();
-		//float _f = pHeart->GetRigidBody()->GetVelocity().Length();
-		//vec = vec  * 50.f;
-		//this->GetRigidBody()->AddForce(vec);
+		Vec2 vec = this->GetPos() - pHeart->GetPos();
+		vec.Normalize();
+		float _f = pHeart->GetRigidBody()->GetVelocity().Length();
+		vec = vec  * 50.f;
+		this->GetRigidBody()->AddForce(vec);
 	}
 
 	if (L"Explode" == pOtherObj->GetName())
@@ -626,6 +608,10 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		}
 
 	}
+
+	CObject::OnCollisionEnter(_pOther);
+
+
 }
 
 void CPlayer::OnCollisionExit(CCollider * _pOther)
@@ -655,30 +641,6 @@ void CPlayer::OnCollisionExit(CCollider * _pOther)
 			break;
 		}
 	}
-	if (L"Door" == pOtherObj->GetName())
-	{
-		/*CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
-
-		switch (pdoor->Dir())
-		{
-		case DIR::UP:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::UP)] = false;
-			break;
-		case DIR::DOWN:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)] = false;
-			break;
-		case DIR::RIGHT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)] = false;
-			break;
-		case DIR::LEFT:
-			m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)] = false;
-			break;
-
-		default:
-			break;
-		}*/
-	}
-
 
 }
 

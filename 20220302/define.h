@@ -49,6 +49,10 @@
 
 #define MAP_SIZE 7
 
+#define ROOMX 14
+#define ROOMY 7
+
+
 #define HEAD_BODY_GAP Vec2(0.f, 43.f)
 
 
@@ -84,6 +88,8 @@ enum class GROUP_TYPE
 	TEARWALL,
 
 	DOOR,
+
+	PROP,
 
 	ALTER,
 
@@ -229,4 +235,14 @@ enum class MOVE_FLAG
 	RIGHT = 0x08,
 
 	END = 0x00,
+};
+
+
+enum class PROP_TYPE
+{
+	POOP,
+	FIRE,
+	ROCK,
+
+	END,
 };

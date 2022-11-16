@@ -10,7 +10,7 @@
 #include "Animation.h"
 
 #include "RigidBody.h"
-
+#include "Door.h"
 #include "Core.h"
 
 CObject::CObject()
@@ -119,6 +119,41 @@ void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOf
 		_pAnim->GetFrame(i).vOffset = Vec2(_vOffset);
 }
 
+void CObject::OnCollision(CCollider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetObj();
+
+	if (L"Prop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+	{
+		Vec2 vTemp = IntersectArea(pOtherObj);
+		SetPos(GetPos() - vTemp);
+	}
+}
+
+void CObject::OnCollisionEnter(CCollider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetObj();
+
+	if (L"Prop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+	{
+		if (L"Door" == pOtherObj->GetName())
+		{
+			CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+			if (pdoor->IsOpen())
+				return;
+		}
+
+		Vec2 vTemp = IntersectArea(pOtherObj);
+		SetPos(GetPos() - vTemp);
+	}
+}
+
+void CObject::OnCollisionExit(CCollider* _pOther)
+{
+	m_LastMoveFlag = 0;
+
+}
+
 
 Vec2 CObject::IntersectArea(CObject* _pOther)
 {
@@ -194,12 +229,11 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 		break;
 
 	}
-
 	vecResult += vOffset;
 	vecResult = vecResult * vDir;
 
-	if(vDir.IsZero())
-		m_LastMoveFlag = 0;
+	//if(vDir.IsZero())
+	//	m_LastMoveFlag = 0;
 
 	//GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
 	//GetRigidBody()->SetForce(Vec2(0.f, 0.f));
@@ -210,15 +244,14 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 
 void CObject::finalupdate()
 {
+	if (m_pRigidBody)
+		m_pRigidBody->finalupdate();
 
 	if (m_pCollider)
 		m_pCollider->finalupdate();
 
 	if (m_pAnimator)
 		m_pAnimator->finalupdate();
-
-	if (m_pRigidBody)
-		m_pRigidBody->finalupdate();
 }
 
 void CObject::render(HDC _dc)
@@ -233,7 +266,7 @@ void CObject::component_render(HDC _dc)
 {
 
 	if (nullptr != m_pAnimator)
-	{
+	{		
 		m_pAnimator->render(_dc);
 	}
 

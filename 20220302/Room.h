@@ -21,6 +21,9 @@
 #include "PickupBomb.h"
 #include "Trapdoor.h"
 
+#include "Props.h"
+#include "Poop.h"
+
 #include "MonsterFactory.h"
 
 
@@ -57,6 +60,7 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 	//	void IsClear();
+
 
 private:
 	void GiveReward();

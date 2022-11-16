@@ -221,6 +221,9 @@
     <Filter Include="Engine\04. Object\Monster\coltty">
       <UniqueIdentifier>{3e39c946-4eb0-4697-8160-55f1e212ad3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Props">
+      <UniqueIdentifier>{40b2f147-1323-4e50-85a9-061364c1814a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -458,6 +461,12 @@
     <ClInclude Include="Coltty.h">
       <Filter>Engine\04. Object\Monster\coltty</Filter>
     </ClInclude>
+    <ClInclude Include="Poop.h">
+      <Filter>Engine\04. Object\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Props.h">
+      <Filter>Engine\04. Object\Props</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -684,6 +693,12 @@
     </ClCompile>
     <ClCompile Include="Coltty.cpp">
       <Filter>Engine\04. Object\Monster\coltty</Filter>
+    </ClCompile>
+    <ClCompile Include="Poop.cpp">
+      <Filter>Engine\04. Object\Props</Filter>
+    </ClCompile>
+    <ClCompile Include="Props.cpp">
+      <Filter>Engine\04. Object\Props</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

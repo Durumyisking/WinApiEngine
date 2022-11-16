@@ -31,7 +31,7 @@ void CColtty::update()
 
 void CColtty::Attack()
 {
-	if (100.5f < m_fAttackCooldown)
+	if (1.5f < m_fAttackCooldown)
 	{
 		Vec2 vDir = Vec2(0.f, 0.f);
 		for (UINT i = 0; i < static_cast<UINT>(DIR::END); i++)

@@ -30,22 +30,24 @@ void CStartRoom::Enter()
 	if (m_bFirstEnter)
 	{
 		// 픽업 생성
-		CObject* pHeart = new CPickupHeart;
-		pHeart->SetPos(GetPos() - m_vResolution / 2 + Vec2(300.f, 400.f));
+		//CObject* pHeart = new CPickupHeart;
+		//pHeart->SetPos(GetPos() - m_vResolution / 2 + Vec2(900.f, 450.f));
+		//CreateObject(pHeart, GROUP_TYPE::PICKUP);
 
-		CObject* pCoin = new CPickupCoin;
-		pCoin->SetPos(GetPos() - m_vResolution / 2 + Vec2(300.f, 500.f));
+		//for (size_t i = 0; i < ROOMX; i++)
+		//{
+		//	for (size_t j = 0; j < ROOMY; j++)
+		//	{
+		//		CProps* pPoop = new CPoop;
+		//		pPoop->SetPos(GetPos() - Vec2(456.f, 211.f) + Vec2(float(70.f * i), float(70.f * j)));
+		//		CreateObject(pPoop, GROUP_TYPE::PROP);
+		//	}
+		//}
 
-		CObject* pBomb = new CPickupBomb;
-		pBomb->SetPos(GetPos() - m_vResolution / 2 + Vec2(500.f, 400.f));
+		CProps* pPoop = new CPoop;
+		pPoop->SetPos(GetPos() - Vec2(456.f, 211.f));
+		CreateObject(pPoop, GROUP_TYPE::PROP);
 
-		CObject* pKey = new CPickupKey;
-		pKey->SetPos(GetPos() - m_vResolution / 2 + Vec2(500.f, 500.f));
-
-		CreateObject(pHeart, GROUP_TYPE::PICKUP);
-		CreateObject(pCoin, GROUP_TYPE::PICKUP);
-		CreateObject(pBomb, GROUP_TYPE::PICKUP);
-		CreateObject(pKey, GROUP_TYPE::PICKUP);
 
 	}
 	CRoom::Enter();
