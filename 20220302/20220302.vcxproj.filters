@@ -464,7 +464,7 @@
     <ClInclude Include="Poop.h">
       <Filter>Engine\04. Object\Props</Filter>
     </ClInclude>
-    <ClInclude Include="Props.h">
+    <ClInclude Include="Fire.h">
       <Filter>Engine\04. Object\Props</Filter>
     </ClInclude>
   </ItemGroup>
@@ -697,7 +697,7 @@
     <ClCompile Include="Poop.cpp">
       <Filter>Engine\04. Object\Props</Filter>
     </ClCompile>
-    <ClCompile Include="Props.cpp">
+    <ClCompile Include="Fire.cpp">
       <Filter>Engine\04. Object\Props</Filter>
     </ClCompile>
   </ItemGroup>

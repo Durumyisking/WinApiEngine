@@ -123,7 +123,7 @@ void CObject::OnCollision(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (L"Prop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+	if (L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
 	{
 		Vec2 vTemp = IntersectArea(pOtherObj);
 		SetPos(GetPos() - vTemp);
@@ -134,7 +134,7 @@ void CObject::OnCollisionEnter(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (L"Prop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+	if (L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
 	{
 		if (L"Door" == pOtherObj->GetName())
 		{

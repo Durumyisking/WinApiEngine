@@ -185,6 +185,7 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="EventMgr.h" />
+    <ClInclude Include="Fire.h" />
     <ClInclude Include="Fly.h" />
     <ClInclude Include="func.h" />
     <ClInclude Include="Gaper.h" />
@@ -217,7 +218,6 @@
     <ClInclude Include="PickupUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Poop.h" />
-    <ClInclude Include="Props.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="ResMgr.h" />
     <ClInclude Include="Resource.h" />
@@ -265,6 +265,7 @@
     <ClCompile Include="Costume.cpp" />
     <ClCompile Include="Dangle.cpp" />
     <ClCompile Include="DeadState.cpp" />
+    <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="ItemAlter.cpp" />
     <ClCompile Include="ItemMgr.cpp" />
@@ -272,7 +273,6 @@
     <ClCompile Include="NormalRoom.cpp" />
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="Poop.cpp" />
-    <ClCompile Include="Props.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Fly.cpp" />

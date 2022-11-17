@@ -44,8 +44,12 @@ void CStartRoom::Enter()
 		//	}
 		//}
 
-		CProps* pPoop = new CPoop;
-		pPoop->SetPos(GetPos() - Vec2(456.f, 211.f));
+		CFire* pFire = new CFire;
+		pFire->SetPos(GetPos() - Vec2(456.f, 211.f));
+		CreateObject(pFire, GROUP_TYPE::PROP);
+
+		CPoop* pPoop = new CPoop;
+		pPoop->SetPos(GetPos() - Vec2(30.f, 211.f));
 		CreateObject(pPoop, GROUP_TYPE::PROP);
 
 

@@ -32,6 +32,8 @@ private:
 
 	Vec2				m_vOffset;
 
+	bool				m_bTransparent;
+
 
 public:
 	CAnimation();
@@ -79,9 +81,9 @@ public:
 	tAnimFrm& GetFrame(int _iIdx) { return m_vecFrm[_iIdx]; }
 	int GetMaxFrame() { return (UINT)m_vecFrm.size(); }
 
-
-
 	void SetReverse(bool _bReverse) { m_bReverse = _bReverse; }
+	void SetTransparent(bool _input) { m_bTransparent = _input; }
+
 
 	friend class CAnimator;
 };

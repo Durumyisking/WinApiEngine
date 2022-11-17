@@ -16,6 +16,7 @@ CAnimation::CAnimation()
 	, m_bFinish(false)
 	, m_fMagnify(3.f)
 	, m_vOffset()
+	, m_bTransparent(false)
 {
 
 }
@@ -53,6 +54,7 @@ void CAnimation::update()
 
 void CAnimation::render(HDC _dc)
 {
+
 	if (m_bFinish)
 		return;
 
@@ -77,44 +79,58 @@ void CAnimation::render(HDC _dc)
 	// 렌더링 위치
 	vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
+	if (!m_bTransparent)
+	{
+
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - vScale.x / m_fMagnify + m_vOffset.x)
+			, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - vScale.y / m_fMagnify + m_vOffset.y)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x * m_fMagnify)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y * m_fMagnify)
+			, Outputdc
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.x)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.y)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y)
+			, RGB(255, 0, 255)
+		);
 
 
-	//BLENDFUNCTION bf = {};
+	}
+	else
+	{
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - vScale.x / m_fMagnify + m_vOffset.x)
+			, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - vScale.y / m_fMagnify + m_vOffset.y)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x * m_fMagnify)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y * m_fMagnify)
+			, Outputdc
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.x)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.y)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y)
+			, RGB(255, 0, 255)
+		);
 
-	//bf.BlendOp = AC_SRC_OVER;
-	//bf.BlendFlags = 0;
-	//bf.AlphaFormat = AC_SRC_ALPHA;
-	//// 고정 알파값 ( 이걸 바꿔서 투명도 조절 )
-	//bf.SourceConstantAlpha = 255;
+		BLENDFUNCTION bf = {};
+		bf.BlendOp = AC_SRC_OVER;
+		bf.BlendFlags = 0;
+		bf.AlphaFormat = AC_SRC_ALPHA;
+		bf.SourceConstantAlpha = 255; // 0 - 225
 
-	//AlphaBlend(_dc
-	//	, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f) - vScale.x / 3.f
-	//	, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f) - vScale.y / 3.f
-	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.x) * 3
-	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.y) * 3
-	//	, Outputdc
-	//	, (int)(m_vecFrm[m_iCurFrm].vLT.x)
-	//	, (int)(m_vecFrm[m_iCurFrm].vLT.y)
-	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.x)
-	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.y)
-	//	, bf
-	//);
-
-
-
-
-	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - vScale.x / m_fMagnify + m_vOffset.x)
-		, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - vScale.y / m_fMagnify + m_vOffset.y)
-		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x * m_fMagnify)
-		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y * m_fMagnify)
-		, Outputdc
-		, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.x)
-		, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.y)
-		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x)
-		, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y)
-		, RGB(255, 0, 255)
-	);
+		AlphaBlend(_dc
+			, static_cast<int>(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f - vScale.x / m_fMagnify + m_vOffset.x)
+			, static_cast<int>(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f - vScale.y / m_fMagnify + m_vOffset.y)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x * m_fMagnify)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y * m_fMagnify)
+			, Outputdc
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.x)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vLT.y)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.x)
+			, static_cast<int>(m_vecFrm[m_iCurFrm].vSlice.y)
+			, bf
+		);
+	}
 
 	DeleteObject(Reversdc);
 }

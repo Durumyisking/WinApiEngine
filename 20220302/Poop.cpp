@@ -9,7 +9,7 @@
 CPoop::CPoop()
 	
 {
-	m_eType = PROP_TYPE::POOP;
+	SetName(L"Poop");
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PoopTex", L"texture\\Props\\grid_poop_1.bmp");
 	m_iHp = 4;
 	m_vScale = { 32.f, 32.f };
@@ -35,15 +35,36 @@ void CPoop::update()
 
 void CPoop::render(HDC _dc)
 {
-	CProps::render(_dc);
+	Vec2 vScale = GetScale();
+	Vec2 vPos = GetPos();
+
+	// 카메라 시점 동기화
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
+
+	// 렌더링 오프셋 적용
+	TransparentBlt(_dc
+		, static_cast<int>(vPos.x - (vScale.x / 2.f))
+		, static_cast<int>(vPos.y - (vScale.y / 2.f))
+		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+		, m_pTex->GetDC()
+		, m_vSlice.x * m_vScale.x, m_vSlice.y * m_vScale.y, m_vScale.x, m_vScale.y
+		, RGB(255, 0, 255));
+
+	component_render(_dc);
 }
 
 void CPoop::OnCollision(CCollider* _pOther)
 {
-	CProps::OnCollision(_pOther);
 }
 
 void CPoop::OnCollisionEnter(CCollider* _pOther)
 {
-	CProps::OnCollisionEnter(_pOther);
+	CObject* pOtherObj = _pOther->GetObj();
+
+	if (L"Tear_Player" == pOtherObj->GetName())
+	{
+		--m_iHp;
+		m_vSlice += {1.f, 0.f};
+	}
 }

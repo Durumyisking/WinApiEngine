@@ -21,8 +21,8 @@
 #include "PickupBomb.h"
 #include "Trapdoor.h"
 
-#include "Props.h"
 #include "Poop.h"
+#include "Fire.h"
 
 #include "MonsterFactory.h"
 
