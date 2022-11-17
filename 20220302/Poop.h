@@ -21,7 +21,7 @@ public:
 	virtual void OnCollisionEnter(CCollider* _pOther);
 
 private:
-	CTexture* m_pTex;
+	CTexture*	m_pTex;
 	int			m_iHp;
 
 	Vec2		m_vSlice;

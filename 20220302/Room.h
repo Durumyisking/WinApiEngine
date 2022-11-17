@@ -23,6 +23,7 @@
 
 #include "Poop.h"
 #include "Fire.h"
+#include "Rock.h"
 
 #include "MonsterFactory.h"
 
@@ -60,6 +61,9 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 	//	void IsClear();
+
+	void SpawnPickup();
+	void SpawnProp();
 
 
 private:

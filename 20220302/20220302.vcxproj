@@ -222,6 +222,7 @@
     <ClInclude Include="ResMgr.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="Rock.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="NormalRoom.cpp" />
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="Poop.cpp" />
+    <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Fly.cpp" />

@@ -7,13 +7,14 @@
 
 
 CPoop::CPoop()
-	
+	: m_vSlice{}
+
 {
 	SetName(L"Poop");
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PoopTex", L"texture\\Props\\grid_poop_1.bmp");
 	m_iHp = 4;
 	m_vScale = { 32.f, 32.f };
-	SetScale(Vec2(70.f, 70.f));
+	SetScale(Vec2(90.f, 90.f));
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(70.f, 70.f));
 
@@ -27,10 +28,6 @@ CPoop::~CPoop()
 
 void CPoop::update()
 {
-	if (m_iHp == 0)
-	{
-		GetCollider()->SwitchOff();
-	}
 }
 
 void CPoop::render(HDC _dc)
@@ -56,6 +53,18 @@ void CPoop::render(HDC _dc)
 
 void CPoop::OnCollision(CCollider* _pOther)
 {
+	CObject* pOtherObj = _pOther->GetObj();
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		m_vSlice += {4.f, 0.f};
+		m_iHp = 0;
+	}
+
+	if (m_iHp == 0)
+	{
+		GetCollider()->SwitchOff();
+	}
+
 }
 
 void CPoop::OnCollisionEnter(CCollider* _pOther)
@@ -67,4 +76,17 @@ void CPoop::OnCollisionEnter(CCollider* _pOther)
 		--m_iHp;
 		m_vSlice += {1.f, 0.f};
 	}
+
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		m_vSlice += {4.f, 0.f};
+		m_iHp = 0;
+	}
+
+	if (m_iHp == 0)
+	{
+		GetCollider()->SwitchOff();
+	}
+
+
 }

@@ -38,21 +38,28 @@ void CStartRoom::Enter()
 		//{
 		//	for (size_t j = 0; j < ROOMY; j++)
 		//	{
-		//		CProps* pPoop = new CPoop;
-		//		pPoop->SetPos(GetPos() - Vec2(456.f, 211.f) + Vec2(float(70.f * i), float(70.f * j)));
+		//		CPoop* pPoop = new CPoop;
+		//		pPoop->SetPos(GetPos() - Vec2(440.f, 200.f) + Vec2(float(80.f * i), float(80.f * j)));
 		//		CreateObject(pPoop, GROUP_TYPE::PROP);
 		//	}
 		//}
 
-		CFire* pFire = new CFire;
-		pFire->SetPos(GetPos() - Vec2(456.f, 211.f));
-		CreateObject(pFire, GROUP_TYPE::PROP);
+		//CFire* pFire = new CFire;
+		//pFire->SetPos(GetPos() - Vec2(400.f, 100.f));
+		//CreateObject(pFire, GROUP_TYPE::PROP);
 
-		CPoop* pPoop = new CPoop;
-		pPoop->SetPos(GetPos() - Vec2(30.f, 211.f));
-		CreateObject(pPoop, GROUP_TYPE::PROP);
+		//CPoop* pPoop = new CPoop;
+		//pPoop->SetPos(GetPos() - Vec2(30.f, 100.f));
+		//CreateObject(pPoop, GROUP_TYPE::PROP);
 
 
+		//for (size_t i = 0; i < 3; i++)
+		//{
+		//	CRock* pRock = new CRock;
+		//	pRock->SetPos(GetPos() - Vec2(-100.f - (i * 80), 100.f));
+		//	CreateObject(pRock, GROUP_TYPE::PROP);
+
+		//}
 	}
 	CRoom::Enter();
 

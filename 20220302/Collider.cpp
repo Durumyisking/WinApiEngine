@@ -108,6 +108,20 @@ void CCollider::OnCollisionExit(CCollider* _pOther)
 		m_pOwner->OnCollisionExit(_pOther);
 }
 
+void CCollider::SwitchOff()
+{
+	if (m_bSwitch)
+	{
+		if (nullptr != m_pOpponent)
+		{
+			m_pOpponent->OnCollisionExit(this);
+			m_pOpponent->GetCollider()->OnCollisionExit(this);
+		}
+	}
+
+	m_bSwitch = false;
+}
+
 // 충돌할때 오브젝트끼리 충돌하면 오브젝트들을 일일히 연산시켜야댐 (너무 비효율적)
 // 그래서 우리 enum에 있는 group type별로 충돌하는지 판별할 것
 // update -> finalupdate -> 충돌체크

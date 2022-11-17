@@ -467,6 +467,9 @@
     <ClInclude Include="Fire.h">
       <Filter>Engine\04. Object\Props</Filter>
     </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Engine\04. Object\Props</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -698,6 +701,9 @@
       <Filter>Engine\04. Object\Props</Filter>
     </ClCompile>
     <ClCompile Include="Fire.cpp">
+      <Filter>Engine\04. Object\Props</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
       <Filter>Engine\04. Object\Props</Filter>
     </ClCompile>
   </ItemGroup>

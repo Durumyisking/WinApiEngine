@@ -23,8 +23,7 @@ CFire::CFire()
 	GetAnimator()->CreateAnimation(L"FirePlace_DEAD", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 1, false);
 
 	PlayAnim(m_pAnim, L"FirePlace_IDLE", Vec2(0.f, 0.f), true);
-//	GetAnimator()->GetCurAnim()->SetTransparent(true);
-	GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -10.f });
+	GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -8.f });
 
 }
 
@@ -34,12 +33,6 @@ CFire::~CFire()
 
 void CFire::update()
 {
-	if (m_iHp == 0)
-	{
-		GetCollider()->SwitchOff();
-		PlayAnim(m_pAnim, L"FirePlace_DEAD", Vec2(0.f, 0.f), true);
-		GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -10.f });
-	}
 }
 
 void CFire::render(HDC _dc)
@@ -49,6 +42,17 @@ void CFire::render(HDC _dc)
 
 void CFire::OnCollision(CCollider* _pOther)
 {
+	CObject* pOtherObj = _pOther->GetObj();
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		m_iHp = 0;
+	}
+	if (m_iHp == 0)
+	{
+		GetCollider()->SwitchOff();
+		PlayAnim(m_pAnim, L"FirePlace_DEAD", Vec2(0.f, 0.f), true);
+		GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -8.f });
+	}
 }
 
 void CFire::OnCollisionEnter(CCollider* _pOther)
@@ -59,5 +63,18 @@ void CFire::OnCollisionEnter(CCollider* _pOther)
 	{
 		--m_iHp;
 	}
+	if (L"Explode" == pOtherObj->GetName())
+	{
+		m_iHp = 0;
+	}
+
+	if (m_iHp == 0)
+	{
+		GetCollider()->SwitchOff();
+		PlayAnim(m_pAnim, L"FirePlace_DEAD", Vec2(0.f, 0.f), true);
+		GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -8.f });
+	}
+
+
 
 }

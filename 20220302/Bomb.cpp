@@ -45,7 +45,7 @@ void CBomb::update()
 
 	if (m_bPassFrame)
 	{
-		GetCollider()->SwitchOff(); // 3
+		GetCollider()->SwitchOff();
 	}
 
 	if (!m_bPassFrame)
@@ -63,7 +63,7 @@ void CBomb::update()
 	}
 
 	// Æø¹ßÃ³¸®
-	if (!m_bExplosionAnim) // 1
+	if (!m_bExplosionAnim)
 	{
 		if (m_fBombTime < 1.4f)
 		{
@@ -99,6 +99,7 @@ void CBomb::OnCollision(CCollider * _pOther) // 2
 	CObject* pOtherObj = _pOther->GetObj();
 
 
+
 	if (m_bPassFrame)
 	{
 		if (L"Player" == pOtherObj->GetName())
@@ -123,6 +124,8 @@ void CBomb::OnCollision(CCollider * _pOther) // 2
 			pMonster->GetStat().InflictDamage(iDamage);
 		}
 	}
+
+
 
 }
 
@@ -169,6 +172,9 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 			pMonster->GetStat().InflictDamage(iDamage);
 		}
 	}
+
+
+
 
 }
 

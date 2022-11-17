@@ -49,8 +49,8 @@
 
 #define MAP_SIZE 7
 
-#define ROOMX 14
-#define ROOMY 7
+#define ROOMX 12
+#define ROOMY 6
 
 
 #define HEAD_BODY_GAP Vec2(0.f, 43.f)
