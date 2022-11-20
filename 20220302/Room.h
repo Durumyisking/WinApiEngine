@@ -51,6 +51,7 @@ public:
 public:
 	Vec2 GetRoomPos() const { return m_vPos; }
 	ROOM_TYPE GetType() const { return m_eType; }
+	void SetType(ROOM_TYPE _eType) { m_eType = _eType; }
 	void SetRoomPos(Vec2 _v) { m_vPos = _v; }
 	void SetOwner(CMap* _pMap) { m_pOwner = _pMap; }
 	CMap* GetOwner() const { return m_pOwner; }
@@ -64,7 +65,9 @@ public:
 
 	void SpawnPickup();
 	void SpawnProp();
-
+	
+	void LoadRoom(ROOM_TYPE _eType);
+	void SetRoom(const wstring& _strRelativePath);
 
 private:
 	void GiveReward();

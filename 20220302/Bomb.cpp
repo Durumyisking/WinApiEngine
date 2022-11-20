@@ -94,7 +94,7 @@ void CBomb::render(HDC _dc)
 	component_render(_dc);
 }
 
-void CBomb::OnCollision(CCollider * _pOther) // 2
+void CBomb::OnCollision(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 

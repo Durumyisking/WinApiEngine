@@ -58,15 +58,19 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 						m_vStartPos = Vec2(x * vResolution.x + (vResolution.x / 2), y * vResolution.y + (vResolution.y / 2));
 						SetCurrentRoom(dynamic_cast<CRoom*>(m_MapData[y][x]));
 						m_pPrevRoom = dynamic_cast<CRoom*>(m_MapData[y][x]);
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::START);
 						break;
 					case L'2':
 						m_MapData[y][x] = new CNormalRoom();
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::NORMAL);
 						break;
 					case L'3':
 						m_MapData[y][x] = new CTreasureRoom();
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::TRESURE);
 						break;
 					case L'9':
 						m_MapData[y][x] = new CBossRoom();
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::BOSS);
 						break;
 					default:
 						break;
@@ -90,6 +94,22 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 						m_MapData[y][x]->SetPos(Vec2(x * vResolution.x + (vResolution.x / 2), y * vResolution.y + (vResolution.y / 2)));
 						dynamic_cast<CRoom*>(m_MapData[y][x])->AddWall();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->AddDoor();
+						ROOM_TYPE RoomType = dynamic_cast<CRoom*>(m_MapData[y][x])->GetType();
+						switch (RoomType)
+						{
+						case ROOM_TYPE::NORMAL:
+							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::NORMAL);
+							break;
+						case ROOM_TYPE::TRESURE:
+							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::TRESURE);
+							break;
+						case ROOM_TYPE::BOSS:
+							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::BOSS);
+							break;
+						default:
+							break;
+						}
+
 						CSceneMgr::GetInst()->GetCurScene()->AddObject(m_MapData[y][x], GROUP_TYPE::ROOM);
 					}
 				}

@@ -39,7 +39,7 @@ void CStartRoom::Enter()
 		//	for (size_t j = 0; j < ROOMY; j++)
 		//	{
 		//		CPoop* pPoop = new CPoop;
-		//		pPoop->SetPos(GetPos() - Vec2(440.f, 200.f) + Vec2(float(80.f * i), float(80.f * j)));
+		//		pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * i), float(71.f * j)));
 		//		CreateObject(pPoop, GROUP_TYPE::PROP);
 		//	}
 		//}

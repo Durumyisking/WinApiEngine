@@ -9,6 +9,8 @@
 #include "PickupBomb.h"
 #include "PickupKey.h"
 
+#include "PathMgr.h"
+
 
 CRoom::CRoom()
 	: m_bFirstEnter(true)
@@ -288,12 +290,119 @@ void CRoom::AddDoor()
 
 void CRoom::Enter()
 {
+	if (m_bFirstEnter)
+	{
+	}
+
 	m_bFirstEnter = false;
 	m_pOwner->SetCurrentRoom(this);
 }
 
 void CRoom::Exit()
 {
+}
+
+void CRoom::LoadRoom(ROOM_TYPE _eType)
+{
+	wstring strFolder = CPathMgr::GetInst()->GetContentPath();
+	strFolder += L"map\\Room";
+	
+	void* p = new int();
+	srand((int)p);
+
+	int iCount = 1;
+	switch (_eType)
+	{	
+	case ROOM_TYPE::NORMAL:
+		strFolder += L"\\Normal\\Room";
+		iCount = rand() % 3 + 1;
+		break;
+	case ROOM_TYPE::TRESURE:
+		strFolder += L"\\Treasure\\Room";
+//		int iCount = rand() % 3 + 1;
+		break;
+	case ROOM_TYPE::BOSS:
+		strFolder += L"\\Boss\\Room";
+//		int iCount = rand() % 3 + 1;
+		break;
+	default:
+		break;
+	}
+
+	delete p;
+
+	wstring strRoom = std::to_wstring(iCount);
+
+
+	wstring strPathEnd = L".txt";
+
+	strFolder += strRoom;
+	strFolder += strPathEnd;
+
+	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(strFolder);
+	SetRoom(strRelativePath);
+
+}
+
+void CRoom::SetRoom(const wstring& _strRelativePath)
+{
+
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	FILE* pFile = nullptr;
+
+	_wfopen_s(&pFile, strFilePath.c_str(), L"rt,ccs=UTF-8");
+
+	assert(pFile);
+
+	// ¸Ê Á¤º¸ ÀÐ±â
+//		wchar_t mapdata[7] = L"";
+	wchar_t buff[64] = L"";
+
+
+	if (0 != pFile)
+	{
+		for (int i = 0; i < ROOMY; i++)
+		{
+			fgetws(buff, 63, pFile);
+			for (int j = 0; j < ROOMX; j++)
+			{
+				switch (buff[j])
+				{
+				case L'0':
+					break;
+				case L'1':
+				{
+					CPoop* pPoop = new CPoop;
+					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					CreateObject(pPoop, GROUP_TYPE::PROP);
+				}	break;
+				case L'2':
+				{
+					CFire* pPoop = new CFire;
+					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					CreateObject(pPoop, GROUP_TYPE::PROP);
+				}	break;
+				case L'3':
+				{
+					CRock* pPoop = new CRock;
+					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					CreateObject(pPoop, GROUP_TYPE::PROP);
+				}	break;
+				case L'8':
+					break;
+				case L'9':
+					break;
+				default:
+					break;
+				}
+
+			}
+		}
+
+		fclose(pFile);
+	}
 }
 
 void CRoom::GiveReward()

@@ -14,7 +14,7 @@ CPoop::CPoop()
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PoopTex", L"texture\\Props\\grid_poop_1.bmp");
 	m_iHp = 4;
 	m_vScale = { 32.f, 32.f };
-	SetScale(Vec2(90.f, 90.f));
+	SetScale(Vec2(70.f, 70.f));
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(70.f, 70.f));
 
