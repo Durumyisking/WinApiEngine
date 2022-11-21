@@ -53,13 +53,15 @@ void CStartRoom::Enter()
 		//CreateObject(pPoop, GROUP_TYPE::PROP);
 
 
-		//for (size_t i = 0; i < 3; i++)
-		//{
-		//	CRock* pRock = new CRock;
-		//	pRock->SetPos(GetPos() - Vec2(-100.f - (i * 80), 100.f));
-		//	CreateObject(pRock, GROUP_TYPE::PROP);
+		for (size_t i = 0; i < 3; i++)
+		{
+			CRock* pRock = new CRock;
+			pRock->SetPos(GetPos() - Vec2(-100.f - (i * 80), 100.f));
+			CreateObject(pRock, GROUP_TYPE::PROP);
+		}
 
-		//}
+		DropPickupType(GetPos() + Vec2(104.f, 0.f));
+
 	}
 	CRoom::Enter();
 

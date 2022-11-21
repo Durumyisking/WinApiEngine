@@ -206,6 +206,41 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 	Vec2 vDir = {};
 
 
+	if (!m_bIsPlayer)
+	{
+		if (nullptr == GetRigidBody())
+			return {0.f, 0.f};
+
+		Vec2 vVel = GetRigidBody()->GetVelocity();
+
+		if (0.f == vVel.x && 0.f == vVel.y)
+		{
+			m_LastMoveFlag = 0;
+		}
+		if (0.f > vVel.y)
+		{
+			m_LastMoveFlag |= static_cast<UINT>(MOVE_FLAG::UP);
+			m_LastMoveFlag &= ~static_cast<UINT>(MOVE_FLAG::DOWN);
+		}
+		if (0.f < vVel.y)
+		{
+			m_LastMoveFlag |= static_cast<UINT>(MOVE_FLAG::DOWN);
+			m_LastMoveFlag &= ~static_cast<UINT>(MOVE_FLAG::UP);
+		}
+		if (0.f > vVel.x)
+		{
+			m_LastMoveFlag |= static_cast<UINT>(MOVE_FLAG::LEFT);
+			m_LastMoveFlag &= ~static_cast<UINT>(MOVE_FLAG::RIGHT);
+		}
+		if (0.f < vVel.x)
+		{
+			m_LastMoveFlag |= static_cast<UINT>(MOVE_FLAG::RIGHT);
+			m_LastMoveFlag &= ~static_cast<UINT>(MOVE_FLAG::LEFT);
+		}
+	}
+
+
+
 	switch (static_cast<int>(m_LastMoveFlag))
 	{
 	case static_cast<int>(MOVE_FLAG::UP):

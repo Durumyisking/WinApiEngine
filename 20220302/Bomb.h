@@ -49,7 +49,7 @@ public:
 
 public:
 	void CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int _iBombTypeBit);
-
+	void PushBomb(CObject* _pOther, float _fForce);
 
 
 };

@@ -69,7 +69,7 @@ public:
 	void LoadRoom(ROOM_TYPE _eType);
 	void SetRoom(const wstring& _strRelativePath);
 
-private:
+public:
 	void GiveReward();
 	void DropPickupType(Vec2 _vPos);
 

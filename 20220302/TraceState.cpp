@@ -45,8 +45,11 @@ void CTraceState::update()
 	// 몬스터가 이동할 방향
 	Vec2 vMonDir = vPlayerPos + Vec2(0.f, 30.f) - vMonsterPos;
 	vMonDir.Normalize();
-	vMonsterPos += vMonDir * GetMonster()->GetStat().m_fSpeed * fDT;
+	vMonDir = vMonDir * GetMonster()->GetStat().m_fSpeed;
+	GetMonster()->GetRigidBody()->SetVelocity(vMonDir);
 
-	GetMonster()->SetPos(vMonsterPos);
+//	vMonsterPos += vMonDir * GetMonster()->GetStat().m_fSpeed * fDT;
+
+//	GetMonster()->SetPos(vMonsterPos);
 
 }

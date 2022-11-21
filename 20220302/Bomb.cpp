@@ -11,6 +11,8 @@
 #include "Missile.h"
 #include "Monster.h"
 
+#include "WallCollider.h"
+
 CBomb::CBomb(CObject* _pOwner)
 	: m_pTex(nullptr)
 	, m_pEffectTex(nullptr)
@@ -133,15 +135,15 @@ void CBomb::OnCollision(CCollider * _pOther)
 	}
 	else
 	{
-		if (L"Player" == pOtherObj->GetName())
-		{
-			//CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
-			//Vec2 vec = this->GetPos() - pPlayer->GetPos();
-			//vec.Normalize();
-			//float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
-			//vec = vec * _f * 300.f;
-			//this->GetRigidBody()->AddForce(vec);
-		}
+		//if (L"Player" == pOtherObj->GetName())
+		//{
+		//	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+		//	Vec2 vec = this->GetPos() - pPlayer->GetPos();
+		//	vec.Normalize();
+		//	float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
+		//	vec = vec * _f * 300.f;
+		//	this->GetRigidBody()->AddForce(vec);
+		//}
 	}
 
 
@@ -161,6 +163,15 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 				m_pTarget = _pOther->GetObj();
 		}
 	}
+
+	if (L"Wall" == pOtherObj->GetName())
+	{
+		CWallCollider* pWall = dynamic_cast<CWallCollider*>(pOtherObj);
+		Vec2 _v = this->GetRigidBody()->GetVelocity();
+		_v *= -0.5f;
+		this->GetRigidBody()->SetVelocity(_v);
+	}
+
 
 	// Player | Monster 
 	if (m_bPassFrame)
@@ -194,21 +205,11 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 	{
 		if (L"Player" == pOtherObj->GetName())
 		{
-			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
-			Vec2 vec = this->GetPos() - pPlayer->GetPos();
-			vec.Normalize();
-			float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
-			vec = vec * _f * 300.f;
-			this->GetRigidBody()->AddForce(vec);
+			PushBomb(pOtherObj, 200.f);
 		}
 		if ( L"Tear_Player" == pOtherObj->GetName())
 		{
-			CMissile* pTear = dynamic_cast<CMissile*>(pOtherObj);
-			Vec2 vec = this->GetPos() - pTear->GetPos();
-			vec.Normalize();
-			float _f = pTear->GetRigidBody()->GetVelocity().Length();
-			vec = vec * _f * 50.f;
-			this->GetRigidBody()->AddForce(vec);
+			PushBomb(pOtherObj, 50.f);
 		}
 	}
 
@@ -253,4 +254,18 @@ void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int
 
 
 	CreateObject(this, GROUP_TYPE::BOMB);
+}
+
+void CBomb::PushBomb(CObject* _pOther, float _fForce)
+{
+	Vec2 vec = this->GetRigidBody()->GetVelocity() - _pOther->GetRigidBody()->GetVelocity();
+
+	if (vec.IsZero())
+		return;
+
+	vec = -vec;
+	vec.Normalize();
+	float _f = _pOther->GetRigidBody()->GetVelocity().Length();
+	vec = vec * _f * _fForce;
+	this->GetRigidBody()->AddForce(vec);
 }
