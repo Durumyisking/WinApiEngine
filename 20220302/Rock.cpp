@@ -37,7 +37,7 @@ CRock::CRock()
 	delete p;
 
 
-	SetScale(Vec2(90.f, 90.f));
+	SetScale(Vec2(70.f, 70.f));
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(70.f, 70.f));
 

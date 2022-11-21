@@ -199,6 +199,7 @@ DIR CMonster::AxisCharge()
 
 void CMonster::OnCollision(CCollider * _pOther)
 {
+	CObject::OnCollision(_pOther);
 
 }
 void CMonster::OnCollisionEnter(CCollider * _pOther)
@@ -252,6 +253,9 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 		
 		GetStat().InflictDamage(100);
 	}
+
+	CObject::OnCollisionEnter(_pOther);
+
 }
 void CMonster::OnCollisionExit(CCollider * _pOther)
 {

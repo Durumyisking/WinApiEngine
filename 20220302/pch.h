@@ -19,6 +19,15 @@
 // 라이브러리 참조
 #pragma comment(lib, "Msimg32.lib") // 이미지 관리 라이브러리
 
+// 소리
+//#include <mmsystem.h>
+//#include <dsound.h>
+//#include <dinput.h>
+//
+//#pragma comment(lib, "winmm.lib")
+//#pragma comment(lib, "dsound.lib")
+
+
 #include <assert.h>
 
 #include <vector>
@@ -42,6 +51,7 @@ using std::wstring;
 
 // 함수포인터 관련 라이브러리
 #include <functional>
+
 
 // custom header
 #include "define.h"

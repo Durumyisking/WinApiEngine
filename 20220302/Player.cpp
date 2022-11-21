@@ -50,6 +50,8 @@ CPlayer::CPlayer()
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
 
+	m_bIsPlayer = true;
+
 	m_strAnimName = L"Hurt";
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player\\isaac.bmp");
 

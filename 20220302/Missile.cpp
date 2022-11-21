@@ -172,7 +172,7 @@ void CMissile::OnCollision(CCollider * _pOther)
 void CMissile::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	if (L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Rock" == pOtherObj->GetName())
+	if (L"Bomb" == pOtherObj->GetName() ||  L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Rock" == pOtherObj->GetName())
 	{
 		if (m_bPierce)
 		{

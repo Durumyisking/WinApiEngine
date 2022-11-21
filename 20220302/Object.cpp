@@ -27,6 +27,7 @@ CObject::CObject()
 	, m_pCollobj(nullptr)
 	, m_bcoll(false)
 	, m_LastMoveFlag(0)
+	, m_bIsPlayer(false)
 
 {
 }
@@ -45,6 +46,7 @@ CObject::CObject(CRoom* _pOwner)
 	, m_pCollobj(nullptr)
 	, m_bcoll(false)
 	, m_LastMoveFlag(0)
+	, m_bIsPlayer(false)
 {
 }
 
@@ -62,6 +64,7 @@ CObject::CObject(const CObject& _origin)
 	, m_pCollobj(nullptr)
 	, m_bcoll(false)
 	, m_LastMoveFlag(0)
+	, m_bIsPlayer(false)
 {
 	if (_origin.m_pCollider)
 	{
@@ -106,8 +109,6 @@ void CObject::CreateRigidBody()
 	m_pRigidBody->m_pOwner = this;
 }
 
-
-
 void CObject::PlayAnim(CAnimation * _pAnim, const wstring & _AnimName, Vec2 _vOffset, bool _Repeat)
 {
 
@@ -128,6 +129,15 @@ void CObject::OnCollision(CCollider* _pOther)
 		Vec2 vTemp = IntersectArea(pOtherObj);
 		SetPos(GetPos() - vTemp);
 	}
+
+	if (!m_bIsPlayer)
+	{
+		if (L"Bomb" == pOtherObj->GetName())
+		{
+			Vec2 vTemp = IntersectArea(pOtherObj);
+			SetPos(GetPos() - vTemp);
+		}
+	}
 }
 
 void CObject::OnCollisionEnter(CCollider* _pOther)
@@ -142,9 +152,17 @@ void CObject::OnCollisionEnter(CCollider* _pOther)
 			if (pdoor->IsOpen())
 				return;
 		}
-
 		Vec2 vTemp = IntersectArea(pOtherObj);
 		SetPos(GetPos() - vTemp);
+	}
+
+	if (!m_bIsPlayer)
+	{
+		if (L"Bomb" == pOtherObj->GetName())
+		{
+			Vec2 vTemp = IntersectArea(pOtherObj);
+			SetPos(GetPos() - vTemp);
+		}
 	}
 }
 

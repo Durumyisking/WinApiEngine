@@ -242,7 +242,6 @@ void CRoom::AddDoor()
 			pDoor->SetOwner(this);
 			CreateObject(pDoor, GROUP_TYPE::DOOR);
 		}
-
 	}
 
 	if (nullptr != m_pOwner->GetMapData(y, x - 1))
@@ -315,7 +314,7 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	{	
 	case ROOM_TYPE::NORMAL:
 		strFolder += L"\\Normal\\Room";
-		iCount = rand() % 3 + 1;
+		iCount = rand() % 8 + 1;
 		break;
 	case ROOM_TYPE::TRESURE:
 		strFolder += L"\\Treasure\\Room";

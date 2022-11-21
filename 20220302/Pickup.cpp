@@ -7,6 +7,8 @@
 
 CPickup::CPickup()
 	: m_pTex(nullptr)
+	, m_eType(PICKUP_TYPE::END)
+	, m_pAnim(nullptr)
 {
 	CreateCollider();
 	CreateRigidBody();
@@ -50,6 +52,9 @@ void CPickup::OnCollision(CCollider * _pOther)
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
 	}
+
+	CObject::OnCollision(_pOther);
+
 }
 
 void CPickup::OnCollisionEnter(CCollider * _pOther)
@@ -102,6 +107,9 @@ void CPickup::OnCollisionEnter(CCollider * _pOther)
 		Vec2 vResult = GetRigidBody()->GetVelocity() - vDir;
 		GetRigidBody()->SetVelocity(vResult);
 	}
+
+	CObject::OnCollisionEnter(_pOther);
+
 }
 
 void CPickup::OnCollisionExit(CCollider * _pOther)

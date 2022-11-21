@@ -35,6 +35,8 @@ protected:
 	int			m_LastMoveFlag;
 	bool		m_bcoll;
 
+	bool		m_bIsPlayer;
+
 
 public:
 	CObject();

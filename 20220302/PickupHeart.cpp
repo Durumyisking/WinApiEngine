@@ -44,11 +44,11 @@ void CPickupHeart::OnCollision(CCollider * _pOther)
 	{
 		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
 
-		//Vec2 vec = this->GetPos() - pPlayer->GetPos();
-		//vec.Normalize();
-		//float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
-		//vec = vec * _f * 10.f;
-		//this->GetRigidBody()->AddForce(vec);
+		Vec2 vec = this->GetPos() - pPlayer->GetPos();
+		vec.Normalize();
+		float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
+		vec = vec * _f * 10.f;
+		this->GetRigidBody()->AddForce(vec);
 	}
 
 	CPickup::OnCollision(_pOther);
@@ -69,12 +69,12 @@ void CPickupHeart::OnCollisionEnter(CCollider * _pOther)
 		}
 		else
 		{
-			//CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
-			//Vec2 vec = this->GetPos() - pPlayer->GetPos();
-			//vec.Normalize();
-			//float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
-			//vec = vec * _f * 300.f;
-			//this->GetRigidBody()->AddForce(vec);
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+			Vec2 vec = this->GetPos() - pPlayer->GetPos();
+			vec.Normalize();
+			float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
+			vec = vec * _f * 300.f;
+			this->GetRigidBody()->AddForce(vec);
 		}
 	}
 

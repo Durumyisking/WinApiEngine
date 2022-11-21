@@ -8,6 +8,7 @@
 #include "TimeMgr.h"
 
 #include "Player.h"
+#include "Missile.h"
 #include "Monster.h"
 
 CBomb::CBomb(CObject* _pOwner)
@@ -26,8 +27,14 @@ CBomb::CBomb(CObject* _pOwner)
 	SetName(L"Bomb");
 	m_strAnimName = L"Bomb";
 	SetScale(Vec2(64.f, 64.f));
-	CreateAnimator();
 
+	CreateRigidBody();
+
+	GetRigidBody()->SetMass(0.5f);
+	GetRigidBody()->SetFricCoeff(550.f);
+	GetRigidBody()->SetMaxVelocity(500.f);
+
+	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Explode", m_pEffectTex, Vec2(0.f, 0.f), Vec2(96.f, 96.f), Vec2(96.f, 0.f), 0.1f, 15, false);
 
 }
@@ -124,7 +131,18 @@ void CBomb::OnCollision(CCollider * _pOther)
 			pMonster->GetStat().InflictDamage(iDamage);
 		}
 	}
-
+	else
+	{
+		if (L"Player" == pOtherObj->GetName())
+		{
+			//CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+			//Vec2 vec = this->GetPos() - pPlayer->GetPos();
+			//vec.Normalize();
+			//float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
+			//vec = vec * _f * 300.f;
+			//this->GetRigidBody()->AddForce(vec);
+		}
+	}
 
 
 }
@@ -172,7 +190,27 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 			pMonster->GetStat().InflictDamage(iDamage);
 		}
 	}
-
+	else
+	{
+		if (L"Player" == pOtherObj->GetName())
+		{
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
+			Vec2 vec = this->GetPos() - pPlayer->GetPos();
+			vec.Normalize();
+			float _f = pPlayer->GetRigidBody()->GetVelocity().Length();
+			vec = vec * _f * 300.f;
+			this->GetRigidBody()->AddForce(vec);
+		}
+		if ( L"Tear_Player" == pOtherObj->GetName())
+		{
+			CMissile* pTear = dynamic_cast<CMissile*>(pOtherObj);
+			Vec2 vec = this->GetPos() - pTear->GetPos();
+			vec.Normalize();
+			float _f = pTear->GetRigidBody()->GetVelocity().Length();
+			vec = vec * _f * 50.f;
+			this->GetRigidBody()->AddForce(vec);
+		}
+	}
 
 
 
