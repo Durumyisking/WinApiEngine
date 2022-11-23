@@ -22,6 +22,7 @@ CDoor::CDoor(CRoom* _pOwner, DIR _eDir)
 {
 	
 	m_bOpen = false;
+	m_bLock = false;
 	
 	SetScale(Vec2(128.f, 116.f));
 
@@ -56,6 +57,28 @@ void CDoor::update()
 			break;
 		case DIR::LEFT:
 			SetSlice(48, 0);
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+	}
+	else if (m_bLock)
+	{
+		switch (m_eDir)
+		{
+		case DIR::UP:
+			SetSlice(128, 0);
+			break;
+		case DIR::DOWN:
+			SetSlice(128, 48);
+			break;
+		case DIR::RIGHT:
+			SetSlice(96, 64);
+			break;
+		case DIR::LEFT:
+			SetSlice(96, 0);
 			break;
 		case DIR::END:
 			break;
@@ -172,16 +195,19 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNStreasure", L"texture\\Props\\DoorNStreasure.bmp"));
 			m_iSliceCountX = 3;
 			m_iSliceCountY = 2;
+			m_bLock = true;
 			break;
 		case DIR::RIGHT: case DIR::LEFT:
 			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWtreasure", L"texture\\Props\\DoorEWtreasure.bmp"));
 			m_iSliceCountX = 3;
 			m_iSliceCountY = 2;
+			m_bLock = true;
 			break;
 		case DIR::END:
 			break;
 		default:
 			break;
+
 		}
 		break;
 	case ROOM_TYPE::BOSS:

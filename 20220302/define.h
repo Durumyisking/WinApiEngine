@@ -193,6 +193,7 @@ enum class PICKUP_TYPE
 	COIN,
 	BOMB,
 	KEY,
+	SOULHEART,
 
 
 	END,
@@ -243,6 +244,14 @@ enum class PROP_TYPE
 	POOP,
 	FIRE,
 	ROCK,
+
+	END,
+};
+
+enum class HEART_TYPE
+{
+	NORMAL,
+	SOUL,
 
 	END,
 };

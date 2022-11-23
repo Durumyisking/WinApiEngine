@@ -4,10 +4,7 @@
 #include "WallCollider.h"
 
 #include "Pickup.h"
-#include "PickupHeart.h"
-#include "PickupCoin.h"
-#include "PickupBomb.h"
-#include "PickupKey.h"
+
 
 #include "PathMgr.h"
 
@@ -20,7 +17,6 @@ CRoom::CRoom()
 	, m_pBgTex(nullptr)
 	, m_bGetReward(false)
 	, m_bIsClear(false)
-	, m_bIsLock(false)
 {
 
 }
@@ -318,11 +314,11 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 		break;
 	case ROOM_TYPE::TRESURE:
 		strFolder += L"\\Treasure\\Room";
-//		int iCount = rand() % 3 + 1;
+		//iCount = rand() % 3 + 1;
 		break;
 	case ROOM_TYPE::BOSS:
 		strFolder += L"\\Boss\\Room";
-//		int iCount = rand() % 3 + 1;
+		iCount = rand() % 3 + 1;
 		break;
 	default:
 		break;
@@ -375,21 +371,25 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CPoop* pPoop = new CPoop;
 					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					pPoop->SetOwner(this);
 					CreateObject(pPoop, GROUP_TYPE::PROP);
 				}	break;
 				case L'2':
 				{
-					CFire* pPoop = new CFire;
-					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
-					CreateObject(pPoop, GROUP_TYPE::PROP);
+					CFire* pFire = new CFire;
+					pFire->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					pFire->SetOwner(this);
+					CreateObject(pFire, GROUP_TYPE::PROP);
 				}	break;
 				case L'3':
 				{
-					CRock* pPoop = new CRock;
-					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
-					CreateObject(pPoop, GROUP_TYPE::PROP);
+					CRock* pRock = new CRock;
+					pRock->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					pRock->SetOwner(this);
+					CreateObject(pRock, GROUP_TYPE::PROP);
 				}	break;
 				case L'8':
+					DropPickupType(GetPos());
 					break;
 				case L'9':
 					break;
@@ -460,9 +460,13 @@ void CRoom::DropPickupType(Vec2 _vPos)
 	case 3: // 열쇠
 		pPickup = new CPickupKey;
 		break;
+	case 4: // 소울하트
+		pPickup = new CSoulHeart;
+		break;
 	default:
 		break;
 	}
+	pPickup->SetOwner(this);
 	pPickup->SetPos(_vPos);
 	CreateObject(pPickup, GROUP_TYPE::PICKUP);
 

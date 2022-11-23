@@ -5,6 +5,8 @@
 #include "Collider.h"
 #include "Texture.h"
 
+#include "Room.h"
+
 
 CPoop::CPoop()
 	: m_vSlice{}
@@ -32,23 +34,30 @@ void CPoop::update()
 
 void CPoop::render(HDC _dc)
 {
-	Vec2 vScale = GetScale();
-	Vec2 vPos = GetPos();
+	if (nullptr == GetOwner())
+		return;
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	{
 
-	// 카메라 시점 동기화
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+		Vec2 vScale = GetScale();
+		Vec2 vPos = GetPos();
+
+		// 카메라 시점 동기화
+		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 
-	// 렌더링 오프셋 적용
-	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - (vScale.x / 2.f))
-		, static_cast<int>(vPos.y - (vScale.y / 2.f))
-		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
-		, m_pTex->GetDC()
-		, m_vSlice.x * m_vScale.x, m_vSlice.y * m_vScale.y, m_vScale.x, m_vScale.y
-		, RGB(255, 0, 255));
+		// 렌더링 오프셋 적용
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - (vScale.x / 2.f))
+			, static_cast<int>(vPos.y - (vScale.y / 2.f))
+			, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+			, m_pTex->GetDC()
+			, m_vSlice.x * m_vScale.x, m_vSlice.y * m_vScale.y, m_vScale.x, m_vScale.y
+			, RGB(255, 0, 255));
 
-	component_render(_dc);
+		component_render(_dc);
+
+	}
 }
 
 void CPoop::OnCollision(CCollider* _pOther)

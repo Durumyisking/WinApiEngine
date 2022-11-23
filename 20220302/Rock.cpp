@@ -5,6 +5,7 @@
 #include "ResMgr.h"
 #include "Collider.h"
 #include "Texture.h"
+#include "Room.h"
 
 CRock::CRock()
 	: m_bCracked(false)
@@ -58,23 +59,29 @@ void CRock::update()
 
 void CRock::render(HDC _dc)
 {
-	Vec2 vScale = GetScale();
-	Vec2 vPos = GetPos();
+	if (nullptr == GetOwner())
+		return;
 
-	// 카메라 시점 동기화
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	{
+		Vec2 vScale = GetScale();
+		Vec2 vPos = GetPos();
+
+		// 카메라 시점 동기화
+		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 
-	// 렌더링 오프셋 적용
-	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - (vScale.x / 2.f))
-		, static_cast<int>(vPos.y - (vScale.y / 2.f))
-		, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
-		, m_pTex->GetDC()
-		, m_vSlice.x * m_vScale.x, m_vSlice.y * m_vScale.y, m_vScale.x, m_vScale.y
-		, RGB(255, 0, 255));
+		// 렌더링 오프셋 적용
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - (vScale.x / 2.f))
+			, static_cast<int>(vPos.y - (vScale.y / 2.f))
+			, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+			, m_pTex->GetDC()
+			, m_vSlice.x * m_vScale.x, m_vSlice.y * m_vScale.y, m_vScale.x, m_vScale.y
+			, RGB(255, 0, 255));
 
-	component_render(_dc);
+		component_render(_dc);
+	}
 }
 
 

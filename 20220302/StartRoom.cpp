@@ -60,7 +60,15 @@ void CStartRoom::Enter()
 			CreateObject(pRock, GROUP_TYPE::PROP);
 		}
 
-		DropPickupType(GetPos() + Vec2(104.f, 0.f));
+		CObject* pPickup = new CSoulHeart;
+		pPickup->SetPos(GetPos() - Vec2(100.f, 100.f));
+		CreateObject(pPickup, GROUP_TYPE::PICKUP);
+
+		CObject* pPickup2 = new CPickupKey;
+		pPickup2->SetPos(GetPos());
+		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
+
+
 
 	}
 	CRoom::Enter();

@@ -17,8 +17,6 @@ void CNormalRoom::update()
 	if(this ==m_pOwner->GetCurrentRoom())
 		CRoom::update();
 
-	// 클리어시 픽업생성
-//	if()
 }
 
 void CNormalRoom::render(HDC _dc)

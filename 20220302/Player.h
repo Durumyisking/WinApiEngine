@@ -22,7 +22,8 @@ protected:
 	// 스텟 관련
 	Stat*	m_pStat;
 	Stat	m_Stat;
-	double			m_dAttackDealy; // 평타 쿨타임
+	double	m_dAttackDealy; // 평타 쿨타임
+	UINT	m_iSoulHeart;
 
 	// 아이템 관련
 	int					m_vInventory [static_cast<UINT>(ITEM_TABLE::end) + 1];
@@ -34,6 +35,7 @@ protected:
 	float			m_finvincibilityTime;
 
 	bool			m_bGetHpMax;
+	bool			m_bGetSoulHeart;
 	bool			m_bFramePass;
 
 	CTexture*		m_pTex;
@@ -73,8 +75,13 @@ public:
 	UINT GetPrevHp() { return m_iPrevHp;}
 	void SetPrevHp(UINT _Prevhp) { m_iPrevHp = _Prevhp; }
 
-	bool GetHpMax() const { return m_bGetHpMax; }
+	bool IsGetHpMax() const { return m_bGetHpMax; }
 	void EndGetHpMax() { m_bGetHpMax = false; }
+
+	UINT GetSoulHeart() const { return m_iSoulHeart; }
+	bool IsGetSoulHeart() const { return m_bGetSoulHeart; }
+	void EndGetSoulHeart() { m_bGetSoulHeart = false; }
+	void PickupSoulHeart() { m_iSoulHeart += 2; }
 
 	vector<CCostume*> GetCostumeVec() const { return m_pCostume; }
 

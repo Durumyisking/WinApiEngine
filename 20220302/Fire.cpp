@@ -6,7 +6,7 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "Texture.h"
-
+#include "Room.h"
 
 CFire::CFire()
 {
@@ -37,7 +37,12 @@ void CFire::update()
 
 void CFire::render(HDC _dc)
 {
-	component_render(_dc);
+	if (nullptr == GetOwner())
+		return;
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	{
+		component_render(_dc);
+	}
 }
 
 void CFire::OnCollision(CCollider* _pOther)

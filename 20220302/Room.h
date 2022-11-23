@@ -19,6 +19,8 @@
 #include "PickupKey.h"
 #include "PickupCoin.h"
 #include "PickupBomb.h"
+#include "SoulHeart.h"
+
 #include "Trapdoor.h"
 
 #include "Poop.h"
@@ -87,5 +89,4 @@ protected:
 	bool		m_bIsClear;
 	bool		m_bFirstEnter;
 	bool		m_bGetReward;
-	bool		m_bIsLock;
 };

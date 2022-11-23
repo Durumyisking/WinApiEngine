@@ -4,6 +4,9 @@
 #include "Texture.h"
 #include "Collider.h"
 
+#include "Room.h"
+
+
 
 CPickup::CPickup()
 	: m_pTex(nullptr)
@@ -29,7 +32,12 @@ void CPickup::update()
 
 void CPickup::render(HDC _dc)
 {
-	component_render(_dc);
+	if (nullptr == GetOwner())
+		return;
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	{
+		component_render(_dc);
+	}
 }
 
 void CPickup::OnCollision(CCollider * _pOther)

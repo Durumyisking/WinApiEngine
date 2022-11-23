@@ -233,6 +233,7 @@
     <ClInclude Include="Scene_Start.h" />
     <ClInclude Include="Scene_Tool.h" />
     <ClInclude Include="SelectGDI.h" />
+    <ClInclude Include="SoulHeart.h" />
     <ClInclude Include="StartRoom.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="struct.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="Scene_Tool.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
+    <ClCompile Include="SoulHeart.cpp" />
     <ClCompile Include="StartRoom.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Texture.cpp" />

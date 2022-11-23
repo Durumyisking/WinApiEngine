@@ -28,9 +28,12 @@ public:
 
 	void Exit(int _type);
 
+	vector<CUI*> GetHpVec() const { return vecHeartUI; }
+
 private:
 	vector<CUI*> vecHeartUI;
-	
+	vector<CUI*> vecSoulHeartUI;
+
 
 	// 이동 된 방 기준 이전 방의 타입
 	bool				m_bBossRoomEnter;

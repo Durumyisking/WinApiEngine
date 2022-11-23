@@ -78,13 +78,12 @@ void CScene_Start::Enter()
 	m_pPlayer->SetPos(m_pMap->GetStartPos() + Vec2(0.f, -40.f));
 
 
-	// ui 技泼
-	
+	// ui 技泼0
 	// 眉仿 ui
 	int iHeartSize = m_pPlayer->GetStat()->m_iMaxHP / 2;
 	for (int i = 0; i < iHeartSize; ++i)
 	{
-		CUI* pHeartUI = new CHeart(i + 1);
+		CUI* pHeartUI = new CHeart(i + 1, HEART_TYPE::NORMAL);
 		vecHeartUI.push_back(pHeartUI);
 		AddObject(pHeartUI, GROUP_TYPE::UI);
 	}
@@ -225,16 +224,25 @@ void CScene_Start::update()
 
 
 
-	// UI贸府
+	// HUD贸府
 	////////////////////////////////////////////////////////////////////
 	// 敲饭捞绢 HP贸府
-	if (m_pPlayer->GetHpMax())
+	if (m_pPlayer->IsGetHpMax())
 	{
-		CUI* pHeartUI = new CHeart(static_cast<int>(vecHeartUI.size() + 1));
+		CUI* pHeartUI = new CHeart(static_cast<int>(vecHeartUI.size() + 1), HEART_TYPE::NORMAL);
 		vecHeartUI.push_back(pHeartUI);
 		AddObject(pHeartUI, GROUP_TYPE::UI);
 
 		m_pPlayer->EndGetHpMax();
+	}
+
+	if (m_pPlayer->IsGetSoulHeart())
+	{
+		CUI* pHeartUI = new CHeart(static_cast<int>(vecSoulHeartUI.size() + 1), HEART_TYPE::SOUL);
+		vecSoulHeartUI.push_back(pHeartUI);
+		AddObject(pHeartUI, GROUP_TYPE::UI);
+
+		m_pPlayer->EndGetSoulHeart();
 	}
 
 	if (m_pPlayer->GetStat()->m_iMaxHP == m_pPlayer->GetStat()->m_iHP)

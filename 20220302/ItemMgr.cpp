@@ -12,6 +12,7 @@
 
 CItemMgr::CItemMgr()
 	:m_arrItem{}
+	,m_arrDropedItem{}
 {
 }
 
@@ -31,14 +32,21 @@ CItem* CItemMgr::CreateItem(UINT _iItem, Vec2 _vPos)
 	pNewItem->CreateAlter();
 	CreateObject(pNewItem, GROUP_TYPE::ITEM);
 
-
 	return nullptr;
 }
 
 CItem* CItemMgr::CreateRandomItem(Vec2 _vPos)
 {
-	srand(CTimeMgr::GetInst()->GetCurCount());
-	UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::end));
+	UINT item;
+
+	do
+	{
+		srand(CTimeMgr::GetInst()->GetCurCount());
+		item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::end));
+
+	} while (m_arrDropedItem[item] > 0);
+
+	++m_arrDropedItem[item];
 
 	ITEM_TABLE eItem = static_cast<ITEM_TABLE>(item);
 	CItem* pNewItem = new CItem(_vPos);

@@ -38,6 +38,8 @@ CPlayer::CPlayer()
 	, m_pStat(nullptr)
 	, m_Pickup{}
 	, m_finvincibilityTime(1.0f)
+	, m_bGetHpMax(false)
+	, m_bGetSoulHeart(false)
 	, m_bFramePass(false)
 	, m_vPrevPos()
 	, m_arrWallDirCheck()
@@ -46,6 +48,7 @@ CPlayer::CPlayer()
 	, m_bClearAnimTimer(0.f)
 	, m_bIsWafer(false)
 	, m_pItemTex(nullptr)
+	, m_iSoulHeart(0)
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
@@ -166,13 +169,13 @@ void CPlayer::update()
 
 
 	if (KEY_AWAY(KEY::W)) 
-			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::UP);
+			m_MoveFlag &= ~static_cast<UINT>(MOVE_FLAG::UP);
 	if (KEY_AWAY(KEY::S))
-			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::DOWN);
+			m_MoveFlag &= ~static_cast<UINT>(MOVE_FLAG::DOWN);
 	if (KEY_AWAY(KEY::A))
-			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::LEFT);
+			m_MoveFlag &= ~static_cast<UINT>(MOVE_FLAG::LEFT);
 	if (KEY_AWAY(KEY::D)) 
-			m_MoveFlag ^= static_cast<UINT>(MOVE_FLAG::RIGHT);
+			m_MoveFlag &= ~static_cast<UINT>(MOVE_FLAG::RIGHT);
 
 	
 
@@ -391,7 +394,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 
 	// monster
-	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName())
+	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName())
 	{
 		CMonster* pMonster = dynamic_cast<CMonster*>(pOtherObj);
 
@@ -459,7 +462,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
 		Vec2 vPos = {};
 
-		if (pdoor->IsOpen())
+		if (pdoor->IsOpen() && !(pdoor->IsLock()))
 		{
 			switch (pdoor->Dir())
 			{
@@ -495,6 +498,13 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				break;
 			default:
 				break;
+			}
+		}
+		else if (pdoor->IsLock())
+		{
+			if (m_Pickup.m_iKey > 0)
+			{
+				pdoor->unLockDoor();
 			}
 		}
 	}
@@ -576,7 +586,14 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 	}
 
-	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName())
+	if (L"PickupSoulHeart" == pOtherObj->GetName())
+	{
+		GetSoulHeart();
+		m_bGetSoulHeart = true;
+	}
+
+
+	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName())
 	{
 
 		Vec2 vDir = pOtherObj->GetPos() - GetPos();

@@ -32,9 +32,24 @@ public:
 		m_bOpen = true;
 	}
 
+	void LockDoor()
+	{
+		m_bLock = true;
+	}
+
+	void unLockDoor()
+	{
+		m_bLock = false;
+	}
+
 	bool IsOpen()
 	{
 		return m_bOpen;
+	}
+
+	bool IsLock()
+	{
+		return m_bLock;
 	}
 
 	void SetTexture(CTexture* _pTex)
@@ -65,5 +80,7 @@ private:
 
 	int				m_iSliceCountX;
 	int				m_iSliceCountY;
+
+	bool			m_bLock;
 };
 

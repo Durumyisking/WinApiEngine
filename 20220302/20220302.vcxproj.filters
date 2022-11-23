@@ -224,6 +224,9 @@
     <Filter Include="Engine\04. Object\Props">
       <UniqueIdentifier>{40b2f147-1323-4e50-85a9-061364c1814a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Pickup\SoulHeart">
+      <UniqueIdentifier>{6591fb26-6e4a-4a1b-8fe0-3c6d3bb02e38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -470,6 +473,9 @@
     <ClInclude Include="Rock.h">
       <Filter>Engine\04. Object\Props</Filter>
     </ClInclude>
+    <ClInclude Include="SoulHeart.h">
+      <Filter>Engine\04. Object\Pickup\SoulHeart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -705,6 +711,9 @@
     </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Engine\04. Object\Props</Filter>
+    </ClCompile>
+    <ClCompile Include="SoulHeart.cpp">
+      <Filter>Engine\04. Object\Pickup\SoulHeart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

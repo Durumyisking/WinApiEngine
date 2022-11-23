@@ -6,7 +6,6 @@
 #include "RigidBody.h"
 #include "WallCollider.h"
 
-
 class CPickup :
 	public CObject
 {
