@@ -40,6 +40,7 @@ CPlayer::CPlayer()
 	, m_finvincibilityTime(1.0f)
 	, m_bGetHpMax(false)
 	, m_bGetSoulHeart(false)
+	, m_bLooseSoulHeart(false)
 	, m_bFramePass(false)
 	, m_vPrevPos()
 	, m_arrWallDirCheck()
@@ -404,9 +405,20 @@ void CPlayer::OnCollision(CCollider * _pOther)
 			AnimOper();
 			m_finvincibilityTime = 0;
 
-			m_iPrevHp = m_pStat->m_iHP;
-			--m_pStat->m_iHP;
-
+			if (m_iSoulHeart > 0)
+			{
+				--m_iSoulHeart;
+				// 피격 당했을때 소울하트가 반개였으면 소울하트를 삭제한다
+				if (0 == m_iSoulHeart % 2)
+				{
+					m_bLooseSoulHeart = true;
+				}
+			}
+			else
+			{
+				m_iPrevHp = m_pStat->m_iHP;
+				--m_pStat->m_iHP;
+			}
 		}
 	}
 
@@ -588,7 +600,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"PickupSoulHeart" == pOtherObj->GetName())
 	{
-		GetSoulHeart();
+		m_iSoulHeart += 2;
 		m_bGetSoulHeart = true;
 	}
 
@@ -608,8 +620,21 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			AnimOper();
 
 			m_finvincibilityTime = 0;
-			m_iPrevHp = m_pStat->m_iHP;
-			--m_pStat->m_iHP;
+
+			if (m_iSoulHeart > 0)
+			{
+				--m_iSoulHeart;
+				// 피격 당했을때 소울하트가 반개였으면 소울하트를 삭제한다
+				if (0 == m_iSoulHeart % 2)
+				{
+					m_bLooseSoulHeart = true;
+				}
+			}
+			else
+			{
+				m_iPrevHp = m_pStat->m_iHP;
+				--m_pStat->m_iHP;
+			}
 
 		}
 	}

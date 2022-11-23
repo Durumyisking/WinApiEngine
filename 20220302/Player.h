@@ -62,6 +62,8 @@ public:
 	~CPlayer();
 
 public:
+	bool			m_bLooseSoulHeart;
+
 	virtual void update();
 	virtual void render(HDC _dc);
 
@@ -81,7 +83,8 @@ public:
 	UINT GetSoulHeart() const { return m_iSoulHeart; }
 	bool IsGetSoulHeart() const { return m_bGetSoulHeart; }
 	void EndGetSoulHeart() { m_bGetSoulHeart = false; }
-	void PickupSoulHeart() { m_iSoulHeart += 2; }
+	void SetSoulHeart(UINT _iValue) { m_iSoulHeart = _iValue; }
+
 
 	vector<CCostume*> GetCostumeVec() const { return m_pCostume; }
 

@@ -245,6 +245,7 @@ void CScene_Start::update()
 		m_pPlayer->EndGetSoulHeart();
 	}
 
+	// 그냥하트
 	if (m_pPlayer->GetStat()->m_iMaxHP == m_pPlayer->GetStat()->m_iHP)
 	{
 		for (size_t i = 0; i < vecHeartUI.size(); i++)
@@ -289,6 +290,26 @@ void CScene_Start::update()
 			}
 		}
 	}
+
+	// 소울하트
+	UINT SoulheartCount = m_pPlayer->GetSoulHeart();
+	if (m_pPlayer->m_bLooseSoulHeart)
+	{
+		DeleteObject(vecSoulHeartUI[vecSoulHeartUI.size() - 1]);
+		vecSoulHeartUI.pop_back();
+		m_pPlayer->m_bLooseSoulHeart = false;
+	}
+
+	for (size_t i = 0; i < vecSoulHeartUI.size(); i++)
+	{
+		vecSoulHeartUI[i]->SetSlice(Vec2(0, 1));
+	}
+
+
+	// 홀수면 맨 마지막꺼만 반칸으로 바꾸면 댐
+	if(1 == SoulheartCount % 2)
+		vecSoulHeartUI[vecSoulHeartUI.size() - 1]->SetSlice({ 1,1 });
+
 }
 
 

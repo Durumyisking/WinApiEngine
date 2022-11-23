@@ -187,7 +187,14 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 			if (pPlayer->IsWafer())
 				iDamage = 1;
 
-			pPlayer->GetStat()->InflictDamage(iDamage);
+			if (pPlayer->GetSoulHeart() < 0)
+			{
+				pPlayer->SetSoulHeart(pPlayer->GetSoulHeart() - iDamage);
+			}
+			else
+			{
+				pPlayer->GetStat()->InflictDamage(iDamage);
+			}
 
 		}
 		if (L"Monster" == pOtherObj->GetName())
