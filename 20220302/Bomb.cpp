@@ -22,6 +22,7 @@ CBomb::CBomb(CObject* _pOwner)
 	, m_bPassFrame(false)
 	, m_pTarget(nullptr)
 	, m_iBombTypeBit(0)
+	, m_bPush(false)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Bomb	", L"texture\\Pickup\\pickup_016_bomb.bmp");
 	m_pEffectTex = CResMgr::GetInst()->LoadTexture(L"Explode", L"texture\\Effect\\effect_029_explosion.bmp");
@@ -187,13 +188,15 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 			if (pPlayer->IsWafer())
 				iDamage = 1;
 
-			if (pPlayer->GetSoulHeart() < 0)
+			if (pPlayer->GetSoulHeart() > 0)
 			{
 				pPlayer->SetSoulHeart(pPlayer->GetSoulHeart() - iDamage);
+				pPlayer->m_bLooseSoulHeart = true;
 			}
 			else
 			{
 				pPlayer->GetStat()->InflictDamage(iDamage);
+				pPlayer->HitRed();
 			}
 
 		}
@@ -226,6 +229,12 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 
 void CBomb::OnCollisionExit(CCollider * _pOther)
 {
+
+	CObject* pOtherObj = _pOther->GetObj();
+	if (L"Player" == pOtherObj->GetName() || L"Tear_Player" == pOtherObj->GetName())
+	{
+		m_bPush = true;
+	}
 }
 
 void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int _iBombTypeBit)
@@ -265,14 +274,17 @@ void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int
 
 void CBomb::PushBomb(CObject* _pOther, float _fForce)
 {
-	Vec2 vec = this->GetRigidBody()->GetVelocity() - _pOther->GetRigidBody()->GetVelocity();
+	if (m_bPush)
+	{
+		Vec2 vec = this->GetRigidBody()->GetVelocity() - _pOther->GetRigidBody()->GetVelocity();
 
-	if (vec.IsZero())
-		return;
+		if (vec.IsZero())
+			return;
 
-	vec = -vec;
-	vec.Normalize();
-	float _f = _pOther->GetRigidBody()->GetVelocity().Length();
-	vec = vec * _f * _fForce;
-	this->GetRigidBody()->AddForce(vec);
+		vec = -vec;
+		vec.Normalize();
+		float _f = _pOther->GetRigidBody()->GetVelocity().Length();
+		vec = vec * _f * _fForce;
+		this->GetRigidBody()->AddForce(vec);
+	}
 }

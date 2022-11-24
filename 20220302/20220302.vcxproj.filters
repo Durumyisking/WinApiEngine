@@ -476,6 +476,9 @@
     <ClInclude Include="SoulHeart.h">
       <Filter>Engine\04. Object\Pickup\SoulHeart</Filter>
     </ClInclude>
+    <ClInclude Include="EvilRoom.h">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -714,6 +717,9 @@
     </ClCompile>
     <ClCompile Include="SoulHeart.cpp">
       <Filter>Engine\04. Object\Pickup\SoulHeart</Filter>
+    </ClCompile>
+    <ClCompile Include="EvilRoom.cpp">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

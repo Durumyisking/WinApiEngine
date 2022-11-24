@@ -55,6 +55,8 @@ protected:
 
 	bool			m_bIsWafer;
 
+	bool			m_bHitRed;
+
 	CTexture*		m_pItemTex;
 
 public:
@@ -101,6 +103,9 @@ public:
 
 	int CheckInventory(ITEM_TABLE _eItemName) { return m_vInventory[static_cast<UINT>(_eItemName)]; }
 	void StartTrapdoorAnim();
+
+	bool IsRedHit() const { return m_bHitRed; }
+	void HitRed() { m_bHitRed = true; }
 
 public:
 	void init();

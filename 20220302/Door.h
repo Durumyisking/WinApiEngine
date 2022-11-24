@@ -65,7 +65,7 @@ public:
 
 	CRoom* GetOwner() const { return m_pOwner; }
 	DIR Dir() const { return m_eDir; }
-
+	void SetSecret(bool _flag) { m_bSecret = _flag; }
 
 
 private:
@@ -73,6 +73,8 @@ private:
 	bool			m_bOpen;
 	CRoom*			m_pOwner;
 	DIR				m_eDir;
+
+	ROOM_TYPE		m_eType;
 
 	// 텍스처 자를 위치
 	int				m_iSliceX;
@@ -82,5 +84,6 @@ private:
 	int				m_iSliceCountY;
 
 	bool			m_bLock;
+	bool			m_bSecret;
 };
 

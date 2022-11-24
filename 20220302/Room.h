@@ -65,8 +65,8 @@ public:
 	virtual void Exit();
 	//	void IsClear();
 
-	void SpawnPickup();
-	void SpawnProp();
+	void SpawnPickup(PICKUP_TYPE _eType, Vec2 _vPos);
+//	void SpawnProp();
 	
 	void LoadRoom(ROOM_TYPE _eType);
 	void SetRoom(const wstring& _strRelativePath);
@@ -89,4 +89,5 @@ protected:
 	bool		m_bIsClear;
 	bool		m_bFirstEnter;
 	bool		m_bGetReward;
+
 };

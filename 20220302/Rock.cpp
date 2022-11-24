@@ -10,6 +10,7 @@
 CRock::CRock()
 	: m_bCracked(false)
 	, m_vSlice{}
+	, m_bTin(false)
 {
 	SetName(L"Rock");
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"RockTex", L"texture\\Props\\Rock.bmp");
@@ -35,6 +36,18 @@ CRock::CRock()
 	default:
 		break;
 	}
+	delete p;
+
+	// 50분의 1확률로 색돌 생성
+	p = new int();
+	srand((int)p);
+	iType = rand() % 50;
+	if (49 == iType)
+	{
+		m_vSlice = { 3.f, 0.f };
+		m_bTin = true;
+	}
+
 	delete p;
 
 
@@ -85,14 +98,21 @@ void CRock::render(HDC _dc)
 }
 
 
+void CRock::Crack()
+{
+	m_vSlice = { 4.f, 0.f };
+	GetCollider()->SwitchOff();
+
+	if(m_bTin)
+		GetOwner()->SpawnPickup(PICKUP_TYPE::SOULHEART, GetPos());
+}
+
 void CRock::OnCollision(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 	if (L"Explode" == pOtherObj->GetName())
 	{
-		m_vSlice = { 4.f, 0.f };
-
-		GetCollider()->SwitchOff();
+		Crack();
 	}
 }
 
@@ -102,9 +122,6 @@ void CRock::OnCollisionEnter(CCollider* _pOther)
 
 	if (L"Explode" == pOtherObj->GetName())
 	{
-		m_vSlice = { 4.f, 0.f };
-
-		GetCollider()->SwitchOff();
+		Crack();
 	}
-
 }

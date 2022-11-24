@@ -13,7 +13,7 @@ CTreasureRoom::CTreasureRoom()
 
 CTreasureRoom::~CTreasureRoom()
 {
-}
+}	
 
 void CTreasureRoom::update()
 {

@@ -15,6 +15,7 @@ public:
 
 	CLONE(CRock);
 
+	void Crack();
 
 public:
 	virtual void OnCollision(CCollider* _pOther);
@@ -23,6 +24,7 @@ public:
 private:
 	CTexture*	m_pTex;
 	bool		m_bCracked;
+	bool		m_bTin;
 
 	Vec2		m_vSlice;
 	Vec2		m_vScale;

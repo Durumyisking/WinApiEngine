@@ -185,6 +185,7 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="EventMgr.h" />
+    <ClInclude Include="EvilRoom.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Fly.h" />
     <ClInclude Include="func.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="Costume.cpp" />
     <ClCompile Include="Dangle.cpp" />
     <ClCompile Include="DeadState.cpp" />
+    <ClCompile Include="EvilRoom.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="ItemAlter.cpp" />

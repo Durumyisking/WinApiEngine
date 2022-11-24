@@ -17,6 +17,7 @@ CRoom::CRoom()
 	, m_pBgTex(nullptr)
 	, m_bGetReward(false)
 	, m_bIsClear(false)
+
 {
 
 }
@@ -297,6 +298,38 @@ void CRoom::Exit()
 {
 }
 
+void CRoom::SpawnPickup(PICKUP_TYPE _eType, Vec2 _vPos)
+{
+	CObject* pPickup = nullptr;
+
+	switch (_eType)
+	{
+	case PICKUP_TYPE::HEART:
+		pPickup = new CPickupHeart;
+		break;
+	case PICKUP_TYPE::COIN:
+		pPickup = new CPickupCoin;
+		break;
+	case PICKUP_TYPE::BOMB:
+		pPickup = new CPickupBomb;
+		break;
+	case PICKUP_TYPE::KEY:
+		pPickup = new CPickupKey;
+		break;
+	case PICKUP_TYPE::SOULHEART:
+		pPickup = new CSoulHeart;
+		break;
+	case PICKUP_TYPE::END:
+		break;
+	default:
+		break;
+	}
+
+	pPickup->SetOwner(this);
+	pPickup->SetPos(_vPos);
+	CreateObject(pPickup, GROUP_TYPE::PICKUP);
+}
+
 void CRoom::LoadRoom(ROOM_TYPE _eType)
 {
 	wstring strFolder = CPathMgr::GetInst()->GetContentPath();
@@ -310,7 +343,7 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	{	
 	case ROOM_TYPE::NORMAL:
 		strFolder += L"\\Normal\\Room";
-		iCount = rand() % 8 + 1;
+		iCount = rand() % 9 + 1;
 		break;
 	case ROOM_TYPE::TRESURE:
 		strFolder += L"\\Treasure\\Room";
@@ -319,6 +352,10 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	case ROOM_TYPE::BOSS:
 		strFolder += L"\\Boss\\Room";
 		iCount = rand() % 3 + 1;
+		break;
+	case ROOM_TYPE::EVIL:
+		strFolder += L"\\Evil\\Room";
+//		iCount = rand() % 3 + 1;
 		break;
 	default:
 		break;

@@ -50,6 +50,7 @@ CPlayer::CPlayer()
 	, m_bIsWafer(false)
 	, m_pItemTex(nullptr)
 	, m_iSoulHeart(0)
+	, m_bHitRed(false)
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
@@ -418,6 +419,9 @@ void CPlayer::OnCollision(CCollider * _pOther)
 			{
 				m_iPrevHp = m_pStat->m_iHP;
 				--m_pStat->m_iHP;
+
+				if (!m_bHitRed)
+					m_bHitRed = true;
 			}
 		}
 	}
@@ -634,6 +638,9 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			{
 				m_iPrevHp = m_pStat->m_iHP;
 				--m_pStat->m_iHP;
+
+				if(!m_bHitRed)
+					m_bHitRed = true;
 			}
 
 		}

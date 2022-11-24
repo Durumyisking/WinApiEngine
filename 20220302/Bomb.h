@@ -25,6 +25,8 @@ private:
 //	CObject*		m_pOwner;
 	CObject*		m_pTarget;
 	int				m_iBombTypeBit;
+
+	bool			m_bPush;
 	/*
 		0	1 : Bomb	2 : Mega	4 : Bobby
 	*/
