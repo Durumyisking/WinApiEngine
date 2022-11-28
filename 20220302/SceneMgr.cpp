@@ -42,6 +42,7 @@ void CSceneMgr::ChangeScene(SCENE_TYPE _eNext)
 
 void CSceneMgr::SetCurScene(SCENE_TYPE _eNext)
 {
+	m_pPrevScene = m_pCurScene;
 	m_pCurScene = m_arrScene[(UINT)_eNext];
 }
 

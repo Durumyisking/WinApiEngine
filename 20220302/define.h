@@ -253,6 +253,17 @@ enum class MOVE_FLAG
 };
 
 
+enum class ITEM_TYPE
+{
+	NORMAL = 0x01,
+	EVIL = 0x02,
+	SHOP = 0x04,
+
+	END = 0x00,
+};
+
+
+
 enum class PROP_TYPE
 {
 	POOP,

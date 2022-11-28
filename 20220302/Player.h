@@ -65,6 +65,10 @@ public:
 
 public:
 	bool			m_bLooseSoulHeart;
+	bool			m_bLooseHeartMax;
+	int				m_iLooseHeartMaxCount;
+	int				m_iLooseSoulCount;
+	int				m_iGetSoulCount;
 
 	virtual void update();
 	virtual void render(HDC _dc);
@@ -84,7 +88,11 @@ public:
 
 	UINT GetSoulHeart() const { return m_iSoulHeart; }
 	bool IsGetSoulHeart() const { return m_bGetSoulHeart; }
-	void EndGetSoulHeart() { m_bGetSoulHeart = false; }
+	void EndGetSoulHeart() 
+	{
+		m_bGetSoulHeart = false; 
+		m_iGetSoulCount = 0;
+	}
 	void SetSoulHeart(UINT _iValue) { m_iSoulHeart = _iValue; }
 
 

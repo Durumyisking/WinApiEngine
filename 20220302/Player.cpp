@@ -41,6 +41,7 @@ CPlayer::CPlayer()
 	, m_bGetHpMax(false)
 	, m_bGetSoulHeart(false)
 	, m_bLooseSoulHeart(false)
+	, m_bLooseHeartMax(false)
 	, m_bFramePass(false)
 	, m_vPrevPos()
 	, m_arrWallDirCheck()
@@ -52,6 +53,10 @@ CPlayer::CPlayer()
 	, m_iSoulHeart(0)
 	, m_bHitRed(false)
 	, m_pCostume{}
+	, m_iLooseHeartMaxCount(0)
+	, m_iGetSoulCount(0)
+	, m_iLooseSoulCount(0)
+
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
@@ -606,6 +611,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	if (L"PickupSoulHeart" == pOtherObj->GetName())
 	{
 		m_iSoulHeart += 2;
+		m_iGetSoulCount = 1;
 		m_bGetSoulHeart = true;
 	}
 
@@ -633,6 +639,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				if (0 == m_iSoulHeart % 2)
 				{
 					m_bLooseSoulHeart = true;
+					m_iLooseSoulCount = 1;
 				}
 			}
 			else
@@ -709,6 +716,32 @@ void CPlayer::ItemCheck()
 	float fFricCoeffRatio = GetRigidBody()->GetFricCoeff() / m_pStat->m_fSpeed;
 
 	*m_pStat += m_GetItemCheck->GetStat();
+	if (m_GetItemCheck->GetSoulHeart() > 0)
+	{
+
+		m_iGetSoulCount = m_GetItemCheck->GetSoulHeart() / 2;
+		m_iSoulHeart += m_GetItemCheck->GetSoulHeart();
+		m_bGetSoulHeart = true;
+	}
+
+
+	m_Pickup.m_iCoin -= m_GetItemCheck->GetPrice();
+
+	if (m_GetItemCheck->GetPriceHpMax() > 0)
+	{
+		m_bLooseHeartMax = true;
+		(*m_pStat).m_iMaxHP -= m_GetItemCheck->GetPriceHpMax();
+		(*m_pStat).m_iHP -= m_GetItemCheck->GetPriceHpMax();
+		m_iLooseHeartMaxCount = m_GetItemCheck->GetPriceHpMax() / 2;
+	}
+	if (m_GetItemCheck->GetPriceSoul() > 0)
+	{
+		m_bLooseSoulHeart = true;
+		m_iSoulHeart -= m_GetItemCheck->GetPriceSoul();
+		m_iLooseSoulCount = m_GetItemCheck->GetPriceSoul() / 2;
+
+	}
+
 
 	pBody->SetStat(this->m_pStat);
 	pHead->SetStat(this->m_pStat);

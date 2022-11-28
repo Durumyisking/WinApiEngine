@@ -9,12 +9,20 @@
 
 #include "TimeMgr.h"
 
+#include "Texture.h"
+#include "ResMgr.h"
+#include "SceneMgr.h"
+#include "Scene.h"
+#include "Player.h"
+
+
 CItem::CItem(Vec2 _vPos)
 	: m_ItemInfo{}
 	, m_bRenderSwitch(false)
 	, m_fRenderOffset(0.f)
 	, m_fRenderTimer(0.f)
 	, m_pAlter(nullptr)
+
 {
 
 	SetScale(Vec2(64.f, 64.f));
@@ -36,6 +44,17 @@ CItem::~CItem()
 
 void CItem::update()
 {
+	CScene* pScene = CSceneMgr::GetInst()->GetCurScene();
+	CPlayer* pPlayer = pScene->GetPlayer();
+
+
+	if (pPlayer->GetStat()->m_iMaxHP < m_ItemInfo.m_iPriceHpMax)
+	{
+		m_ItemInfo.m_iPriceHpMax = 0;
+		m_ItemInfo.m_iPriceSoul = 3;
+	}
+
+
 	// 아이템 텍스처만 위아래 위아래
 	if (m_bRenderSwitch)
 		m_fRenderOffset -= 20.f * fDT;
@@ -72,6 +91,7 @@ void CItem::render(HDC _dc)
 
 	// 카메라 시점 동기화
 	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+	Vec2 vPricePos = vPos;
 
 	// 렌더링 오프셋 적용
 	vPos += Vec2(0.f, m_fRenderOffset);
@@ -83,6 +103,27 @@ void CItem::render(HDC _dc)
 		, m_ItemInfo.m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
+
+	if (m_ItemInfo.m_iPriceHpMax > 0)
+	{
+		CTexture* pCostTex =  CResMgr::GetInst()->LoadTexture(L"HpMaxPrice", L"texture\\Item\\shop_001_bitfont.bmp");
+
+		int LT = 0;
+		int RB = 0;
+
+		if (4 == m_ItemInfo.m_iPriceHpMax)
+			LT = 32;
+		if (3 == m_ItemInfo.m_iPriceSoul)
+			LT = 64;
+
+		TransparentBlt(_dc
+			, static_cast<int>(vPricePos.x - (vScale.x / 2.f))
+			, static_cast<int>(vPricePos.y - (vScale.y / 2.f) + 75.f)
+			, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
+			, pCostTex->GetDC()
+			, LT, RB, 32, 32
+			, RGB(255, 0, 255));
+	}
 
 	component_render(_dc);
 }

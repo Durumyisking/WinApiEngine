@@ -19,6 +19,7 @@ protected:
 	CItemAlter*		m_pAlter;
 
 
+
 public:
 	CItem(Vec2 _vPos);
 	~CItem();
@@ -38,6 +39,12 @@ public:
 public:
 	void SetItemInfo(ItemInfo _iteminfo) { m_ItemInfo = _iteminfo; }
 	Stat GetStat() const { return m_ItemInfo.m_stat; }
+	int GetSoulHeart() const { return m_ItemInfo.m_iSoulHeart; }
+	int GetPrice() const { return m_ItemInfo.m_iPrice; }
+	int GetPriceHpMax() const { return m_ItemInfo.m_iPriceHpMax; }
+	int GetPriceSoul() const { return m_ItemInfo.m_iPriceSoul; }
+
+
 	ITEM_TABLE GetItemName() const { return m_ItemInfo.m_eName; }
 	CTexture* GetItemTex() const { return m_ItemInfo.m_pTex; }
 	void CreateAlter();

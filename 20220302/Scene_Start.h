@@ -23,7 +23,9 @@ public:
 
 	void SetPlayerPos(CObject* _pPlayer);
 	void SetStage(int _iStage);
-	int GetStage() const { return m_CurrentStage; }
+	int GetStage() const {
+		return m_CurrentStage; 
+	}
 	void SetStageIdx(int _iStage) { m_CurrentStage = _iStage; }
 
 	void Exit(int _type);

@@ -238,12 +238,40 @@ void CScene_Start::update()
 
 	if (m_pPlayer->IsGetSoulHeart())
 	{
-		CUI* pHeartUI = new CHeart(static_cast<int>(vecSoulHeartUI.size() + 1), HEART_TYPE::SOUL);
-		vecSoulHeartUI.push_back(pHeartUI);
-		AddObject(pHeartUI, GROUP_TYPE::UI);
+		for (int i = 0; i < m_pPlayer->m_iGetSoulCount; i++)
+
+		{
+			CUI* pHeartUI = new CHeart(static_cast<int>(vecSoulHeartUI.size() + 1), HEART_TYPE::SOUL);
+			vecSoulHeartUI.push_back(pHeartUI);
+			AddObject(pHeartUI, GROUP_TYPE::UI);
+		}
 
 		m_pPlayer->EndGetSoulHeart();
 	}
+
+	if (m_pPlayer->m_bLooseHeartMax)
+	{
+		for (int i = 0; i < m_pPlayer->m_iLooseHeartMaxCount; i++)
+		{
+			DeleteObject(vecHeartUI[vecHeartUI.size() - 1]);
+			vecHeartUI.pop_back();
+			m_pPlayer->m_bLooseHeartMax = false;
+		}
+		m_pPlayer->m_iLooseHeartMaxCount = 0;
+	}
+
+	if (m_pPlayer->m_bLooseSoulHeart)
+	{
+		for (int i = 0; i < m_pPlayer->m_iLooseSoulCount; i++)
+		{
+			DeleteObject(vecSoulHeartUI[vecSoulHeartUI.size() - 1]);
+			vecSoulHeartUI.pop_back();
+			m_pPlayer->m_bLooseSoulHeart= false;
+		}
+		m_pPlayer->m_iLooseHeartMaxCount = 0;
+	}
+
+
 
 	// 그냥하트
 	if (m_pPlayer->GetStat()->m_iMaxHP == m_pPlayer->GetStat()->m_iHP)
