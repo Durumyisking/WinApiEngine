@@ -26,7 +26,6 @@ void CStartRoom::render(HDC _dc)
 
 void CStartRoom::Enter()
 {
-	
 	if (m_bFirstEnter)
 	{
 		// 픽업 생성
@@ -82,11 +81,8 @@ void CStartRoom::Enter()
 		pPickup2->SetPos(GetPos() - Vec2(100.f, -100.f));
 		pPickup2->SetOwner(this);
 		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
-
-
-
 	}
+
 	CRoom::Enter();
-
-
+	
 }

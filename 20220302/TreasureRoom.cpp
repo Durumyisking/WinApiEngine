@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "TreasureRoom.h"
 
-#include "Item.h"
-#include "ItemMgr.h"
-
 CTreasureRoom::CTreasureRoom()
 {
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexTreasure", L"texture\\BackGround\\bg_basement_treasure.bmp");
@@ -29,9 +26,9 @@ void CTreasureRoom::render(HDC _dc)
 
 void CTreasureRoom::Enter()
 {		
+
 	if (m_bFirstEnter)
 	{
-		m_bFirstEnter = false;
 
 		// 아이템 추가
 
@@ -46,7 +43,7 @@ void CTreasureRoom::Enter()
 
 		int j = -3;
 		float y = -200;
-		for (UINT i = 0; i < static_cast<UINT>(ITEM_TABLE::end); i++)
+		for (UINT i = 0; i < static_cast<UINT>(ITEM_TABLE::normalend); i++)
 		{
 			if (j > 3)
 			{

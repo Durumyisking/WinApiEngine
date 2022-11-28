@@ -25,6 +25,15 @@ void CEvilRoom::render(HDC _dc)
 
 void CEvilRoom::Enter()
 {
+	if (m_bFirstEnter)
+	{
+		srand(CTimeMgr::GetInst()->GetCurCount());
+		UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::evilend) - static_cast<UINT>(ITEM_TABLE::normalend) - 1);
+																		// 악마방 템 개수 //															13 (펜타그램) 부터
+		item += static_cast<UINT>(ITEM_TABLE::normalend) + 1;
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::thepact), GetPos());
+	}
+
 	CRoom::Enter();
 
 }

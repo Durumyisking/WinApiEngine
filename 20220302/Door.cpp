@@ -46,6 +46,10 @@ void CDoor::update()
 {
 	CPlayer* player = CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
 
+	if (m_bLock)
+		m_bOpen = false;
+
+
 	if (nullptr != player && ROOM_TYPE::EVIL == m_eType)
 	{
 		if (m_pOwner->IsClear() && m_bSecret)
@@ -85,28 +89,6 @@ void CDoor::update()
 			break;
 		}
 	}
-	else if (m_bLock)
-	{
-		switch (m_eDir)
-		{
-		case DIR::UP:
-			SetSlice(128, 0);
-			break;
-		case DIR::DOWN:
-			SetSlice(128, 48);
-			break;
-		case DIR::RIGHT:
-			SetSlice(96, 64);
-			break;
-		case DIR::LEFT:
-			SetSlice(96, 0);
-			break;
-		case DIR::END:
-			break;
-		default:
-			break;
-		}
-	}
 	else
 	{
 		switch (m_eDir)
@@ -134,6 +116,29 @@ void CDoor::update()
 		}
 	}
 
+	if (m_bLock)
+	{
+		switch (m_eDir)
+		{
+		case DIR::UP:
+			SetSlice(128, 0);
+			break;
+		case DIR::DOWN:
+			SetSlice(128, 48);
+			break;
+		case DIR::RIGHT:
+			SetSlice(96, 64);
+			break;
+		case DIR::LEFT:
+			SetSlice(96, 0);
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+	}
+	
 }
 
 void CDoor::render(HDC _dc)

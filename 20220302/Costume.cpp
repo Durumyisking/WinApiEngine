@@ -12,6 +12,7 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 	, m_eItemName(_eItem)
 	, m_bIsHead(false)
 	, m_bHaveUp(false)
+	, m_pAnim(nullptr)
 {
 	CreateAnimator();
 
@@ -105,10 +106,10 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 	//}
 	//break;
 
-	case ITEM_TABLE::end:
+	case ITEM_TABLE::normalend:
 		break; 
 		default:
-			m_eItemName = ITEM_TABLE::end;
+			m_eItemName = ITEM_TABLE::normalend;
 			break;
 	}
 }
@@ -122,7 +123,7 @@ CCostume::~CCostume()
 void CCostume::update()
 {
 	if (nullptr != m_pPlayer)
-	{
+	{ 
 		SetPos(m_pPlayer->GetPos());
 
 			if(m_bHaveUp)

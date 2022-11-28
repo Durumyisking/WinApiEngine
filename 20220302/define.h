@@ -226,8 +226,20 @@ enum class ITEM_TABLE
 	polyphemus,
 	sagittarius,
 	thewafer,
+	normalend,
 
-	end,
+
+	pentagram,
+	technology,
+	themark,
+	momsknife,
+	brimstone,
+	whoreofbabylon,
+	ceremonialrobes,
+	thepact,
+	ouijaboard,
+	spiritofthenight,
+	evilend,
 };
 
 enum class MOVE_FLAG

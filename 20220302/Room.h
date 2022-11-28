@@ -14,6 +14,10 @@
 #include "IdleState.h"
 #include "TraceState.h"
 
+#include "Item.h"
+#include "ItemMgr.h"
+
+
 #include "PickupCount.h"
 #include "PickupHeart.h"
 #include "PickupKey.h"

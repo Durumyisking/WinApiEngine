@@ -26,8 +26,6 @@ void CNormalRoom::render(HDC _dc)
 
 void CNormalRoom::Enter()
 {
-	CRoom::Enter();
-
 	if (!m_bIsClear)
 	{
 		// 몬스터 생성
@@ -37,4 +35,7 @@ void CNormalRoom::Enter()
 		++m_iMonsterCount;
 
 	}
+
+	CRoom::Enter();
+
 }

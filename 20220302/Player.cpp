@@ -51,6 +51,7 @@ CPlayer::CPlayer()
 	, m_pItemTex(nullptr)
 	, m_iSoulHeart(0)
 	, m_bHitRed(false)
+	, m_pCostume{}
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
@@ -724,7 +725,7 @@ void CPlayer::ItemCheck()
 		m_bIsWafer = true;
 	}
 
-
+	int t = m_pCostume.size();
 	CCostume* pCosTemp = new CCostume(m_GetItemCheck->GetItemName());
 	// 이미 있는 아이템이면 코스튬추가 필요없음
 	for (size_t i = 0; i < m_pCostume.size(); i++)
@@ -735,7 +736,7 @@ void CPlayer::ItemCheck()
 		}
 	}
 	// 코스튬이 있는 아이템일때만
-	if (ITEM_TABLE::end != pCosTemp->GetItemName())
+	if (ITEM_TABLE::normalend != pCosTemp->GetItemName())
 	{
 		pCosTemp->SetPlayer(this);
 		CreateObject(pCosTemp, GROUP_TYPE::COSTUME);

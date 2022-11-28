@@ -26,7 +26,7 @@ protected:
 	UINT	m_iSoulHeart;
 
 	// 아이템 관련
-	int					m_vInventory [static_cast<UINT>(ITEM_TABLE::end) + 1];
+	int					m_vInventory [static_cast<UINT>(ITEM_TABLE::evilend) + 1];
 	CItem*				m_GetItemCheck;
 	vector<CCostume*>	m_pCostume;
 

@@ -53,7 +53,6 @@ void CBossRoom::render(HDC _dc)
 
 void CBossRoom::Enter()
 {
-	CRoom::Enter();
 	m_bExit = false;
 	
 
@@ -67,6 +66,8 @@ void CBossRoom::Enter()
 		++m_iMonsterCount;
 
 	}
+
+	CRoom::Enter();
 }
 
 void CBossRoom::Exit()

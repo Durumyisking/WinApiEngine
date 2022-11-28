@@ -288,9 +288,10 @@ void CRoom::Enter()
 {
 	if (m_bFirstEnter)
 	{
+		m_bFirstEnter = false;
+
 	}
 
-	m_bFirstEnter = false;
 	m_pOwner->SetCurrentRoom(this);
 }
 
