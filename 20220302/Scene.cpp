@@ -58,7 +58,7 @@ void CScene::DeleteAll()
 {
 	for (size_t i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
-		if ((UINT)GROUP_TYPE::PLAYER == i)
+		if ((UINT)GROUP_TYPE::PLAYER == i || (UINT)GROUP_TYPE::COSTUME == i)
 			continue;
 			Safe_Delete_Vec<CObject*>(m_arrObj[i]);
 	}
