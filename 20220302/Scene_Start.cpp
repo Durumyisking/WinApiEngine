@@ -32,6 +32,7 @@
 
 CScene_Start::CScene_Start()
 	: vecHeartUI{}
+	, vecSoulHeartUI{}
 	, m_bBossRoomEnter(false)
 	, m_CurrentStage(1)
 	, m_bFirst(false)
@@ -85,6 +86,13 @@ void CScene_Start::Enter()
 	{
 		CUI* pHeartUI = new CHeart(i + 1, HEART_TYPE::NORMAL);
 		vecHeartUI.push_back(pHeartUI);
+		AddObject(pHeartUI, GROUP_TYPE::UI);
+	}
+	int iSoulSize = m_pPlayer->GetSoulHeart() / 2;
+	for (int i = 0; i < iSoulSize; ++i)
+	{
+		CUI* pHeartUI = new CHeart(i + 1, HEART_TYPE::SOUL);
+		vecSoulHeartUI.push_back(pHeartUI);
 		AddObject(pHeartUI, GROUP_TYPE::UI);
 	}
 	// 픽업 카운트
@@ -156,6 +164,7 @@ void CScene_Start::Exit()
 {
 	DeleteAll_IncludePlayer();
 	vecHeartUI.clear();
+	vecSoulHeartUI.clear();
 	CCollisionMgr::GetInst()->Reset();
 }
 
@@ -167,7 +176,7 @@ void CScene_Start::Exit(int _type)
 		DeleteAll();
 	
 	vecHeartUI.clear(); // 벡터는 클리어 시켜놓자
-
+	vecSoulHeartUI.clear();
 
 	// 다른 씬에서는 다른 충돌 그룹을 쓸 수 있기 때문에 해제시켜주어야함
 	CCollisionMgr::GetInst()->Reset();

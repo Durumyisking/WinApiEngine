@@ -527,6 +527,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 			if (m_Pickup.m_iKey > 0)
 			{
 				pdoor->unLockDoor();
+				--m_Pickup.m_iKey;
 			}
 		}
 	}

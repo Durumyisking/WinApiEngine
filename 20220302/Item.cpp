@@ -104,7 +104,7 @@ void CItem::render(HDC _dc)
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
 
-	if (m_ItemInfo.m_iPriceHpMax > 0)
+	if (m_ItemInfo.m_iPriceHpMax > 0 || m_ItemInfo.m_iPriceSoul > 0)
 	{
 		CTexture* pCostTex =  CResMgr::GetInst()->LoadTexture(L"HpMaxPrice", L"texture\\Item\\shop_001_bitfont.bmp");
 

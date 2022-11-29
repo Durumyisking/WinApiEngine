@@ -31,7 +31,10 @@ void CEvilRoom::Enter()
 		UINT item = static_cast<UINT>(rand() % (static_cast<UINT>(ITEM_TABLE::evilend) - static_cast<UINT>(ITEM_TABLE::normalend) - 1));
 																		// 0부터 악마방 템 개수 //											
 		item += static_cast<UINT>(ITEM_TABLE::normalend) + 1;
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(item), GetPos());
+//		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(item), GetPos());
+
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::ceremonialrobes), GetPos());
+
 	}
 
 	CRoom::Enter();
