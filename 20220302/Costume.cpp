@@ -11,8 +11,9 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 	, m_pTex(nullptr)
 	, m_eItemName(_eItem)
 	, m_bIsHead(false)
-	, m_bHaveUp(false)
 	, m_pAnim(nullptr)
+	, m_bChangeHead(false)
+	, m_bChangeBody(false)
 {
 	CreateAnimator();
 
@@ -26,7 +27,8 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		m_vAnimOffset = Vec2(-64.f, -64.f);
 		m_bIsHead = true;
 		GetAnimator()->CreateAnimation(L"sadonion_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
-		GetAnimator()->CreateAnimation(L"sadonion_UPDOWN", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
+		GetAnimator()->CreateAnimation(L"sadonion_UP", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
+		GetAnimator()->CreateAnimation(L"sadonion_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 		GetAnimator()->CreateAnimation(L"sadonion_LEFT", m_pTex, Vec2(0.f, 64.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 		GetAnimator()->CreateAnimation(L"sadonion_RIGHT", m_pTex, Vec2(0.f, 128.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 
@@ -39,7 +41,8 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		SetName(L"belt");
 		m_vAnimOffset = Vec2(-32.f, 0.f);
 		GetAnimator()->CreateAnimation(L"belt_IDLE", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 1, false);
-		GetAnimator()->CreateAnimation(L"belt_UPDOWN", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"belt_UP", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"belt_DOWN", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 		GetAnimator()->CreateAnimation(L"belt_LEFT", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 		GetAnimator()->CreateAnimation(L"belt_RIGHT", m_pTex, Vec2(0.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 
@@ -52,7 +55,8 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		SetName(L"momsheels");
 		m_vAnimOffset = Vec2(-32.f, 0.f);
 		GetAnimator()->CreateAnimation(L"momsheels_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 1, false);
-		GetAnimator()->CreateAnimation(L"momsheels_UPDOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"momsheels_UP", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"momsheels_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 		GetAnimator()->CreateAnimation(L"momsheels_LEFT", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 		GetAnimator()->CreateAnimation(L"momsheels_RIGHT", m_pTex, Vec2(0.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 
@@ -71,23 +75,23 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 
 	//}
 	//break;
+		
+	case ITEM_TABLE::mrmega:
+	{
+		m_pTex = CResMgr::GetInst()->LoadTexture(L"mrmega_cos", L"texture\\Costume\\costume_046_mrmega.bmp");
+		m_strAnimName = L"mrmega_IDLE";
+		SetName(L"mrmega");
+		m_bIsHead = true;	
+		m_bChangeHead = true;
+		m_vAnimOffset = Vec2(-32.f, -30.f);
+		GetAnimator()->CreateAnimation(L"mrmega_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 1, false);
+		GetAnimator()->CreateAnimation(L"mrmega_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"mrmega_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"mrmega_RIGHT", m_pTex, Vec2(192.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"mrmega_LEFT", m_pTex, Vec2(64.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 
-	//case ITEM_TABLE::mrmega:
-	//{
-	//	m_pTex = CResMgr::GetInst()->LoadTexture(L"mrmega_cos", L"texture\\Costume\\costume_046_mrmega.bmp");
-	//	m_strAnimName = L"mrmega_IDLE";
-	//	SetName(L"mrmega");
-	//	m_bIsHead = true;
-	//	m_bHaveUp = true;
-	//	m_vAnimOffset = Vec2(-32.f, -64.f);
-	//	GetAnimator()->CreateAnimation(L"mrmega_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 1, false);
-	//	GetAnimator()->CreateAnimation(L"mrmega_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-	//	GetAnimator()->CreateAnimation(L"mrmega_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-	//	GetAnimator()->CreateAnimation(L"mrmega_LEFT", m_pTex, Vec2(192.f, 32.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-	//	GetAnimator()->CreateAnimation(L"mrmega_RIGHT", m_pTex, Vec2(64.f, 64.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-
-	//}
-	//break;
+	}
+	break;
 	//
 	//case ITEM_TABLE::polyphemus:
 	//{
@@ -122,30 +126,29 @@ CCostume::~CCostume()
 
 void CCostume::update()
 {
+	if (m_pPlayer->IsMainAnimPlaying())
+	{
+		GetAnimator()->GetCurAnim()->SetFinish();
+		GetAnimator()->ResetCurAnim();
+		return;
+	}
+	m_strAnimName = GetName() + L"_IDLE";
+	PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
+
+
 	if (nullptr != m_pPlayer)
 	{ 
 		SetPos(m_pPlayer->GetPos());
 
-			if(m_bHaveUp)
+			if (KEY_HOLD(KEY::W))
 			{
-				if (KEY_HOLD(KEY::W))
-				{
-					m_strAnimName = GetName() + L"_UP";
-					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
-				}
-				if (KEY_HOLD(KEY::S))
-				{
-					m_strAnimName = GetName() + L"_DOWN";
-					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
-				}
+				m_strAnimName = GetName() + L"_UP";
+				PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 			}
-			else
+			if (KEY_HOLD(KEY::S))
 			{
-				if (KEY_HOLD(KEY::W) || KEY_HOLD(KEY::S))
-				{
-					m_strAnimName = GetName() + L"_UPDOWN";
-					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
-				}
+				m_strAnimName = GetName() + L"_DOWN";
+				PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 			}
 			if (KEY_HOLD(KEY::A))
 			{
@@ -163,11 +166,15 @@ void CCostume::update()
 
 			if (m_bIsHead)
 			{
-				if (KEY_HOLD(KEY::UP) || KEY_HOLD(KEY::DOWN))
+				if (KEY_HOLD(KEY::UP))
 				{
-					m_strAnimName = GetName() + L"_UPDOWN";
+					m_strAnimName = GetName() + L"_UP";
 					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
-
+				}
+				if (KEY_HOLD(KEY::DOWN))
+				{
+					m_strAnimName = GetName() + L"_DOWN";
+					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 				}
 				if (KEY_HOLD(KEY::RIGHT))
 				{

@@ -53,9 +53,12 @@ CPlayer::CPlayer()
 	, m_iSoulHeart(0)
 	, m_bHitRed(false)
 	, m_pCostume{}
+	, m_bChangeHead(false)
+	, m_bChangeBody(false)
 	, m_iLooseHeartMaxCount(0)
 	, m_iGetSoulCount(0)
 	, m_iLooseSoulCount(0)
+	, m_bMainAnimPlaying(false)
 
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
@@ -224,35 +227,49 @@ void CPlayer::render(HDC _dc)
 	// body와 head는
 	if (nullptr != m_pOwner)
 	{
+		if (this == m_pOwner->Head() && m_pOwner->m_bChangeHead)
+		{
+			return;
+		}
+		if (this == m_pOwner->Body() && m_pOwner->m_bChangeBody)
+		{
+			return;
+		}
+
+
 		// 부모의 애니메이션이 진행중이면 렌더링 하지 않는다
-			if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
-				|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
-				|| L"GetItem" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				return;
-			}
+		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+			|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+			|| L"GetItem" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
+		{
+			return;
+		}
 		else
 		{
-			for (size_t i = 0; i < m_pCostume.size(); i++)
-			{
-				if (nullptr != m_pCostume[i])
-					m_pCostume[i]->render(_dc);
-			}
 			component_render(_dc);
 		}
+
 	}
 	// 부모는 무적권 렌더링
 	else
 	{
 		component_render(_dc);
 	}
+	//for (size_t i = 0; i < m_pCostume.size(); i++)
+	//{
+	//	if (nullptr != m_pCostume[i])
+	//		m_pCostume[i]->render(_dc);
+	//}
 
 	// 부모 애니메이션 리셋
 	if (GetAnimator()->GetCurAnim()->IsFinish())
 	{
 		if (GetAnimator()->GetCurAnim() == GetAnimator()->FindAnimation(L"GetItem"))
 			m_pItemTex = nullptr;
+
+
 		GetAnimator()->ResetCurAnim();
+		m_bMainAnimPlaying = false;
 
 	}
 
@@ -298,6 +315,8 @@ CHead* CPlayer::Head()
 void CPlayer::AnimOper()
 {
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+	m_bMainAnimPlaying = true;
+
 
 	if (GetAnimator()->GetCurAnim()->IsFinish())
 	{
@@ -340,6 +359,7 @@ void CPlayer::StartTrapdoorAnim()
 		m_bClearAnimTimer = 0.f;
 		GetAnimator()->GetCurAnim()->SetFinish();
 		GetAnimator()->ResetCurAnim();
+		m_bMainAnimPlaying = false;
 		SetScale(Vec2(138.f, 91.f));
 
 		return;
@@ -442,7 +462,6 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		vec = vec * 50.f;
 		this->GetRigidBody()->AddForce(vec);
 	}
-
 
 	if (L"Explode" == pOtherObj->GetName())
 	{
@@ -759,8 +778,13 @@ void CPlayer::ItemCheck()
 		m_bIsWafer = true;
 	}
 
-	int t = m_pCostume.size();
 	CCostume* pCosTemp = new CCostume(m_GetItemCheck->GetItemName());
+	if (pCosTemp->IsChangeHead())
+		m_bChangeHead = true;
+	if (pCosTemp->IsChangeBody())
+		m_bChangeBody = true;
+
+
 	// 이미 있는 아이템이면 코스튬추가 필요없음
 	for (size_t i = 0; i < m_pCostume.size(); i++)
 	{

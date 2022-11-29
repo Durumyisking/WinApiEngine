@@ -84,8 +84,11 @@ void CAnimator::render(HDC _dc)
 
 void CAnimator::ResetCurAnim()
 {
-	m_pCurAnim->SetOffset(Vec2(0.f, 0.f));
-	m_pCurAnim->SetMagnify(3.f);
+	if (nullptr != m_pCurAnim)
+	{
+		m_pCurAnim->SetOffset(Vec2(0.f, 0.f));
+		m_pCurAnim->SetMagnify(3.f);
 
+	}
 	m_pCurAnim = nullptr;
 }

@@ -29,6 +29,9 @@ protected:
 	int					m_vInventory [static_cast<UINT>(ITEM_TABLE::evilend) + 1];
 	CItem*				m_GetItemCheck;
 	vector<CCostume*>	m_pCostume;
+	bool			m_bChangeHead;
+	bool			m_bChangeBody;
+	bool			m_bMainAnimPlaying;
 
 	CPlayer*		m_pOwner;
 
@@ -97,6 +100,7 @@ public:
 
 
 	vector<CCostume*> GetCostumeVec() const { return m_pCostume; }
+	bool IsMainAnimPlaying() const { return m_bMainAnimPlaying; }
 
 	void SetPrevPos() { m_vPrevPos = GetPos(); }
 	Vec2 GetPrevPos() const { return m_vPrevPos; }

@@ -36,6 +36,10 @@ public:
 
 	ITEM_TABLE GetItemName() const { return m_eItemName; }
 
+	bool IsChangeHead() const { return m_bChangeHead; }
+	bool IsChangeBody() const { return m_bChangeBody; }
+
+
 private:
 	CTexture* m_pTex;
 	ITEM_TABLE m_eItemName;
@@ -45,6 +49,9 @@ private:
 	Vec2		m_vAnimOffset;
 
 	bool		m_bIsHead;
-	bool		m_bHaveUp;
+
+	bool		m_bChangeHead;
+	bool		m_bChangeBody;
+
 };
 
