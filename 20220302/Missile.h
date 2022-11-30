@@ -27,9 +27,9 @@ private:
 
 	bool		m_bpoofa;
 	bool		m_bPierce;
+	bool		m_bPierceWall;
 
-
-
+	bool		m_bIsLaser;
 
 public:
 	CMissile(float _fShotSpeed, int _iDmg);
@@ -57,6 +57,7 @@ public:
 	void CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName);
 	void ChangeTexture(CTexture* _pTex) { m_pTex = _pTex; }
 	void SetPierce(bool _bPierce) { m_bPierce = _bPierce; }
+	void SetLaser() { m_bIsLaser = true; }
 
 	CLONE(CMissile);
 

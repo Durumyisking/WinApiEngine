@@ -29,8 +29,8 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		GetAnimator()->CreateAnimation(L"sadonion_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 		GetAnimator()->CreateAnimation(L"sadonion_UP", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 		GetAnimator()->CreateAnimation(L"sadonion_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
-		GetAnimator()->CreateAnimation(L"sadonion_LEFT", m_pTex, Vec2(0.f, 64.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
-		GetAnimator()->CreateAnimation(L"sadonion_RIGHT", m_pTex, Vec2(0.f, 128.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
+		GetAnimator()->CreateAnimation(L"sadonion_RIGHT", m_pTex, Vec2(0.f, 64.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
+		GetAnimator()->CreateAnimation(L"sadonion_LEFT", m_pTex, Vec2(0.f, 128.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 
 	}
 		break;
@@ -43,8 +43,8 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		GetAnimator()->CreateAnimation(L"belt_IDLE", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 1, false);
 		GetAnimator()->CreateAnimation(L"belt_UP", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 		GetAnimator()->CreateAnimation(L"belt_DOWN", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
-		GetAnimator()->CreateAnimation(L"belt_LEFT", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
-		GetAnimator()->CreateAnimation(L"belt_RIGHT", m_pTex, Vec2(0.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"belt_RIGHT", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"belt_LEFT", m_pTex, Vec2(0.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 
 	}
 		break;
@@ -57,8 +57,8 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		GetAnimator()->CreateAnimation(L"momsheels_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 1, false);
 		GetAnimator()->CreateAnimation(L"momsheels_UP", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 		GetAnimator()->CreateAnimation(L"momsheels_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
-		GetAnimator()->CreateAnimation(L"momsheels_LEFT", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
-		GetAnimator()->CreateAnimation(L"momsheels_RIGHT", m_pTex, Vec2(0.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"momsheels_RIGHT", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
+		GetAnimator()->CreateAnimation(L"momsheels_LEFT", m_pTex, Vec2(0.f, 64.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 10, false);
 
 	}
 		break;
@@ -178,12 +178,12 @@ void CCostume::update()
 				}
 				if (KEY_HOLD(KEY::RIGHT))
 				{
-					m_strAnimName = GetName() + L"_LEFT";
+					m_strAnimName = GetName() + L"_RIGHT";
 					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 				}
 				if (KEY_HOLD(KEY::LEFT))
 				{
-					m_strAnimName = GetName() + L"_RIGHT";
+					m_strAnimName = GetName() + L"_LEFT";
 					PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 				}
 			}

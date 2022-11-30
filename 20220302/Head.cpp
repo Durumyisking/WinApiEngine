@@ -209,6 +209,7 @@ void CHead::CreateMissile(Vec2 _vDir)
 				m_vecMissile.push_back(pMissile);
 			}
 		}
+		// mutantspider
 		if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::mutantspider)] > 0)
 		{
 			for (int i = -2; i <= 2; i++)
@@ -224,9 +225,20 @@ void CHead::CreateMissile(Vec2 _vDir)
 				m_vecMissile.push_back(pMissile);
 			}
 		}
+
 		// 미사일 벡터에 담긴 미사일들을 한꺼번에 처리한다 // 텍스처, 관통
 		for (size_t i = 0; i < m_vecMissile.size(); i++)
 		{
+			// technology
+			if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::technology)] > 0)
+			{
+				m_vecMissile[i]->ChangeTexture(CResMgr::GetInst()->LoadTexture(L"TearTexLaser", L"texture\\Tear\\laser2.bmp"));
+				m_vecMissile[i]->SetPierce(true);
+				m_vecMissile[i]->SetLaser();
+				m_vecMissile[i]->CreateMissile(GROUP_TYPE::PROJ_PLAYER, this, L"Player");
+				continue;
+			}
+
 			if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::sagittarius)] > 0)
 			{
 				m_vecMissile[i]->ChangeTexture(CResMgr::GetInst()->LoadTexture(L"TearTexArrow", L"texture\\Tear\\effect_998_arrowpoofa.bmp"));

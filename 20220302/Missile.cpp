@@ -31,7 +31,11 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	, m_pOwner(nullptr)
 	, m_bpoofa(false)
 	, m_bPierce(false)
+	, m_bPierceWall(false)
 	, m_fAccFall(0.f)
+	, m_pAnim(nullptr)
+	, m_bIsLaser(false)
+
 
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
@@ -66,6 +70,17 @@ void CMissile::update()
 
 		m_fAccFall -= fDT;
 
+		if (m_bIsLaser)
+		{
+
+			if (m_fAccFall <= 5.f)
+			{
+				DeleteObject(this);
+			}
+
+			return;
+		}
+
 		// 중력가속도
 		pRigid->AddForce(Vec2(0.f, +9.8f));
 		if (m_fAccFall <= 0.f)
@@ -94,11 +109,13 @@ void CMissile::update()
 
 			m_bpoofa = true;
 		}
+
+
 	
 
 	SetPos(vPos);
 }
-void CMissile::render(HDC _dc)
+void CMissile::render(HDC _dc)	
 {
 	component_render(_dc);
 }
@@ -110,13 +127,28 @@ void CMissile::CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _
 		GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 3, false);
 		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(192.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 15, false);
 	}
-	else
+	else if (m_bIsLaser)
+	{
+		if (abs(m_vDir.x) > abs(m_vDir.y))
+		{
+			GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 32.f), Vec2(0.f, 0.f), 0.05f, 1, false);
+			m_vOffset = Vec2(0.f, 20.f);
+			GetCollider()->SetScale(Vec2(100.f, 5.f));
+		}
+		else
+		{
+			GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 32.f), Vec2(0.f, 0.f), 0.05f, 1, false);
+			GetCollider()->SetScale(Vec2(5.f, 100.f));
+		}
+	}
+	else 
 	{
 		GetAnimator()->CreateAnimation(L"TEAR_IDLE" + m_strShooterName, m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.5f, 1, false);
 		GetAnimator()->CreateAnimation(L"TEAR_POOFA" + m_strShooterName, m_pTex, Vec2(64.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.05f, 15, false);
 	}
 	GetAnimator()->FindAnimation(L"TEAR_IDLE" + m_strShooterName)->SetMagnify(2.f);
-	GetAnimator()->FindAnimation(L"TEAR_POOFA" + m_strShooterName)->SetMagnify(2.f);
+	if(!m_bIsLaser)
+		GetAnimator()->FindAnimation(L"TEAR_POOFA" + m_strShooterName)->SetMagnify(2.f);
 
 	m_strAnimName = L"TEAR_IDLE" + m_strShooterName;
 
@@ -133,8 +165,23 @@ void CMissile::CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _
 		SetName(L"Tear_Player");
 		m_pOwner = _pShooter;
 
-		vMissilePos  += Vec2(0.f, 20.f);
-		SetPos(vMissilePos)	;
+		if (!m_bIsLaser)
+		{
+			vMissilePos += Vec2(0.f, 20.f);
+			SetPos(vMissilePos);
+		}
+		else
+		{
+			vMissilePos += Vec2(0.f, 20.f);
+			SetPos(vMissilePos);
+			GetRigidBody()->SetMaxVelocity(m_fShotSpeed * 1000);
+			Vec2 vForce = m_vDir * m_fShotSpeed * 15.f;
+			GetRigidBody()->AddVelocity(vForce);
+			m_fAccFall = 1000000.f;
+
+			CreateObject(this, _eShooter);
+			return;
+		}
 
 		// 플레이어의 스텟에서 눈물 최대속도 받음
 		GetRigidBody()->SetMaxVelocity(m_fShotSpeed);
@@ -172,7 +219,7 @@ void CMissile::OnCollision(CCollider * _pOther)
 void CMissile::OnCollisionEnter(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
-	if (L"Bomb" == pOtherObj->GetName() ||  L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Rock" == pOtherObj->GetName())
+	if (L"Bomb" == pOtherObj->GetName() ||  L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName())
 	{
 		if (m_bPierce)
 		{
@@ -182,9 +229,21 @@ void CMissile::OnCollisionEnter(CCollider * _pOther)
 		m_fAccFall = 0.5f;
 	}
 
+	if (L"Poop" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Rock" == pOtherObj->GetName())
+	{
+		if (m_bPierceWall)
+		{
+			return;
+		}
+
+		m_fAccFall = 0.5f;
+
+	}
+
 
 	if (L"Wall_Tear" == pOtherObj->GetName())
 	{
+
 		m_fAccFall = 0.5f;
 	}
 
