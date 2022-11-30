@@ -81,6 +81,9 @@ void CStartRoom::Enter()
 		pPickup2->SetPos(GetPos() - Vec2(100.f, -100.f));
 		pPickup2->SetOwner(this);
 		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
+
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f));
+
 	}
 
 	CRoom::Enter();

@@ -39,7 +39,8 @@ private:
 
 	// 이동 된 방 기준 이전 방의 타입
 	bool				m_bBossRoomEnter;
-	int					m_CurrentStage;	
+	int					m_CurrentStage;
+
 	bool				m_bFirst;
 
 };

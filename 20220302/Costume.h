@@ -39,6 +39,7 @@ public:
 	bool IsChangeHead() const { return m_bChangeHead; }
 	bool IsChangeBody() const { return m_bChangeBody; }
 
+	void StopAnim();
 
 private:
 	CTexture* m_pTex;

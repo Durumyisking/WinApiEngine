@@ -87,28 +87,28 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		GetAnimator()->CreateAnimation(L"mrmega_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 1, false);
 		GetAnimator()->CreateAnimation(L"mrmega_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 		GetAnimator()->CreateAnimation(L"mrmega_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-		GetAnimator()->CreateAnimation(L"mrmega_RIGHT", m_pTex, Vec2(192.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-		GetAnimator()->CreateAnimation(L"mrmega_LEFT", m_pTex, Vec2(64.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"mrmega_LEFT", m_pTex, Vec2(192.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"mrmega_RIGHT", m_pTex, Vec2(64.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 
 	}
 	break;
-	//
-	//case ITEM_TABLE::polyphemus:
-	//{
-	//	m_pTex = CResMgr::GetInst()->LoadTexture(L"polyphemus_cos", L"texture\\Costume\\costume_106_polyphemus.bmp");
-	//	m_strAnimName = L"polyphemus_IDLE";
-	//	SetName(L"polyphemus");
-	//	m_bIsHead = true;
-	//	m_bHaveUp = true;
-	//	m_vAnimOffset = Vec2(-32.f, -64.f);
-	//	GetAnimator()->CreateAnimation(L"polyphemus_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 1, false);
-	//	GetAnimator()->CreateAnimation(L"polyphemus_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-	//	GetAnimator()->CreateAnimation(L"polyphemus_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-	//	GetAnimator()->CreateAnimation(L"polyphemus_LEFT", m_pTex, Vec2(192.f, 32.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
-	//	GetAnimator()->CreateAnimation(L"polyphemus_RIGHT", m_pTex, Vec2(64.f, 64.f), Vec2(32.f, 64.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+	
+	case ITEM_TABLE::polyphemus:
+	{
+		m_pTex = CResMgr::GetInst()->LoadTexture(L"polyphemus_cos", L"texture\\Costume\\costume_106_polyphemus.bmp");
+		m_strAnimName = L"polyphemus_IDLE";
+		SetName(L"polyphemus");
+		m_bIsHead = true;
+		m_bChangeHead = true;
+		m_vAnimOffset = Vec2(-32.f, -30.f);
+		GetAnimator()->CreateAnimation(L"polyphemus_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 1, false);
+		GetAnimator()->CreateAnimation(L"polyphemus_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"polyphemus_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"polyphemus_LEFT", m_pTex, Vec2(192.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
+		GetAnimator()->CreateAnimation(L"polyphemus_RIGHT", m_pTex, Vec2(64.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 
-	//}
-	//break;
+	}
+	break;
 
 	case ITEM_TABLE::normalend:
 		break; 
@@ -152,12 +152,12 @@ void CCostume::update()
 			}
 			if (KEY_HOLD(KEY::A))
 			{
-				m_strAnimName = GetName() + L"_RIGHT";
+				m_strAnimName = GetName() + L"_LEFT";
 				PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 			}
 			if (KEY_HOLD(KEY::D))
 			{
-				m_strAnimName = GetName() + L"_LEFT";
+				m_strAnimName = GetName() + L"_RIGHT";
 				PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 			}
 
@@ -199,5 +199,12 @@ void CCostume::update()
 		
 
 	}
+}
+
+void CCostume::StopAnim()
+{
+	PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, false);
+	GetAnimator()->GetCurAnim()->SetFinish();
+	GetAnimator()->ResetCurAnim();	
 }
 

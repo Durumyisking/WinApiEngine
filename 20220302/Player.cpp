@@ -784,6 +784,22 @@ void CPlayer::ItemCheck()
 	if (pCosTemp->IsChangeBody())
 		m_bChangeBody = true;
 
+	// 머리or 몸 대체 코스튬먹었을때 이미 대체코스튬이 존재하면 pop한다
+	for (size_t i = 0; i < m_pCostume.size(); i++)
+	{
+		if (pCosTemp->IsChangeHead() && m_pCostume[i]->IsChangeHead())
+		{
+			m_pCostume[i]->StopAnim();
+			DeleteObject(m_pCostume[i]);
+			m_pCostume.erase(m_pCostume.begin() + i);
+		}
+		if(pCosTemp->IsChangeBody() && m_pCostume[i]->IsChangeBody())
+		{
+			m_pCostume[i]->StopAnim();
+			DeleteObject(m_pCostume[i]);
+			m_pCostume.erase(m_pCostume.begin() + i);
+		}
+	}
 
 	// 이미 있는 아이템이면 코스튬추가 필요없음
 	for (size_t i = 0; i < m_pCostume.size(); i++)

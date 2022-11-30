@@ -76,10 +76,10 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 	CKeyMgr::GetInst()->init();
 	CPathMgr::GetInst()->init();
 	CCamera::GetInst()->init();
+	CItemMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
 	CCollisionMgr::GetInst()->init();
 	CEventMgr::GetInst()->init();
-	CItemMgr::GetInst()->init();
 
 
 	return S_OK;

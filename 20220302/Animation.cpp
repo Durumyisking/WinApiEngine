@@ -11,6 +11,8 @@
 
 CAnimation::CAnimation()
 	: m_pAnimator(nullptr)
+	, m_pTex(nullptr)
+	, m_bReverse(false)
 	, m_iCurFrm(0)
 	, m_fAccTime(0.f)
 	, m_bFinish(false)
