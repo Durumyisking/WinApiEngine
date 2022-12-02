@@ -17,12 +17,13 @@ CPickupHeart::CPickupHeart()
 	m_strAnimName = L"PickupHeart";
 	SetScale(Vec2(64.f, 64.f));
 	GetCollider()->SetScale(Vec2(48.f, 48.f));
-	GetCollider()->SetOffsetPos(Vec2(6.f, 10.f));
+//	GetCollider()->SetOffsetPos(Vec2(6.f, 10.f));
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"PickupHeart", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f),  true);
+	GetAnimator()->GetCurAnim()->SetOffset(Vec2(-6.f, -10.f));
 
 
 }

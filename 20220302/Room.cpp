@@ -286,6 +286,24 @@ void CRoom::AddDoor()
 
 void CRoom::Enter()
 {
+	CPlayer* pPlayer =  CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
+	if (nullptr != pPlayer)
+	{
+		if (0 < pPlayer->CheckInventory(ITEM_TABLE::whoreofbabylon))
+		{
+			if ((pPlayer->GetStat()->m_iHP <= 2) && !pPlayer->m_bBabylonOn)
+			{
+				pPlayer->GetStat()->m_iDmg += 1;
+				pPlayer->m_bBabylonOn = true;
+			}
+			else if ((pPlayer->GetStat()->m_iHP > 2) && pPlayer->m_bBabylonOn)
+			{
+				pPlayer->GetStat()->m_iDmg -= 1;
+				pPlayer->m_bBabylonOn = false;
+			}
+		}
+	}
+
 	if (m_bFirstEnter)
 	{
 		m_bFirstEnter = false;
@@ -401,6 +419,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 			fgetws(buff, 63, pFile);
 			for (int j = 0; j < ROOMX; j++)
 			{
+				Vec2 vSpawnPos = GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i));
 				switch (buff[j])
 				{
 				case L'0':
@@ -408,29 +427,75 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				case L'1':
 				{
 					CPoop* pPoop = new CPoop;
-					pPoop->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					pPoop->SetPos(vSpawnPos);
 					pPoop->SetOwner(this);
 					CreateObject(pPoop, GROUP_TYPE::PROP);
 				}	break;
 				case L'2':
 				{
 					CFire* pFire = new CFire;
-					pFire->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					pFire->SetPos(vSpawnPos);
 					pFire->SetOwner(this);
 					CreateObject(pFire, GROUP_TYPE::PROP);
 				}	break;
 				case L'3':
 				{
 					CRock* pRock = new CRock;
-					pRock->SetPos(GetPos() - Vec2(450.f, 215.f) + Vec2(float(75.f * j), float(71.f * i)));
+					pRock->SetPos(vSpawnPos);
 					pRock->SetOwner(this);
 					CreateObject(pRock, GROUP_TYPE::PROP);
 				}	break;
 				case L'8':
-					DropPickupType(GetPos());
+					DropPickupType(vSpawnPos);
 					break;
 				case L'9':
 					break;
+
+				// monster
+				case L'q':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					++m_iMonsterCount;
+				}
+					break;
+				case L'w':
+				{
+					CMonster * M = CMonsterFactory::CreateMonster(MON_TYPE::Fly, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					++m_iMonsterCount;
+				}
+					break;
+				case L'e':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Host, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					++m_iMonsterCount;
+				}
+				break;
+				case L'r':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Charger, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					++m_iMonsterCount;
+				}
+				break;
+				case L't':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Kamikazeleech, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					++m_iMonsterCount;
+				}
+				break;
+				case L'y':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Coltty, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					++m_iMonsterCount;
+				}
+				break;
+
+
 				default:
 					break;
 				}
@@ -444,7 +509,6 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 
 void CRoom::GiveReward()
 {
-		m_bGetReward = true;
 
 		srand(CTimeMgr::GetInst()->GetCurCount());
 		int iCount = rand() % 3;

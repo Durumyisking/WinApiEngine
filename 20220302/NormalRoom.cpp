@@ -30,9 +30,9 @@ void CNormalRoom::Enter()
 	{
 		// 몬스터 생성
 
-		CMonster* M5 = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, GetPos() , this);
-		CSceneMgr::GetInst()->GetCurScene()->AddObject(M5, GROUP_TYPE::MONSTER);
-		++m_iMonsterCount;
+		//CMonster* M5 = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, GetPos() , this);
+		//CSceneMgr::GetInst()->GetCurScene()->AddObject(M5, GROUP_TYPE::MONSTER);
+		//++m_iMonsterCount;
 
 	}
 

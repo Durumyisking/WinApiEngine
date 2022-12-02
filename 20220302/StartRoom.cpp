@@ -60,18 +60,18 @@ void CStartRoom::Enter()
 			CreateObject(pRock, GROUP_TYPE::PROP);
 		}
 
-		CObject* pPickup = new CSoulHeart;
+		CObject* pPickup = new CPickupKey;
 		pPickup->SetPos(GetPos() - Vec2(100.f, 100.f));
 		pPickup->SetOwner(this);
 		CreateObject(pPickup, GROUP_TYPE::PICKUP);
 
-		CObject* pPickup3 = new CSoulHeart;
+		CObject* pPickup3 = new CPickupBomb;
 		pPickup3->SetPos(GetPos() - Vec2(150.f, 100.f));
 		pPickup3->SetOwner(this);
 		CreateObject(pPickup3, GROUP_TYPE::PICKUP);
 
 
-		CObject* pPickup4 = new CSoulHeart;
+		CObject* pPickup4 = new CPickupCoin;
 		pPickup4->SetPos(GetPos() - Vec2(200.f, 100.f));
 		pPickup4->SetOwner(this);
 		CreateObject(pPickup4, GROUP_TYPE::PICKUP);
@@ -82,6 +82,7 @@ void CStartRoom::Enter()
 		pPickup2->SetOwner(this);
 		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
 
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f));
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f));
 
 	}

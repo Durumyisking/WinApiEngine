@@ -59,6 +59,7 @@ CPlayer::CPlayer()
 	, m_iGetSoulCount(0)
 	, m_iLooseSoulCount(0)
 	, m_bMainAnimPlaying(false)
+	, m_bBabylonOn(false)
 
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
@@ -71,8 +72,8 @@ CPlayer::CPlayer()
 
 	CreateRigidBody();
 	GetRigidBody()->SetMaxVelocity(m_pStat->m_fSpeed);
-	
-	
+
+
 }
 
 
@@ -98,6 +99,7 @@ void CPlayer::update()
 	{
 		StartTrapdoorAnim();
 	}
+
 
 	// 공격 쿨타임
 	m_dAttackDealy += fDT;

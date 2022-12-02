@@ -67,6 +67,7 @@ public:
 	~CPlayer();
 
 public:
+	bool			m_bBabylonOn;
 	bool			m_bLooseSoulHeart;
 	bool			m_bLooseHeartMax;
 	int				m_iLooseHeartMaxCount;

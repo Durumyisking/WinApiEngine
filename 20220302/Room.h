@@ -93,5 +93,4 @@ protected:
 	bool		m_bIsClear;
 	bool		m_bFirstEnter;
 	bool		m_bGetReward;
-
 };
