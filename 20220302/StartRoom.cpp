@@ -85,6 +85,11 @@ void CStartRoom::Enter()
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f));
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f));
 
+
+		CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, GetPos() - Vec2(450.f, 215.f), this);
+		CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+		++m_iMonsterCount;
+
 	}
 
 	CRoom::Enter();

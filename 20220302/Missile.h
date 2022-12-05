@@ -57,6 +57,8 @@ public:
 	void CreateMissile(GROUP_TYPE _eShooter, CObject* _pShooter, wstring _strShooterName);
 	void ChangeTexture(CTexture* _pTex) { m_pTex = _pTex; }
 	void SetPierce(bool _bPierce) { m_bPierce = _bPierce; }
+	void SetPierceWall(bool _bPierce) { m_bPierceWall = _bPierce; }
+
 	void SetLaser() { m_bIsLaser = true; }
 
 	CLONE(CMissile);

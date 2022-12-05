@@ -36,7 +36,7 @@ protected:
 	bool		m_bcoll;
 
 	bool		m_bIsPlayer;
-
+	bool		m_bOnAir;
 
 public:
 	CObject();
@@ -56,6 +56,8 @@ public:
 	Vec2 GetPos() const { return m_vPos; }
 	Vec2 GetPosTemp() const { return m_vPosTemp; }
 	Vec2 GetScale() const { return m_vScale; }
+
+	bool IsOnAir() const { return m_bOnAir; }
 
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() const { return m_strName; }

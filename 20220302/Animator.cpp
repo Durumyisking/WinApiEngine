@@ -86,6 +86,7 @@ void CAnimator::ResetCurAnim()
 {
 	if (nullptr != m_pCurAnim)
 	{
+		m_pCurAnim->SetFrame(0);
 		m_pCurAnim->SetOffset(Vec2(0.f, 0.f));
 		m_pCurAnim->SetMagnify(3.f);
 

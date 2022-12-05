@@ -15,6 +15,7 @@ enum class MON_TYPE
 	Charger,
 	Kamikazeleech,
 	Coltty,
+	Trite,
 
 	// boss
 	Dangle,

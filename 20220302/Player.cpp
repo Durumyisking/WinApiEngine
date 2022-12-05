@@ -60,6 +60,7 @@ CPlayer::CPlayer()
 	, m_iLooseSoulCount(0)
 	, m_bMainAnimPlaying(false)
 	, m_bBabylonOn(false)
+	, m_bInvisible(false)
 
 {
 	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
@@ -106,7 +107,14 @@ void CPlayer::update()
 
 	// 무적시간
 	if (m_finvincibilityTime < 1.0f)
+	{
 		m_finvincibilityTime += fDT;
+		m_bInvisible = false;
+	}
+	else
+	{
+		m_bInvisible = true;
+	}
 
 
 	// 이동
@@ -640,6 +648,10 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 
 	if (L"Monster" == pOtherObj->GetName() || L"Tear_Monster" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName())
 	{
+		if (m_bInvisible)
+		{
+			return;
+		}
 
 		Vec2 vDir = pOtherObj->GetPos() - GetPos();
 		vDir.Normalize();

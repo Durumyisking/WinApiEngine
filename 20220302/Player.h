@@ -73,6 +73,7 @@ public:
 	int				m_iLooseHeartMaxCount;
 	int				m_iLooseSoulCount;
 	int				m_iGetSoulCount;
+	bool			m_bInvisible;
 
 	virtual void update();
 	virtual void render(HDC _dc);

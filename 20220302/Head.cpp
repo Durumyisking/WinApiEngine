@@ -245,6 +245,12 @@ void CHead::CreateMissile(Vec2 _vDir)
 				m_vecMissile[i]->SetPierce(true);
 			}
 
+
+			if (m_pOwner->m_vInventory[static_cast<UINT>(ITEM_TABLE::ouijaboard)] > 0)
+			{
+				m_vecMissile[i]->ChangeTexture(CResMgr::GetInst()->LoadTexture(L"TearTexArrow", L"texture\\Tear\\tearouijaboard.bmp"));
+				m_vecMissile[i]->SetPierceWall(true);
+			}
 			
 			m_vecMissile[i]->CreateMissile(GROUP_TYPE::PROJ_PLAYER, this, L"Player");
 			CheckSizeItem(m_vecMissile[i]);

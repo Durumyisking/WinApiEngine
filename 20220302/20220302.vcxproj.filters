@@ -227,6 +227,9 @@
     <Filter Include="Engine\04. Object\Pickup\SoulHeart">
       <UniqueIdentifier>{6591fb26-6e4a-4a1b-8fe0-3c6d3bb02e38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\trite">
+      <UniqueIdentifier>{c210c621-ab8d-4259-8055-4fd192dc990e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -479,6 +482,9 @@
     <ClInclude Include="EvilRoom.h">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClInclude>
+    <ClInclude Include="Trite.h">
+      <Filter>Engine\04. Object\Monster\trite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -720,6 +726,9 @@
     </ClCompile>
     <ClCompile Include="EvilRoom.cpp">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClCompile>
+    <ClCompile Include="Trite.cpp">
+      <Filter>Engine\04. Object\Monster\trite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

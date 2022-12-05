@@ -19,6 +19,7 @@
 #include "Charger.h"
 #include "Kamikazeleech.h"
 #include "Coltty.h"
+#include "Trite.h"
 
 // boss
 #include "Dangle.h"
@@ -194,9 +195,33 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->GetCollider()->SetScale(Vec2(112.f, 112.f));
 
 	}
+	break;	
+
+	case MON_TYPE::Trite:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
 	break;
-
-
 
 	// boss
 

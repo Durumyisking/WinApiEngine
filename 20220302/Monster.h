@@ -34,7 +34,7 @@ protected:
 	wstring			m_arrAnimName[static_cast<UINT>(MON_STATE::END)];
 	CAI*			m_pAI;
 	bool			m_arrWallDirCheck[(UINT)DIR::END];
-	CRoom*			m_pOwner;
+//	CRoom*			m_pOwner;
 	bool			m_bDeadAnim;
 	float			m_fDeadAnimTime;
 	Vec2			m_vAnimOffset;
@@ -55,7 +55,7 @@ public:
 public:
 	Stat& GetStat() { return m_Stat;  }
 	void SetStat(Stat _playerstat) { m_Stat = _playerstat; }
-	void SetOwner(CRoom* _pOwner) { m_pOwner = _pOwner; }
+
 
 	void SetAI(CAI* _pAI);
 	CAI* GetAI() const { return m_pAI; }

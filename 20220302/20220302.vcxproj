@@ -245,6 +245,7 @@
     <ClInclude Include="TraceState.h" />
     <ClInclude Include="Trapdoor.h" />
     <ClInclude Include="TreasureRoom.h" />
+    <ClInclude Include="Trite.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIMgr.h" />
     <ClInclude Include="WallCollider.h" />
@@ -334,6 +335,7 @@
     <ClCompile Include="TraceState.cpp" />
     <ClCompile Include="Trapdoor.cpp" />
     <ClCompile Include="TreasureRoom.cpp" />
+    <ClCompile Include="Trite.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIMgr.cpp" />
     <ClCompile Include="WallCollider.cpp" />

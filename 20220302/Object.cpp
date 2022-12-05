@@ -13,6 +13,10 @@
 #include "Door.h"
 #include "Core.h"
 
+#include "SceneMgr.h"
+#include "Scene.h"
+#include "Player.h"
+
 CObject::CObject()
 	: m_vPos{}
 	, m_vPosTemp{}
@@ -28,6 +32,7 @@ CObject::CObject()
 	, m_bcoll(false)
 	, m_LastMoveFlag(0)
 	, m_bIsPlayer(false)
+	, m_bOnAir(false)
 
 {
 }
@@ -47,6 +52,7 @@ CObject::CObject(CRoom* _pOwner)
 	, m_bcoll(false)
 	, m_LastMoveFlag(0)
 	, m_bIsPlayer(false)
+	, m_bOnAir(false)
 {
 }
 
@@ -65,6 +71,7 @@ CObject::CObject(const CObject& _origin)
 	, m_bcoll(false)
 	, m_LastMoveFlag(0)
 	, m_bIsPlayer(false)
+	, m_bOnAir(false)
 {
 	if (_origin.m_pCollider)
 	{
@@ -124,18 +131,46 @@ void CObject::OnCollision(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (L"Rock" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+	if (!m_bOnAir || _pOther->GetObj()->IsOnAir())
 	{
+		if (L"Rock" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+		{
+
+			if (L"Door" == pOtherObj->GetName())
+			{
+				CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+				if (pdoor->IsOpen())
+					return;
+			}
+
+			if (m_bIsPlayer && L"Monster" == pOtherObj->GetName())
+			{
+				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
+				{
+					return;
+				}
+			}
+			if (L"Monster" == GetName() && L"Player" == pOtherObj->GetName())
+			{
+				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
+				{
+					return;
+				}
+			}
+		}
+
+
 		Vec2 vTemp = IntersectArea(pOtherObj);
 		SetPos(GetPos() - vTemp);
-	}
 
-	if (!m_bIsPlayer)
-	{
-		if (L"Bomb" == pOtherObj->GetName())
+
+		if (!m_bIsPlayer)
 		{
-			Vec2 vTemp = IntersectArea(pOtherObj);
-			SetPos(GetPos() - vTemp);
+			if (L"Bomb" == pOtherObj->GetName())
+			{
+				Vec2 vTemp = IntersectArea(pOtherObj);
+				SetPos(GetPos() - vTemp);
+			}
 		}
 	}
 }
@@ -144,24 +179,43 @@ void CObject::OnCollisionEnter(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (L"Rock" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
+	if (!m_bOnAir || _pOther->GetObj()->IsOnAir())
 	{
-		if (L"Door" == pOtherObj->GetName())
+		if (L"Rock" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
 		{
-			CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
-			if (pdoor->IsOpen())
-				return;
-		}
-		Vec2 vTemp = IntersectArea(pOtherObj);
-		SetPos(GetPos() - vTemp);
-	}
+			if (L"Door" == pOtherObj->GetName())
+			{
+				CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
+				if (pdoor->IsOpen())
+					return;
+			}
 
-	if (!m_bIsPlayer)
-	{
-		if (L"Bomb" == pOtherObj->GetName())
-		{
+			if (L"Player" == GetName() && L"Monster" == pOtherObj->GetName())
+			{
+				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
+				{
+					return;
+				}
+			}
+			if (L"Monster" == GetName() && L"Player" == pOtherObj->GetName())
+			{
+				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
+				{
+					return;
+				}
+			}
+
 			Vec2 vTemp = IntersectArea(pOtherObj);
 			SetPos(GetPos() - vTemp);
+		}
+
+		if (!m_bIsPlayer)
+		{
+			if (L"Bomb" == pOtherObj->GetName())
+			{
+				Vec2 vTemp = IntersectArea(pOtherObj);
+				SetPos(GetPos() - vTemp);
+			}
 		}
 	}
 }

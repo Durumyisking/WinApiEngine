@@ -42,7 +42,7 @@ void CMonster::update()
 {
 	if (0 >= m_Stat.m_iHP && MON_STATE::DEAD != GetAI()->GetCurState()->GetType())
 	{
-		m_pOwner->MonsterDead();
+		GetOwner()->MonsterDead();
 		GetAI()->ChangeState(MON_STATE::DEAD);
 	}
 	else
