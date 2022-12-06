@@ -17,6 +17,8 @@
 #include "Scene.h"
 #include "Player.h"
 
+#include "Room.h"
+
 CObject::CObject()
 	: m_vPos{}
 	, m_vPosTemp{}
@@ -364,9 +366,10 @@ void CObject::finalupdate()
 void CObject::render(HDC _dc)
 {
 	// ÁøÂ¥ ÁÂÇ¥°¡ ¾Æ´Ñ ·»´õ¸µ µÇ´Â ÁÂÇ¥ (ÁøÂ¥ ÁÂÇ¥´Â m_vPos)
-	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vPos);
-
-	component_render(_dc);
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	{
+		component_render(_dc);
+	}
 }
 
 void CObject::component_render(HDC _dc)

@@ -19,6 +19,7 @@
 #include "WallCollider.h"
 #include "Map.h"
 #include "Camera.h"
+#include "Room.h"
 
 
 
@@ -236,6 +237,36 @@ void CScene::LoadTile(const wstring & _strRelativePath)
 
 
 	fclose(pFile);
+}
+
+bool CScene::CheckObject(Vec2 _vPos, Vec2 _vCheckRange)
+{
+	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+	{
+		for (size_t j = 0; j < m_arrObj[i].size(); ++j)
+		{
+			if (nullptr != m_arrObj[i][j]->GetOwner())
+			{
+				if (m_arrObj[i][j]->GetOwner() != m_arrObj[i][j]->GetOwner()->GetOwner()->GetCurrentRoom())
+				{
+					continue;
+				}
+				else
+				{
+					Vec2 vCheckPos = m_arrObj[i][j]->GetPos();
+					Vec2 vCheckScale = m_arrObj[i][j]->GetScale();
+
+					if (fabs(_vPos.x - vCheckPos.x) < (_vCheckRange.x + vCheckScale.x) / 2.f
+						&& fabs(_vPos.y - vCheckPos.y) < (_vCheckRange.y + vCheckScale.y) / 2.f)
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 

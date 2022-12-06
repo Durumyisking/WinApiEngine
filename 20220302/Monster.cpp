@@ -40,45 +40,51 @@ void CMonster::Attack()
 
 void CMonster::update()
 {
-	if (0 >= m_Stat.m_iHP && MON_STATE::DEAD != GetAI()->GetCurState()->GetType())
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
 	{
-		GetOwner()->MonsterDead();
-		GetAI()->ChangeState(MON_STATE::DEAD);
-	}
-	else
-	{
-		if (nullptr != GetRigidBody())
+
+		if (0 >= m_Stat.m_iHP && MON_STATE::DEAD != GetAI()->GetCurState()->GetType())
 		{
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
+			GetOwner()->MonsterDead();
+			GetAI()->ChangeState(MON_STATE::DEAD);
+		}
+		else
+		{
+			if (nullptr != GetRigidBody())
 			{
-				if (GetRigidBody()->GetVelocity().y < 0)
-					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
-			}
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)])
-			{
-				if (GetRigidBody()->GetVelocity().y > 0)
-					GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
-			}
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)])
-			{
-				if (GetRigidBody()->GetVelocity().x > 0)
-					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
-			}
-			if (m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)])
-			{
-				if (GetRigidBody()->GetVelocity().x < 0)
-					GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+				if (m_arrWallDirCheck[static_cast<UINT>(DIR::UP)])
+				{
+					if (GetRigidBody()->GetVelocity().y < 0)
+						GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
+				}
+				if (m_arrWallDirCheck[static_cast<UINT>(DIR::DOWN)])
+				{
+					if (GetRigidBody()->GetVelocity().y > 0)
+						GetRigidBody()->SetVelocity(Vec2(GetRigidBody()->GetVelocity().x, 0.f));
+				}
+				if (m_arrWallDirCheck[static_cast<UINT>(DIR::RIGHT)])
+				{
+					if (GetRigidBody()->GetVelocity().x > 0)
+						GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+				}
+				if (m_arrWallDirCheck[static_cast<UINT>(DIR::LEFT)])
+				{
+					if (GetRigidBody()->GetVelocity().x < 0)
+						GetRigidBody()->SetVelocity(Vec2(0.f, GetRigidBody()->GetVelocity().y));
+				}
 			}
 		}
+		m_pAI->update();
 	}
-	m_pAI->update();
 }
 
 
 void CMonster::render(HDC _dc)
 {
-
-	component_render(_dc);
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	{
+		component_render(_dc);
+	}
 }
 void CMonster::CreateMissile(Vec2 _vDir, CTexture* _pTex, wstring _strShooterName)
 {

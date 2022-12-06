@@ -217,7 +217,6 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->GetRigidBody()->SetMass(2.5f);
 		pMon->GetRigidBody()->SetFricCoeff(500.f);
 
-
 		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
 
 	}

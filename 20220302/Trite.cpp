@@ -32,9 +32,6 @@ void CTrite::update()
 {
 	m_fAttackCooldown += fDT;
 
-
-
-
 	if (2.3f < m_fAttackCooldown)
 	{
 		if (!m_bDefinePos)
@@ -52,11 +49,17 @@ void CTrite::update()
 			}
 			else
 			{
-				m_vJumpDest = Vec2(rand() % 901 - 450, rand() % 431 - 215);
-				Vec2 vTemp = GetOwner()->GetPos();
-				m_vJumpDest += vTemp;
+				do
+				{
+					m_vJumpDest = Vec2(rand() % 901 - 450, rand() % 431 - 215);
+					Vec2 vTemp = GetOwner()->GetPos();
+					m_vJumpDest += vTemp;
+				} 
+				while (CSceneMgr::GetInst()->GetCurScene()->CheckObject(m_vJumpDest, GetCollider()->GetScale()));
+
 				GetRigidBody()->SetMaxVelocity(500.f);
 			}
+
 			m_vJumpDir = m_vJumpDest - GetPos();
 			m_vJumpDir.Normalize();
 
@@ -106,8 +109,6 @@ void CTrite::Attack()
 		m_strAnimName = L"TRITE_IDLE";
 		PlayAnim(m_pAnim, m_strAnimName, Vec2(-24.f, -44.f), true);
 	}
-
-
 	
 
 	if (2.7f < m_fAttackCooldown)

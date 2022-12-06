@@ -104,6 +104,9 @@ public:
 	void CreateTile(UINT _iXCount, UINT _iYCount);
 	void LoadTile(const wstring& _strRelativePath);
 
+	bool CheckObject(Vec2 _vPos, Vec2 _vCheckRange);
+
+
 	vector<CObject*>& GetUIGroup()  { return m_arrObj[(UINT)GROUP_TYPE::UI]; }
 
 
