@@ -1,6 +1,5 @@
 #pragma once
 
-
 class CItem;
 class CTexture;
 

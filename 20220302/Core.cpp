@@ -10,6 +10,7 @@
 #include "UIMgr.h"
 #include "Camera.h"
 #include "ItemMgr.h"
+#include "ParticleMgr.h"
 
 #include "Texture.h"
 #include "ResMgr.h"
@@ -77,6 +78,7 @@ int CCore::init(HWND _hWnd, Vec2 _vResolution)
 	CPathMgr::GetInst()->init();
 	CCamera::GetInst()->init();
 	CItemMgr::GetInst()->init();
+	CParticleMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
 	CCollisionMgr::GetInst()->init();
 	CEventMgr::GetInst()->init();

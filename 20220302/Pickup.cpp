@@ -81,7 +81,6 @@ void CPickup::OnCollisionEnter(CCollider * _pOther)
 			break;
 		case PICKUP_TYPE::COIN:
 			pPlayerObj->GetPickup().SetCoin(1);
-			DeleteObject(this);
 
 			break;
 		case PICKUP_TYPE::BOMB:

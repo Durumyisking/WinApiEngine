@@ -230,6 +230,12 @@
     <Filter Include="Engine\04. Object\Monster\trite">
       <UniqueIdentifier>{c210c621-ab8d-4259-8055-4fd192dc990e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\ParticleMgr">
+      <UniqueIdentifier>{00eaca06-7d00-40fc-a6eb-560280d83b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Particle">
+      <UniqueIdentifier>{41cda91a-19e6-4ff6-8d0a-f07b20681f40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -485,6 +491,12 @@
     <ClInclude Include="Trite.h">
       <Filter>Engine\04. Object\Monster\trite</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleMgr.h">
+      <Filter>Engine\03. Manager\ParticleMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Engine\04. Object\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -729,6 +741,12 @@
     </ClCompile>
     <ClCompile Include="Trite.cpp">
       <Filter>Engine\04. Object\Monster\trite</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleMgr.cpp">
+      <Filter>Engine\03. Manager\ParticleMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Engine\04. Object\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
