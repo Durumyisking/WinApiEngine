@@ -83,6 +83,8 @@ enum class GROUP_TYPE
 
 	WALL,
 
+	PARTICLE,
+
 	TRAPDOOR,
 
 	TEARWALL,
