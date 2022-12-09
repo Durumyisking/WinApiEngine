@@ -109,7 +109,6 @@ void CItem::render(HDC _dc)
 		CTexture* pCostTex =  CResMgr::GetInst()->LoadTexture(L"HpMaxPrice", L"texture\\Item\\shop_001_bitfont.bmp");
 
 		int LT = 0;
-		int RB = 0;
 
 		if (4 == m_ItemInfo.m_iPriceHpMax)
 			LT = 32;
@@ -121,7 +120,7 @@ void CItem::render(HDC _dc)
 			, static_cast<int>(vPricePos.y - (vScale.y / 2.f) + 75.f)
 			, static_cast<int>(vScale.x), static_cast<int>(vScale.y)
 			, pCostTex->GetDC()
-			, LT, RB, 32, 32
+			, LT, 0, 32, 32
 			, RGB(255, 0, 255));
 	}
 

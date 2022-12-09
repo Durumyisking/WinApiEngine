@@ -13,7 +13,6 @@ class CPlayer;
 class CMap;
 			
 class CScene
-	: m_arrParticlePool()
 {
 
 

@@ -3,7 +3,8 @@
 #include "Monster.h"
 #include "Collider.h"
 #include "RigidBody.h"
-
+#include "ParticleMgr.h"
+#include "Particle.h"
 
 CDeadState::CDeadState()
 	: CState(MON_STATE::DEAD)
@@ -30,6 +31,7 @@ void CDeadState::Enter()
 	}
 	else
 	{
+		CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos());
 		DeleteObject(pMonster);
 	}
 }
@@ -48,7 +50,7 @@ void CDeadState::update()
 		if(pMonster->GetAnimator()->GetCurAnim()->IsFinish())
 		{
 			// 몬스터 죽을때 시체 나가는 효과 넣자
-
+			CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos());
 			DeleteObject(pMonster);
 		}
 }

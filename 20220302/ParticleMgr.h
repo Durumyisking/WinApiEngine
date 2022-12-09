@@ -5,8 +5,10 @@ class CParticle;
 
 enum class PARTICLE_TYPE
 {
-	blood,
-	bomb,
+	bloodpool,
+	bloodstain,
+	bloodgibs,
+	bombradius,
 
 	END
 };
