@@ -31,12 +31,24 @@ void CDeadState::Enter()
 	}
 	else
 	{
-		CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos());
+		CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodpool, GetMonster()->GetPos(), Vec2(0.f, 0.f));
+		for (int i = -1; i <= 1; i++)
+		{
+			if (0 == i)
+				continue;
+			for (int j = -1; j <= 1; j++)
+			{
+				if (0 == j)
+					continue;
+
+				CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos() + Vec2(i * 15.f, j * 15.f), Vec2(i, j));
+			}
+		}
 		DeleteObject(pMonster);
 	}
 }
 
-void CDeadState::Exit()
+void CDeadState::Exit()	
 {
 }
 
@@ -50,7 +62,19 @@ void CDeadState::update()
 		if(pMonster->GetAnimator()->GetCurAnim()->IsFinish())
 		{
 			// 몬스터 죽을때 시체 나가는 효과 넣자
-			CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos());
+			CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodpool, GetMonster()->GetPos(), Vec2(0.f,0.f));
+			for (int i = -1; i <= 1; i++)
+			{
+				if (0 == i)
+					continue;
+				for (int j = -1; j <= 1; j++)
+				{
+					if (0 == j)
+						continue;
+					
+					CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos() + Vec2(i*50.f, j*50.f), Vec2(i, j));
+				}
+			}
 			DeleteObject(pMonster);
 		}
 }

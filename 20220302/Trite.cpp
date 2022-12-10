@@ -39,7 +39,6 @@ void CTrite::update()
 			void* p = new int();
 			void* q = new int();
 			srand((int)p);
-			srand((int)q);
 
 			int iToPlayer = rand() % 3;
 			if (0 == iToPlayer)
@@ -64,7 +63,6 @@ void CTrite::update()
 			m_vJumpDir.Normalize();
 
 			delete p;
-			delete q;
 
 			m_bDefinePos = true;
 		}

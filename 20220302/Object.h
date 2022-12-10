@@ -36,6 +36,7 @@ protected:
 	bool		m_bcoll;
 
 	bool		m_bIsPlayer;
+	bool		m_bIsPickup;
 	bool		m_bOnAir;
 
 public:

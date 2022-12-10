@@ -25,6 +25,8 @@ public:
     PARTICLE_TYPE   m_eType;
     Vec2            m_vSliceQuant;
     Vec2            m_vSlice;
+    Vec2            m_vSliceGap;
+
 
 };
 

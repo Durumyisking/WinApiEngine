@@ -20,6 +20,7 @@ CPickup::CPickup()
 	GetRigidBody()->SetFricCoeff(550.f);
 	GetRigidBody()->SetMaxVelocity(500.f);
 
+	m_bIsPickup = true;
 }
 
 CPickup::~CPickup()

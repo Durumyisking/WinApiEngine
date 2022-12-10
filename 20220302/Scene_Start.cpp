@@ -219,7 +219,7 @@ void CScene_Start::update()
 	}
 	if (KEY_TAP(KEY::ESC))
 	{
-		ChangeScene(SCENE_TYPE::MENU);
+//		ChangeScene(SCENE_TYPE::MENU);
 	}
 
 	// 카메라 전환

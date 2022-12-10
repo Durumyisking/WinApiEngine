@@ -19,7 +19,7 @@ class CParticleMgr
 
 public:
 	void init();
-	void CreateParticle(PARTICLE_TYPE _eType, Vec2 _vPos); // 직접 추가용
+	void CreateParticle(PARTICLE_TYPE _eType, Vec2 _vPos, Vec2 _vDir); // 직접 추가용
 //	void CreateParticle(PARTICLE_TYPE _eType); // 오브젝트 풀링
 
 	

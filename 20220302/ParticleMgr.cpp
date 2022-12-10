@@ -4,6 +4,7 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "Map.h"
+#include "RigidBody.h"
 
 CParticleMgr::CParticleMgr()
 	: m_arrParticlePool()
@@ -28,17 +29,20 @@ void CParticleMgr::init()
 
 }
 
-void CParticleMgr::CreateParticle(PARTICLE_TYPE _eType, Vec2 _vPos)
+void CParticleMgr::CreateParticle(PARTICLE_TYPE _eType, Vec2 _vPos, Vec2 _vDir)
 {
 	if (!m_arrParticlePool[static_cast<UINT>(_eType)].empty())
 	{
 		// 현재 타입에 맞는 벡터의 마지막 인덱스에 있는걸 뽑아옴
 		CParticle* pNewParticle = m_arrParticlePool[static_cast<UINT>(_eType)][m_arrParticlePool[static_cast<UINT>(_eType)].size() - 1];
 		pNewParticle->SetPos(_vPos);
+		
+		if(PARTICLE_TYPE::bloodgibs == _eType)
+			pNewParticle->GetRigidBody()->AddVelocity(_vDir * 3000.f);
+
 		pNewParticle->SetOwner(CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom());
 		// 뽑아왔으니 popback;
 		m_arrParticlePool[static_cast<UINT>(_eType)].pop_back();
-
 		CreateObject(pNewParticle, GROUP_TYPE::PARTICLE);
 	}
 	else

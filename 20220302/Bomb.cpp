@@ -147,6 +147,7 @@ void CBomb::OnCollision(CCollider * _pOther)
 		//}
 	}
 
+	CObject::OnCollision(_pOther);
 
 }
 
@@ -213,16 +214,21 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 	}
 	else
 	{
-		if (L"Player" == pOtherObj->GetName())
-		{
-			PushBomb(pOtherObj, 200.f);
-		}
-		if ( L"Tear_Player" == pOtherObj->GetName())
-		{
-			PushBomb(pOtherObj, 50.f);
-		}
+		//if (m_bPush)
+		//{
+			if (L"Player" == pOtherObj->GetName())
+			{
+				PushBomb(pOtherObj, 200.f);
+			}
+			if (L"Tear_Player" == pOtherObj->GetName())
+			{
+				PushBomb(pOtherObj, 50.f);
+			}
+
+//		}
 	}
 
+	CObject::OnCollisionEnter(_pOther);
 
 
 }
@@ -235,6 +241,9 @@ void CBomb::OnCollisionExit(CCollider * _pOther)
 	{
 		m_bPush = true;
 	}
+
+	CObject::OnCollisionExit(_pOther);
+
 }
 
 void CBomb::CreateBomb(Vec2 _vOwnerPos, Vec2 _vOwnerScale, wstring _strName, int _iBombTypeBit)

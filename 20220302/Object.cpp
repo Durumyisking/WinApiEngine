@@ -35,7 +35,7 @@ CObject::CObject()
 	, m_LastMoveFlag(0)
 	, m_bIsPlayer(false)
 	, m_bOnAir(false)
-
+	, m_bIsPickup(false)
 {
 }
 
@@ -55,6 +55,7 @@ CObject::CObject(CRoom* _pOwner)
 	, m_LastMoveFlag(0)
 	, m_bIsPlayer(false)
 	, m_bOnAir(false)
+	, m_bIsPickup(false)
 {
 }
 
@@ -64,7 +65,6 @@ CObject::CObject(const CObject& _origin)
 	, m_vScale{_origin.m_vScale}
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
-
 	, m_bAlive(true)
 	, m_pOwner(nullptr)
 	, m_MoveFlag(_origin.m_MoveFlag)
@@ -74,6 +74,7 @@ CObject::CObject(const CObject& _origin)
 	, m_LastMoveFlag(0)
 	, m_bIsPlayer(false)
 	, m_bOnAir(false)
+	, m_bIsPickup(false)
 {
 	if (_origin.m_pCollider)
 	{
@@ -133,8 +134,17 @@ void CObject::OnCollision(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (!m_bOnAir || _pOther->GetObj()->IsOnAir())
+	if (!m_bOnAir && !(_pOther->GetObj()->IsOnAir()))
 	{
+		if (!m_bIsPlayer)
+		{
+			if (L"Bomb" == pOtherObj->GetName())
+			{
+				Vec2 vTemp = IntersectArea(pOtherObj);
+				SetPos(GetPos() - vTemp);
+			}
+		}
+
 		if (L"Rock" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
 		{
 
@@ -145,34 +155,29 @@ void CObject::OnCollision(CCollider* _pOther)
 					return;
 			}
 
-			if (m_bIsPlayer && L"Monster" == pOtherObj->GetName())
+			if (L"Player" == GetName() && L"Monster" == pOtherObj->GetName() || L"Monster" == GetName() && L"Player" == pOtherObj->GetName())
 			{
 				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
 				{
 					return;
 				}
 			}
-			if (L"Monster" == GetName() && L"Player" == pOtherObj->GetName())
+
+			if (L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName())
 			{
-				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
-				{
+				if (m_bIsPickup)
 					return;
-				}
 			}
-		}
 
-
-		Vec2 vTemp = IntersectArea(pOtherObj);
-		SetPos(GetPos() - vTemp);
-
-
-		if (!m_bIsPlayer)
-		{
-			if (L"Bomb" == pOtherObj->GetName())
+			if (L"Bomb" == GetName() && L"Player" == pOtherObj->GetName() || L"Player" == GetName() && L"Bomb" == pOtherObj->GetName())
 			{
-				Vec2 vTemp = IntersectArea(pOtherObj);
-				SetPos(GetPos() - vTemp);
+				return;
 			}
+
+
+			Vec2 vTemp = IntersectArea(pOtherObj);
+			SetPos(GetPos() - vTemp);
+
 		}
 	}
 }
@@ -181,8 +186,18 @@ void CObject::OnCollisionEnter(CCollider* _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-	if (!m_bOnAir || _pOther->GetObj()->IsOnAir())
+	if (!m_bOnAir && !(_pOther->GetObj()->IsOnAir()))
 	{
+		if (L"Bomb" == pOtherObj->GetName())
+		{
+			if (!m_bIsPlayer)
+			{
+				Vec2 vTemp = IntersectArea(pOtherObj);
+				SetPos(GetPos() - vTemp);
+			}
+		}
+
+
 		if (L"Rock" == pOtherObj->GetName() || L"Fire" == pOtherObj->GetName() || L"Poop" == pOtherObj->GetName() || L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName() || L"Door" == pOtherObj->GetName())
 		{
 			if (L"Door" == pOtherObj->GetName())
@@ -192,33 +207,31 @@ void CObject::OnCollisionEnter(CCollider* _pOther)
 					return;
 			}
 
-			if (L"Player" == GetName() && L"Monster" == pOtherObj->GetName())
+			if (L"Player" == GetName() && L"Monster" == pOtherObj->GetName() || L"Monster" == GetName() && L"Player" == pOtherObj->GetName())
 			{
 				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
 				{
 					return;
 				}
 			}
-			if (L"Monster" == GetName() && L"Player" == pOtherObj->GetName())
+
+
+			if (L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName())
 			{
-				if (CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->m_bInvisible)
-				{
+				if (m_bIsPickup)
 					return;
-				}
+			}
+
+			if (L"Bomb" == GetName() && L"Player" == pOtherObj->GetName() || L"Player" == GetName() && L"Bomb" == pOtherObj->GetName())
+			{
+				return;
 			}
 
 			Vec2 vTemp = IntersectArea(pOtherObj);
 			SetPos(GetPos() - vTemp);
+
 		}
 
-		if (!m_bIsPlayer)
-		{
-			if (L"Bomb" == pOtherObj->GetName())
-			{
-				Vec2 vTemp = IntersectArea(pOtherObj);
-				SetPos(GetPos() - vTemp);
-			}
-		}
 	}
 }
 
