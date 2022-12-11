@@ -111,6 +111,15 @@ CParticle::CParticle(PARTICLE_TYPE _eType)
 		break;
 	case PARTICLE_TYPE::bombradius:
 		m_pTex = CResMgr::GetInst()->LoadTexture(L"bombradius", L"texture\\Particle\\effect_017_bombradius.bmp");
+		{
+			void* p = new int();
+			srand((int)p);
+			m_vSlice.x = rand() % 8;
+			m_vSliceQuant = Vec2(96.f, 48.f);
+			m_vSliceGap = Vec2(96.f, 0.f);
+			SetScale(Vec2(96.f, 48.f));
+
+		}
 		break;
 	case PARTICLE_TYPE::END:
 		break;

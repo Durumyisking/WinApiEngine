@@ -12,6 +12,7 @@
 #include "Monster.h"
 
 #include "WallCollider.h"
+#include "ParticleMgr.h"
 
 CBomb::CBomb(CObject* _pOwner)
 	: m_pTex(nullptr)
@@ -51,7 +52,9 @@ void CBomb::update()
 	m_fBombTime -= fDT;
 
 	if (GetAnimator()->GetCurAnim()->IsFinish())
+	{
 		DeleteObject(this);
+	}
 
 	if (m_bPassFrame)
 	{
@@ -64,6 +67,7 @@ void CBomb::update()
 		{
 			if (nullptr != m_pTarget)
 			{
+
 				Vec2 vDir = m_pTarget->GetPos() - GetPos();
 				vDir.Normalize();
 
@@ -81,7 +85,7 @@ void CBomb::update()
 			{
 
 				m_strAnimName = L"Explode";
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(-65.f, -130.f), false);
+				PlayAnim(m_pAnim, m_strAnimName, Vec2(-80.f, -155.f), false);
 				SetName(L"Explode");
 				GetCollider()->SetScale(Vec2(300.f, 300.f));
 
@@ -92,6 +96,8 @@ void CBomb::update()
 					GetAnimator()->GetCurAnim()->SetMagnify(4.f);
 					GetAnimator()->GetCurAnim()->SetOffset(-Vec2(60.f, 80.f));
 				}
+				CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bombradius, GetPos() - Vec2(50.f, 30.f), Vec2(0.f, 0.f));
+
 			}
 			m_bPassFrame = true;
 
@@ -112,6 +118,7 @@ void CBomb::OnCollision(CCollider * _pOther)
 
 	if (m_bPassFrame)
 	{
+
 		if (L"Player" == pOtherObj->GetName())
 		{
 			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pOtherObj);
