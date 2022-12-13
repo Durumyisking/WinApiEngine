@@ -15,7 +15,7 @@ CRoom::CRoom()
 	, m_iMonsterCount(0)
 	, m_pOwner(nullptr)
 	, m_pBgTex(nullptr)
-	, m_bGetReward(false)
+	, m_bGetReward(true)
 	, m_bIsClear(false)
 
 {
@@ -456,6 +456,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 					break;
@@ -463,6 +464,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CMonster * M = CMonsterFactory::CreateMonster(MON_TYPE::Fly, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 					break;
@@ -470,6 +472,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Host, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 				break;
@@ -477,6 +480,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Charger, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 				break;
@@ -484,6 +488,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Kamikazeleech, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 				break;
@@ -491,6 +496,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				{
 					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Coltty, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 				break;

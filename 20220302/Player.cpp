@@ -109,11 +109,11 @@ void CPlayer::update()
 	if (m_finvincibilityTime < 1.0f)
 	{
 		m_finvincibilityTime += fDT;
-		m_bInvisible = false;
+		m_bInvisible = true;
 	}
 	else
 	{
-		m_bInvisible = true;
+		m_bInvisible = false;
 	}
 
 

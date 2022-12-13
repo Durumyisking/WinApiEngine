@@ -119,6 +119,8 @@ CParticle::CParticle(PARTICLE_TYPE _eType)
 			m_vSliceGap = Vec2(96.f, 0.f);
 			SetScale(Vec2(96.f, 48.f));
 
+			delete p;
+
 		}
 		break;
 	case PARTICLE_TYPE::END:
@@ -126,7 +128,7 @@ CParticle::CParticle(PARTICLE_TYPE _eType)
 	default:
 		break;
 	}
-
+	 
 
 }
 

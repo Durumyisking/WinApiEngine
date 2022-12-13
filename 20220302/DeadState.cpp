@@ -41,7 +41,12 @@ void CDeadState::Enter()
 				if (0 == j)
 					continue;
 
-				CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos() + Vec2(i * 15.f, j * 15.f), Vec2(i, j));
+				void* p = new int();
+				srand((int)p);
+				float ix = rand() % 100 - 50.f;
+				float iy = rand() % 100 - 50, f;
+
+				CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos() + Vec2(i * ix, j * iy), Vec2(i * ix, j * iy));
 			}
 		}
 		DeleteObject(pMonster);
@@ -72,7 +77,12 @@ void CDeadState::update()
 					if (0 == j)
 						continue;
 					
-					CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos() + Vec2(i*50.f, j*50.f), Vec2(i, j));
+					void* p = new int();
+					srand((int)p);
+					float ix = rand() % 100 - 50.f;
+					float iy = rand() % 100 - 50,f;
+
+					CParticleMgr::GetInst()->CreateParticle(PARTICLE_TYPE::bloodgibs, GetMonster()->GetPos() + Vec2(i* ix, j* iy), Vec2(i * ix, j * iy));
 				}
 			}
 			DeleteObject(pMonster);
