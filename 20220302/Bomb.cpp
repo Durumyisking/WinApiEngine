@@ -14,6 +14,8 @@
 #include "WallCollider.h"
 #include "ParticleMgr.h"
 
+#include "Door.h"
+
 CBomb::CBomb(CObject* _pOwner)
 	: m_pTex(nullptr)
 	, m_pEffectTex(nullptr)
@@ -114,7 +116,19 @@ void CBomb::OnCollision(CCollider * _pOther)
 {
 	CObject* pOtherObj = _pOther->GetObj();
 
-
+	if (L"Door" == pOtherObj->GetName())
+	{
+		CDoor* pDoor = dynamic_cast<CDoor*>(pOtherObj);
+		if (m_bPassFrame)
+		{
+			if (ROOM_TYPE::SECRET
+				== pDoor->GetType())
+			{
+				pDoor->SetSecret(false);
+				pDoor->unLockDoor();
+			}
+		}
+	}
 
 	if (m_bPassFrame)
 	{
@@ -179,6 +193,19 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 		Vec2 _v = this->GetRigidBody()->GetVelocity();
 		_v *= -0.5f;
 		this->GetRigidBody()->SetVelocity(_v);
+	}
+	if (L"Door" == pOtherObj->GetName())
+	{
+		CDoor* pDoor= dynamic_cast<CDoor*>(pOtherObj);
+		if (m_bPassFrame)
+		{
+			if (ROOM_TYPE::SECRET
+				== pDoor->GetType())
+			{
+				pDoor->SetSecret(false);
+				pDoor->unLockDoor();
+			}
+		}
 	}
 
 

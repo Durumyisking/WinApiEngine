@@ -29,7 +29,7 @@ void CBossRoom::update()
 		{
 			if (!m_bItemCreated)
 			{
-				CItemMgr::GetInst()->CreateRandomItem(GetPos() + Vec2(0.f, 150.f));
+				CItemMgr::GetInst()->CreateRandomItem(GetPos() + Vec2(0.f, 150.f), this);
 				m_bItemCreated = true;
 			}
 			// 최초 클리어시 트랩도어와 아이템을 생성합니다.

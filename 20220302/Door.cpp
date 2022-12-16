@@ -17,6 +17,7 @@
 
 CDoor::CDoor(CRoom* _pOwner, DIR _eDir)
 	: m_pTex(nullptr)
+	, m_eType(ROOM_TYPE::END)
 	, m_pOwner(_pOwner)
 	, m_eDir(_eDir)
 	, m_iSliceX(0)
@@ -65,6 +66,19 @@ void CDoor::update()
 			m_bOpen = false;
 		}
 	}
+
+	if (ROOM_TYPE::SECRET == m_eType)
+	{
+		if (m_bSecret)
+		{
+			m_bLock = true;
+		}
+		else
+		{
+			m_bLock = false;
+		}
+	}
+
 	if (!IsOpen())
 	{
 		GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
@@ -254,16 +268,36 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 	case ROOM_TYPE::EVIL:
 		m_bSecret = true;
 		m_bLock = true;
-		m_iSliceCountX = 2;
+		m_iSliceCountX = 1;
 		m_iSliceCountY = 2;
 		m_eType = ROOM_TYPE::EVIL;
 		switch (m_eDir)
 		{
 		case DIR::UP: case DIR::DOWN:
-			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNSevil", L"texture\\Props\\DoorNSboss.bmp"));
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNSevil", L"texture\\Props\\DoorNSevil.bmp"));
 			break;
 		case DIR::RIGHT: case DIR::LEFT:
-			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWevil", L"texture\\Props\\DoorEWboss.bmp"));
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWevil", L"texture\\Props\\DoorEWevil.bmp"));
+			break;
+		case DIR::END:
+			break;
+		default:
+			break;
+		}
+		break;
+	case ROOM_TYPE::SECRET:
+		m_bSecret = true;
+		m_bLock = true;
+		m_iSliceCountX = 1;
+		m_iSliceCountY = 2;
+		m_eType = ROOM_TYPE::SECRET;
+		switch (m_eDir)
+		{
+		case DIR::UP: case DIR::DOWN:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorNSsecret", L"texture\\Props\\DoorNSsecret.bmp"));
+			break;
+		case DIR::RIGHT: case DIR::LEFT:
+			SetTexture(CResMgr::GetInst()->LoadTexture(L"DoorEWsecret", L"texture\\Props\\DoorEWsecret.bmp"));
 			break;
 		case DIR::END:
 			break;

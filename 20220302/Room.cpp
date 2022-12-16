@@ -315,6 +315,8 @@ void CRoom::Enter()
 
 void CRoom::Exit()
 {
+
+		
 }
 
 void CRoom::SpawnPickup(PICKUP_TYPE _eType, Vec2 _vPos)
@@ -376,6 +378,10 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 		strFolder += L"\\Evil\\Room";
 //		iCount = rand() % 3 + 1;
 		break;
+	case ROOM_TYPE::SECRET:
+		strFolder += L"\\Secret\\Room";
+		break;
+
 	default:
 		break;
 	}
@@ -446,7 +452,12 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 					CreateObject(pRock, GROUP_TYPE::PROP);
 				}	break;
 				case L'8':
-					DropPickupType(vSpawnPos);
+					if (ROOM_TYPE::SECRET == m_eType)
+					{
+						SpawnPickup(PICKUP_TYPE::COIN, vSpawnPos);
+					}
+					else
+						DropPickupType(vSpawnPos);
 					break;
 				case L'9':
 					break;
@@ -495,6 +506,14 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				case L'y':
 				{
 					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Coltty, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
+				case L'u':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;

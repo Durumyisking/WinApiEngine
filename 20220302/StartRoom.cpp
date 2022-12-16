@@ -1,10 +1,23 @@
 #include "pch.h"
 #include "StartRoom.h"
-
+#include "Scene_Start.h"
 
 CStartRoom::CStartRoom()
 {
-	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexStart", L"texture\\BackGround\\bg_basement_start.bmp");
+	switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+	{
+	case 1:
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexStart1", L"texture\\BackGround\\bg_basement_start.bmp");
+		break;
+	case 2:
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexStart2", L"texture\\BackGround\\bg_depth_normal.bmp");
+		break;
+	case 3:
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexStart3", L"texture\\BackGround\\bg_basement_start.bmp");
+		break;
+	default:
+		break;
+	}
 	m_eType = ROOM_TYPE::START;
 	m_bGetReward = true;
 }
@@ -82,13 +95,8 @@ void CStartRoom::Enter()
 		pPickup2->SetOwner(this);
 		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
 
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f));
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f));
-
-
-		CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, GetPos() - Vec2(450.f, 215.f), this);
-		CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
-		++m_iMonsterCount;
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f), this);
+		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f), this);
 
 	}
 

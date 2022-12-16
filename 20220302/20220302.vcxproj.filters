@@ -497,6 +497,9 @@
     <ClInclude Include="Particle.h">
       <Filter>Engine\04. Object\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="SecretRoom.h">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -747,6 +750,9 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Engine\04. Object\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="SecretRoom.cpp">
+      <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,7 @@
 #include "TreasureRoom.h"
 #include "BossRoom.h"
 #include "EvilRoom.h"
+#include "SecretRoom.h"
 
 CMap::CMap()
 	: m_MapData{}
@@ -69,6 +70,10 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 						m_MapData[y][x] = new CTreasureRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::TRESURE);
 						break;
+					case L'5':
+						m_MapData[y][x] = new CSecretRoom();
+						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::SECRET);
+						break;
 					case L'8':
 						m_MapData[y][x] = new CEvilRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::EVIL);
@@ -113,6 +118,9 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 							break;
 						case ROOM_TYPE::EVIL:
 							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::EVIL);
+							break;
+						case ROOM_TYPE::SECRET:
+							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::SECRET);
 							break;
 						default:
 							break;

@@ -50,7 +50,7 @@ void CTreasureRoom::Enter()
 				j = -3;
 				y += 100;
 			}
-			CItemMgr::GetInst()->CreateItem(i, GetPos() + (vSpace * j) + Vec2(0.f, y) );
+			CItemMgr::GetInst()->CreateItem(i, GetPos() + (vSpace * j) + Vec2(0.f, y), this);
 
 			++j;
 		}

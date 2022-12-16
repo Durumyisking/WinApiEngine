@@ -235,6 +235,7 @@
     <ClInclude Include="Scene_StageCut.h" />
     <ClInclude Include="Scene_Start.h" />
     <ClInclude Include="Scene_Tool.h" />
+    <ClInclude Include="SecretRoom.h" />
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="SoulHeart.h" />
     <ClInclude Include="StartRoom.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="Scene_StageCut.cpp" />
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="Scene_Tool.cpp" />
+    <ClCompile Include="SecretRoom.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
     <ClCompile Include="SoulHeart.cpp" />
     <ClCompile Include="StartRoom.cpp" />

@@ -379,7 +379,10 @@ void CObject::finalupdate()
 void CObject::render(HDC _dc)
 {
 	// ÁøÂ¥ ÁÂÇ¥°¡ ¾Æ´Ñ ·»´õ¸µ µÇ´Â ÁÂÇ¥ (ÁøÂ¥ ÁÂÇ¥´Â m_vPos)
-	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	if (nullptr == GetOwner())
+		component_render(_dc);
+
+	else if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
 	{
 		component_render(_dc);
 	}

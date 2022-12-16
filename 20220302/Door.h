@@ -51,6 +51,10 @@ public:
 	{
 		return m_bLock;
 	}
+	void SetSecret(bool _bFlag)
+	{
+		m_bSecret = _bFlag;
+	}
 
 	void SetTexture(CTexture* _pTex)
 	{
@@ -64,8 +68,8 @@ public:
 	}
 
 	CRoom* GetOwner() const { return m_pOwner; }
+	ROOM_TYPE GetType() const { return m_eType; }
 	DIR Dir() const { return m_eDir; }
-	void SetSecret(bool _flag) { m_bSecret = _flag; }
 
 
 private:
