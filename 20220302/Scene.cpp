@@ -61,7 +61,7 @@ void CScene::DeleteAll()
 	{
 		if ((UINT)GROUP_TYPE::PLAYER == i || (UINT)GROUP_TYPE::COSTUME == i)
 			continue;
-			Safe_Delete_Vec<CObject*>(m_arrObj[i]);
+		Safe_Delete_Vec<CObject*>(m_arrObj[i]);
 	}
 	m_pMap->~CMap();
 	delete m_pMap;
@@ -111,7 +111,7 @@ void CScene::finalupdate()
 		for (size_t j = 0; j < m_arrObj[i].size(); ++j) 
 		{
 			m_arrObj[i][j]->finalupdate();
-		}
+			}
 	}
 
 }

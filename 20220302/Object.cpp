@@ -36,6 +36,7 @@ CObject::CObject()
 	, m_bIsPlayer(false)
 	, m_bOnAir(false)
 	, m_bIsPickup(false)
+	, m_bCollisionObj(false)
 {
 }
 
@@ -56,6 +57,7 @@ CObject::CObject(CRoom* _pOwner)
 	, m_bIsPlayer(false)
 	, m_bOnAir(false)
 	, m_bIsPickup(false)
+	, m_bCollisionObj(false)
 {
 }
 
@@ -75,6 +77,7 @@ CObject::CObject(const CObject& _origin)
 	, m_bIsPlayer(false)
 	, m_bOnAir(false)
 	, m_bIsPickup(false)
+	, m_bCollisionObj(false)
 {
 	if (_origin.m_pCollider)
 	{
@@ -360,12 +363,19 @@ Vec2 CObject::IntersectArea(CObject* _pOther)
 	//GetRigidBody()->SetVelocity(Vec2(0.f, 0.f));
 	//GetRigidBody()->SetForce(Vec2(0.f, 0.f));
 
+	m_bCollisionObj = true;
 
 	return vecResult;
 }
 
 void CObject::finalupdate()
 {
+	//if (m_bCollisionObj)
+	//{
+	//	m_pRigidBody->SetVelocity(Vec2(0.f, 0.f));
+	//	m_bCollisionObj = false;
+	//}
+
 	if (m_pRigidBody)
 		m_pRigidBody->finalupdate();
 

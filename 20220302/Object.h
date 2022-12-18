@@ -39,6 +39,8 @@ protected:
 	bool		m_bIsPickup;
 	bool		m_bOnAir;
 
+	bool		m_bCollisionObj;
+
 public:
 	CObject();
 	CObject(CRoom* _pOwner);
@@ -59,6 +61,7 @@ public:
 	Vec2 GetScale() const { return m_vScale; }
 
 	bool IsOnAir() const { return m_bOnAir; }
+	void SetOnAir(bool _bFlag) { m_bOnAir = _bFlag; }
 
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() const { return m_strName; }

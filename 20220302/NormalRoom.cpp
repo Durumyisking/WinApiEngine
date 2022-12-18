@@ -1,9 +1,23 @@
 #include "pch.h"
 #include "NormalRoom.h"
+#include "Scene_Start.h"
 
 CNormalRoom::CNormalRoom()
 {
-	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal", L"texture\\BackGround\\bg_basement_normal.bmp");
+	switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+	{
+	case 1:
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal", L"texture\\BackGround\\bg_basement_normal.bmp");
+		break;
+	case 2:
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal2", L"texture\\BackGround\\bg_depth_normal.bmp");
+		break;
+	case 3:
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal3", L"texture\\BackGround\\bg_basement_normal.bmp");
+		break;
+	default:
+		break;
+	}
 	m_eType = ROOM_TYPE::NORMAL;
 
 }

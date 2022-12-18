@@ -16,6 +16,13 @@ enum class MON_TYPE
 	Kamikazeleech,
 	Coltty,
 	Trite,
+	Baby,
+	Boomfly,
+	Frowngaper,
+	Keeper,
+	Pooter,
+	Sucker,
+	Maw,
 
 	// boss
 	Dangle,

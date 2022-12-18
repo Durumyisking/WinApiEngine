@@ -236,6 +236,27 @@
     <Filter Include="Engine\04. Object\Particle">
       <UniqueIdentifier>{41cda91a-19e6-4ff6-8d0a-f07b20681f40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Monster\baby">
+      <UniqueIdentifier>{72a61c96-820c-4ced-afc3-c4a44df1fde0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\boomfly">
+      <UniqueIdentifier>{886b045c-a2f6-4cc0-8e95-ad220ee15042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\frowngaper">
+      <UniqueIdentifier>{ce7d8144-6ff3-4262-92b6-8316a74331cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\keeper">
+      <UniqueIdentifier>{6ad44118-567d-480e-9926-377ed425b4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\sucker">
+      <UniqueIdentifier>{13407dce-85d8-40df-9b3e-174eb44eff81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\pooter">
+      <UniqueIdentifier>{ca877246-50e1-48c1-881e-4f347f8d9895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. Object\Monster\maw">
+      <UniqueIdentifier>{e012693a-65a3-4936-8d4e-c557b5eb5659}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -500,6 +521,27 @@
     <ClInclude Include="SecretRoom.h">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
     </ClInclude>
+    <ClInclude Include="Baby.h">
+      <Filter>Engine\04. Object\Monster\baby</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomfly.h">
+      <Filter>Engine\04. Object\Monster\boomfly</Filter>
+    </ClInclude>
+    <ClInclude Include="FrownGaper.h">
+      <Filter>Engine\04. Object\Monster\frowngaper</Filter>
+    </ClInclude>
+    <ClInclude Include="Keeper.h">
+      <Filter>Engine\04. Object\Monster\keeper</Filter>
+    </ClInclude>
+    <ClInclude Include="Sucker.h">
+      <Filter>Engine\04. Object\Monster\sucker</Filter>
+    </ClInclude>
+    <ClInclude Include="Pooter.h">
+      <Filter>Engine\04. Object\Monster\pooter</Filter>
+    </ClInclude>
+    <ClInclude Include="Maw.h">
+      <Filter>Engine\04. Object\Monster\maw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -753,6 +795,27 @@
     </ClCompile>
     <ClCompile Include="SecretRoom.cpp">
       <Filter>Engine\04. Object\Room\RoomSub</Filter>
+    </ClCompile>
+    <ClCompile Include="Baby.cpp">
+      <Filter>Engine\04. Object\Monster\baby</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomfly.cpp">
+      <Filter>Engine\04. Object\Monster\boomfly</Filter>
+    </ClCompile>
+    <ClCompile Include="FrownGaper.cpp">
+      <Filter>Engine\04. Object\Monster\frowngaper</Filter>
+    </ClCompile>
+    <ClCompile Include="Keeper.cpp">
+      <Filter>Engine\04. Object\Monster\keeper</Filter>
+    </ClCompile>
+    <ClCompile Include="Sucker.cpp">
+      <Filter>Engine\04. Object\Monster\sucker</Filter>
+    </ClCompile>
+    <ClCompile Include="Pooter.cpp">
+      <Filter>Engine\04. Object\Monster\pooter</Filter>
+    </ClCompile>
+    <ClCompile Include="Maw.cpp">
+      <Filter>Engine\04. Object\Monster\maw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

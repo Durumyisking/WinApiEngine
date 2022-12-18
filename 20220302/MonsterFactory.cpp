@@ -9,7 +9,7 @@
 #include "PatrolState.h"
 #include "DeadState.h"
 
-#include "RigidBody.h"
+#include "RigidBody.h" 
 #include "Room.h"
 
 // monster
@@ -20,6 +20,13 @@
 #include "Kamikazeleech.h"
 #include "Coltty.h"
 #include "Trite.h"
+#include "Baby.h"
+#include "Boomfly.h"
+#include "FrownGaper.h"
+#include "Keeper.h"
+#include "Pooter.h"
+#include "Sucker.h"
+#include "Maw.h"
 
 // boss
 #include "Dangle.h"
@@ -75,6 +82,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 		pAI->SetCurState(MON_STATE::PATROL);
 		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
 
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
@@ -159,6 +167,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 		pAI->SetCurState(MON_STATE::PATROL);
 		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
 
 		pMon->CreateRigidBody();
 		pMon->GetRigidBody()->SetMass(1.f);
@@ -221,6 +230,195 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 	}
 	break;
+
+	case  MON_TYPE::Baby:
+	{
+		pMon = new CBaby;
+		Stat Stat = { 30, 30, 1, 50.f, 600.f, 1.5f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(300.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CIdleState);
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::IDLE);
+		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(48.f, 80.f));
+
+	}
+	break;
+
+	case  MON_TYPE::Boomfly:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
+	break;
+
+	case  MON_TYPE::Frowngaper:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
+	break;
+
+
+	case  MON_TYPE::Keeper:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
+	break;
+
+	case  MON_TYPE::Pooter:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
+	break;
+
+	case  MON_TYPE::Sucker:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
+	break;
+
+	case  MON_TYPE::Maw:
+	{
+		pMon = new CTrite;
+		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(10.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CAttackState);
+
+		pAI->SetCurState(MON_STATE::ATTACK);
+		pMon->SetAI(pAI);
+		pMon->SetOnAir(true);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(2.5f);
+		pMon->GetRigidBody()->SetFricCoeff(500.f);
+
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+
+	}
+	break;
+
+
+
+
+
+
 
 	// boss
 

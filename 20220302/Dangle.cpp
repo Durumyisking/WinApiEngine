@@ -17,7 +17,7 @@ CDangle::CDangle()
 	, m_fChargeForce(0.f)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"DangleTex", L"texture\\Boss\\boss_085_dangle.bmp");
-	m_pTearTex = CResMgr::GetInst()->LoadTexture(L"TearTexBlood", L"texture\\Tear\\effect_999_cornpoofa.bmp");
+	m_pTearTex = CResMgr::GetInst()->LoadTexture(L"TearTexCorn", L"texture\\Tear\\effect_999_cornpoofa.bmp");
 	m_strAnimName = L"DANGLE_IDLE";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"DANGLE_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 64.f), Vec2(64.f, 0.f), 0.1f, 3, false);
@@ -241,8 +241,8 @@ void CDangle::update()
 
 void CDangle::Attack()
 {
-	Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
-	vTargetDir += Vec2(0.f, 45.f);
+	Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
+
 	vTargetDir = vTargetDir.Normalize();
 	for (int i = -1; i < 2; i++)
 	{

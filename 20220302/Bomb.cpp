@@ -168,7 +168,8 @@ void CBomb::OnCollision(CCollider * _pOther)
 		//}
 	}
 
-	CObject::OnCollision(_pOther);
+	if (!(4 & m_iBombTypeBit))
+		CObject::OnCollision(_pOther);
 
 }
 
@@ -262,7 +263,8 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 //		}
 	}
 
-	CObject::OnCollisionEnter(_pOther);
+	if (!(4 & m_iBombTypeBit))
+		CObject::OnCollisionEnter(_pOther);
 
 
 }

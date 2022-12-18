@@ -9,7 +9,8 @@
 #include "ResMgr.h"
 #include "TimeMgr.h"
 #include "RigidBody.h"
-
+#include "SceneMgr.h"
+#include "Scene.h"
 
 class CAnimation;
 class CAI;

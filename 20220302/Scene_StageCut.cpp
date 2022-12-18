@@ -36,6 +36,7 @@ void CScene_StageCut::Enter()
 
 void CScene_StageCut::Exit()
 {
+
 }
 
 void CScene_StageCut::update()

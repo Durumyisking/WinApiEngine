@@ -28,7 +28,8 @@ void CEventMgr::update()
 	for (size_t i = 0; i < m_vecDead.size(); ++i)
 	{
 		// 가장 마지막순서
-		delete m_vecDead[i];
+//		if(nullptr != m_vecDead[i])
+			delete m_vecDead[i];
 	}
 	m_vecDead.clear();
 

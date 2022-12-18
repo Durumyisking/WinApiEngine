@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "StartRoom.h"
-#include "Scene_Start.h"
 
 CStartRoom::CStartRoom()
 {
@@ -99,6 +98,10 @@ void CStartRoom::Enter()
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f), this);
 
 	}
+
+	CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Baby, GetPos() + Vec2(-150.f, -150.f), this);
+	CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+	++m_iMonsterCount;
 
 	CRoom::Enter();
 	

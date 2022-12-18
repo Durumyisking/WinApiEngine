@@ -758,7 +758,6 @@ void CPlayer::ItemCheck()
 		m_bGetSoulHeart = true;
 	}
 
-
 	m_Pickup.m_iCoin -= m_GetItemCheck->GetPrice();
 
 	if (m_GetItemCheck->GetPriceHpMax() > 0)
@@ -773,9 +772,7 @@ void CPlayer::ItemCheck()
 		m_bLooseSoulHeart = true;
 		m_iSoulHeart -= m_GetItemCheck->GetPriceSoul();
 		m_iLooseSoulCount = m_GetItemCheck->GetPriceSoul() / 2;
-
 	}
-
 
 	pBody->SetStat(this->m_pStat);
 	pHead->SetStat(this->m_pStat);

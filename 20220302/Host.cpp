@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "Host.h"
 #include "Missile.h"
-#include "SceneMgr.h"
-#include "Scene.h"
+
 
 CHost::CHost()
 	: m_bInvisible(true)
@@ -45,8 +44,7 @@ void CHost::Attack()
 
 		if (!m_bAttacked)
 		{
-			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
-			vTargetDir += Vec2(0.f, 45.f);
+			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
 			vTargetDir = vTargetDir.Normalize();
 			for (int i = -1; i < 2; i++)
 			{

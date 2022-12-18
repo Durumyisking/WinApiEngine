@@ -39,11 +39,11 @@ void CTraceState::update()
 	//follow player
 	CPlayer* pPlayer;
 	pPlayer = CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
-	Vec2 vPlayerPos = pPlayer->GetPos();
+	Vec2 vPlayerPos = pPlayer->GetCollider()->GetFinalPos();
 	Vec2 vMonsterPos = GetMonster()->GetPos();
 
 	// 몬스터가 이동할 방향
-	Vec2 vMonDir = vPlayerPos + Vec2(0.f, 30.f) - vMonsterPos;
+	Vec2 vMonDir = vPlayerPos - vMonsterPos;
 	vMonDir.Normalize();
 	vMonDir = vMonDir * GetMonster()->GetStat().m_fSpeed;
 	GetMonster()->GetRigidBody()->SetVelocity(vMonDir);

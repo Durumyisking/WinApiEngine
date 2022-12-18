@@ -169,8 +169,10 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="AttackState.h" />
+    <ClInclude Include="Baby.h" />
     <ClInclude Include="Body.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="Boomfly.h" />
     <ClInclude Include="BossRoom.h" />
     <ClInclude Include="BtnUI.h" />
     <ClInclude Include="Camera.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="EvilRoom.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Fly.h" />
+    <ClInclude Include="FrownGaper.h" />
     <ClInclude Include="func.h" />
     <ClInclude Include="Gaper.h" />
     <ClInclude Include="Head.h" />
@@ -198,8 +201,10 @@
     <ClInclude Include="ItemAlter.h" />
     <ClInclude Include="ItemMgr.h" />
     <ClInclude Include="Kamikazeleech.h" />
+    <ClInclude Include="Keeper.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Maw.h" />
     <ClInclude Include="MenuObj.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
@@ -221,6 +226,7 @@
     <ClInclude Include="PickupUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Poop.h" />
+    <ClInclude Include="Pooter.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="ResMgr.h" />
     <ClInclude Include="Resource.h" />
@@ -241,6 +247,7 @@
     <ClInclude Include="StartRoom.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="struct.h" />
+    <ClInclude Include="Sucker.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tile.h" />
@@ -261,8 +268,10 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AttackState.cpp" />
+    <ClCompile Include="Baby.cpp" />
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="Boomfly.cpp" />
     <ClCompile Include="BossRoom.cpp" />
     <ClCompile Include="BtnUI.cpp" />
     <ClCompile Include="AI.cpp" />
@@ -274,15 +283,19 @@
     <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="EvilRoom.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FrownGaper.cpp" />
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="ItemAlter.cpp" />
     <ClCompile Include="ItemMgr.cpp" />
     <ClCompile Include="Kamikazeleech.cpp" />
+    <ClCompile Include="Keeper.cpp" />
+    <ClCompile Include="Maw.cpp" />
     <ClCompile Include="NormalRoom.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleMgr.cpp" />
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="Poop.cpp" />
+    <ClCompile Include="Pooter.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -335,6 +348,7 @@
     <ClCompile Include="SoulHeart.cpp" />
     <ClCompile Include="StartRoom.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Sucker.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
