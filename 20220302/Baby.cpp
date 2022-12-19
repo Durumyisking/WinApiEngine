@@ -27,15 +27,18 @@ CBaby::~CBaby()
 
 void CBaby::update()
 {
-	m_fAttackCooldown += fDT;
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
+	{
+		m_fAttackCooldown += fDT;
 
-	Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
+		Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
 
-	vTargetDir.Normalize();
-	vTargetDir = vTargetDir * GetStat().m_fSpeed;
-	GetRigidBody()->SetVelocity(vTargetDir);
+		vTargetDir.Normalize();
+		vTargetDir = vTargetDir * GetStat().m_fSpeed;
+		GetRigidBody()->SetVelocity(vTargetDir);
 
-	CMonster::update();
+		CMonster::update();
+	}
 }
 
 void CBaby::Attack()

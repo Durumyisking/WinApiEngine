@@ -418,7 +418,7 @@ void CPlayer::init()
 	pHead->SetPos(Vec2(m_vResolution.x / 2, m_vResolution.y / 2));
 
 
-	m_Pickup.SetBomb(9);
+	m_Pickup.SetBomb(5);
 	m_bGoTrapdoor = false;
 	m_bStateClear = false;
 

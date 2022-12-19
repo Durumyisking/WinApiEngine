@@ -11,6 +11,7 @@
 #include "RigidBody.h"
 #include "SceneMgr.h"
 #include "Scene.h"
+#include "Room.h"
 
 class CAnimation;
 class CAI;

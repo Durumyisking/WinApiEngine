@@ -25,8 +25,10 @@ CFly::~CFly()
 
 void CFly::update()
 {
-
-	CMonster::update();
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
+	{
+		CMonster::update();
+	}
 }
 
 void CFly::Attack()

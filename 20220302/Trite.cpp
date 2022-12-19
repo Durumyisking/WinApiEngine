@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Trite.h"
 
-#include "Room.h"
+
 
 CTrite::CTrite()
 	: m_fAttackCooldown(0.f)

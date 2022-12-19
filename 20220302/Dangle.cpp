@@ -49,194 +49,196 @@ CDangle::~CDangle()
 
 void CDangle::update()
 {
-	CMonster::update();
-
-	if (0 < m_Stat.m_iHP)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
+		CMonster::update();
 
-		if (m_eState == DANGLE_STATE::IDLE)
+		if (0 < m_Stat.m_iHP)
 		{
-			m_fAttackCooldown += fDT;
 
-			// idle 2초 지속시 공격
-			if (m_fAttackCooldown > 2.f)
+			if (m_eState == DANGLE_STATE::IDLE)
 			{
-				m_eState = DANGLE_STATE::BEFOREATTACK;
-				m_bAnimPlaying = false;
-				m_fAttackCooldown = 0.f;
+				m_fAttackCooldown += fDT;
 
-			}
-		}
-
-		if (m_eState == DANGLE_STATE::BEFOREATTACK)
-		{
-			// 처음 들어왔을때
-			if (!m_bAnimPlaying)
-			{
-				m_strAnimName = L"DANGLE_BEFOREATTACK";
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-				m_bAnimPlaying = true;
-			}
-
-			// 애니메이션 끝나면 ATTACKPRE로
-			if (GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				GetAnimator()->GetCurAnim()->SetFrame(0);
-				srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
-				int iflag1 = static_cast<int>(rand() % 2);
-				if (0 == iflag1) // attack 분기
+				// idle 2초 지속시 공격
+				if (m_fAttackCooldown > 2.f)
 				{
-					srand(CTimeMgr::GetInst()->GetCurCount());
-					int iflag2 = static_cast<int>(rand() % 2);
-					if (0 == iflag2)
+					m_eState = DANGLE_STATE::BEFOREATTACK;
+					m_bAnimPlaying = false;
+					m_fAttackCooldown = 0.f;
+
+				}
+			}
+
+			if (m_eState == DANGLE_STATE::BEFOREATTACK)
+			{
+				// 처음 들어왔을때
+				if (!m_bAnimPlaying)
+				{
+					m_strAnimName = L"DANGLE_BEFOREATTACK";
+					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+					m_bAnimPlaying = true;
+				}
+
+				// 애니메이션 끝나면 ATTACKPRE로
+				if (GetAnimator()->GetCurAnim()->IsFinish())
+				{
+					GetAnimator()->GetCurAnim()->SetFrame(0);
+					srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
+					int iflag1 = static_cast<int>(rand() % 2);
+					if (0 == iflag1) // attack 분기
 					{
-						m_strAnimName = L"DANGLE_ATTACK_PREPARE1";
-						m_eState = DANGLE_STATE::ATTACKPRE1;
+						srand(CTimeMgr::GetInst()->GetCurCount());
+						int iflag2 = static_cast<int>(rand() % 2);
+						if (0 == iflag2)
+						{
+							m_strAnimName = L"DANGLE_ATTACK_PREPARE1";
+							m_eState = DANGLE_STATE::ATTACKPRE1;
+							PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+						}
+						else
+						{
+							m_strAnimName = L"DANGLE_ATTACK_PREPARE2";
+							m_eState = DANGLE_STATE::ATTACKPRE2;
+							PlayAnim(m_pAnim, m_strAnimName, Vec2(-17.f, 0.f), true);
+						}
+					}
+					else // charge 분기
+					{
+						m_eState = DANGLE_STATE::CHARGEPRE;
+						m_bAnimPlaying = false;
+					}
+				}
+			}
+
+			/////////////////////////////////////// 
+			/////////////ATTACK 분기///////////////
+			/////////////////////////////////////// 
+			if (m_eState == DANGLE_STATE::ATTACKPRE1
+				|| m_eState == DANGLE_STATE::ATTACKPRE2)
+			{
+				m_fAttackPrePare += fDT;
+
+				// 1초간 공격 준비
+				if (m_fAttackPrePare > 1.f)
+				{
+					m_eState = DANGLE_STATE::ATTACK;
+					m_bAnimPlaying = false;
+					m_fAttackPrePare = 0.f;
+				}
+			}
+
+			if (m_eState == DANGLE_STATE::ATTACK)
+			{
+				// 처음 들어왔을때
+				if (!m_bAnimPlaying)
+				{
+					m_strAnimName = L"DANGLE_ATTACK1";
+					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+					m_bAnimPlaying = true;
+					Attack();
+				}
+
+				// 애니메이션 끝나면 ATTACKPOST로
+				if (GetAnimator()->GetCurAnim()->IsFinish())
+				{
+					GetAnimator()->GetCurAnim()->SetFrame(0);
+					m_strAnimName = L"DANGLE_ATTACK1_POST";
+					m_eState = DANGLE_STATE::ATTACKPOST;
+					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+				}
+
+			}
+
+			if (m_eState == DANGLE_STATE::ATTACKPOST)
+			{
+				m_fPostTimer += fDT;
+
+				// 1초간 공격 준비
+				if (m_fPostTimer > 0.5f)
+				{
+					m_eState = DANGLE_STATE::IDLE;
+					m_strAnimName = L"DANGLE_IDLE";
+					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+					m_fPostTimer = 0.f;
+				}
+			}
+
+			/////////////////////////////////////// 
+			/////////////Charge 분기///////////////
+			/////////////////////////////////////// 
+			if (m_eState == DANGLE_STATE::CHARGEPRE)
+			{
+				if (!m_bAnimPlaying)
+				{
+					m_strAnimName = L"DANGLE_CHARGE_PREPARE";
+					m_eState = DANGLE_STATE::CHARGEPRE;
+					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+					m_bAnimPlaying = true;
+				}
+
+				// 애니메이션 끝나면 CHARGE로
+				if (GetAnimator()->GetCurAnim()->IsFinish())
+				{
+					GetAnimator()->GetCurAnim()->SetFrame(0);
+					m_eState = DANGLE_STATE::CHARGE;
+					m_bAnimPlaying = false;
+				}
+			}
+
+			if (m_eState == DANGLE_STATE::CHARGE)
+			{
+				// 처음 들어왔을때
+				if (!m_bAnimPlaying)
+				{
+					m_strAnimName = L"DANGLE_CHARGE";
+					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
+					m_bAnimPlaying = true;
+					//follow player
+					m_vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
+					m_vTargetDir += Vec2(0.f, 45.f);
+					m_vTargetDir.Normalize();
+					m_fChargeForce = 0.f;
+					++m_iChargeCount;
+				}
+
+				Charge();
+
+				// 애니메이션 끝나면 ATTACKPOST로
+				if (GetAnimator()->GetCurAnim()->IsFinish())
+				{
+					GetAnimator()->GetCurAnim()->SetFrame(0);
+					if (2 == m_iChargeCount)
+					{
+						m_iChargeCount = 0;
+						m_strAnimName = L"DANGLE_STUN";
+						m_eState = DANGLE_STATE::STUN;
 						PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
 					}
 					else
 					{
-						m_strAnimName = L"DANGLE_ATTACK_PREPARE2";
-						m_eState = DANGLE_STATE::ATTACKPRE2;
-						PlayAnim(m_pAnim, m_strAnimName, Vec2(-17.f, 0.f), true);
+						m_eState = DANGLE_STATE::CHARGEPRE;
+						m_bAnimPlaying = false;
 					}
 				}
-				else // charge 분기
+
+			}
+
+			if (m_eState == DANGLE_STATE::STUN)
+			{
+				m_fPostTimer += fDT;
+
+				// 1초간 공격 준비
+				if (m_fPostTimer > 2.f)
 				{
-					m_eState = DANGLE_STATE::CHARGEPRE;
-					m_bAnimPlaying = false;
-				}
-			}
-		}
-
-		/////////////////////////////////////// 
-		/////////////ATTACK 분기///////////////
-		/////////////////////////////////////// 
-		if (m_eState == DANGLE_STATE::ATTACKPRE1
-			|| m_eState == DANGLE_STATE::ATTACKPRE2)
-		{
-			m_fAttackPrePare += fDT;
-
-			// 1초간 공격 준비
-			if (m_fAttackPrePare > 1.f)
-			{
-				m_eState = DANGLE_STATE::ATTACK;
-				m_bAnimPlaying = false;
-				m_fAttackPrePare = 0.f;
-			}
-		}
-
-		if (m_eState == DANGLE_STATE::ATTACK)
-		{
-			// 처음 들어왔을때
-			if (!m_bAnimPlaying)
-			{
-				m_strAnimName = L"DANGLE_ATTACK1";
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-				m_bAnimPlaying = true;
-				Attack();
-			}
-
-			// 애니메이션 끝나면 ATTACKPOST로
-			if (GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				GetAnimator()->GetCurAnim()->SetFrame(0);
-				m_strAnimName = L"DANGLE_ATTACK1_POST";
-				m_eState = DANGLE_STATE::ATTACKPOST;
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
-			}
-
-		}
-
-		if (m_eState == DANGLE_STATE::ATTACKPOST)
-		{
-			m_fPostTimer += fDT;
-
-			// 1초간 공격 준비
-			if (m_fPostTimer > 0.5f)
-			{
-				m_eState = DANGLE_STATE::IDLE;
-				m_strAnimName = L"DANGLE_IDLE";
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
-				m_fPostTimer = 0.f;
-			}
-		}
-
-		/////////////////////////////////////// 
-		/////////////Charge 분기///////////////
-		/////////////////////////////////////// 
-		if (m_eState == DANGLE_STATE::CHARGEPRE)
-		{
-			if (!m_bAnimPlaying)
-			{
-				m_strAnimName = L"DANGLE_CHARGE_PREPARE";
-				m_eState = DANGLE_STATE::CHARGEPRE;
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-				m_bAnimPlaying = true;
-			}
-
-			// 애니메이션 끝나면 CHARGE로
-			if (GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				GetAnimator()->GetCurAnim()->SetFrame(0);
-				m_eState = DANGLE_STATE::CHARGE;
-				m_bAnimPlaying = false;
-			}
-		}
-
-		if (m_eState == DANGLE_STATE::CHARGE)
-		{
-			// 처음 들어왔을때
-			if (!m_bAnimPlaying)
-			{
-				m_strAnimName = L"DANGLE_CHARGE";
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), false);
-				m_bAnimPlaying = true;
-				//follow player
-				m_vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
-				m_vTargetDir += Vec2(0.f, 45.f);
-				m_vTargetDir.Normalize();
-				m_fChargeForce = 0.f;
-				++m_iChargeCount;
-			}
-
-			Charge();
-
-			// 애니메이션 끝나면 ATTACKPOST로
-			if (GetAnimator()->GetCurAnim()->IsFinish())
-			{
-				GetAnimator()->GetCurAnim()->SetFrame(0);
-				if (2 == m_iChargeCount)
-				{
-					m_iChargeCount = 0;
-					m_strAnimName = L"DANGLE_STUN";
-					m_eState = DANGLE_STATE::STUN;
+					m_eState = DANGLE_STATE::IDLE;
+					m_strAnimName = L"DANGLE_IDLE";
 					PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+					m_fPostTimer = 0.f;
 				}
-				else
-				{
-					m_eState = DANGLE_STATE::CHARGEPRE;
-					m_bAnimPlaying = false;
-				}
-			}
-
-		}
-
-		if (m_eState == DANGLE_STATE::STUN)
-		{
-			m_fPostTimer += fDT;
-
-			// 1초간 공격 준비
-			if (m_fPostTimer > 2.f)
-			{
-				m_eState = DANGLE_STATE::IDLE;
-				m_strAnimName = L"DANGLE_IDLE";
-				PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
-				m_fPostTimer = 0.f;
 			}
 		}
 	}
-
 }
 
 void CDangle::Attack()

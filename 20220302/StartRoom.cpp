@@ -94,7 +94,7 @@ void CStartRoom::Enter()
 		pPickup2->SetOwner(this);
 		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
 
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f), this);
+//		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f), this);
 		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f), this);
 
 	}

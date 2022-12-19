@@ -46,46 +46,48 @@ CCharger::~CCharger()
 
 void CCharger::update()
 {
-	CMonster::update();
-
-	// 돌진중이 아닐때
-	if (!m_bCharging)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		m_fMoveTimer += fDT;
+		CMonster::update();
 
-		// 이동 축이동만 합니다.
-		if (m_fMoveTimer >= 0.5f)
+		// 돌진중이 아닐때
+		if (!m_bCharging)
 		{
-			m_fMoveTimer = 0.f;
+			m_fMoveTimer += fDT;
 
-			DIR eChargeDir = AxisPatrol();
-			switch (eChargeDir)
+			// 이동 축이동만 합니다.
+			if (m_fMoveTimer >= 0.5f)
 			{
-			case DIR::UP:
-				m_strAnimName = L"Charger_IDLE_U";
-				break;
-			case DIR::DOWN:
-				m_strAnimName = L"Charger_IDLE_D";
-				break;
-			case DIR::RIGHT:
-				m_strAnimName = L"Charger_IDLE_R";
-				break;
-			case DIR::LEFT:
-				m_strAnimName = L"Charger_IDLE_L";
-				break;
-			case DIR::END:
-				m_fMoveTimer = 0.5f;
-				break;
-			default:
-				break;
-			}
-			PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
-		}
-		// player의 위치 체크	
-		if(AxisPlayerCheck())
-			Attack();		
-	}
+				m_fMoveTimer = 0.f;
 
+				DIR eChargeDir = AxisPatrol();
+				switch (eChargeDir)
+				{
+				case DIR::UP:
+					m_strAnimName = L"Charger_IDLE_U";
+					break;
+				case DIR::DOWN:
+					m_strAnimName = L"Charger_IDLE_D";
+					break;
+				case DIR::RIGHT:
+					m_strAnimName = L"Charger_IDLE_R";
+					break;
+				case DIR::LEFT:
+					m_strAnimName = L"Charger_IDLE_L";
+					break;
+				case DIR::END:
+					m_fMoveTimer = 0.5f;
+					break;
+				default:
+					break;
+				}
+				PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
+			}
+			// player의 위치 체크	
+			if (AxisPlayerCheck())
+				Attack();
+		}
+	}
 }
 
 void CCharger::Attack()

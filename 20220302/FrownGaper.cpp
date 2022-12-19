@@ -24,8 +24,11 @@ CFrownGaper::~CFrownGaper()
 
 void CFrownGaper::update()
 {
-	m_fAttackCooldown += fDT;
-	CMonster::update();
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
+	{
+		m_fAttackCooldown += fDT;
+		CMonster::update();
+	}
 }
 
 void CFrownGaper::Attack()

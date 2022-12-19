@@ -27,7 +27,10 @@ CGaper::~CGaper()
 
 void CGaper::update()
 {
-	CMonster::update();
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
+	{
+		CMonster::update();
+	}
 }
 
 void CGaper::Attack()

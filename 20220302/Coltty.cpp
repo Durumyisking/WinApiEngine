@@ -31,44 +31,47 @@ void CColtty::update()
 
 void CColtty::Attack()
 {
-	if (1.5f < m_fAttackCooldown)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		Vec2 vDir = Vec2(0.f, 0.f);
-		for (UINT i = 0; i < static_cast<UINT>(DIR::END); i++)
+		if (1.5f < m_fAttackCooldown)
 		{
-
-			switch (i)
+			Vec2 vDir = Vec2(0.f, 0.f);
+			for (UINT i = 0; i < static_cast<UINT>(DIR::END); i++)
 			{
-			case static_cast<UINT>(DIR::RIGHT):
-				vDir = Vec2(1.f, 0.f);
-				break;
-			case static_cast<UINT>(DIR::LEFT):
-				vDir = Vec2(-1.f, 0.f);
-				break;
-			case static_cast<UINT>(DIR::UP):
-				vDir = Vec2(0.f, -1.f);
-				break;
-			case static_cast<UINT>(DIR::DOWN):
-				vDir = Vec2(0.f, 1.f);
-				break;
 
-			default:
-				break;
+				switch (i)
+				{
+				case static_cast<UINT>(DIR::RIGHT):
+					vDir = Vec2(1.f, 0.f);
+					break;
+				case static_cast<UINT>(DIR::LEFT):
+					vDir = Vec2(-1.f, 0.f);
+					break;
+				case static_cast<UINT>(DIR::UP):
+					vDir = Vec2(0.f, -1.f);
+					break;
+				case static_cast<UINT>(DIR::DOWN):
+					vDir = Vec2(0.f, 1.f);
+					break;
+
+				default:
+					break;
+				}
+
+
+				CreateMissile(vDir, m_pTearTex, L"Coltty");
 			}
 
-
-			CreateMissile(vDir, m_pTearTex, L"Coltty");
+			m_fAttackCooldown = 0.f;
 		}
 
-		m_fAttackCooldown = 0.f;
+
+		srand(CTimeMgr::GetInst()->GetCurCount());
+		float x = static_cast<float>(rand() % 10000 - 4800);
+		srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
+		float y = static_cast<float>(rand() % 10000 - 4800);
+		GetRigidBody()->AddForce(Vec2(x, y));
 	}
-
-
-	srand(CTimeMgr::GetInst()->GetCurCount());
-	float x = static_cast<float>(rand() % 10000 - 4800);
-	srand(CTimeMgr::GetInst()->GetCurCount() * CTimeMgr::GetInst()->GetCurCount());
-	float y = static_cast<float>(rand() % 10000 - 4800);
-	GetRigidBody()->AddForce(Vec2(x, y));
 }
 
 void CColtty::OnCollision(CCollider* _pOther)

@@ -37,39 +37,42 @@ void CHost::update()
 
 void CHost::Attack()
 {
-	if (m_fHideCoolDown > 2.f)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		GetCollider()->SetOffsetPos(Vec2(0.f, -20.f));
-		GetCollider()->SetScale(Vec2(64.f, 120.f));
-
-		if (!m_bAttacked)
+		if (m_fHideCoolDown > 2.f)
 		{
-			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
-			vTargetDir = vTargetDir.Normalize();
-			for (int i = -1; i < 2; i++)
+			GetCollider()->SetOffsetPos(Vec2(0.f, -20.f));
+			GetCollider()->SetScale(Vec2(64.f, 120.f));
+
+			if (!m_bAttacked)
 			{
-				CreateMissile(vTargetDir.Rotate(20 * i), m_pTearTex, L"Host");
+				Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
+				vTargetDir = vTargetDir.Normalize();
+				for (int i = -1; i < 2; i++)
+				{
+					CreateMissile(vTargetDir.Rotate(20 * i), m_pTearTex, L"Host");
+				}
+				m_bAttacked = true;
 			}
-			m_bAttacked = true;
+
+			m_bInvisible = false;
+			m_fAttackCooldown += fDT;
+
+			if (m_fAttackCooldown > 1.5f)
+			{
+				m_bInvisible = true;
+				m_fHideCoolDown = 0.f;
+			}
 		}
-
-		m_bInvisible = false;
-		m_fAttackCooldown += fDT;
-
-		if (m_fAttackCooldown > 1.5f)
+		else
 		{
-			m_bInvisible = true;
-			m_fHideCoolDown = 0.f;
-		}
-	}
-	else
-	{
-		GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-		GetCollider()->SetScale(Vec2(64.f, 64.f));
-		GetAI()->ChangeState(MON_STATE::IDLE);
-		m_fAttackCooldown = 0;
-		m_bAttacked = false;
+			GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+			GetCollider()->SetScale(Vec2(64.f, 64.f));
+			GetAI()->ChangeState(MON_STATE::IDLE);
+			m_fAttackCooldown = 0;
+			m_bAttacked = false;
 
+		}
 	}
 }
 
