@@ -5,6 +5,10 @@
 #include "Texture.h"
 #include "ResMgr.h"
 
+#include "SceneMgr.h"
+#include "Scene_Start.h"
+#include "Map.h"
+
 
 CParticle::CParticle(Vec2 _vPos, PARTICLE_TYPE _eType)
 	: m_pTex(nullptr)
@@ -143,21 +147,23 @@ void CParticle::update()
 
 void CParticle::render(HDC _dc)
 {
-	int iWidth = static_cast<int>(m_pTex->GetWidth());
-	int iHeight = static_cast<int>(m_pTex->GetHeight());
-	Vec2 vScale = GetScale();
-	Vec2 vPos = GetPos();
-	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+	if (CSceneMgr::GetInst()->GetCurScene()->GetMap()->GetCurrentRoom() == GetOwner())
+	{
+		int iWidth = static_cast<int>(m_pTex->GetWidth());
+		int iHeight = static_cast<int>(m_pTex->GetHeight());
+		Vec2 vScale = GetScale();
+		Vec2 vPos = GetPos();
+		vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 
-	TransparentBlt(_dc
-		, static_cast<int>(vPos.x - (vScale.x / 2))
-		, static_cast<int>(vPos.y - (vScale.y / 2))
-		, static_cast<int>(vScale.x * 2), static_cast<int>(vScale.y * 2)
-		, m_pTex->GetDC()
-		, m_vSliceGap.x + (m_vSlice.x * m_vSliceQuant.x)
-		, m_vSliceGap.y + (m_vSlice.y * m_vSliceQuant.y)
-		, m_vSliceQuant.x, m_vSliceQuant.y
-		, RGB(255, 0, 255));
-
+		TransparentBlt(_dc
+			, static_cast<int>(vPos.x - (vScale.x / 2))
+			, static_cast<int>(vPos.y - (vScale.y / 2))
+			, static_cast<int>(vScale.x * 2), static_cast<int>(vScale.y * 2)
+			, m_pTex->GetDC()
+			, m_vSliceGap.x + (m_vSlice.x * m_vSliceQuant.x)
+			, m_vSliceGap.y + (m_vSlice.y * m_vSliceQuant.y)
+			, m_vSliceQuant.x, m_vSliceQuant.y
+			, RGB(255, 0, 255));
+	}
 }

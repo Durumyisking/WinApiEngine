@@ -30,51 +30,54 @@ CTrite::~CTrite()
 
 void CTrite::update() 
 {
-	m_fAttackCooldown += fDT;
-
-	if (2.3f < m_fAttackCooldown)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		if (!m_bDefinePos)
-		{
-			void* p = new int();
-			void* q = new int();
-			srand((int)p);
 
-			int iToPlayer = rand() % 3;
-			if (0 == iToPlayer)
+		m_fAttackCooldown += fDT;
+
+		if (2.3f < m_fAttackCooldown)
+		{
+			if (!m_bDefinePos)
 			{
-				m_vJumpDest = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos();
-				GetRigidBody()->SetMaxVelocity(1500.f);
-			}
-			else
-			{
-				do
+				void* p = new int();
+				void* q = new int();
+				srand((int)p);
+
+				int iToPlayer = rand() % 3;
+				if (0 == iToPlayer)
 				{
-					m_vJumpDest = Vec2(rand() % 901 - 450, rand() % 431 - 215);
-					Vec2 vTemp = GetOwner()->GetPos();
-					m_vJumpDest += vTemp;
-				} 
-				while (CSceneMgr::GetInst()->GetCurScene()->CheckObject(m_vJumpDest, GetCollider()->GetScale()));
+					m_vJumpDest = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos();
+					GetRigidBody()->SetMaxVelocity(1500.f);
+				}
+				else
+				{
+					do
+					{
+						m_vJumpDest = Vec2(rand() % 901 - 450, rand() % 431 - 215);
+						Vec2 vTemp = GetOwner()->GetPos();
+						m_vJumpDest += vTemp;
+					} while (CSceneMgr::GetInst()->GetCurScene()->CheckObject(m_vJumpDest, GetCollider()->GetScale()));
 
-				GetRigidBody()->SetMaxVelocity(500.f);
+					GetRigidBody()->SetMaxVelocity(500.f);
+				}
+
+				m_vJumpDir = m_vJumpDest - GetPos();
+				m_vJumpDir.Normalize();
+
+				delete p;
+
+				m_bDefinePos = true;
+			}
+			if (m_bDefinePos)
+			{
+				m_bOnAir = true;
+				GetRigidBody()->SetVelocity(m_vJumpDir * 1500.f);
 			}
 
-			m_vJumpDir = m_vJumpDest - GetPos();
-			m_vJumpDir.Normalize();
-
-			delete p;
-
-			m_bDefinePos = true;
-		}
-		if (m_bDefinePos)
-		{
-			m_bOnAir = true;
-			GetRigidBody()->SetVelocity(m_vJumpDir  * 1500.f);
 		}
 
+		CMonster::update();
 	}
-
-	CMonster::update();
 }
 
 void CTrite::Attack()

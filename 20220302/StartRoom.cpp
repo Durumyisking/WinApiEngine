@@ -99,7 +99,7 @@ void CStartRoom::Enter()
 
 	}
 
-	CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Baby, GetPos() + Vec2(-150.f, -150.f), this);
+	CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Frowngaper, GetPos() + Vec2(-250.f, -200.f), this);
 	CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 	++m_iMonsterCount;
 

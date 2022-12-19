@@ -12,7 +12,7 @@ CBaby::CBaby()
 	m_strAnimName = L"BABY_IDLE";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"BABY_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(64.f, 32.f), Vec2(0.f, 32.f), 0.05f, 1, false);
-	GetAnimator()->CreateAnimation(L"BABY_ATTACK", m_pTex, Vec2(0.f, 32.f), Vec2(64.f, 32.f), Vec2(0.f, 32.f), 0.05f, 1, false);
+	GetAnimator()->CreateAnimation(L"BABY_ATTACK", m_pTex, Vec2(0.f, 32.f), Vec2(64.f, 32.f), Vec2(0.f, -32.f), 1.f, 2, false);
 
 	m_arrAnimName[static_cast<UINT>(MON_STATE::IDLE)] = L"BABY_IDLE";
 	m_arrAnimName[static_cast<UINT>(MON_STATE::ATTACK)] = L"BABY_ATTACK";
@@ -46,7 +46,7 @@ void CBaby::Attack()
 		vTargetDir = vTargetDir.Normalize();
 		for (int i = -1; i < 2; i++)
 		{
-			CreateMissile(vTargetDir.Rotate(20 * i), m_pTearTex, L"Host");
+			CreateMissile(vTargetDir.Rotate(20 * i), m_pTearTex, L"Baby");
 		}
 		GetAI()->ChangeState(MON_STATE::IDLE);
 		m_fAttackCooldown = 0;

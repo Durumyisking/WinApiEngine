@@ -7,6 +7,7 @@
 
 
 #include "PathMgr.h"
+#include "Scene_Start.h"
 
 
 CRoom::CRoom()
@@ -360,23 +361,25 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	srand((int)p);
 
 	int iCount = 1;
+	CScene* pScene = CSceneMgr::GetInst()->GetCurScene();
+	int iStage = dynamic_cast<CScene_Start*>(pScene)->GetStage();
 	switch (_eType)
 	{	
 	case ROOM_TYPE::NORMAL:
 		strFolder += L"\\Normal\\Room";
-		iCount = rand() % 9 + 1;
+		iCount = rand() % 10 + 1;// +10 * (iStage - 1);
 		break;
 	case ROOM_TYPE::TRESURE:
 		strFolder += L"\\Treasure\\Room";
-		//iCount = rand() % 3 + 1;
+		//iCount = rand() % 3 + 1 + 10 * (iStage - 1);
 		break;
 	case ROOM_TYPE::BOSS:
 		strFolder += L"\\Boss\\Room";
-		iCount = rand() % 3 + 1;
+		iCount = rand() % 3 + 1;// +10 * (iStage - 1);
 		break;
 	case ROOM_TYPE::EVIL:
 		strFolder += L"\\Evil\\Room";
-//		iCount = rand() % 3 + 1;
+//		iCount = rand() % 3 + 1 + 10 * (iStage - 1);
 		break;
 	case ROOM_TYPE::SECRET:
 		strFolder += L"\\Secret\\Room";
@@ -519,7 +522,30 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 					++m_iMonsterCount;
 				}
 				break;
-
+				case L'i':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Baby, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
+				case L'o':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Frowngaper, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
+				case L'p':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
 
 				default:
 					break;
