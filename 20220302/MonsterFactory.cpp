@@ -290,7 +290,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		Stat Stat = { 20, 20, 1, 0.f, 600.f, 1.5f ,0.f };
 		pMon->SetScale(Vec2(64.f, 64.f));
 		pMon->SetStat(Stat);
-		pMon->SetRecogRange(200.f);
+		pMon->SetRecogRange(250.f);
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
@@ -391,18 +391,19 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 	case  MON_TYPE::Maw:
 	{
-		pMon = new CTrite;
-		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
+		pMon = new CMaw;
+		Stat Stat = { 20, 20, 1, 30.f, 600.f, 1.5f ,0.f };
 		pMon->SetScale(Vec2(64.f, 64.f));
 		pMon->SetStat(Stat);
-		pMon->SetRecogRange(10.f);
+		pMon->SetRecogRange(250.f);
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
 		CAI* pAI = new CAI;
+		pAI->AddState(new CIdleState);
 		pAI->AddState(new CAttackState);
 
-		pAI->SetCurState(MON_STATE::ATTACK);
+		pAI->SetCurState(MON_STATE::IDLE);
 		pMon->SetAI(pAI);
 		pMon->SetOnAir(true);
 

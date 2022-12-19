@@ -65,7 +65,7 @@ void CSceneMgr::init()
 	m_arrScene[(UINT)SCENE_TYPE::STAGECUT]->SetName(L"StageCut Scene");
 
 	// ÇöÀç ¾À ¼³Á¤
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::START];
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::MENU];
 	m_pPrevScene = m_pCurScene;
 
 	m_pCurScene->Enter();

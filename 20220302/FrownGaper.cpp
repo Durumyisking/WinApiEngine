@@ -24,7 +24,6 @@ CFrownGaper::~CFrownGaper()
 
 void CFrownGaper::update()
 {
-
 	m_fAttackCooldown += fDT;
 	CMonster::update();
 }
