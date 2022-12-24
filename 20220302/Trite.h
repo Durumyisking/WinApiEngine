@@ -17,6 +17,8 @@ public:
 	virtual void OnCollisionExit(CCollider* _pOther);
 
 public:
+	CTexture* m_pShadowTex;
+
 	float	m_fAttackCooldown;
 	Vec2	m_vJumpDest;
 	Vec2	m_vJumpDir;

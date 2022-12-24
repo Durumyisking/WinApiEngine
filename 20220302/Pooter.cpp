@@ -11,7 +11,7 @@ CPooter::CPooter()
 	m_strAnimName = L"POOTER_PATROL";
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"POOTER_PATROL", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 4, false);
-	GetAnimator()->CreateAnimation(L"POOTER_ATTACK", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.1f, 12, false);
+	GetAnimator()->CreateAnimation(L"POOTER_ATTACK", m_pTex, Vec2(0.f, 32.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.05f, 12, false);
 
 	m_arrAnimName[static_cast<UINT>(MON_STATE::PATROL)] = L"POOTER_PATROL";
 	m_arrAnimName[static_cast<UINT>(MON_STATE::ATTACK)] = L"POOTER_ATTACK";
@@ -36,7 +36,7 @@ void CPooter::update()
 
 void CPooter::Attack()
 {
-	if (m_fAttackCooldown > 1.2f)
+	if (m_fAttackCooldown > 0.6f)
 	{
 		Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
 		vTargetDir = vTargetDir.Normalize();

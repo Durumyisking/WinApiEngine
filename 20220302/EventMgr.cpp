@@ -29,7 +29,7 @@ void CEventMgr::update()
 	{
 		// 가장 마지막순서
 //		if(nullptr != m_vecDead[i])
-			delete m_vecDead[i];
+ 			delete m_vecDead[i];
 	}
 	m_vecDead.clear();
 
