@@ -26,6 +26,7 @@ enum class MON_TYPE
 
 	// boss
 	Dangle,
+	Monstro,
 };
 
 class CMonsterFactory

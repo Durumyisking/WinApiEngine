@@ -92,18 +92,26 @@ void CScene::update()
 			}
 		}
 	}
-	
-	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+
+	Vec2 vCamPos = CCamera::GetInst()->GetLookAt();
+	Vec2 vRoomPos = GetMap()->GetCurrentRoom()->GetPos();
+
+	bool bx = fabs(vCamPos.x - vRoomPos.x) < EPSILON;
+	bool by = fabs(vCamPos.y - vRoomPos.y) < EPSILON;
+	 
+	if (bx && by)
 	{
-		for (size_t j = 0; j < m_arrObj[i].size(); ++j)
+		for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 		{
-			if (!m_arrObj[i][j]->IsDead())
+			for (size_t j = 0; j < m_arrObj[i].size(); ++j)
 			{
-				m_arrObj[i][j]->update();
+				if (!m_arrObj[i][j]->IsDead())
+				{
+					m_arrObj[i][j]->update();
+				}
 			}
 		}
 	}
-
 }
 
 void CScene::finalupdate()

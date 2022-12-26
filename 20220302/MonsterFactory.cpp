@@ -30,6 +30,7 @@
 
 // boss
 #include "Dangle.h"
+#include "Monstro.h"
 
 CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _pRoom)
 {
@@ -453,6 +454,32 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 		pMon->GetCollider()->SetOffsetPos(Vec2(16.f, 16.f));
 		pMon->GetCollider()->SetScale(Vec2(128.f, 128.f));
+
+	}
+	break;
+
+	case MON_TYPE::Monstro:
+	{
+		pMon = new CMonstro;
+		Stat Stat = { 15, 15, 1, 400.f, 700.f, 10.f , 0.f };
+		pMon->SetScale(Vec2(128.f, 128.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(500.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+		pMon->SetDeadAnimTime(1.6f);
+
+		CAI* pAI = new CAI;
+		pAI->AddState(new CIdleState);
+
+		pAI->SetCurState(MON_STATE::IDLE);
+		pMon->SetAI(pAI);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(1.f);
+		pMon->GetRigidBody()->SetFricCoeff(1000.f);
+
+		pMon->GetCollider()->SetScale(Vec2(100.f, 100.f));
 
 	}
 	break;

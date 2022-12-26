@@ -217,14 +217,22 @@ void CMonster::OnCollisionEnter(CCollider * _pOther)
 		CMissile* pMissileObj = dynamic_cast<CMissile*>(pOtherObj);
 		Vec2 vTearForce = pOtherObj->GetRigidBody()->GetVelocity();
 		Vec2 vMonsterVelocity = GetRigidBody()->GetVelocity();
-		Vec2 vResult = vMonsterVelocity + vTearForce;
+		Vec2 vResult = Vec2(0.f, 0.f);
+		vResult.x = fabs(vMonsterVelocity.x + vTearForce.x);
+		vResult.y = fabs(vMonsterVelocity.y + vTearForce.y);
 		if (vResult.x > 200.f)
 		{
-			vResult.x = 200.f;
+			if(vTearForce.x > 0.f)
+				vResult.x = 200.f;
+			else
+				vResult.x = -200.f;
 		}
-		else if ((vResult.y > 200.f))
+		else if (vResult.y > 200.f)
 		{
-			vResult.y = 200.f;
+			if (vTearForce.y > 0.f)
+				vResult.y = 200.f;
+			else
+				vResult.y = -200.f;
 		}
 		GetRigidBody()->SetVelocity(vResult);
 		m_Stat.m_iHP -= pMissileObj->GetDmg();

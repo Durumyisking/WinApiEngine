@@ -209,6 +209,7 @@
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="Monstro.h" />
     <ClInclude Include="NormalRoom.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PanelUI.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="Kamikazeleech.cpp" />
     <ClCompile Include="Keeper.cpp" />
     <ClCompile Include="Maw.cpp" />
+    <ClCompile Include="Monstro.cpp" />
     <ClCompile Include="NormalRoom.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleMgr.cpp" />

@@ -61,6 +61,7 @@
 #define LIMITE 1152.f
 #define LIMITW 128.f
 
+#define EPSILON 0.00001 //Á¤È®µµ
 
 
 //#define OBJUPDATE() for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)\

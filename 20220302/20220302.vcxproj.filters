@@ -542,6 +542,9 @@
     <ClInclude Include="Maw.h">
       <Filter>Engine\04. Object\Monster\maw</Filter>
     </ClInclude>
+    <ClInclude Include="Monstro.h">
+      <Filter>Engine\04. Object\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -816,6 +819,9 @@
     </ClCompile>
     <ClCompile Include="Maw.cpp">
       <Filter>Engine\04. Object\Monster\maw</Filter>
+    </ClCompile>
+    <ClCompile Include="Monstro.cpp">
+      <Filter>Engine\04. Object\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
