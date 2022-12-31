@@ -40,7 +40,6 @@ void CTrite::update()
 			if (!m_bDefinePos)
 			{
 				void* p = new int();
-				void* q = new int();
 				srand((int)p);
 
 				int iToPlayer = rand() % 3;

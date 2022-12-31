@@ -41,7 +41,6 @@ void CScene_StageCut::Exit()
 
 void CScene_StageCut::update()
 {
-	CScene::update();
 
 	if (KEY_TAP(KEY::SPACE))
 	{

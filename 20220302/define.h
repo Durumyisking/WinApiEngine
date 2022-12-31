@@ -104,11 +104,11 @@ enum class GROUP_TYPE
 
 	PICKUP,
 
+	MONSTER,
+
 	PLAYER,
 
 	COSTUME,
-
-	MONSTER,
 
 	PROJ_PLAYER,
 

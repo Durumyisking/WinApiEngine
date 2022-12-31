@@ -94,15 +94,14 @@ void CStartRoom::Enter()
 		pPickup2->SetOwner(this);
 		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
 
-//		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f), this);
-		CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f), this);
+		//	CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f), this);
+		//CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f), this);
 
 	}
 
-	CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Monstro, GetPos() + Vec2(-250.f, -0.f), this);
-	CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
-	++m_iMonsterCount;
+	//CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Monstro, GetPos() + Vec2(-250.f, -0.f), this);
+	//CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+	//++m_iMonsterCount;
 
 	CRoom::Enter();
-	
 }

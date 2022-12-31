@@ -9,7 +9,7 @@
 #include "KeyMgr.h"
 
 #include "TimeMgr.h"
-
+#include "Scene_Start.h"
 
 CScene_Boss::CScene_Boss()
 	: m_pTexBG(nullptr)
@@ -54,7 +54,15 @@ void CScene_Boss::Exit()
 
 void CScene_Boss::update()
 {
-	CScene::update();
+	int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetPrevScene())->GetStage();
+	if (1 == stage)
+	{
+		SetBoss(MON_TYPE::Dangle);
+	}
+	else if (2 == stage)
+	{
+		SetBoss(MON_TYPE::Monstro);
+	}
 
 	if (m_bIsAnimTimerOn)
 	{

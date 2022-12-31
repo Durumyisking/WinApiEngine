@@ -149,10 +149,13 @@ void CItemMgr::init()
 			m_arrItem[i].m_stat = Stat{ 0, 0, 1, 0.f, 0.f, 0.f, 0.f };
 			break;
 		case 14:
-			m_arrItem[i].m_eName = ITEM_TABLE::technology;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"technology", L"texture\\Item\\collectibles_068_technology.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
+			//m_arrItem[i].m_eName = ITEM_TABLE::technology;
+			//m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"technology", L"texture\\Item\\collectibles_068_technology.bmp");
+			//m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
 
+			m_arrItem[i].m_eName = ITEM_TABLE::pentagram;
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"pentagram", L"texture\\Item\\collectibles_051_pentagram.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 1, 0.f, 0.f, 0.f, 0.f };
 			m_arrItem[i].m_iPriceHpMax = 4;
 			break;
 		case 15:
@@ -162,18 +165,27 @@ void CItemMgr::init()
 			m_arrItem[i].m_iSoulHeart = 4;
 			break;
 		case 16:
-			m_arrItem[i].m_eName = ITEM_TABLE::momsknife;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"momsknife", L"texture\\Item\\collectibles_114_momsknife.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.0f };
+			//m_arrItem[i].m_eName = ITEM_TABLE::momsknife;
+			//m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"momsknife", L"texture\\Item\\collectibles_114_momsknife.bmp");
+			//m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.0f };
+			//m_arrItem[i].m_iPriceHpMax = 4;
 
-			m_arrItem[i].m_iPriceHpMax = 4;
+			m_arrItem[i].m_eName = ITEM_TABLE::themark;
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"themark", L"texture\\Item\\collectibles_079_themark.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 1, 0.f, 0.f, 0.f, -0.1f };
+			m_arrItem[i].m_iSoulHeart = 4;
+
 			break;
 		case 17:
-			m_arrItem[i].m_eName = ITEM_TABLE::brimstone;
-			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"brimstone", L"texture\\Item\\collectibles_118_brimstone.bmp");
-			m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
+			//m_arrItem[i].m_eName = ITEM_TABLE::brimstone;
+			//m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"brimstone", L"texture\\Item\\collectibles_118_brimstone.bmp");
+			//m_arrItem[i].m_stat = Stat{ 0, 0, 0, 0.f, 0.f, 0.f, 0.f };
+			//m_arrItem[i].m_iPriceHpMax = 4;
+			m_arrItem[i].m_eName = ITEM_TABLE::ceremonialrobes;
+			m_arrItem[i].m_pTex = CResMgr::GetInst()->LoadTexture(L"ceremonialrobes", L"texture\\Item\\collectibles_216_ceremonialrobes.bmp");
+			m_arrItem[i].m_stat = Stat{ 0, 0, 1, 0.f, 0.f, 0.f, 0.f };
+			m_arrItem[i].m_iSoulHeart = 6;
 
-			m_arrItem[i].m_iPriceHpMax = 4;
 			break;
 		case 18:
 			m_arrItem[i].m_eName = ITEM_TABLE::whoreofbabylon;

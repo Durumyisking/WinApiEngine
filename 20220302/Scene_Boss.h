@@ -48,9 +48,15 @@ public:
 		{
 		case MON_TYPE::Dangle:
 			m_eBossType = _eType;
-			m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss", L"texture\\Boss\\portrait_dangle.bmp");
+			m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss_dangle", L"texture\\CutScene\\portrait_dangle.bmp");
 			m_vBossSlice = Vec2(4, 0);
 			break;
+		case MON_TYPE::Monstro:
+			m_eBossType = _eType;
+			m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss_monstro", L"texture\\CutScene\\portrait_20.0_monstro.bmp");
+			m_vBossSlice = Vec2(1, 0);
+			break;
+
 		default:
 			break;
 		}

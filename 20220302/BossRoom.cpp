@@ -59,11 +59,20 @@ void CBossRoom::Enter()
 	// 몬스터 생성
 	if (!m_bIsClear)
 	{
+		int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
 
-		// 몬스터
-		CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Dangle, GetPos(), this);
-		CSceneMgr::GetInst()->GetCurScene()->AddObject(M1, GROUP_TYPE::MONSTER);
-		++m_iMonsterCount;
+		if (1 == stage)
+		{
+			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Dangle, GetPos(), this);
+			CSceneMgr::GetInst()->GetCurScene()->AddObject(M1, GROUP_TYPE::MONSTER);
+			++m_iMonsterCount;
+		}
+		else if (2 == stage)
+		{
+			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Monstro, GetPos(), this);
+			CSceneMgr::GetInst()->GetCurScene()->AddObject(M1, GROUP_TYPE::MONSTER);
+			++m_iMonsterCount;
+		}
 
 	}
 
