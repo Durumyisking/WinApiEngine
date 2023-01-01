@@ -35,8 +35,6 @@ void CScene_Intro::Exit()
 void CScene_Intro::update()
 {
 
-	CScene::update();
-
 
 	if (KEY_TAP(KEY::SPACE))
 	{

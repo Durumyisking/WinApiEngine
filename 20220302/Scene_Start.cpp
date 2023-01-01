@@ -203,6 +203,14 @@ void CScene_Start::update()
 	}
 	if (GetPlayer()->IsStateClear())
 	{
+		int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
+		
+		if (2 == stage)
+		{
+			CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::ENDING);
+			return;
+		}
+
 		GetPlayer()->SetStateUnclear();
 		GetPlayer()->Body()->SetStateUnclear();
 		GetPlayer()->Head()->SetStateUnclear();

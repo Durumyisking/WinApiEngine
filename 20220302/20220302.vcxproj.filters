@@ -257,6 +257,9 @@
     <Filter Include="Engine\04. Object\Monster\maw">
       <UniqueIdentifier>{e012693a-65a3-4936-8d4e-c557b5eb5659}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Ending">
+      <UniqueIdentifier>{49a9b440-eaee-40cd-ae15-be9321eb9780}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -545,6 +548,9 @@
     <ClInclude Include="Monstro.h">
       <Filter>Engine\04. Object\Monster\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Ending.h">
+      <Filter>Engine\05. Scene\Scene_Ending</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -822,6 +828,9 @@
     </ClCompile>
     <ClCompile Include="Monstro.cpp">
       <Filter>Engine\04. Object\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Ending.cpp">
+      <Filter>Engine\05. Scene\Scene_Ending</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

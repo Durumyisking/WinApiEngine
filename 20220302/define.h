@@ -134,6 +134,7 @@ enum class SCENE_TYPE
 	START,
 	BOSS,
 	STAGECUT,
+	ENDING,
 
 	END,
 };
