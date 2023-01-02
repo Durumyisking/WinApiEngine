@@ -1,6 +1,7 @@
 #pragma once
 
 class CRoom;
+class CMinimap;
 
 class CMap
 {
@@ -9,7 +10,7 @@ public:
 	~CMap();
 
 public:
-	void LoadMap(const wstring& _strRelativePath);
+	void LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap);
 	Vec2 GetStartPos() const { return m_vStartPos; }
 	void SetCurrentRoom(CRoom* _pRoom) 
 	{

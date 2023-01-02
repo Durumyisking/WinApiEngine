@@ -15,6 +15,8 @@
 #include "BossRoom.h"
 #include "EvilRoom.h"
 #include "SecretRoom.h"
+#include "Minimap.h"
+#include "MapRoom.h"
 
 CMap::CMap()
 	: m_MapData{}
@@ -26,7 +28,7 @@ CMap::~CMap()
 
 }
 
-void CMap::LoadMap(const wstring& _strRelativePath)
+void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 {
 
 		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
@@ -51,9 +53,12 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 				fgetws(buff, 63, pFile);
 				for (int x = 0; x < MAP_SIZE; x++)
 				{
+					CMapRoom* pMapRoom = new CMapRoom();
+
 					switch (buff[x])
 					{
 					case L'0':	
+						pMapRoom->SetType(ROOM_TYPE::END);
 						break;
 					case L'1':
 						m_MapData[y][x] = new CStartRoom();
@@ -61,30 +66,39 @@ void CMap::LoadMap(const wstring& _strRelativePath)
 						SetCurrentRoom(dynamic_cast<CRoom*>(m_MapData[y][x]));
 						m_pPrevRoom = dynamic_cast<CRoom*>(m_MapData[y][x]);
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::START);
+						pMapRoom->SetType(ROOM_TYPE::START);
 						break;
 					case L'2':
 						m_MapData[y][x] = new CNormalRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::NORMAL);
+						pMapRoom->SetType(ROOM_TYPE::NORMAL);
 						break;
 					case L'3':
 						m_MapData[y][x] = new CTreasureRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::TRESURE);
+						pMapRoom->SetType(ROOM_TYPE::TRESURE);
 						break;
 					case L'5':
 						m_MapData[y][x] = new CSecretRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::SECRET);
+						pMapRoom->SetType(ROOM_TYPE::SECRET);
 						break;
 					case L'8':
 						m_MapData[y][x] = new CEvilRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::EVIL);
+						pMapRoom->SetType(ROOM_TYPE::EVIL);
 						break;
 					case L'9':
 						m_MapData[y][x] = new CBossRoom();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->SetType(ROOM_TYPE::BOSS);
+						pMapRoom->SetType(ROOM_TYPE::BOSS);
 						break;
 					default:
 						break;
 					}
+					pMapRoom->AddChild(_pMinimap);
+					_pMinimap->GetMapRoomVec().push_back(pMapRoom);
+
 					// 방 좌표 주고 map과 연결
 					if (nullptr != m_MapData[y][x])
 					{

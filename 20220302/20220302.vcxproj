@@ -204,8 +204,10 @@
     <ClInclude Include="Keeper.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MapRoom.h" />
     <ClInclude Include="Maw.h" />
     <ClInclude Include="MenuObj.h" />
+    <ClInclude Include="Minimap.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />
@@ -291,7 +293,9 @@
     <ClCompile Include="ItemMgr.cpp" />
     <ClCompile Include="Kamikazeleech.cpp" />
     <ClCompile Include="Keeper.cpp" />
+    <ClCompile Include="MapRoom.cpp" />
     <ClCompile Include="Maw.cpp" />
+    <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="Monstro.cpp" />
     <ClCompile Include="NormalRoom.cpp" />
     <ClCompile Include="Particle.cpp" />

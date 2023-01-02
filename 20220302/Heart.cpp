@@ -48,4 +48,6 @@ void CHeart::render(HDC _dc)
 
 
 
+
+
 }

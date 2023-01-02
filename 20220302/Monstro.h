@@ -31,6 +31,7 @@ public:
 	virtual void render(HDC _dc);
 	virtual void Attack();
 	void Shotgun();
+	void LandSpray();
 
 
 private:

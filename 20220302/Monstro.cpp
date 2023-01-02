@@ -202,6 +202,10 @@ void CMonstro::update()
 
 				if (GetAnimator()->GetCurAnim()->IsFinish())
 				{
+					//m_vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
+					//m_vTargetDir.Normalize();
+					//LandSpray();
+
 					m_vAnimOffset = m_vAnimOffsetTemp;
 					GetAnimator()->GetCurAnim()->SetFrame(0);
 					m_eState = MONSTRO_STATE::FALLEND;
@@ -310,9 +314,6 @@ void CMonstro::update()
 
 		}
 
-
-
-
 		CMonster::update();
 	}
 }
@@ -339,6 +340,23 @@ void CMonstro::render(HDC _dc)
 				, 0, 0, 120, 49
 				, RGB(255, 0, 255));
 
+
+		/*	BLENDFUNCTION bf = {};
+
+			bf.BlendOp = AC_SRC_OVER;
+			bf.BlendFlags = 0;
+			bf.AlphaFormat = 0;
+			bf.SourceConstantAlpha = 128;
+
+			AlphaBlend(_dc
+				, static_cast<int>(vPos.x - (vScale.x / 2))
+				, static_cast<int>(vPos.y - (vScale.y / 2)) + 55
+				, 120, 48
+				, m_pShadowTex->GetDC()
+				, 0, 0, 120, 49
+				, bf
+			);*/
+
 		}
 		component_render(_dc);
 	}
@@ -350,9 +368,9 @@ void CMonstro::Attack()
 
 void CMonstro::Shotgun()
 {
+	void* p = new int();
 	for (int i = 0; i < 3; i++)
 	{
-		void* p = new int();
 		srand((int)p);
 		int shotflag = static_cast<int>(rand() % 10);
 		if (0 == shotflag)
@@ -368,4 +386,22 @@ void CMonstro::Shotgun()
 			continue;
 		}
 	}
+	delete p;
+
+}
+
+void CMonstro::LandSpray()
+{
+	//void* p = new int();
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	srand((int)p);
+
+	//	int degree = static_cast<int>(rand() % 360);
+	//	float range = static_cast<float>(rand() % 30) / 10;
+	//	m_Stat.m_fRange = range;
+
+	//	CreateMissile(m_vTargetDir.Rotate(degree), m_pTearTex, L"Monstro");
+	//}
+	//delete p;
 }

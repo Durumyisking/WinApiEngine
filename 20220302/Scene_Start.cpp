@@ -20,8 +20,7 @@
 
 #include "UI.h"
 #include "Heart.h"
-#include"PanelUI.h"
-#include"BtnUI.h"
+#include "Minimap.h"
 
 #include "PickupUI.h"
 #include "PickupCount.h"
@@ -112,9 +111,7 @@ void CScene_Start::Enter()
 	{
 		pPickupCount[i-1] = new CPickupCount(static_cast<PICKUP_TYPE>(i), m_pPlayer->GetPickup());
 		AddObject(pPickupCount[i - 1], GROUP_TYPE::UI);
-
 	}
-
 
 
 
@@ -388,9 +385,14 @@ void CScene_Start::SetStage(int _iStage)
 	strFolder += strStage;
 	strFolder += strPathEnd;
 
+	CUI* pMinimap = new CMinimap();
+	AddObject(pMinimap, GROUP_TYPE::UI);
+
+	CMinimap* pMinimapInst = dynamic_cast<CMinimap*>(pMinimap);
+
 	m_pMap = new CMap();
 	wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(strFolder);
-	m_pMap->LoadMap(strRelativePath);
+	m_pMap->LoadMap(strRelativePath, pMinimapInst);
 
 	m_pMap->GetCurrentRoom()->Enter();
 }

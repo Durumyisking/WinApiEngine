@@ -33,27 +33,27 @@ void CTreasureRoom::Enter()
 		// 아이템 추가
 
 		// 랜덤추가
-		//srand(CTimeMgr::GetInst()->GetCurCount());
-		//UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::end));
-		// CItemMgr::GetInst()->CreateItem(item, GetPos());
+		srand(CTimeMgr::GetInst()->GetCurCount());
+		UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::normalend));
+		 CItemMgr::GetInst()->CreateItem(item, GetPos(), this);
 
 		// 명시적
 
-		Vec2 vSpace = Vec2(100.f, 0.f);
+		//Vec2 vSpace = Vec2(100.f, 0.f);
 
-		int j = -3;
-		float y = -200;
-		for (UINT i = 0; i < static_cast<UINT>(ITEM_TABLE::normalend); i++)
-		{
-			if (j > 3)
-			{
-				j = -3;
-				y += 100;
-			}
-			CItemMgr::GetInst()->CreateItem(i, GetPos() + (vSpace * j) + Vec2(0.f, y), this);
+		//int j = -3;
+		//float y = -200;
+		//for (UINT i = 0; i < static_cast<UINT>(ITEM_TABLE::normalend); i++)
+		//{
+		//	if (j > 3)
+		//	{
+		//		j = -3;
+		//		y += 100;
+		//	}
+		//	CItemMgr::GetInst()->CreateItem(i, GetPos() + (vSpace * j) + Vec2(0.f, y), this);
 
-			++j;
-		}
+		//	++j;
+		//}
 	}
 	CRoom::Enter();
 
