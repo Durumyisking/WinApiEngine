@@ -432,7 +432,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Dangle:
 	{
 		pMon = new CDangle;
-		Stat Stat = { 15, 15, 1, 400.f, 700.f, 10.f , 0.f };
+		Stat Stat = { 300, 300, 1, 400.f, 700.f, 10.f , 0.f };
 		pMon->SetScale(Vec2(128.f, 128.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(500.f);
@@ -461,7 +461,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Monstro:
 	{
 		pMon = new CMonstro;
-		Stat Stat = { 15, 15, 1, 400.f, 450.f, 2.f , 0.f };
+		Stat Stat = { 300, 300, 1, 400.f, 450.f, 2.f , 0.f };
 		pMon->SetScale(Vec2(128.f, 128.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(500.f);

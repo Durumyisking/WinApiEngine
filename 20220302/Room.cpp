@@ -540,12 +540,39 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'p':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Keeper, vSpawnPos, this);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
 				}
 				break;
+				case L'a':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Pooter, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
+
+				case L's':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Sucker, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
+
+				case L'd':
+				{
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Maw, vSpawnPos, this);
+					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
+					m_bGetReward = false;
+					++m_iMonsterCount;
+				}
+				break;
+
 
 				default:
 					break;
