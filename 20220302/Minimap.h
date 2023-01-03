@@ -2,6 +2,7 @@
 #include "UI.h"
 
 class CMapRoom;
+
 class CMinimap :
 	public CUI
 {
@@ -20,6 +21,7 @@ public:
 
 private:
 	vector<CMapRoom*> m_vecMapRoom;
+	
 };
 
 

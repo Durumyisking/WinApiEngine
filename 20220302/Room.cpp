@@ -18,7 +18,7 @@ CRoom::CRoom()
 	, m_pBgTex(nullptr)
 	, m_bGetReward(true)
 	, m_bIsClear(false)
-
+	, m_bSecret(true)
 {
 
 }
@@ -287,6 +287,8 @@ void CRoom::AddDoor()
 
 void CRoom::Enter()
 {
+	m_bSecret = false;
+
 	CPlayer* pPlayer =  CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
 	if (nullptr != pPlayer)
 	{
@@ -367,7 +369,7 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	{	
 	case ROOM_TYPE::NORMAL:
 		strFolder += L"\\Normal\\Room";
-		iCount = rand() % 10 + 1;// +10 * (iStage - 1);
+		iCount = rand() % 10 + 1 + (10 * (iStage - 1));
 		break;
 	case ROOM_TYPE::TRESURE:
 		strFolder += L"\\Treasure\\Room";

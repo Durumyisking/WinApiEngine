@@ -96,8 +96,13 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 					default:
 						break;
 					}
-					pMapRoom->AddChild(_pMinimap);
-					_pMinimap->GetMapRoomVec().push_back(pMapRoom);
+					if (L'0' != buff[x])
+					{
+						pMapRoom->SetMap(dynamic_cast<CRoom*>(m_MapData[y][x]));
+						pMapRoom->SetPos((Vec2((18.f * x) + 4, (16.f * y) + 4)));
+						_pMinimap->AddChild(pMapRoom);
+						_pMinimap->GetMapRoomVec().push_back(pMapRoom);
+					}
 
 					// 방 좌표 주고 map과 연결
 					if (nullptr != m_MapData[y][x])

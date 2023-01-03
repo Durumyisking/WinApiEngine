@@ -21,6 +21,7 @@ CUI::CUI(bool _bCamAff)
 	, m_bMouseOn(false)
 	, m_pTex(nullptr)
 	, m_vSlice(Vec2(0, 0))
+	, m_fMagnify(2.f)
 {
 }
 CUI::CUI(const CUI& _origin)
@@ -31,6 +32,7 @@ CUI::CUI(const CUI& _origin)
 	, m_bLbtnDown(false)
 	, m_pTex(nullptr)
 	, m_vSlice(Vec2(0, 0))
+	, m_fMagnify(2.f)
 {
 	for (size_t i = 0; i < _origin.m_vecChildUI.size(); ++i)
 		AddChild(_origin.m_vecChildUI[i]->Clone());
@@ -89,7 +91,7 @@ void CUI::render(HDC _dc)
 
 		TransparentBlt(_dc
 			, static_cast<int>(vPos.x), static_cast<int>(vPos.y)
-			, static_cast<int>(vScale.x) * 2, static_cast<int>(vScale.y) * 2
+			, static_cast<int>(vScale.x) * m_fMagnify, static_cast<int>(vScale.y) * m_fMagnify
 			, m_pTex->GetDC()
 			, static_cast<int>(GetScale().x * m_vSlice.x)
 			, static_cast<int>(GetScale().y * m_vSlice.y)

@@ -20,6 +20,7 @@ CNormalRoom::CNormalRoom()
 	}
 	m_eType = ROOM_TYPE::NORMAL;
 
+
 }
 
 CNormalRoom::~CNormalRoom()

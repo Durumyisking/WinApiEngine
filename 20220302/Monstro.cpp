@@ -29,7 +29,7 @@ CMonstro::CMonstro()
 	GetAnimator()->CreateAnimation(L"MONSTRO_FALL", m_pTex, Vec2(320.f, 0.f), Vec2(80.f, 112.f), Vec2(80.f, 0.f), 1.125f, 1, false);
 	GetAnimator()->CreateAnimation(L"MONSTRO_JUMPAIR", m_pTex, Vec2(160.f, 112.f), Vec2(80.f, 112.f), Vec2(80.f, 0.f), 1.f, 1, false);
 
-	GetAnimator()->CreateAnimation(L"MONSTRO_DEAD", m_pTex, Vec2(240.f, 112.f), Vec2(80.f, 112.f), Vec2(80.f, 0.f), 2.f, 1, false);
+	GetAnimator()->CreateAnimation(L"MONSTRO_DEAD", m_pTex, Vec2(240.f, 112.f), Vec2(80.f, 112.f), Vec2(80.f, 0.f), 0.25f, 8, false);
 
 
 	m_arrAnimName[static_cast<UINT>(MON_STATE::IDLE)] = L"MONSTRO_IDLE";
@@ -104,7 +104,6 @@ void CMonstro::update()
 						PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 					}
 
-					delete p;
 				}			
 			}
 			if (m_eState == MONSTRO_STATE::FIREPRE)
@@ -372,7 +371,7 @@ void CMonstro::Shotgun()
 	for (int i = 0; i < 3; i++)
 	{
 		srand((int)p);
-		int shotflag = static_cast<int>(rand() % 10);
+		int shotflag = static_cast<int>(rand() % 7);
 		if (0 == shotflag)
 		{
 			int degree = static_cast<int>(rand() % 21) - 10;
@@ -386,8 +385,6 @@ void CMonstro::Shotgun()
 			continue;
 		}
 	}
-	delete p;
-
 }
 
 void CMonstro::LandSpray()

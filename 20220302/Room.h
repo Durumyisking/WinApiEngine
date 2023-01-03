@@ -69,6 +69,7 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 	//	void IsClear();
+	bool IsSecret() const { return m_bSecret; }
 
 	void SpawnPickup(PICKUP_TYPE _eType, Vec2 _vPos);
 //	void SpawnProp();
@@ -94,4 +95,6 @@ protected:
 	bool		m_bIsClear;
 	bool		m_bFirstEnter;
 	bool		m_bGetReward;
+	bool		m_bSecret;
+
 };

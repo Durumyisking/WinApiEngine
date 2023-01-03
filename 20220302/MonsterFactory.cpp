@@ -370,26 +370,31 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 
 	case  MON_TYPE::Sucker:
 	{
-		pMon = new CTrite;
-		Stat Stat = { 20, 20, 1, 500.f, 0.f, 0.f ,0.f };
-		pMon->SetScale(Vec2(64.f, 64.f));
+		pMon = new CSucker;
+
+		Stat Stat = { 20, 20, 1, 100.f, 600.f, 1.5f ,0.f };
+		pMon->SetScale(Vec2(32.f, 32.f));
 		pMon->SetStat(Stat);
-		pMon->SetRecogRange(10.f);
+		pMon->SetRecogRange(300.f);
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
+		pMon->SetDeadAnimTime(0.6f);
 
 		CAI* pAI = new CAI;
-		pAI->AddState(new CAttackState);
+		pAI->AddState(new CPatrolState);
+		pAI->AddState(new CTraceState);
 
-		pAI->SetCurState(MON_STATE::ATTACK);
+
+		pAI->SetCurState(MON_STATE::PATROL);
 		pMon->SetAI(pAI);
 		pMon->SetOnAir(true);
 
 		pMon->CreateRigidBody();
-		pMon->GetRigidBody()->SetMass(2.5f);
-		pMon->GetRigidBody()->SetFricCoeff(500.f);
+		pMon->GetRigidBody()->SetMass(1.f);
+		pMon->GetRigidBody()->SetFricCoeff(0.f);
 
-		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
+		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+		pMon->GetCollider()->SetScale(Vec2(32.f, 32.f));
 
 	}
 	break;

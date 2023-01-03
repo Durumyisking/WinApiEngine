@@ -51,7 +51,7 @@ void CCollider::finalupdate()
 		m_vFinalPos = vObjectPos + m_vOffsetPos;
 
 		if (m_iCol < 0)
-			int i = 0;
+			m_iCol = 0;
 		assert(0 <= m_iCol);
 	}
 }	
@@ -103,9 +103,12 @@ void CCollider::OnCollisionEnter(CCollider * _pOther)
 
 void CCollider::OnCollisionExit(CCollider* _pOther)
 {
+	if (m_bSwitch)
+	{
 		--m_iCol;
 		m_pOpponent = nullptr;
 		m_pOwner->OnCollisionExit(_pOther);
+	}
 }
 
 void CCollider::SwitchOff()

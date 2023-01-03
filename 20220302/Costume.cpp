@@ -83,7 +83,7 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		SetName(L"mrmega");
 		m_bIsHead = true;	
 		m_bChangeHead = true;
-		m_vAnimOffset = Vec2(-32.f, -30.f);
+		m_vAnimOffset = Vec2(-32.f, -28.f);
 		GetAnimator()->CreateAnimation(L"mrmega_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 1, false);
 		GetAnimator()->CreateAnimation(L"mrmega_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 		GetAnimator()->CreateAnimation(L"mrmega_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
@@ -100,7 +100,7 @@ CCostume::CCostume(ITEM_TABLE _eItem)
 		SetName(L"polyphemus");
 		m_bIsHead = true;
 		m_bChangeHead = true;
-		m_vAnimOffset = Vec2(-32.f, -30.f);
+		m_vAnimOffset = Vec2(-32.f, -28.f);
 		GetAnimator()->CreateAnimation(L"polyphemus_IDLE", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 1, false);
 		GetAnimator()->CreateAnimation(L"polyphemus_UP", m_pTex, Vec2(128.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);
 		GetAnimator()->CreateAnimation(L"polyphemus_DOWN", m_pTex, Vec2(0.f, 0.f), Vec2(32.f, 32.f), Vec2(32.f, 0.f), 0.5f, 2, false);

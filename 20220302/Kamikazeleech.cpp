@@ -94,32 +94,36 @@ void CKamikazeleech::update()
 
 void CKamikazeleech::Attack()
 {
-	if (!m_bCharging)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		DIR eChargeDir = AxisCharge();
-		switch (eChargeDir)
-		{
-		case DIR::UP:
-			m_strAnimName = L"Kamikazeleech_IDLE_U";
-			break;
-		case DIR::DOWN:
-			m_strAnimName = L"Kamikazeleech_IDLE_D";
-			break;
-		case DIR::RIGHT:
-			m_strAnimName = L"Kamikazeleech_IDLE_R";
-			break;
-		case DIR::LEFT:
-			m_strAnimName = L"Kamikazeleech_IDLE_L";
-			break;
-		case DIR::END:
-			break;
-		default:
-			break;
-		}
-		GetAnimator()->FindAnimation(m_strAnimName)->SetDuration(0.05f);
-		PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 
-		m_bCharging = true;
+		if (!m_bCharging)
+		{
+			DIR eChargeDir = AxisCharge();
+			switch (eChargeDir)
+			{
+			case DIR::UP:
+				m_strAnimName = L"Kamikazeleech_IDLE_U";
+				break;
+			case DIR::DOWN:
+				m_strAnimName = L"Kamikazeleech_IDLE_D";
+				break;
+			case DIR::RIGHT:
+				m_strAnimName = L"Kamikazeleech_IDLE_R";
+				break;
+			case DIR::LEFT:
+				m_strAnimName = L"Kamikazeleech_IDLE_L";
+				break;
+			case DIR::END:
+				break;
+			default:
+				break;
+			}
+			GetAnimator()->FindAnimation(m_strAnimName)->SetDuration(0.05f);
+			PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
+
+			m_bCharging = true;
+		}
 	}
 }
 

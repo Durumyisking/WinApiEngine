@@ -25,26 +25,34 @@ CMaw::~CMaw()
 
 void CMaw::update()
 {
-	m_fAttackCooldown += fDT;
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
+	{
 
-	Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
+		m_fAttackCooldown += fDT;
 
-	vTargetDir.Normalize();
-	vTargetDir = vTargetDir * GetStat().m_fSpeed;
-	GetRigidBody()->SetVelocity(vTargetDir);
+		Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos() - GetPos();
 
-	CMonster::update();
+		vTargetDir.Normalize();
+		vTargetDir = vTargetDir * GetStat().m_fSpeed;
+		GetRigidBody()->SetVelocity(vTargetDir);
+
+		CMonster::update();
+	}
 }
 
 void CMaw::Attack()
 {
-	if (m_fAttackCooldown > 2.f)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
-		vTargetDir = vTargetDir.Normalize();
 
-		CreateMissile(vTargetDir, m_pTearTex, L"Maw");
-		GetAI()->ChangeState(MON_STATE::IDLE);
-		m_fAttackCooldown = 0;
+		if (m_fAttackCooldown > 2.f)
+		{
+			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
+			vTargetDir = vTargetDir.Normalize();
+
+			CreateMissile(vTargetDir, m_pTearTex, L"Maw");
+			GetAI()->ChangeState(MON_STATE::IDLE);
+			m_fAttackCooldown = 0;
+		}
 	}
 }

@@ -14,6 +14,7 @@ private:
 	bool				m_bCameAffected; // UI가 카메라 영향을 받는지
 	bool				m_bMouseOn;
 	bool				m_bLbtnDown;
+	float				m_fMagnify;
 
 protected:
 	CTexture*			m_pTex;
@@ -62,6 +63,9 @@ public:
 	bool IsMouseOn() { return m_bMouseOn; }
 
 	bool IsLbtnDown() { return m_bLbtnDown; }
+
+	void SetMagnify(float _fValue) { m_fMagnify = _fValue; }
+	float GetMagnify() const { return m_fMagnify; }
 
 	void SetTexture(CTexture* _pTex)
 	{

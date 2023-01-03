@@ -6,7 +6,6 @@ CSecretRoom::CSecretRoom()
 	m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexSecret", L"texture\\BackGround\\bg_sercret.bmp");
 	m_eType = ROOM_TYPE::SECRET;
 	m_bGetReward = true;
-	
 }
 
 CSecretRoom::~CSecretRoom()

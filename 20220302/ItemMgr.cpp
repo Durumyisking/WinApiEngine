@@ -38,11 +38,11 @@ CItem* CItemMgr::CreateItem(UINT _iItem, Vec2 _vPos, CRoom* _pOwner)
 CItem* CItemMgr::CreateRandomItem(Vec2 _vPos, CRoom* _pOwner)
 {
 	UINT item;
+	srand(CTimeMgr::GetInst()->GetCurCount());
 
 	do
 	{
-		srand(CTimeMgr::GetInst()->GetCurCount());
-		item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::normalend));
+		item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::thewafer) + 1);
 
 	} while (m_arrDropedItem[item] > 0);
 

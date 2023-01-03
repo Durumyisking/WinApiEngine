@@ -33,13 +33,17 @@ void CFrownGaper::update()
 
 void CFrownGaper::Attack()
 {
-	if (m_fAttackCooldown > 2.f)
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
-		vTargetDir = vTargetDir.Normalize();
 
-		CreateMissile(vTargetDir, m_pTearTex, L"Frowngaper");
-		GetAI()->ChangeState(MON_STATE::IDLE);
-		m_fAttackCooldown = 0;
+		if (m_fAttackCooldown > 2.f)
+		{
+			Vec2 vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
+			vTargetDir = vTargetDir.Normalize();
+
+			CreateMissile(vTargetDir, m_pTearTex, L"Frowngaper");
+			GetAI()->ChangeState(MON_STATE::IDLE);
+			m_fAttackCooldown = 0;
+		}
 	}
 }
