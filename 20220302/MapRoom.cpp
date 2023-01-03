@@ -5,6 +5,8 @@
 #include "ResMgr.h"
 #include "Room.h"
 
+#include "Map.h"
+
 
 CMapRoom::CMapRoom()
 	:CUI(false)
@@ -25,10 +27,20 @@ CMapRoom::~CMapRoom()
 
 void CMapRoom::update()
 {
+	if (m_pRoom->GetOwner()->GetCurrentRoom() == m_pRoom)
+	{
+		SetSlice({ 1.f, 0.f });
+	}
+	else
+	{
+		SetSlice({ 0.f, 0.f });
+	}
+
 }
 
 void CMapRoom::render(HDC _dc)
 {
+
 	if (!m_pRoom->IsSecret())
 	{
 		CUI::render(_dc);
@@ -44,7 +56,6 @@ void CMapRoom::render(HDC _dc)
 				, static_cast<int>(m_vMarkScale.x), static_cast<int>(m_vMarkScale.y)
 				, RGB(255, 0, 255));
 		}
-
 	}
 }
 

@@ -23,6 +23,7 @@ CMinimap::~CMinimap()
 
 void CMinimap::update()
 {
+	CUI::update_child();
 }
 
 void CMinimap::render(HDC _dc)

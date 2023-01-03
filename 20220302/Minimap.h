@@ -16,11 +16,7 @@ public:
 
 	CLONE(CMinimap);
 
-public:
-	vector<CMapRoom*> GetMapRoomVec() const { return m_vecMapRoom; }
 
-private:
-	vector<CMapRoom*> m_vecMapRoom;
 	
 };
 

@@ -20,7 +20,7 @@ CRoom::CRoom()
 	, m_bIsClear(false)
 	, m_bSecret(true)
 {
-
+	m_vecAdjacentRoom = new vector<CRoom*>();
 }
 
 CRoom::~CRoom()
@@ -288,6 +288,10 @@ void CRoom::AddDoor()
 void CRoom::Enter()
 {
 	m_bSecret = false;
+	for (int i = 0; i < GetAdjacentRoomVec()->size(); ++i)
+	{
+		(*GetAdjacentRoomVec())[i]->SetSecret(false);
+	}
 
 	CPlayer* pPlayer =  CSceneMgr::GetInst()->GetCurScene()->GetPlayer();
 	if (nullptr != pPlayer)
@@ -608,7 +612,7 @@ void CRoom::GiveReward()
 			{
 				if (0 == i)
 					continue;
-				DropPickupType(GetPos() + (Vec2(64.f, 0.f) * i));
+				DropPickupType(GetPos() + (Vec2(128.f, 0.f) * i));
 			}
 			break;
 

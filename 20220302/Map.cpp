@@ -42,7 +42,7 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 
 		// 맵 정보 읽기
 //		wchar_t mapdata[7] = L"";
-		wchar_t buff[64] = L"";
+		wchar_t buff[10] = L"";
 
 
 		if (0 != pFile)
@@ -50,7 +50,7 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 			Vec2 vResolution = CCore::GetInst()->GetResolution();
 			for (int y = 0; y < MAP_SIZE; y++)
 			{
-				fgetws(buff, 63, pFile);
+				fgetws(buff, 9, pFile);
 				for (int x = 0; x < MAP_SIZE; x++)
 				{
 					CMapRoom* pMapRoom = new CMapRoom();
@@ -101,9 +101,7 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 						pMapRoom->SetMap(dynamic_cast<CRoom*>(m_MapData[y][x]));
 						pMapRoom->SetPos((Vec2((18.f * x) + 4, (16.f * y) + 4)));
 						_pMinimap->AddChild(pMapRoom);
-						_pMinimap->GetMapRoomVec().push_back(pMapRoom);
 					}
-
 					// 방 좌표 주고 map과 연결
 					if (nullptr != m_MapData[y][x])
 					{
@@ -112,6 +110,9 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 					}
 				}
 			}
+
+
+
 			// 불러온 map init
 			for (int y = 0; y < MAP_SIZE; y++)
 			{
@@ -124,25 +125,56 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 						dynamic_cast<CRoom*>(m_MapData[y][x])->AddWall();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->AddDoor();
 						ROOM_TYPE RoomType = dynamic_cast<CRoom*>(m_MapData[y][x])->GetType();
+						int i = 100;
+
 						switch (RoomType)
 						{
-						case ROOM_TYPE::NORMAL:
-							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::NORMAL);
-							break;
-						case ROOM_TYPE::TRESURE:
-							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::TRESURE);
-							break;
-						case ROOM_TYPE::BOSS:
-							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::BOSS);
-							break;
-						case ROOM_TYPE::EVIL:
-							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::EVIL);
-							break;
-						case ROOM_TYPE::SECRET:
-							dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::SECRET);
-							break;
-						default:
-							break;
+							case ROOM_TYPE::NORMAL:
+								dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::NORMAL);
+								break;
+							case ROOM_TYPE::TRESURE:
+								dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::TRESURE);
+								break;
+							case ROOM_TYPE::BOSS:
+								dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::BOSS);
+								break;
+							case ROOM_TYPE::EVIL:
+								dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::EVIL);
+								break;
+							case ROOM_TYPE::SECRET:
+								dynamic_cast<CRoom*>(m_MapData[y][x])->LoadRoom(ROOM_TYPE::SECRET);
+								break;
+							default:
+								break;
+						}
+
+						if (0 != y)
+						{
+							if (nullptr != m_MapData[y - 1][x])
+							{
+								dynamic_cast<CRoom*>(m_MapData[y][x])->GetAdjacentRoomVec()->push_back(dynamic_cast<CRoom*>(m_MapData[y - 1][x]));
+							}
+						}
+						if (6 != y)
+						{
+							if (nullptr != m_MapData[y + 1][x])
+							{
+								dynamic_cast<CRoom*>(m_MapData[y][x])->GetAdjacentRoomVec()->push_back(dynamic_cast<CRoom*>(m_MapData[y + 1][x]));
+							}
+						}
+						if (0 != x)
+						{
+							if (nullptr != m_MapData[y][x - 1])
+							{
+								dynamic_cast<CRoom*>(m_MapData[y][x])->GetAdjacentRoomVec()->push_back(dynamic_cast<CRoom*>(m_MapData[y][x - 1]));
+							}
+						}
+						if (6 != x)
+						{
+							if (nullptr != m_MapData[y][x + 1])
+							{
+								dynamic_cast<CRoom*>(m_MapData[y][x])->GetAdjacentRoomVec()->push_back(dynamic_cast<CRoom*>(m_MapData[y][x + 1]));
+							}
 						}
 
 						CSceneMgr::GetInst()->GetCurScene()->AddObject(m_MapData[y][x], GROUP_TYPE::ROOM);

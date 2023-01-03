@@ -28,9 +28,8 @@ private:
 
 	float		m_vMarkSlice;
 	Vec2		m_vMarkScale;
-
-
 	bool		m_bMarkOn;
+
 
 };
 

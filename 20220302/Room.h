@@ -70,6 +70,7 @@ public:
 	virtual void Exit();
 	//	void IsClear();
 	bool IsSecret() const { return m_bSecret; }
+	void SetSecret(bool _bflag) { m_bSecret = _bflag; }
 
 	void SpawnPickup(PICKUP_TYPE _eType, Vec2 _vPos);
 //	void SpawnProp();
@@ -81,13 +82,17 @@ public:
 	void GiveReward();
 	void DropPickupType(Vec2 _vPos);
 
+public:
+	vector<CRoom*>* GetAdjacentRoomVec() const { return m_vecAdjacentRoom; }
+
+
 protected:
 	CTexture*	m_pBgTex;
 	Vec2		m_vPos;
 	CMap*		m_pOwner;
 	ROOM_TYPE	m_eType;
 
-
+	vector<CRoom*>* m_vecAdjacentRoom;
 
 	vector<CDoor*> m_Door;
 
