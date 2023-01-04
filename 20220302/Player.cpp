@@ -63,7 +63,7 @@ CPlayer::CPlayer()
 	, m_bInvisible(false)
 
 {
-	m_Stat = { 6, 6, 5, 400.f, 600.f, 1.5f ,0.38f };
+	m_Stat = { 6, 6, 555, 400.f, 600.f, 1.5f ,0.38f };
 	m_pStat = &m_Stat;
 
 	m_bIsPlayer = true;
@@ -303,9 +303,6 @@ void CPlayer::render(HDC _dc)
 
 }
 
-
-
-
 CBody* CPlayer::Body()
 {
 	if (nullptr == m_pOwner)
@@ -438,6 +435,28 @@ void CPlayer::OnCollision(CCollider * _pOther)
 
 		if (m_finvincibilityTime >= 1.0f)
 		{
+			void* p = new int();
+			srand((int)p);
+
+			int iType = rand() % static_cast<int>(3);
+
+			switch (iType)
+			{
+			case 0:
+				CSoundMgr::GetInst()->Play(L"isaachurt1");
+				break;
+			case 1:
+				CSoundMgr::GetInst()->Play(L"isaachurt2");
+				break;
+			case 2:
+				CSoundMgr::GetInst()->Play(L"isaachurt3");
+				break;
+			default:
+				break;
+			}
+			delete p;
+
+
 			m_strAnimName = L"Hurt";
 			AnimOper();
 			m_finvincibilityTime = 0;
@@ -482,6 +501,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 		GetRigidBody()->SetVelocity(vResult);
 		if (m_finvincibilityTime >= 1.0f)
 		{
+			CSoundMgr::GetInst()->Play(L"isaachurt2");
 			m_strAnimName = L"Hurt";
 			AnimOper();
 			m_finvincibilityTime = 0.f;
@@ -733,6 +753,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		CItem* pItem = dynamic_cast<CItem*>(pOtherObj);
 		++(m_vInventory[static_cast<UINT>(pItem->GetItemName())]);
 		m_GetItemCheck = pItem;
+		CSoundMgr::GetInst()->Play(L"itemget");
 
 		// 보유 아이템 체크 얻은 아이템이 있으면 itemcheck에서 획득처리
 		if (nullptr != m_GetItemCheck)
@@ -771,12 +792,15 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		GetRigidBody()->SetVelocity(vResult);
 
 		m_strAnimName = L"Hurt";
-		if (GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"Hurt"))
+		if (m_finvincibilityTime >= 1.0f)
 		{
-			AnimOper();
-			m_finvincibilityTime = 0;
+			if (GetAnimator()->GetCurAnim() != GetAnimator()->FindAnimation(L"Hurt"))
+			{
+				CSoundMgr::GetInst()->Play(L"isaachurt2");
+				AnimOper();
+				m_finvincibilityTime = 0;
+			}
 		}
-
 	}
 
 	if (L"PickupSoulHeart" == pOtherObj->GetName())
@@ -793,6 +817,26 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 		{
 			return;
 		}
+		void* p = new int();
+		srand((int)p);
+
+		int iType = rand() % static_cast<int>(3);
+
+		switch (iType)
+		{
+		case 0:
+			CSoundMgr::GetInst()->Play(L"isaachurt1");
+			break;
+		case 1:
+			CSoundMgr::GetInst()->Play(L"isaachurt2");
+			break;
+		case 2:
+			CSoundMgr::GetInst()->Play(L"isaachurt3");
+			break;
+		default:
+			break;
+		}
+		delete p;
 
 		Vec2 vDir = pOtherObj->GetPos() - GetPos();
 		vDir.Normalize();

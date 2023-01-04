@@ -71,6 +71,7 @@ void CPoop::OnCollision(CCollider* _pOther)
 
 	if (m_iHp == 0)
 	{
+		CSoundMgr::GetInst()->Play(L"popdeath");
 		GetCollider()->SwitchOff();
 	}
 
@@ -94,6 +95,7 @@ void CPoop::OnCollisionEnter(CCollider* _pOther)
 
 	if (m_iHp == 0)
 	{
+		CSoundMgr::GetInst()->Play(L"popdeath");
 		GetCollider()->SwitchOff();
 	}
 

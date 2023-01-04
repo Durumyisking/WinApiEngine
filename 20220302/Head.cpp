@@ -193,6 +193,25 @@ void CHead::CreateMissile(Vec2 _vDir)
 {
 	if (m_dAttackDealy > m_pStat->m_fRate)
 	{
+		void* p = new int();
+		srand((int)p);
+
+		int iType = rand() % static_cast<int>(2);
+
+		switch (iType)
+		{
+		case 0:
+			CSoundMgr::GetInst()->Play(L"tearfire1");
+			break;
+		case 1:
+			CSoundMgr::GetInst()->Play(L"tearfire2");
+			break;
+		default:
+			break;
+		}
+		delete p;
+
+
 		CMissile* pMissileNormal = new CMissile(m_pStat->m_fShotSpeed, m_pStat->m_iDmg);
 		pMissileNormal->SetDir(_vDir);
 		m_vecMissile.push_back(pMissileNormal);

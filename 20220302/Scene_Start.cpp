@@ -206,7 +206,7 @@ void CScene_Start::update()
 
 	if (ROOM_TYPE::BOSS == m_pMap->GetCurrentRoom()->GetType() && !m_bBossRoomEnter && !(m_pMap->GetCurrentRoom()->IsClear()))
 	{
-		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::BOSS);
+		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::BOSS, false);
 		m_bBossRoomEnter = true;
 
 	}
@@ -220,7 +220,7 @@ void CScene_Start::update()
 		
 		if (2 == stage)
 		{
-			CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::ENDING);
+			CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::ENDING, false);
 			return;
 		}
 
@@ -228,7 +228,7 @@ void CScene_Start::update()
 		GetPlayer()->Body()->SetStateUnclear();
 		GetPlayer()->Head()->SetStateUnclear();
 
-		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::STAGECUT);
+		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::STAGECUT, true);
 		CCamera::GetInst()->FadeIn(1.f);
 
 	}

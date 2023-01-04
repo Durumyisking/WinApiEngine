@@ -50,6 +50,7 @@ void CSoulHeart::OnCollisionEnter(CCollider* _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 	if (L"Player" == pOtherObj->GetName())
 	{		
+		CSoundMgr::GetInst()->Play(L"soulheartget");
 		DeleteObject(this);		
 	}
 	CPickup::OnCollisionEnter(_pOther);

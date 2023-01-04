@@ -79,20 +79,21 @@ void CPickup::OnCollisionEnter(CCollider * _pOther)
 		switch (this->m_eType)
 		{
 		case PICKUP_TYPE::HEART:
+			CSoundMgr::GetInst()->Play(L"heartget");
 			break;
 		case PICKUP_TYPE::COIN:
 			pPlayerObj->GetPickup().SetCoin(1);
-
+			CSoundMgr::GetInst()->Play(L"coinget");
 			break;
 		case PICKUP_TYPE::BOMB:
 			pPlayerObj->GetPickup().SetBomb(1);
+//			CSoundMgr::GetInst()->Play(L"bombget");
 			DeleteObject(this);
-
 			break;
 		case PICKUP_TYPE::KEY:
 			pPlayerObj->GetPickup().SetKey(1);
+			CSoundMgr::GetInst()->Play(L"keyget");
 			DeleteObject(this);
-
 			break;
 		default:
 			break;

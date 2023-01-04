@@ -39,20 +39,19 @@ void CSoundMgr::init()
 	// intro
 	addSound(L"intro", L"sound\\bgm\\intro.wav", true);
 	addSound(L"introtostart", L"sound\\bgm\\titletostart.wav", false);
+	addSound(L"stageintro", L"sound\\bgm\\the calm intro.wav", false);
 
 	// basement
 	addSound(L"basement", L"sound\\bgm\\basement.wav", true);
 
 	// cave
-	addSound(L"cave_intro", L"sound\\bgm\\the-caves-intro.wav", false);
 	addSound(L"cave", L"sound\\bgm\\the-caves.wav", true);
 
 	// depth
-	addSound(L"depth_intro", L"sound\\bgm\\the-depths-intro.wav", false);
 	addSound(L"depth", L"sound\\bgm\\the-depths.wav", true);
 
 	// boss fight
-	addSound(L"boss", L"sound\\bgm\\basic boss fight.wav", true);
+	addSound(L"bossroom", L"sound\\bgm\\basic boss fight.wav", true);
 	addSound(L"bossend", L"sound\\bgm\\bossfightend.wav", false);
 
 	// evilroom

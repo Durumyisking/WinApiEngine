@@ -125,7 +125,6 @@ void CMap::LoadMap(const wstring& _strRelativePath, CMinimap* _pMinimap)
 						dynamic_cast<CRoom*>(m_MapData[y][x])->AddWall();
 						dynamic_cast<CRoom*>(m_MapData[y][x])->AddDoor();
 						ROOM_TYPE RoomType = dynamic_cast<CRoom*>(m_MapData[y][x])->GetType();
-						int i = 100;
 
 						switch (RoomType)
 						{

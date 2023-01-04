@@ -104,7 +104,7 @@ void CScene_Boss::update()
 		m_bAnimReverse = false;
 
 		CCamera::GetInst()->FadeIn(1.f);
-		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::START);
+		CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::START, false);
 	}
 	
 }

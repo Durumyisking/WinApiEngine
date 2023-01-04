@@ -16,7 +16,7 @@ CFly::CFly()
 
 
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(-4.f, 0.f), true);
-
+	m_bNoparticle = true;
 }
 
 CFly::~CFly()
@@ -35,20 +35,3 @@ void CFly::Attack()
 {
 }
 
-void CFly::OnCollision(CCollider* _pOther)
-{
-	CMonster::OnCollision(_pOther);
-
-}
-
-void CFly::OnCollisionEnter(CCollider* _pOther)
-{
-	CMonster::OnCollisionEnter(_pOther);
-
-}
-
-void CFly::OnCollisionExit(CCollider* _pOther)
-{
-
-	CMonster::OnCollisionExit(_pOther);
-}

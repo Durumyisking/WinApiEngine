@@ -41,6 +41,8 @@ protected:
 	float			m_fDeadAnimTime;
 	Vec2			m_vAnimOffset;
 
+public:
+	bool			m_bNoparticle;
 
 public:
 	CMonster();

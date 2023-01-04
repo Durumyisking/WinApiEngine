@@ -19,7 +19,7 @@ public:
 	}
 	CScene* GetPrevScene() { return m_pPrevScene; }
 //	CScene* GetSceneArr(SCENE_TYPE _eType) { return m_arrScene[(UINT)_eType]; }
-	void SetCurScene(SCENE_TYPE _eNext);
+	void SetCurScene(SCENE_TYPE _eNext, bool _bEnter);
 
 
 public:

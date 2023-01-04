@@ -29,6 +29,8 @@ void CBossRoom::update()
 		{
 			if (!m_bItemCreated)
 			{
+				CSoundMgr::GetInst()->Stop(L"bossroom", true);
+				CSoundMgr::GetInst()->Play(L"bossend");
 				CItemMgr::GetInst()->CreateRandomItem(GetPos() + Vec2(50.f, 150.f), this);
 				CItemMgr::GetInst()->CreateRandomItem(GetPos() - Vec2(50.f, 0.f) + Vec2(0.f, 150.f), this);
 
@@ -61,6 +63,8 @@ void CBossRoom::Enter()
 	// 몬스터 생성
 	if (!m_bIsClear)
 	{
+		CSoundMgr::GetInst()->Play(L"bossroom");
+
 		int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
 
 		if (1 == stage)

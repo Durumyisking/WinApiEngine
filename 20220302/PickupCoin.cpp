@@ -4,6 +4,7 @@
 
 #include "ResMgr.h"
 #include "Animation.h"
+#include "Room.h"
 
 CPickupCoin::CPickupCoin()
 {
@@ -32,18 +33,24 @@ CPickupCoin::~CPickupCoin()
 
 void CPickupCoin::update()
 {
-	if (L"PickupCoinDrop" == GetAnimator()->GetCurAnim()->GetName() && GetAnimator()->GetCurAnim()->IsFinish())
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		m_strAnimName = L"PickupCoin";
-		PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
-		GetAnimator()->GetCurAnim()->SetOffset(Vec2(-42.f, -42.f));
-	}
+		if (L"PickupCoinDrop" == GetAnimator()->GetCurAnim()->GetName() && 1 == GetAnimator()->GetCurAnim()->GetCurFrame())
+		{
+			CSoundMgr::GetInst()->Play(L"coindrop");
+		}
+		if (L"PickupCoinDrop" == GetAnimator()->GetCurAnim()->GetName() && GetAnimator()->GetCurAnim()->IsFinish())
+		{
+			m_strAnimName = L"PickupCoin";
+			PlayAnim(m_pAnim, m_strAnimName, Vec2(0.f, 0.f), true);
+			GetAnimator()->GetCurAnim()->SetOffset(Vec2(-42.f, -42.f));
+		}
 
-	if (L"PickupCoinGet" == GetAnimator()->GetCurAnim()->GetName() && GetAnimator()->GetCurAnim()->IsFinish())
-	{
-		DeleteObject(this);
+		if (L"PickupCoinGet" == GetAnimator()->GetCurAnim()->GetName() && GetAnimator()->GetCurAnim()->IsFinish())
+		{
+			DeleteObject(this);
+		}
 	}
-
 }
 
 void CPickupCoin::OnCollisionEnter(CCollider* _pOther)

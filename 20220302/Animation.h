@@ -78,6 +78,7 @@ public:
 	// 받아간쪽에서 수정 가능하게 레퍼런스
 	tAnimFrm& GetFrame(int _iIdx) { return m_vecFrm[_iIdx]; }
 	int GetMaxFrame() { return (UINT)m_vecFrm.size(); }
+	int GetCurFrame() const { return m_iCurFrm; }
 
 	void SetReverse(bool _bReverse) { m_bReverse = _bReverse; }
 

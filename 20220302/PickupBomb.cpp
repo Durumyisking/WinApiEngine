@@ -5,6 +5,7 @@
 #include "ResMgr.h"
 #include "Animation.h"
 
+
 CPickupBomb::CPickupBomb()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PickupBombTex", L"texture\\Pickup\\pickup_016_bomb.bmp");

@@ -112,6 +112,7 @@ void CRock::OnCollision(CCollider* _pOther)
 	CObject* pOtherObj = _pOther->GetObj();
 	if (L"Explode" == pOtherObj->GetName())
 	{
+		CSoundMgr::GetInst()->Play(L"rockdeath");
 		Crack();
 	}
 }
@@ -122,6 +123,7 @@ void CRock::OnCollisionEnter(CCollider* _pOther)
 
 	if (L"Explode" == pOtherObj->GetName())
 	{
+		CSoundMgr::GetInst()->Play(L"rockdeath");
 		Crack();
 	}
 }

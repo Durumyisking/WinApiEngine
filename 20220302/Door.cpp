@@ -56,6 +56,7 @@ void CDoor::update()
 		if (m_pOwner->IsClear() && m_bSecret)
 			if (!player->IsRedHit())
 			{
+				CSoundMgr::GetInst()->Play(L"evilfind");
 				m_bSecret = false;
 				m_bLock = false;
 			}
@@ -75,6 +76,8 @@ void CDoor::update()
 		}
 		else
 		{
+			if(m_bLock)
+				CSoundMgr::GetInst()->Play(L"secretfind");
 			m_bLock = false;
 		}
 	}

@@ -20,7 +20,7 @@ void CParticleMgr::init()
 {
 	for (UINT i = 0; i < static_cast<UINT>(PARTICLE_TYPE::END); i++)
 	{	
-		for (int j = 0; j < 100; j++)
+		for (int j = 0; j < 1000; j++)
 		{
 			CParticle* pNewParticle = new CParticle(static_cast<PARTICLE_TYPE>(i));
 			m_arrParticlePool[i].push_back(pNewParticle);

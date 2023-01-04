@@ -54,6 +54,7 @@ void CFire::OnCollision(CCollider* _pOther)
 	}
 	if (m_iHp == 0)
 	{
+		CSoundMgr::GetInst()->Play(L"firedeath");
 		GetCollider()->SwitchOff();
 		PlayAnim(m_pAnim, L"FirePlace_DEAD", Vec2(0.f, 0.f), true);
 		GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -8.f });
@@ -73,8 +74,14 @@ void CFire::OnCollisionEnter(CCollider* _pOther)
 		m_iHp = 0;
 	}
 
+	if (L"Monster" == pOtherObj->GetName() || L"Player" == pOtherObj->GetName())
+	{
+		CSoundMgr::GetInst()->Play(L"firedeath");
+	}
+
 	if (m_iHp == 0)
 	{
+		CSoundMgr::GetInst()->Play(L"firedeath");
 		GetCollider()->SwitchOff();
 		PlayAnim(m_pAnim, L"FirePlace_DEAD", Vec2(0.f, 0.f), true);
 		GetAnimator()->GetCurAnim()->SetOffset({ -8.f, -8.f });

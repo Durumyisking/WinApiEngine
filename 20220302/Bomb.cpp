@@ -60,7 +60,11 @@ void CBomb::update()
 
 	if (m_bPassFrame)
 	{
-		GetCollider()->SwitchOff();
+		if (GetCollider()->IsOn())
+		{
+			CSoundMgr::GetInst()->Play(L"explosion");
+			GetCollider()->SwitchOff();
+		}
 	}
 
 	if (!m_bPassFrame)
@@ -204,7 +208,7 @@ void CBomb::OnCollisionEnter(CCollider * _pOther)
 				== pDoor->GetType())
 			{
 				pDoor->SetSecret(false);
-				pDoor->unLockDoor();
+				//pDoor->unLockDoor();
 			}
 		}
 	}

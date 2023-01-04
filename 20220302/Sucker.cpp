@@ -13,6 +13,8 @@ CSucker::CSucker()
 
 	m_arrAnimName[static_cast<UINT>(MON_STATE::IDLE)] = L"Sucker_PATROL";
 	PlayAnim(m_pAnim, m_strAnimName, Vec2(-4.f, 0.f), true);
+
+	m_bNoparticle = true;
 }
 
 CSucker::~CSucker()
@@ -23,7 +25,7 @@ void CSucker::update()
 {
 	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
-		if (0 == m_Stat.m_iHP)
+		if (0 >= m_Stat.m_iHP)
 		{
 			for (int i = 0; i < 3; i++)
 			{
@@ -31,7 +33,6 @@ void CSucker::update()
 				CreateMissile(Vec2(0.f, -1.f), m_pTearTex, L"Sucker");
 				CreateMissile(Vec2(1.f, 0.f), m_pTearTex, L"Sucker");
 				CreateMissile(Vec2(-1.f, 0.f), m_pTearTex, L"Sucker");
-
 			}
 
 		}

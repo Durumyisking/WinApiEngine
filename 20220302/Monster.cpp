@@ -18,6 +18,7 @@ CMonster::CMonster()
 	, m_fDeadAnimTime(0.f)
 	, m_arrAnimName{}
 	, m_vAnimOffset{}
+	, m_bNoparticle(false)
 
 {
 	SetName(L"Monster");
@@ -40,7 +41,7 @@ void CMonster::Attack()
 
 void CMonster::update()
 {
-	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner() || GetOwner()->GetOwner()->GetPrevRoom() == GetOwner())
+	if (GetOwner()->GetOwner()->GetCurrentRoom() == GetOwner())
 	{
 
 		if (0 >= m_Stat.m_iHP && MON_STATE::DEAD != GetAI()->GetCurState()->GetType())

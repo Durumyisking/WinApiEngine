@@ -322,9 +322,7 @@ void CRoom::Enter()
 }
 
 void CRoom::Exit()
-{
-
-		
+{		
 }
 
 void CRoom::SpawnPickup(PICKUP_TYPE _eType, Vec2 _vPos)
@@ -391,7 +389,6 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	case ROOM_TYPE::SECRET:
 		strFolder += L"\\Secret\\Room";
 		break;
-
 	default:
 		break;
 	}
@@ -399,8 +396,6 @@ void CRoom::LoadRoom(ROOM_TYPE _eType)
 	delete p;
 
 	wstring strRoom = std::to_wstring(iCount);
-
-
 	wstring strPathEnd = L".txt";
 
 	strFolder += strRoom;

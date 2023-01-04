@@ -49,7 +49,6 @@ void CNormalRoom::Enter()
 		//CMonster* M5 = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, GetPos() , this);
 		//CSceneMgr::GetInst()->GetCurScene()->AddObject(M5, GROUP_TYPE::MONSTER);
 		//++m_iMonsterCount;
-
 	}
 
 	CRoom::Enter();
