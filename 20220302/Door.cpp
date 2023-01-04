@@ -310,3 +310,13 @@ void CDoor::SetTextureType(ROOM_TYPE _eType)
 	}
 }
 
+void CDoor::openDoor()
+{
+	if (!m_bOpen && !m_bLock)
+	{
+		if (ROOM_TYPE::START != GetOwner()->GetType())
+			CSoundMgr::GetInst()->Play(L"dooropen");
+	}
+	m_bOpen = true;
+}
+

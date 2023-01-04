@@ -1,12 +1,12 @@
 #pragma once
 
 class CObject;
-class CAI;
+class CMonsterAI;
 
 void CreateObject(CObject* _pObj, GROUP_TYPE _eGroup);
 void DeleteObject(CObject* _pObj);
 void ChangeScene(SCENE_TYPE _eNext);
-void ChangeAIState(CAI* _pAI, MON_STATE _eState);
+void ChangeAIState(CMonsterAI* _pAI, MON_STATE _eState);
 
 
 template <typename T>

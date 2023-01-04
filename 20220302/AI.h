@@ -6,7 +6,7 @@ class CMonster;
 //  AI클래스는
 // 몬스터가 가진 여러가지 AI state 들 중에서 전환할 수 있게 해주는 클래스
 // 여기에다가 행동패턴을 구현하지는 않을것
-class CAI
+class CMonsterAI
 {
 private:
 	// 해당 AI를 가질 몬스터를 설정
@@ -16,8 +16,8 @@ private:
 	CState*					m_pCurState;
 
 public:
-	CAI();
-	~CAI();
+	CMonsterAI();
+	~CMonsterAI();
 
 public:
 	void update();

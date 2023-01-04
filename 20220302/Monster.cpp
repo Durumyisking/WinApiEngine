@@ -300,7 +300,7 @@ void CMonster::OnCollisionExit(CCollider * _pOther)
 	}
 }
 
-void CMonster::SetAI(CAI * _pAI)
+void CMonster::SetAI(CMonsterAI * _pAI)
 {
 	m_pAI = _pAI;
 	m_pAI->m_pOwner = this;

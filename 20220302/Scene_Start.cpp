@@ -49,16 +49,30 @@ void CScene_Start::Enter()
 {
 	CCore::GetInst()->DivideMenu();
 
-	// map 추가
-	
+	// map 추가	
 	SetStage(m_CurrentStage);
+
+	switch (m_CurrentStage)
+	{
+	case 1:
+		CSoundMgr::GetInst()->Play(L"basement");
+		break;
+	case 2:
+		CSoundMgr::GetInst()->Play(L"cave");
+		break;
+	case 3:
+		CSoundMgr::GetInst()->Play(L"depth");
+		break;
+	default:
+		break;
+	}
 
 	// start room의 위치로 카메라 이동
 	CCamera::GetInst()->SetLookAtDirect(m_pMap->GetStartPos());
 
 
 	// Object 추가
-		
+
 
 	// Player 생성 1스테이지에서만 생성함 Delete때 생략해야할듯
 	if (!m_bFirst)
@@ -174,7 +188,9 @@ void CScene_Start::Exit(int _type)
 	if (0 == _type)
 		DeleteAll_IncludePlayer();
 	else if (1 == _type)
+	{
 		DeleteAll();
+	}
 	
 	vecHeartUI.clear(); // 벡터는 클리어 시켜놓자
 	vecSoulHeartUI.clear();

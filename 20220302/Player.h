@@ -62,6 +62,8 @@ protected:
 
 	CTexture*		m_pItemTex;
 
+	ROOM_TYPE		m_eBeforeRoom;
+
 public:
 	CPlayer();
 	~CPlayer();

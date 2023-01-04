@@ -248,6 +248,8 @@
     <ClInclude Include="SecretRoom.h" />
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="SoulHeart.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="StartRoom.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="struct.h" />
@@ -354,6 +356,8 @@
     <ClCompile Include="SecretRoom.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
     <ClCompile Include="SoulHeart.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="StartRoom.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Sucker.cpp" />

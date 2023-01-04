@@ -20,12 +20,12 @@
 #pragma comment(lib, "Msimg32.lib") // 이미지 관리 라이브러리
 
 // 소리
-//#include <mmsystem.h>
-//#include <dsound.h>
-//#include <dinput.h>
-//
-//#pragma comment(lib, "winmm.lib")
-//#pragma comment(lib, "dsound.lib")
+#include <mmsystem.h>
+#include <dsound.h>
+#include <dinput.h>
+
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
 
 
 #include <assert.h>

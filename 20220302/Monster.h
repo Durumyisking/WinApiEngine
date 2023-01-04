@@ -14,7 +14,7 @@
 #include "Room.h"
 
 class CAnimation;
-class CAI;
+class CMonsterAI;
 class CTexture;
 class CRoom;
 
@@ -34,7 +34,7 @@ protected:
 	CAnimation*		m_pAnim;
 	wstring			m_strAnimName;
 	wstring			m_arrAnimName[static_cast<UINT>(MON_STATE::END)];
-	CAI*			m_pAI;
+	CMonsterAI*			m_pAI;
 	bool			m_arrWallDirCheck[(UINT)DIR::END];
 //	CRoom*			m_pOwner;
 	bool			m_bDeadAnim;
@@ -59,8 +59,8 @@ public:
 	void SetStat(Stat _playerstat) { m_Stat = _playerstat; }
 
 
-	void SetAI(CAI* _pAI);
-	CAI* GetAI() const { return m_pAI; }
+	void SetAI(CMonsterAI* _pAI);
+	CMonsterAI* GetAI() const { return m_pAI; }
 
 	void SetRecogRange(float _fRecogRange) { m_fRecogRange = _fRecogRange; }
 	float GetRecogRange() const { return m_fRecogRange; }

@@ -1,13 +1,13 @@
 #pragma once
 
-class CAI;
+class CMonsterAI;
 class CMonster;
 
 class CState
 {
 private:
 	// 부모AI
-	CAI*		m_pAI;
+	CMonsterAI*		m_pAI;
 	// 상태
 	MON_STATE	m_eState;
 
@@ -26,7 +26,7 @@ public:
 	virtual void update() = 0;
 
 public:
-	CAI* GetAI() {	return m_pAI;}
+	CMonsterAI* GetAI() {	return m_pAI;}
 
 	void SetState(MON_STATE& _strKey) { m_eState = _strKey; }
 	MON_STATE GetType() const { return m_eState; }
@@ -34,6 +34,6 @@ public:
 
 
 
-	friend class CAI;
+	friend class CMonsterAI;
 };
 

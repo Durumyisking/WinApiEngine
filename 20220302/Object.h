@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Camera.h"
+#include "SoundMgr.h"
 
 class CCollider;
 class CAnimator;

@@ -69,7 +69,7 @@ void CSceneMgr::init()
 
 
 	// ÇöÀç ¾À ¼³Á¤
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::START];
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::MENU];
 	m_pPrevScene = m_pCurScene;
 
 	m_pCurScene->Enter();

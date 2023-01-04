@@ -3,25 +3,25 @@
 
 #include "State.h"
 
-CAI::CAI()
+CMonsterAI::CMonsterAI()
 	: m_pCurState(nullptr)
 	, m_pOwner(nullptr)
 {
 }
 
-CAI::~CAI()
+CMonsterAI::~CMonsterAI()
 {
 	// 삭제될때 map에 할당한 state 해제
 	Safe_Delete_Map(m_pmapState);
 }
 
 
-void CAI::update()
+void CMonsterAI::update()
 {
 	m_pCurState->update();
 }
 
-void CAI::AddState(CState * _pState)
+void CMonsterAI::AddState(CState * _pState)
 {
 	CState* pState = GetState(_pState->GetType());
 	// pState가 있으면 오류
@@ -31,7 +31,7 @@ void CAI::AddState(CState * _pState)
 	_pState->m_pAI = this;
 }
 
-CState * CAI::GetState(MON_STATE _eState)
+CState * CMonsterAI::GetState(MON_STATE _eState)
 {
 	map<MON_STATE, CState*>::iterator iter = m_pmapState.find(_eState);
 
@@ -42,7 +42,7 @@ CState * CAI::GetState(MON_STATE _eState)
 	return iter->second;
 }
 
-void CAI::ChangeState(MON_STATE _eNextState)
+void CMonsterAI::ChangeState(MON_STATE _eNextState)
 {
 	CState* pNextState = GetState(_eNextState);
 	

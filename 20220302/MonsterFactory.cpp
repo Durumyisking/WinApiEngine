@@ -49,7 +49,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CTraceState);
 
@@ -76,7 +76,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 		pMon->SetDeadAnimTime(0.6f);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CPatrolState);
 		pAI->AddState(new CTraceState);
 
@@ -106,7 +106,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CAttackState);
 
@@ -133,7 +133,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 
 		pAI->SetCurState(MON_STATE::IDLE);
@@ -161,7 +161,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 		pMon->SetDeadAnimTime(0.6f);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CPatrolState);
 		pAI->AddState(new CAttackState);
 
@@ -191,7 +191,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CAttackState);
 
 		pAI->SetCurState(MON_STATE::ATTACK);
@@ -217,7 +217,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CAttackState);
 
 		pAI->SetCurState(MON_STATE::ATTACK);
@@ -242,7 +242,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CAttackState);
 
@@ -269,7 +269,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CAttackState);
 
 		pAI->SetCurState(MON_STATE::ATTACK);
@@ -295,7 +295,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CAttackState);
 
@@ -323,7 +323,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CAttackState);
 
@@ -349,7 +349,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CPatrolState);
 		pAI->AddState(new CAttackState);
 
@@ -380,7 +380,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 		pMon->SetDeadAnimTime(0.6f);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CPatrolState);
 		pAI->AddState(new CTraceState);
 
@@ -409,7 +409,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetPos(_vPos);
 		pMon->SetOwner(_pRoom);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CAttackState);
 
@@ -445,7 +445,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 		pMon->SetDeadAnimTime(1.6f);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 //		pAI->AddState(new CAttackState);
 
@@ -474,7 +474,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->SetOwner(_pRoom);
 		pMon->SetDeadAnimTime(1.6f);
 
-		CAI* pAI = new CAI;
+		CMonsterAI* pAI = new CMonsterAI;
 		pAI->AddState(new CIdleState);
 
 		pAI->SetCurState(MON_STATE::IDLE);

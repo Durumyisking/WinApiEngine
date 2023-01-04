@@ -512,6 +512,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 	{
 		CDoor* pdoor = dynamic_cast<CDoor*>(pOtherObj);
 		Vec2 vPos = {};
+		ROOM_TYPE eRoomType;
 
 		if (pdoor->IsOpen() && !(pdoor->IsLock()))
 		{
@@ -524,6 +525,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				// 들어간 방을 현재 방으로 설정합니다.
 				pdoor->GetOwner()->Exit();
+				eRoomType = dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y - 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->GetType();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y - 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
 			case DIR::DOWN:
@@ -531,6 +533,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(0.f, 250.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
+				eRoomType = dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y + 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->GetType();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y + 1), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x)))->Enter();
 				break;
 			case DIR::RIGHT:
@@ -538,6 +541,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(450.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
+				eRoomType = dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x + 1)))->GetType();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x + 1)))->Enter();
 				break;
 			case DIR::LEFT:
@@ -545,17 +549,154 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				SetPos(vPos * m_vResolution + (m_vResolution / 2) - Vec2(-450.f, 40.f));
 				CCamera::GetInst()->SetLookAt(vPos * m_vResolution + (m_vResolution / 2));
 				pdoor->GetOwner()->Exit();
+				eRoomType = dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x - 1)))->GetType();
 				dynamic_cast<CRoom*>(pdoor->GetOwner()->GetOwner()->GetMapData(static_cast<int>(pdoor->GetOwner()->GetRoomPos().y), static_cast<int>(pdoor->GetOwner()->GetRoomPos().x - 1)))->Enter();
 				break;
 			default:
 				break;
 			}
+
+			switch (eRoomType)
+			{
+			case ROOM_TYPE::START:
+				if (m_eBeforeRoom != ROOM_TYPE::START && m_eBeforeRoom != ROOM_TYPE::NORMAL)
+				{
+					switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+					{
+					case 1:
+						CSoundMgr::GetInst()->Play(L"basement");
+						break;
+					case 2:
+						CSoundMgr::GetInst()->Play(L"cave");
+						break;
+					case 3:
+						CSoundMgr::GetInst()->Play(L"depth");
+						break;
+					default:
+						break;
+					}
+					CSoundMgr::GetInst()->Stop(L"evilroom", true);
+					CSoundMgr::GetInst()->Stop(L"secretroom", true);
+					CSoundMgr::GetInst()->Stop(L"treasureroom", true);
+				}
+				m_eBeforeRoom = ROOM_TYPE::START;
+				break;
+			case ROOM_TYPE::NORMAL:
+				if (m_eBeforeRoom != ROOM_TYPE::START && m_eBeforeRoom != ROOM_TYPE::NORMAL)
+				{
+					switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+					{
+					case 1:
+						CSoundMgr::GetInst()->Play(L"basement");
+						break;
+					case 2:
+						CSoundMgr::GetInst()->Play(L"cave");
+						break;
+					case 3:
+						CSoundMgr::GetInst()->Play(L"depth");
+						break;
+					default:
+						break;
+					}
+					CSoundMgr::GetInst()->Stop(L"evilroom", true);
+					CSoundMgr::GetInst()->Stop(L"secretroom", true);
+					CSoundMgr::GetInst()->Stop(L"treasureroom", true);
+				}
+				m_eBeforeRoom = ROOM_TYPE::NORMAL;
+				break;
+			case ROOM_TYPE::TRESURE:
+				m_eBeforeRoom = ROOM_TYPE::TRESURE;
+				switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+				{
+				case 1:
+					CSoundMgr::GetInst()->Stop(L"basement", true);
+					break;
+				case 2:
+					CSoundMgr::GetInst()->Stop(L"cave", true);
+					break;
+				case 3:
+					CSoundMgr::GetInst()->Stop(L"depth", true);
+					break;
+				default:
+					break;
+				}
+				CSoundMgr::GetInst()->Stop(L"evilroom", true);
+				CSoundMgr::GetInst()->Stop(L"secretroom", true);
+				CSoundMgr::GetInst()->Play(L"treasureroom");
+				break;
+			case ROOM_TYPE::BOSS:
+				m_eBeforeRoom = ROOM_TYPE::BOSS;
+				switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+				{
+				case 1:
+					CSoundMgr::GetInst()->Stop(L"basement", true);
+					break;
+				case 2:
+					CSoundMgr::GetInst()->Stop(L"cave", true);
+					break;
+				case 3:
+					CSoundMgr::GetInst()->Stop(L"depth", true);
+					break;
+				default:
+					break;
+				}
+				CSoundMgr::GetInst()->Stop(L"evilroom", true);
+				CSoundMgr::GetInst()->Stop(L"secretroom", true);
+				CSoundMgr::GetInst()->Stop(L"treasureroom", true);
+				break;
+			case ROOM_TYPE::SECRET:
+				m_eBeforeRoom = ROOM_TYPE::SECRET;
+				switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+				{
+				case 1:
+					CSoundMgr::GetInst()->Stop(L"basement", true);
+					break;
+				case 2:
+					CSoundMgr::GetInst()->Stop(L"cave", true);
+					break;
+				case 3:
+					CSoundMgr::GetInst()->Stop(L"depth", true);
+					break;
+				default:
+					break;
+				}
+				CSoundMgr::GetInst()->Stop(L"evilroom", true);
+				CSoundMgr::GetInst()->Play(L"secretroom");
+				CSoundMgr::GetInst()->Stop(L"treasureroom", true);
+				break;
+			case ROOM_TYPE::EVIL:
+				m_eBeforeRoom = ROOM_TYPE::EVIL;
+				switch (dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage())
+				{
+				case 1:
+					CSoundMgr::GetInst()->Stop(L"basement", true);
+					break;
+				case 2:
+					CSoundMgr::GetInst()->Stop(L"cave", true);
+					break;
+				case 3:
+					CSoundMgr::GetInst()->Stop(L"depth", true);
+					break;
+				default:
+					break;
+				}
+				CSoundMgr::GetInst()->Play(L"evilroom");
+				CSoundMgr::GetInst()->Stop(L"secretroom", true);
+				CSoundMgr::GetInst()->Stop(L"treasureroom", true);
+				break;
+			case ROOM_TYPE::END:
+				break;
+			default:
+				break;
+			}
+			
 		}
 		else if (pdoor->IsLock())
 		{
 			if (m_Pickup.m_iKey > 0)
 			{
 				pdoor->unLockDoor();
+
 				--m_Pickup.m_iKey;
 			}
 		}

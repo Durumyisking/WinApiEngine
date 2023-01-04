@@ -23,6 +23,7 @@
 
 
 
+
 CScene::CScene()
 	: m_fTimeCount(0)
 	, m_vResolution(CCore::GetInst()->GetResolution())

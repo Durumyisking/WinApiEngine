@@ -84,7 +84,7 @@ void CEventMgr::Execute(const tEvent & _eve)
 		// wParam : AI
 		// lParam : ¹Ù²Ü ai state type
 	{
-		CAI* pAI = (CAI*)_eve.lParam;
+		CMonsterAI* pAI = (CMonsterAI*)_eve.lParam;
 		pAI->ChangeState(static_cast<MON_STATE>(_eve.wParam));
 	}
 	default:

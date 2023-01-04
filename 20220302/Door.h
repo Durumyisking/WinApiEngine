@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "SoundMgr.h"
 
 class CTexture;
 class CRoom;
@@ -27,10 +28,7 @@ public:
 		m_bOpen = false;
 	}
 
-	void openDoor()
-	{
-		m_bOpen = true;
-	}
+	void openDoor();
 
 	void LockDoor()
 	{
@@ -39,6 +37,8 @@ public:
 
 	void unLockDoor()
 	{
+		if(m_bLock && !m_bSecret)
+			CSoundMgr::GetInst()->Play(L"doorunlock");
 		m_bLock = false;
 	}
 
@@ -54,6 +54,10 @@ public:
 	void SetSecret(bool _bFlag)
 	{
 		m_bSecret = _bFlag;
+	}
+	bool IsSecret()
+	{
+		return m_bSecret;
 	}
 
 	void SetTexture(CTexture* _pTex)

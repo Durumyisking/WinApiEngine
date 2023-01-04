@@ -266,6 +266,9 @@
     <Filter Include="Engine\04. Object\UI\Minimap\child">
       <UniqueIdentifier>{9ae58963-0369-4ccb-8010-b512637e2c5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\SoundMgr">
+      <UniqueIdentifier>{6e6de22b-66e4-4c75-9b73-963f42e02793}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -563,6 +566,12 @@
     <ClInclude Include="MapRoom.h">
       <Filter>Engine\04. Object\UI\Minimap\child</Filter>
     </ClInclude>
+    <ClInclude Include="SoundMgr.h">
+      <Filter>Engine\03. Manager\SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Engine\06. Resource\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -849,6 +858,12 @@
     </ClCompile>
     <ClCompile Include="MapRoom.cpp">
       <Filter>Engine\04. Object\UI\Minimap\child</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundMgr.cpp">
+      <Filter>Engine\03. Manager\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Engine\06. Resource\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

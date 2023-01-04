@@ -1,4 +1,5 @@
 #pragma once
+#include "SoundMgr.h"
 
 
 class CObject;	// 전방선언이라 아직 이게 우리의 CObject인지 모름

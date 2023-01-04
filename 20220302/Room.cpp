@@ -2,13 +2,12 @@
 #include "Room.h"
 
 #include "WallCollider.h"
-
 #include "Pickup.h"
-
-
 #include "PathMgr.h"
 #include "Scene_Start.h"
 
+#include "SoundMgr.h"
+#include "Sound.h";
 
 CRoom::CRoom()
 	: m_bFirstEnter(true)
@@ -30,7 +29,7 @@ CRoom::~CRoom()
 void CRoom::update()
 {
 	// 이전방과 현재방만 업뎃해줍니다.
-	if (this == m_pOwner->GetCurrentRoom() || this == m_pOwner->GetPrevRoom())
+	if (this == m_pOwner->GetCurrentRoom())
 	{
 		if (m_iMonsterCount <= 0)
 		{
@@ -49,7 +48,8 @@ void CRoom::update()
 		{
 			for (size_t i = 0; i < m_Door.size(); i++)
 			{
-				m_Door[i]->openDoor();
+//				if(!m_Door[i]->IsOpen() && !m_Door[i]->IsLock() && !m_Door[i]->IsSecret())
+					m_Door[i]->openDoor();
 			}
 		}
 		else
@@ -287,6 +287,7 @@ void CRoom::AddDoor()
 
 void CRoom::Enter()
 {
+
 	m_bSecret = false;
 	for (int i = 0; i < GetAdjacentRoomVec()->size(); ++i)
 	{

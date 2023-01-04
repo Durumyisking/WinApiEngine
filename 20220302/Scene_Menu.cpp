@@ -27,6 +27,8 @@ CScene_Menu::~CScene_Menu()
 
 void CScene_Menu::Enter()
 {
+	CSoundMgr::GetInst()->Play(L"intro");
+
 	CCamera::GetInst()->FadeIn(0.5f);
 
 	CCore::GetInst()->DivideMenu();
@@ -52,13 +54,15 @@ void CScene_Menu::Exit()
 
 void CScene_Menu::update()
 {
-	CScene::update();
-
 
 	if (KEY_TAP(KEY::SPACE))
 	{
-		if(m_bOnNewGame)
+		if (m_bOnNewGame)
+		{
+			CSoundMgr::GetInst()->Stop(L"intro", true);
+			CSoundMgr::GetInst()->Play(L"introtostart");
 			ChangeScene(SCENE_TYPE::START);
+		}
 		else
 		{ 
 			CCamera::GetInst()->SetLookAt(Vec2(m_vResolution.x/2, m_vResolution.y + m_vResolution.y/2));
