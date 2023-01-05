@@ -63,6 +63,10 @@ void CScene_Boss::update()
 	{
 		SetBoss(MON_TYPE::Monstro);
 	}
+	else if (3 == stage)
+	{
+		SetBoss(MON_TYPE::Itlives);
+	}
 
 	if (m_bIsAnimTimerOn)
 	{

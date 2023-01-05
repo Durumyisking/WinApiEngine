@@ -470,7 +470,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				// monster
 				case L'q':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Gaper, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -478,7 +478,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 					break;
 				case L'w':
 				{
-					CMonster * M = CMonsterFactory::CreateMonster(MON_TYPE::Fly, vSpawnPos, this);
+					CMonster * M = CMonsterFactory::CreateMonster(MON_TYPE::Fly, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -486,7 +486,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 					break;
 				case L'e':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Host, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Host, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -494,7 +494,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'r':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Charger, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Charger, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -502,7 +502,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L't':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Kamikazeleech, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Kamikazeleech, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -510,7 +510,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'y':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Coltty, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Coltty, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -518,7 +518,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'u':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Trite, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -526,7 +526,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'i':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Baby, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Baby, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -534,7 +534,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'o':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Frowngaper, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Frowngaper, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -542,7 +542,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'p':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Keeper, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Keeper, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -550,7 +550,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 				break;
 				case L'a':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Pooter, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Pooter, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -559,7 +559,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 
 				case L's':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Sucker, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Sucker, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;
@@ -568,7 +568,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 
 				case L'd':
 				{
-					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Maw, vSpawnPos, this);
+					CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Maw, vSpawnPos, this, true);
 					CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
 					m_bGetReward = false;
 					++m_iMonsterCount;

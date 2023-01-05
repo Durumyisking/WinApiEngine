@@ -56,6 +56,11 @@ public:
 			m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss_monstro", L"texture\\CutScene\\portrait_20.0_monstro.bmp");
 			m_vBossSlice = Vec2(1, 0);
 			break;
+		case MON_TYPE::Itlives:
+			m_eBossType = _eType;
+			m_pTexBoss = CResMgr::GetInst()->LoadTexture(L"BossSceneBoss_itlives", L"texture\\CutScene\\portrait_78.1_itlives.bmp");
+			m_vBossSlice = Vec2(1, 11);
+			break;
 
 		default:
 			break;

@@ -572,6 +572,9 @@
     <ClInclude Include="Sound.h">
       <Filter>Engine\06. Resource\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Itlives.h">
+      <Filter>Engine\04. Object\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -864,6 +867,9 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Engine\06. Resource\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Itlives.cpp">
+      <Filter>Engine\04. Object\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

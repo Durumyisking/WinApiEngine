@@ -77,6 +77,8 @@ public:
 	
 	void LoadRoom(ROOM_TYPE _eType);
 	void SetRoom(const wstring& _strRelativePath);
+	void MonsterAdd() { ++m_iMonsterCount; }
+	int GetMonsterCount() const { return m_iMonsterCount; }
 
 public:
 	void GiveReward();

@@ -35,8 +35,7 @@ CMissile::CMissile(float _fShotSpeed, int _iDmg)
 	, m_fAccFall(0.f)
 	, m_pAnim(nullptr)
 	, m_bIsLaser(false)
-
-
+	, m_bWiggle(false)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"TearTex", L"texture\\Tear\\effect_015_tearpoofa.bmp");
 	CreateAnimator();
@@ -80,6 +79,12 @@ void CMissile::update()
 
 			return;
 		}
+
+		//if (!m_bWiggle)
+		//{
+		//	pRigid->SetVelocity(pRigid->GetVelocity() * Vec2(0.f, 0.f));
+		//}
+
 
 		// 중력가속도
 		pRigid->AddForce(Vec2(0.f, +9.8f));

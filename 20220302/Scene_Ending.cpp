@@ -20,7 +20,7 @@ CScene_Ending::~CScene_Ending()
 void CScene_Ending::Enter()
 {
 	CCore::GetInst()->DivideMenu();
-
+	CSoundMgr::GetInst()->Play(L"intro");
 }
 
 void CScene_Ending::Exit()

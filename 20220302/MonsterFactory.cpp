@@ -31,8 +31,9 @@
 // boss
 #include "Dangle.h"
 #include "Monstro.h"
+#include "Itlives.h"
 
-CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _pRoom)
+CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _pRoom, bool _IsRoom)
 {
 	CMonster* pMon = nullptr;
 
@@ -202,7 +203,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->GetRigidBody()->SetFricCoeff(300.f);
 
 
-		pMon->GetCollider()->SetScale(Vec2(112.f, 112.f));
+		pMon->GetCollider()->SetScale(Vec2(64.f, 64.f));
 
 	}
 	break;	
@@ -437,7 +438,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Dangle:
 	{
 		pMon = new CDangle;
-		Stat Stat = { 300, 300, 1, 400.f, 700.f, 10.f , 0.f };
+		Stat Stat = { 500, 500, 1, 400.f, 700.f, 10.f , 0.f };
 		pMon->SetScale(Vec2(128.f, 128.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(500.f);
@@ -466,7 +467,7 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	case MON_TYPE::Monstro:
 	{
 		pMon = new CMonstro;
-		Stat Stat = { 300, 300, 1, 400.f, 450.f, 2.f , 0.f };
+		Stat Stat = { 700, 700, 1, 400.f, 450.f, 2.f , 0.f };
 		pMon->SetScale(Vec2(128.f, 128.f));
 		pMon->SetStat(Stat);
 		pMon->SetRecogRange(500.f);
@@ -489,6 +490,33 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 	}
 	break;
 
+	case MON_TYPE::Itlives:
+	{
+		pMon = new CItlives;
+		Stat Stat = { 1000, 1000, 1, 0.f, 450.f, 2.f , 0.f };
+		pMon->SetScale(Vec2(128.f, 128.f));
+		pMon->SetStat(Stat);
+		pMon->SetRecogRange(1000.f);
+		pMon->SetPos(_vPos);
+		pMon->SetOwner(_pRoom);
+		pMon->SetDeadAnimTime(1.6f);
+
+		CMonsterAI* pAI = new CMonsterAI;
+		pAI->AddState(new CIdleState);
+
+		pAI->SetCurState(MON_STATE::IDLE);
+		pMon->SetAI(pAI);
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(10000000.f);
+		pMon->GetRigidBody()->SetFricCoeff(1000000.f);
+
+		pMon->GetCollider()->SetScale(Vec2(100.f, 100.f));
+		pMon->GetCollider()->SetOffsetPos(Vec2(0.f, 90.f));
+
+	}
+	break;
+
 	default:
 		break;
 	}
@@ -500,6 +528,12 @@ CMonster * CMonsterFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _p
 		pMon->GetAI()->AddState(new CDeadState);
 
 	}
+	if (!_IsRoom)
+	{
+		CSceneMgr::GetInst()->GetCurScene()->AddObject(pMon, GROUP_TYPE::MONSTER);
+		_pRoom->MonsterAdd();
+	}
+
 	return pMon;
 }
 

@@ -200,6 +200,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemAlter.h" />
     <ClInclude Include="ItemMgr.h" />
+    <ClInclude Include="Itlives.h" />
     <ClInclude Include="Kamikazeleech.h" />
     <ClInclude Include="Keeper.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="Host.cpp" />
     <ClCompile Include="ItemAlter.cpp" />
     <ClCompile Include="ItemMgr.cpp" />
+    <ClCompile Include="Itlives.cpp" />
     <ClCompile Include="Kamikazeleech.cpp" />
     <ClCompile Include="Keeper.cpp" />
     <ClCompile Include="MapRoom.cpp" />

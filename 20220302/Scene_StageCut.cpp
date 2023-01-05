@@ -31,8 +31,6 @@ CScene_StageCut::~CScene_StageCut()
 
 void CScene_StageCut::Enter()
 {
-	int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetPrevScene())->GetStage();
-
 
 	CSoundMgr::GetInst()->Play(L"stageintro");
 

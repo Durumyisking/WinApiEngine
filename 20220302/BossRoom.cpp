@@ -69,16 +69,24 @@ void CBossRoom::Enter()
 
 		if (1 == stage)
 		{
-			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Dangle, GetPos(), this);
+			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Dangle, GetPos(), this, true);
 			CSceneMgr::GetInst()->GetCurScene()->AddObject(M1, GROUP_TYPE::MONSTER);
 			++m_iMonsterCount;
 		}
 		else if (2 == stage)
 		{
-			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Monstro, GetPos(), this);
+			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Monstro, GetPos(), this, true);
 			CSceneMgr::GetInst()->GetCurScene()->AddObject(M1, GROUP_TYPE::MONSTER);
 			++m_iMonsterCount;
 		}
+		else if (3 == stage)
+		{
+			CMonster* M1 = CMonsterFactory::CreateMonster(MON_TYPE::Itlives, GetPos() + Vec2(0.f, -250.f), this, true);
+			CSceneMgr::GetInst()->GetCurScene()->AddObject(M1, GROUP_TYPE::MONSTER);
+			++m_iMonsterCount;
+		}
+
+
 
 	}
 

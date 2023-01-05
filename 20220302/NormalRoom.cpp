@@ -13,7 +13,7 @@ CNormalRoom::CNormalRoom()
 		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal2", L"texture\\BackGround\\bg_depth_normal.bmp");
 		break;
 	case 3:
-		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal3", L"texture\\BackGround\\bg_basement_normal.bmp");
+		m_pBgTex = CResMgr::GetInst()->LoadTexture(L"BgTexNormal3", L"texture\\BackGround\\bg_worm.bmp");
 		break;
 	default:
 		break;

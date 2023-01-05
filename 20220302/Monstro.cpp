@@ -91,19 +91,20 @@ void CMonstro::update()
 						m_eState = MONSTRO_STATE::FIREPRE;
 						PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 					}
-					if (1 == iflag1)
+					else if (1 == iflag1)
 					{
 						m_strAnimName = L"MONSTRO_PREJUMP";
 						m_eState = MONSTRO_STATE::BIGJUMPPRE;
 						PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 					}
-					if (2 == iflag1)
+					else if (2 == iflag1)
 					{
 						m_strAnimName = L"MONSTRO_PREJUMP";
 						m_eState = MONSTRO_STATE::JUMPPRE;
 						PlayAnim(m_pAnim, m_strAnimName, m_vAnimOffset, true);
 					}
 
+					delete p;
 				}			
 			}
 			if (m_eState == MONSTRO_STATE::FIREPRE)
@@ -201,9 +202,10 @@ void CMonstro::update()
 
 				if (GetAnimator()->GetCurAnim()->IsFinish())
 				{
-					//m_vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
-					//m_vTargetDir.Normalize();
-					//LandSpray();
+					CMonsterFactory::CreateMonster(MON_TYPE::Fly, GetPos() + Vec2(50.f, 50.f), GetOwner(), false);
+					CMonsterFactory::CreateMonster(MON_TYPE::Fly, GetPos() + Vec2(50.f, -50.f), GetOwner(), false);
+					CMonsterFactory::CreateMonster(MON_TYPE::Fly, GetPos() + Vec2(-50.f, 50.f), GetOwner(), false);
+					CMonsterFactory::CreateMonster(MON_TYPE::Fly, GetPos() + Vec2(-50.f, -50.f), GetOwner(), false);
 
 					m_vAnimOffset = m_vAnimOffsetTemp;
 					GetAnimator()->GetCurAnim()->SetFrame(0);
@@ -218,6 +220,10 @@ void CMonstro::update()
 
 			if (m_eState == MONSTRO_STATE::FALLEND)
 			{
+				//m_vTargetDir = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetCollider()->GetFinalPos() - GetPos();
+				//m_vTargetDir.Normalize();
+				//LandSpray();
+
 				// 애니메이션 끝나면 IDLE로
 				if (GetAnimator()->GetCurAnim()->IsFinish())
 				{
@@ -261,6 +267,7 @@ void CMonstro::update()
 				{
 					m_bOnAir = true;
 					GetCollider()->SwitchOff();
+					CMonsterFactory::CreateMonster(MON_TYPE::Fly, GetPos(), GetOwner(), false);
 
 					vJumpDest = CSceneMgr::GetInst()->GetCurScene()->GetPlayer()->GetPos();
 					vJumpDir = vJumpDest - GetPos();
@@ -294,7 +301,6 @@ void CMonstro::update()
 
 				m_fAttackCooldown = 0.f;
 				m_bOnAir = false;
-				bDefinePos = false;
 				m_vAnimOffset = m_vAnimOffsetTemp;
 				GetCollider()->SwitchOn();
 
@@ -304,6 +310,7 @@ void CMonstro::update()
 			}
 			if (1.f < m_fJumpTimer)
 			{
+				bDefinePos = false;
 				m_fJumpTimer = 0.f;
 				m_eState = MONSTRO_STATE::IDLE;
 				m_strAnimName = L"MONSTRO_IDLE";
@@ -324,8 +331,6 @@ void CMonstro::render(HDC _dc)
 	{
 		if (m_bOnAir)
 		{
-			int iWidth = static_cast <int>(m_pShadowTex->GetWidth());
-			int iHeight = static_cast<int>(m_pShadowTex->GetHeight());
 			Vec2 vScale = GetScale();
 			Vec2 vPos = GetPos();
 			vPos = CCamera::GetInst()->GetRenderPos(vPos);

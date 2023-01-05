@@ -218,7 +218,7 @@ void CScene_Start::update()
 	{
 		int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
 		
-		if (2 == stage)
+		if (3 == stage)
 		{
 			CSceneMgr::GetInst()->SetCurScene(SCENE_TYPE::ENDING, false);
 			return;

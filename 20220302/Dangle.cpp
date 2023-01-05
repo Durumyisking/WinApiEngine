@@ -142,6 +142,8 @@ void CDangle::update()
 				// 애니메이션 끝나면 ATTACKPOST로
 				if (GetAnimator()->GetCurAnim()->IsFinish())
 				{
+					CMonsterFactory::CreateMonster(MON_TYPE::Sucker, GetPos(), GetOwner(), false);
+
 					GetAnimator()->GetCurAnim()->SetFrame(0);
 					m_strAnimName = L"DANGLE_ATTACK1_POST";
 					m_eState = DANGLE_STATE::ATTACKPOST;

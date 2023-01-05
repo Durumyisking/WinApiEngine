@@ -468,16 +468,38 @@ void CPlayer::OnCollision(CCollider * _pOther)
 				if (0 == m_iSoulHeart % 2)
 				{
 					m_bLooseSoulHeart = true;
+					int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
+					if (3 == stage)
+					{
+						if(1 != m_iSoulHeart)
+							m_iLooseSoulCount = 2;
+						else
+							m_iLooseSoulCount = 1;
+					}
+					else
+					{
+						m_iLooseSoulCount = 1;
+					}
 				}
 			}
 			else
 			{
-				m_iPrevHp = m_pStat->m_iHP;
-				--m_pStat->m_iHP;
+				int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
+				if (3 == stage)
+				{
+					m_iPrevHp = m_pStat->m_iHP;
+					m_pStat->m_iHP -= 2;
+				}
+				else
+				{
+					m_iPrevHp = m_pStat->m_iHP;
+					--m_pStat->m_iHP;
+				}
 
 				if (!m_bHitRed)
 					m_bHitRed = true;
 			}
+
 		}
 	}
 
@@ -858,13 +880,31 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				if (0 == m_iSoulHeart % 2)
 				{
 					m_bLooseSoulHeart = true;
-					m_iLooseSoulCount = 1;
+					int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
+					if (3 == stage)
+					{
+						if (1 != m_iSoulHeart)
+							m_iLooseSoulCount = 2;
+						else
+							m_iLooseSoulCount = 1;
+					}
+					else
+						m_iLooseSoulCount = 1;
 				}
 			}
 			else
 			{
-				m_iPrevHp = m_pStat->m_iHP;
-				--m_pStat->m_iHP;
+				int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
+				if (3 == stage)
+				{
+					m_iPrevHp = m_pStat->m_iHP;
+					m_pStat->m_iHP -= 2;
+				}
+				else
+				{
+					m_iPrevHp = m_pStat->m_iHP;
+					--m_pStat->m_iHP;
+				}
 
 				if(!m_bHitRed)
 					m_bHitRed = true;

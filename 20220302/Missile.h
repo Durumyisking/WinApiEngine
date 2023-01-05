@@ -31,6 +31,10 @@ private:
 
 	bool		m_bIsLaser;
 
+
+public:
+	bool		m_bWiggle;
+
 public:
 	CMissile(float _fShotSpeed, int _iDmg);
 	~CMissile();

@@ -27,13 +27,14 @@ enum class MON_TYPE
 	// boss
 	Dangle,
 	Monstro,
+	Itlives,
 };
 
 class CMonsterFactory
 {
 public:
 	// 객체 없어도 호출 가능한 멤버함수 = 정적 멤버함수
-	static CMonster* CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _pRoom);
+	static CMonster* CreateMonster(MON_TYPE _eType, Vec2 _vPos, CRoom* _pRoom, bool _IsRoom);
 
 	// 객체도 안만들거고 싱글톤도 아니니까 private
 private:

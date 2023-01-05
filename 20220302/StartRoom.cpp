@@ -64,44 +64,42 @@ void CStartRoom::Enter()
 		//CreateObject(pPoop, GROUP_TYPE::PROP);
 
 
-		for (size_t i = 0; i < 3; i++)
-		{
-			CRock* pRock = new CRock;
-			pRock->SetPos(GetPos() - Vec2(-100.f - (i * 80), 100.f));
-			pRock->SetOwner(this);
-			CreateObject(pRock, GROUP_TYPE::PROP);
-		}
+		//for (size_t i = 0; i < 3; i++)
+		//{
+		//	CRock* pRock = new CRock;
+		//	pRock->SetPos(GetPos() - Vec2(-100.f - (i * 80), 100.f));
+		//	pRock->SetOwner(this);
+		//	CreateObject(pRock, GROUP_TYPE::PROP);
+		//}
 
 		CObject* pPickup = new CPickupKey;
 		pPickup->SetPos(GetPos() - Vec2(100.f, 100.f));
 		pPickup->SetOwner(this);
 		CreateObject(pPickup, GROUP_TYPE::PICKUP);
 
-		CObject* pPickup3 = new CPickupBomb;
-		pPickup3->SetPos(GetPos() - Vec2(150.f, 100.f));
-		pPickup3->SetOwner(this);
-		CreateObject(pPickup3, GROUP_TYPE::PICKUP);
+		//CObject* pPickup3 = new CPickupBomb;
+		//pPickup3->SetPos(GetPos() - Vec2(150.f, 100.f));
+		//pPickup3->SetOwner(this);
+		//CreateObject(pPickup3, GROUP_TYPE::PICKUP);
 
 
-		CObject* pPickup4 = new CPickupCoin;
-		pPickup4->SetPos(GetPos() - Vec2(200.f, 100.f));
-		pPickup4->SetOwner(this);
-		CreateObject(pPickup4, GROUP_TYPE::PICKUP);
+		//CObject* pPickup4 = new CPickupCoin;
+		//pPickup4->SetPos(GetPos() - Vec2(200.f, 100.f));
+		//pPickup4->SetOwner(this);
+		//CreateObject(pPickup4, GROUP_TYPE::PICKUP);
 
 
-		CObject* pPickup2 = new CPickupKey;
-		pPickup2->SetPos(GetPos() - Vec2(100.f, -100.f));
-		pPickup2->SetOwner(this);
-		CreateObject(pPickup2, GROUP_TYPE::PICKUP);
+		//CObject* pPickup2 = new CPickupKey;
+		//pPickup2->SetPos(GetPos() - Vec2(100.f, -100.f));
+		//pPickup2->SetOwner(this);
+		//CreateObject(pPickup2, GROUP_TYPE::PICKUP);
 
 		//	CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::whoreofbabylon), GetPos() + Vec2(-150.f, 150.f), this);
 		//CItemMgr::GetInst()->CreateItem(static_cast<UINT>(ITEM_TABLE::technology), GetPos() + Vec2(150.f, 150.f), this);
 
 	}
 
-	//CMonster* M = CMonsterFactory::CreateMonster(MON_TYPE::Sucker, GetPos() + Vec2(-250.f, -0.f), this);
-	//CSceneMgr::GetInst()->GetCurScene()->AddObject(M, GROUP_TYPE::MONSTER);
-	//++m_iMonsterCount;
+//	CMonsterFactory::CreateMonster(MON_TYPE::Itlives, GetPos() + Vec2(0.f, -250.f), this, false);
 
 	CRoom::Enter();
 }
