@@ -32,7 +32,7 @@ CBomb::CBomb(CObject* _pOwner)
 
 	SetName(L"Bomb");
 	m_strAnimName = L"Bomb";
-	SetScale(Vec2(64.f, 64.f));
+	SetScale(Vec2(48.f, 48.f));
 
 	CreateRigidBody();
 

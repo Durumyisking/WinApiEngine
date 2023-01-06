@@ -58,9 +58,9 @@ public:
 	}
 	void ResetCurAnim();
 
-	AnimEvent m_StartEvent;
-	AnimEvent m_CompleteEvent;
-	AnimEvent m_EndEvent;
+	//AnimEvent m_StartEvent;
+	//AnimEvent m_CompleteEvent;
+	//AnimEvent m_EndEvent;
 
 
 	friend class CObject;

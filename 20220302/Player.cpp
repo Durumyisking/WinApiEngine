@@ -247,17 +247,17 @@ void CPlayer::render(HDC _dc)
 		}
 
 
-		// 부모의 애니메이션이 진행중이면 렌더링 하지 않는다
-		if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
-			|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
-			|| L"GetItem" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
-		{
-			return;
-		}
-		else
-		{
-			component_render(_dc);
-		}
+			// 부모의 애니메이션이 진행중이면 렌더링 하지 않는다
+			if (L"Hurt" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+				|| L"Jump" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish()
+				|| L"GetItem" == m_pOwner->GetAnimator()->GetCurAnim()->GetName() && !m_pOwner->GetAnimator()->GetCurAnim()->IsFinish())
+			{
+				return;
+			}
+			else
+			{
+				component_render(_dc);
+			}
 
 	}
 	// 부모는 무적권 렌더링
@@ -468,18 +468,7 @@ void CPlayer::OnCollision(CCollider * _pOther)
 				if (0 == m_iSoulHeart % 2)
 				{
 					m_bLooseSoulHeart = true;
-					int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
-					if (3 == stage)
-					{
-						if(1 != m_iSoulHeart)
-							m_iLooseSoulCount = 2;
-						else
-							m_iLooseSoulCount = 1;
-					}
-					else
-					{
-						m_iLooseSoulCount = 1;
-					}
+					m_iLooseSoulCount = 1;
 				}
 			}
 			else
@@ -880,16 +869,7 @@ void CPlayer::OnCollisionEnter(CCollider * _pOther)
 				if (0 == m_iSoulHeart % 2)
 				{
 					m_bLooseSoulHeart = true;
-					int stage = dynamic_cast<CScene_Start*>(CSceneMgr::GetInst()->GetCurScene())->GetStage();
-					if (3 == stage)
-					{
-						if (1 != m_iSoulHeart)
-							m_iLooseSoulCount = 2;
-						else
-							m_iLooseSoulCount = 1;
-					}
-					else
-						m_iLooseSoulCount = 1;
+					m_iLooseSoulCount = 1;
 				}
 			}
 			else
