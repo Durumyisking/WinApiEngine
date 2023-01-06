@@ -25,5 +25,7 @@ private:
 
 	float		m_fTrumble;
 
+	bool		m_bSoundPlaying;
+
 };
 

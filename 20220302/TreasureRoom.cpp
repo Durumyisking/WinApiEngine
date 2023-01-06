@@ -33,7 +33,7 @@ void CTreasureRoom::Enter()
 		// 아이템 추가
 
 		// 랜덤추가
-		srand(CTimeMgr::GetInst()->GetCurCount());
+//		srand(CTimeMgr::GetInst()->GetCurCount());
 //		UINT item = static_cast<UINT>(rand() % static_cast<UINT>(ITEM_TABLE::normalend));
 		CItemMgr::GetInst()->CreateRandomItem(GetPos() - Vec2(50.f, 0.f), this);
 		CItemMgr::GetInst()->CreateRandomItem(GetPos() + Vec2(50.f, 0.f), this);

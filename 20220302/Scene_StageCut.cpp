@@ -41,7 +41,7 @@ void CScene_StageCut::Exit()
 {
 
 	CSoundMgr::GetInst()->Stop(L"stageintro", true);
-
+	m_fAnimTimer = 0.f;
 
 }
 

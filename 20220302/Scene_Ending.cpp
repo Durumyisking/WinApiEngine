@@ -8,6 +8,7 @@
 
 CScene_Ending::CScene_Ending()
 	:m_pTexBG(nullptr)
+	, m_bSoundPlaying(false)
 {
 	m_pTexBG = CResMgr::GetInst()->LoadTexture(L"EndTex", L"texture\\UI\\ending.bmp");
 
@@ -29,6 +30,11 @@ void CScene_Ending::Exit()
 
 void CScene_Ending::update()
 {
+	if (!m_bSoundPlaying)
+	{
+		CSoundMgr::GetInst()->Play(L"intro");
+		m_bSoundPlaying = true;
+	}
 
 	if (KEY_TAP(KEY::SPACE))
 	{

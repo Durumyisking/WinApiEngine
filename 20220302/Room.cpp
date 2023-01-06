@@ -466,7 +466,7 @@ void CRoom::SetRoom(const wstring& _strRelativePath)
 					break;
 				case L'9':
 					break;
-
+					CItemMgr::GetInst()->CreateRandomItem(GetPos(), this);
 				// monster
 				case L'q':
 				{
